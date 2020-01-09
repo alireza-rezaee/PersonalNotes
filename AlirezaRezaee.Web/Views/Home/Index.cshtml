@@ -1,8 +1,58 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "تارنمای علیرضا رضائی";
+}
+@section Head {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
+        <link rel="stylesheet" href="~/lib/lightgallery/1.6.12/css/lightgallery.css" />
+        <link rel="stylesheet" href="~/lib/fontawesome/5.11.2/css/all.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
+              asp-fallback-href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
+              asp-fallback-test-class="mCustomScrollBox"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="relative"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha256-JHGEmB629pipTkMag9aMaw32I8zle24p3FpsEeI6oZU=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"
+              asp-fallback-href="~/lib/lightgallery/1.6.12/css/lightgallery.min.css"
+              asp-fallback-test-class="lg-icon"
+              asp-fallback-test-property="font-family"
+              asp-fallback-test-value="lg"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha256-8rfHbJr+ju3Oc099jFJMR1xAPu8CTPHU8uP5J3X/VAY=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+              asp-fallback-href="~/lib/fontawesome/5.11.2/css/all.min.css"
+              asp-fallback-test-class="fa"
+              asp-fallback-test-property="font-weight"
+              asp-fallback-test-value="900"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    </environment>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Scripts {
+    <environment include="Development">
+        <script src="~/lib/picturefill/3.0.3/picturefill.js"></script>
+        <script src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+        <script src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js"
+                asp-fallback-src="~/lib/picturefill/3.0.3/picturefill.min.js"
+                asp-fallback-test="picturefill"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha256-iT+n/otuaeKCgxnASny7bxKeqCDbaV1M7VdX1ZRQtqg=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
+                asp-fallback-src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
+                asp-fallback-test="$(document).mousewheel"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha256-jnOjDTXIPqall8M0MyTSt98JetJuZ7Yu+1Jm7hLTF7U=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
+                asp-fallback-src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
+                asp-fallback-test="jQuery.mCustomScrollbar"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha256-/YAntTqXy9V4LoXFkI5WPDl3ZwP/knn1BljmMJJ7QWc=" crossorigin="anonymous"></script>
+    </environment>
+}
