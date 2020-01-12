@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200112050259_AddOption.cs" />
+    <Compile Remove="Data\Migrations\20200112050259_AddOption.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200112052410_InsertDefaultOptions.cs" />
+    <Compile Remove="Data\Migrations\20200112052410_InsertDefaultOptions.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200112081106_InsertDefaultOptions.cs" />
+    <Compile Remove="Data\Migrations\20200112081106_InsertDefaultOptions.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200112094122_InsertDefaultOptions.cs" />
+    <Compile Remove="Data\Migrations\20200112094122_InsertDefaultOptions.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
   </ItemGroup>
 
@@ -24,6 +35,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
   </ItemGroup>
 
 </Project>

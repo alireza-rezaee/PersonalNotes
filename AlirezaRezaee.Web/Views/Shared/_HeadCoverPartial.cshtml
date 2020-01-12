@@ -1,0 +1,33 @@
+﻿<div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px);">
+    <div id="hnav-besm" class="mx-auto py-2"></div>
+    <div class="container h-100 text-right">
+        <div class="cover h-100 rounded" style="background-image: url(@ViewBag.ProfileOptions.CoverPath);"></div>
+        <nav id="hnav">
+            <div class="cover-avatar d-inline-block">
+                <picture>
+                    <source media="(min-width: 992px)" srcset="@ViewBag.ProfileOptions.AvatarPath_150px">
+                    <source media="(min-width: 768px)" srcset="@ViewBag.ProfileOptions.AvatarPath_125px">
+                    <source media="(min-width: 576px)" srcset="@ViewBag.ProfileOptions.AvatarPath_100px">
+                    <img src="@ViewBag.ProfileOptions.AvatarPath_64px" alt="@ViewBag.ProfileOptions.FullName" class="rounded-circle h-100 img-fluid">
+                </picture>
+            </div>
+            <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
+                <a href="/"><img src="@ViewBag.ProfileOptions.IllustratedNamePath" alt="@ViewBag.ProfileOptions.FullName"></a>
+                <div class="mr-auto position-relative">
+                    <button type="button"
+                            class="btn btn-default h-100 d-block d-sm-none material-icons nav-shortcuts-trigger" id="js-nav-shortcuts-trigger">
+                        menu
+                    </button>
+                    <ul class="d-none d-sm-flex align-items-center pr-0 nav-shortcuts" id="js-nav-shortcuts">
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">home</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">create</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">camera</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">people</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">message</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">notifications</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
