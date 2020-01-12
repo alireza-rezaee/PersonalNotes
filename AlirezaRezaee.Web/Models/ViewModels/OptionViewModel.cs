@@ -36,5 +36,7 @@ namespace AlirezaRezaee.Web.Models.ViewModels
         public string SiteFootnote { get; set; }
 
         public string QuranAyah { get; set; }
+
+        public string AboutAuthorSummary { get; set; }
     }
 }

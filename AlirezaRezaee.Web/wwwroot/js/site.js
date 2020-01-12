@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    $('<div class="mt-5"></div>').css("height", $('#footer').outerHeight()).appendTo('body>.wrapper');
     $("#gallery").lightGallery();
     $('.js-tooltip').tooltip();
     $('.js-peyvandha-compact').mCustomScrollbar({

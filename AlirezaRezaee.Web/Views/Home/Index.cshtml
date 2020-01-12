@@ -48,9 +48,32 @@
     </div>
 </div>
 
+
+<div class="container mt-3 notes">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <h6 class="border-bottom border-gray pb-2 mb-0">درباره نویسنده</h6>
+                <div class="media text-muted pt-3">
+                    <img src="/uploads/profile/avatar-32x.jpg" alt="" width="32" height="32"
+                         class="ml-2 rounded-circle">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProfileOptions.AboutAuthorSummary))
+                    </p>
+                </div>
+                <small class="d-block text-left mt-3">
+                    <a href="#">اطلاعات بیشتر</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
     <environment include="Development">
         <script src="~/lib/picturefill/3.0.3/picturefill.js"></script>
+        <script src="~/lib/lightgallery/1.6.12/js/lightgallery-all.js"></script>
         <script src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
         <script src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     </environment>
@@ -60,6 +83,11 @@
                 asp-fallback-test="picturefill"
                 asp-suppress-fallback-integrity="true"
                 integrity="sha256-iT+n/otuaeKCgxnASny7bxKeqCDbaV1M7VdX1ZRQtqg=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js"
+                asp-fallback-src="~/lib/lightgallery/1.6.12/js/lightgallery-all.min.js"
+                asp-fallback-test="$(document).lightGallery"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha256-w14QFJrxOYkUnF0hb8pVFCSgYcsF0hMIKrqGb8A7J8A=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
                 asp-fallback-src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
                 asp-fallback-test="$(document).mousewheel"
