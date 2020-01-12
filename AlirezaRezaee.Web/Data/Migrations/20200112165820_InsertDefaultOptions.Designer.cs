@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200112095032_InsertDefaultOptions")]
+    [Migration("20200112165820_InsertDefaultOptions")]
     partial class InsertDefaultOptions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

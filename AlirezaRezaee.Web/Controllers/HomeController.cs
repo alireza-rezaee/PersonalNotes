@@ -35,7 +35,8 @@ namespace AlirezaRezaee.Web.Controllers
                 AvatarPath_150px = options.First(i => i.OptionName == "AvatarPath_150px").OptionValue,
                 IllustratedNamePath = options.First(i => i.OptionName == "IllustratedNamePath").OptionValue,
                 CoverPath = options.First(i => i.OptionName == "CoverPath").OptionValue,
-                SiteFootnote = options.First(i => i.OptionName == "SiteFootnote").OptionValue
+                SiteFootnote = options.First(i => i.OptionName == "SiteFootnote").OptionValue,
+                QuranAyah = options.First(i => i.OptionName == "QuranAyah").OptionValue
             };
         }
 

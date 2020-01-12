@@ -34,5 +34,7 @@ namespace AlirezaRezaee.Web.Models.ViewModels
         public string IllustratedNamePath { get; set; }
 
         public string SiteFootnote { get; set; }
+
+        public string QuranAyah { get; set; }
     }
 }
