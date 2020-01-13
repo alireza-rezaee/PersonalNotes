@@ -16,5 +16,11 @@
     "inputFiles": [
       "wwwroot/js/site.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/timeago/1.6.7/jquery.timeago.min.js",
+    "inputFiles": [
+      "wwwroot/lib/timeago/1.6.7/jquery.timeago.js"
+    ]
   }
 ]

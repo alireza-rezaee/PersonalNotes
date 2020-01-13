@@ -12,33 +12,38 @@ using AlirezaRezaee.Web.Models.ViewModels;
 
 namespace AlirezaRezaee.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly OptionViewModel _profileOptions;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger) : base (context)
         {
             _context = context;
             _logger = logger;
 
             var options = _context.Options;
-            _profileOptions = new OptionViewModel()
-            {
-                FirstName = options.First(i => i.OptionName == "FirstName").OptionValue,
-                LastName = options.First(i => i.OptionName == "LastName").OptionValue,
-                AvatarOrginalPath = options.First(i => i.OptionName == "AvatarOrginalPath").OptionValue,
-                AvatarPath_64px = options.First(i => i.OptionName == "AvatarPath_64px").OptionValue,
-                AvatarPath_100px = options.First(i => i.OptionName == "AvatarPath_100px").OptionValue,
-                AvatarPath_125px = options.First(i => i.OptionName == "AvatarPath_125px").OptionValue,
-                AvatarPath_150px = options.First(i => i.OptionName == "AvatarPath_150px").OptionValue,
-                IllustratedNamePath = options.First(i => i.OptionName == "IllustratedNamePath").OptionValue,
-                CoverPath = options.First(i => i.OptionName == "CoverPath").OptionValue,
-                SiteFootnote = options.First(i => i.OptionName == "SiteFootnote").OptionValue,
-                QuranAyah = options.First(i => i.OptionName == "QuranAyah").OptionValue,
-                AboutAuthorSummary = options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue
-            };
+
+            _profileOptions = GetProfileOptions();
+            _profileOptions.QuranAyah = options.First(i => i.OptionName == "QuranAyah").OptionValue;
+            _profileOptions.AboutAuthorSummary = options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue;
+
+            //_profileOptions = new OptionViewModel()
+            //{
+            //    //FirstName = options.First(i => i.OptionName == "FirstName").OptionValue,
+            //    //LastName = options.First(i => i.OptionName == "LastName").OptionValue,
+            //    //AvatarOrginalPath = options.First(i => i.OptionName == "AvatarOrginalPath").OptionValue,
+            //    //AvatarPath_64px = options.First(i => i.OptionName == "AvatarPath_64px").OptionValue,
+            //    //AvatarPath_100px = options.First(i => i.OptionName == "AvatarPath_100px").OptionValue,
+            //    //AvatarPath_125px = options.First(i => i.OptionName == "AvatarPath_125px").OptionValue,
+            //    //AvatarPath_150px = options.First(i => i.OptionName == "AvatarPath_150px").OptionValue,
+            //    //IllustratedNamePath = options.First(i => i.OptionName == "IllustratedNamePath").OptionValue,
+            //    //CoverPath = options.First(i => i.OptionName == "CoverPath").OptionValue,
+            //    //SiteFootnote = options.First(i => i.OptionName == "SiteFootnote").OptionValue,
+            //    QuranAyah = options.First(i => i.OptionName == "QuranAyah").OptionValue,
+            //    AboutAuthorSummary = options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue
+            //};
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -48,7 +53,7 @@ namespace AlirezaRezaee.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new HomeIndexViewModel() { Notes = _context.Notes.OrderByDescending(n => n.DateTime).Take(2).ToList() });
         }
 
         public IActionResult Privacy()

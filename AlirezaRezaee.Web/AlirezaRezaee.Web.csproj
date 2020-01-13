@@ -22,6 +22,10 @@
     <Compile Remove="Data\Migrations\20200112164629_InsertDefaultOptions.Designer.cs" />
     <Compile Remove="Data\Migrations\20200112164940_InsertDefaultOptions.cs" />
     <Compile Remove="Data\Migrations\20200112164940_InsertDefaultOptions.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200112185654_AddAuthorNoteModel.cs" />
+    <Compile Remove="Data\Migrations\20200112185654_AddAuthorNoteModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200112200912_AddAuthorNoteModel1.cs" />
+    <Compile Remove="Data\Migrations\20200112200912_AddAuthorNoteModel1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +45,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />

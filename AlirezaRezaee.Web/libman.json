@@ -28,6 +28,10 @@
     {
       "library": "twitter-bootstrap@4.4.1",
       "destination": "wwwroot/lib/bootstrap/4.4.1"
+    },
+    {
+      "library": "jquery-timeago@1.6.7",
+      "destination": "wwwroot/lib/timeago/1.6.7"
     }
   ],
   "version": "1.0"
