@@ -3,7 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>
+        @{
+            if (!(ViewData["Title"] is null))
+            {
+                @ViewData["Title"] <text> &bull; </text> @ViewBag.ProfileOptions.FullName
+            }
+            else
+            {
+                @ViewBag.ProfileOptions.FullName
+            }
+        }
+    </title>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/4.4.1/css/bootstrap.css" />
         <link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />
@@ -25,11 +36,6 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @RenderSection("Head", required: false)
-    <style>
-        .timeago {
-            font-family: IRANSansFaNum;
-        }
-    </style>
 </head>
 <body>
     <div class="wrapper">
