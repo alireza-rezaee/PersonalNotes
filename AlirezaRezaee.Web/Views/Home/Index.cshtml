@@ -1,5 +1,8 @@
 ﻿@using System.Web;
 @model AlirezaRezaee.Web.Models.ViewModels.HomeIndexViewModel;
+@{
+    ViewData["Title"] = "تارنمای علیرضا رضائی";
+}
 @section Head {
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
@@ -29,11 +32,6 @@
               asp-suppress-fallback-integrity="true"
               integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
     </environment>
-    <style>
-        .timeago {
-            font-family: IRANSansFaNum;
-        }
-    </style>
 }
 
 <div class="container my-3">
@@ -88,7 +86,7 @@
                     }
 
                     <small class="d-block text-left mt-3">
-                        <a asp-controller="notes" asp-action="index">نمایش همه پیام ها</a>
+                        <a href="#">نمایش همه پیام ها</a>
                     </small>
                 }
                 else
