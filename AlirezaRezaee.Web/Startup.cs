@@ -17,8 +17,10 @@ namespace AlirezaRezaee.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
+            _env = env;
             Configuration = configuration;
         }
 
@@ -27,9 +29,10 @@ namespace AlirezaRezaee.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = !_env.IsDevelopment() ? "MyPersonalSiteDb" : "LocalDb";
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("LocalDb")));
+                    Configuration.GetConnectionString(connectionString)));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -37,9 +40,9 @@ namespace AlirezaRezaee.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
