@@ -9,6 +9,7 @@ using AlirezaRezaee.Web.Data;
 using AlirezaRezaee.Web.Models;
 using AlirezaRezaee.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Identity;
 
 namespace AlirezaRezaee.Web.Controllers
 {
@@ -16,9 +17,13 @@ namespace AlirezaRezaee.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly OptionViewModel _profileOptions;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public NotesController(ApplicationDbContext context) : base(context)
+        public NotesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) : base(context)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
 
             //var options = _context.Options;
@@ -52,7 +57,7 @@ namespace AlirezaRezaee.Web.Controllers
         // GET: Notes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Notes.ToListAsync());
+            return _signInManager.IsSignedIn(User) ? View("IndexAdmin", await _context.Notes.ToListAsync()) : View("Index", await _context.Notes.ToListAsync());
         }
 
         // GET: Notes/Details/5

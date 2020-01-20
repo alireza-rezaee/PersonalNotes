@@ -69,7 +69,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
-                <h6 class="border-bottom border-gray pb-2 mb-0">تازه ترین پیام ها</h6>
+                <a asp-controller="notes" asp-action="index" class="text-decoration-none text-dark"><h6 class="border-bottom border-gray pb-2 mb-0">تازه ترین پیام ها</h6></a>
                 @if (Model.Notes.Any())
                 {
                     foreach (var note in Model.Notes)
@@ -107,12 +107,7 @@
         <script src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.js"></script>
         <script src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
         <script src="~/lib/timeago/1.6.7/jquery.timeago.js"></script>
-        @*<script src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"></script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/locales/jquery.timeago.fa.min.js"
-                asp-fallback-src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.min.js"
-                asp-fallback-test="jQuery.timeago"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-sFVsGcmCR6b20l9bCjpuTslNmrPlE0+k7o1nv+eC7og=" crossorigin="anonymous"></script>
+        <script src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js"
