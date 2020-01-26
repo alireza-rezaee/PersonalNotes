@@ -1,8 +1,5 @@
 ﻿@using System.Web;
-@model AlirezaRezaee.Web.Models.ViewModels.HomeIndexViewModel;
-@{
-    ViewData["Title"] = "تارنمای علیرضا رضائی";
-}
+@model AlirezaRezaee.Web.Models.ViewModels.HomeIndexViewModel
 @section Head {
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
@@ -33,7 +30,6 @@
               integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
     </environment>
 }
-
 <div class="container my-3">
     <div class="row">
         <div class="col-11 mx-auto">
@@ -44,7 +40,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-sm-11 d-block d-sm-flex mx-auto px-0 text-center border rounded py-4">
-            @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProfileOptions.QuranAyah))
+            @Html.Raw(HttpUtility.HtmlDecode(Model.QuranAyah))
         </div>
     </div>
 </div>
@@ -59,7 +55,7 @@
                     <img src="/uploads/profile/avatar-32x.jpg" alt="" width="32" height="32"
                          class="ml-2 rounded-circle">
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProfileOptions.AboutAuthorSummary))
+                        @Html.Raw(HttpUtility.HtmlDecode(Model.AboutAuthorSummary))
                     </p>
                 </div>
                 <small class="d-block text-left mt-3">
@@ -78,7 +74,7 @@
                             <img src="/uploads/profile/avatar-32x.jpg" alt="" width="32" height="32" class="ml-2 rounded">
                             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                                 <span class="d-block text-gray-dark">
-                                    <strong>@ViewBag.ProfileOptions.FullName</strong> . <time class="timeago" datetime="@note.DateTime.ToString("yyyy-MM-ddTHH\\:mm\\:ss")"></time>
+                                    <strong>@ViewData["FullName"]</strong> . <time class="timeago" datetime="@note.DateTime.ToString("yyyy-MM-ddTHH\\:mm\\:ss")"></time>
                                 </span>
                                 @note.Content
                             </p>
@@ -142,6 +138,12 @@
                 integrity="sha256-sFVsGcmCR6b20l9bCjpuTslNmrPlE0+k7o1nv+eC7og=" crossorigin="anonymous"></script>
     </environment>
     <script>
-        jQuery("time.timeago").timeago();
+        $(document).ready(function () {
+            $("#gallery").lightGallery();
+            $('.js-peyvandha-compact').mCustomScrollbar({
+                axis: "x" // horizontal scrollbar
+            });
+            jQuery("time.timeago").timeago();
+        });
     </script>
 }

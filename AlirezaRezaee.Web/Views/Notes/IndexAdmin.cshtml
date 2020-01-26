@@ -15,11 +15,11 @@
             <div class="mb-5">
                 <div class="d-flex">
                     <div class="rounded-circle ml-2" style="height: 40px; width: 40px; min-width: 40px;">
-                        <img src="@ViewBag.ProfileOptions.AvatarPath_64px" alt="@ViewBag.ProfileOptions.FullName" class="rounded-circle h-100 img-fluid">
+                        <img src="@ViewBag.ProfileOptions.AvatarPath_64px" alt="@ViewData["FullName"]" class="rounded-circle h-100 img-fluid">
                     </div>
                     <div class="pl-1 small" style="border: 1px solid #d2d2d2; border-radius: 3rem; line-height: 2.5;">
                         <div class="px-2 py-1 d-inline-block" style="border-radius: 3rem; background-color: #e9ecef; height: 40px;">
-                            @ViewBag.ProfileOptions.FullName
+                            @ViewData["FullName"]
                         </div>
                         <time class="timeago" datetime="@note.DateTime.ToString("yyyy-MM-ddTHH\\:mm\\:ss")"></time>
                     </div>

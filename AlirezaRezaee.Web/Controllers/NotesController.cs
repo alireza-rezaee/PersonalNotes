@@ -13,45 +13,23 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AlirezaRezaee.Web.Controllers
 {
-    public class NotesController : ControllerBase
+    public class NotesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly OptionViewModel _profileOptions;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public NotesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) : base(context)
+        public NotesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-
-            //var options = _context.Options;
-
-            _profileOptions = GetProfileOptions();
-            //_profileOptions.QuranAyah = options.First(i => i.OptionName == "QuranAyah").OptionValue;
-            //_profileOptions.AboutAuthorSummary = options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue;
-
-            ////_profileOptions = new OptionViewModel()
-            ////{
-            ////    //FirstName = options.First(i => i.OptionName == "FirstName").OptionValue,
-            ////    //LastName = options.First(i => i.OptionName == "LastName").OptionValue,
-            ////    //AvatarOrginalPath = options.First(i => i.OptionName == "AvatarOrginalPath").OptionValue,
-            ////    //AvatarPath_64px = options.First(i => i.OptionName == "AvatarPath_64px").OptionValue,
-            ////    //AvatarPath_100px = options.First(i => i.OptionName == "AvatarPath_100px").OptionValue,
-            ////    //AvatarPath_125px = options.First(i => i.OptionName == "AvatarPath_125px").OptionValue,
-            ////    //AvatarPath_150px = options.First(i => i.OptionName == "AvatarPath_150px").OptionValue,
-            ////    //IllustratedNamePath = options.First(i => i.OptionName == "IllustratedNamePath").OptionValue,
-            ////    //CoverPath = options.First(i => i.OptionName == "CoverPath").OptionValue,
-            ////    //SiteFootnote = options.First(i => i.OptionName == "SiteFootnote").OptionValue,
-            ////    QuranAyah = options.First(i => i.OptionName == "QuranAyah").OptionValue,
-            ////    AboutAuthorSummary = options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue
-            ////};
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.ProfileOptions = _profileOptions;
+            ViewData["AvatarPath_64px"] = _context.Options.First(i => i.OptionName == "AvatarPath_64px").OptionValue;
+            ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
         }
 
         // GET: Notes

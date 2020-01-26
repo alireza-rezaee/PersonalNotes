@@ -1,18 +1,20 @@
-﻿<div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px);">
+﻿@model AlirezaRezaee.Web.Models.ViewModels.Profile.HeadCoverViewModel
+
+<div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px);">
     <div id="hnav-besm" class="mx-auto py-2"></div>
     <div class="container h-100 text-right">
-        <div class="cover h-100 rounded" style="background-image: url(@ViewBag.ProfileOptions.CoverPath);"></div>
+        <div class="cover h-100 rounded" style="background-image: url(@Model.CoverPath);"></div>
         <nav id="hnav">
             <div class="cover-avatar d-inline-block">
                 <picture>
-                    <source media="(min-width: 992px)" srcset="@ViewBag.ProfileOptions.AvatarPath_150px">
-                    <source media="(min-width: 768px)" srcset="@ViewBag.ProfileOptions.AvatarPath_125px">
-                    <source media="(min-width: 576px)" srcset="@ViewBag.ProfileOptions.AvatarPath_100px">
-                    <img src="@ViewBag.ProfileOptions.AvatarPath_64px" alt="@ViewBag.ProfileOptions.FullName" class="rounded-circle h-100 img-fluid">
+                    <source media="(min-width: 992px)" srcset="@Model.AvatarPath_150px">
+                    <source media="(min-width: 768px)" srcset="@Model.AvatarPath_125px">
+                    <source media="(min-width: 576px)" srcset="@Model.AvatarPath_100px">
+                    <img src="@Model.AvatarPath_64px" alt="@Model.FullName" class="rounded-circle h-100 img-fluid">
                 </picture>
             </div>
             <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
-                <a href="/"><img src="@ViewBag.ProfileOptions.IllustratedNamePath" alt="@ViewBag.ProfileOptions.FullName"></a>
+                <a href="/"><img src="@Model.IllustratedNamePath" alt="@Model.FullName"></a>
                 <div class="mr-auto position-relative">
                     <button type="button"
                             class="btn btn-default h-100 d-block d-sm-none material-icons nav-shortcuts-trigger" id="js-nav-shortcuts-trigger">

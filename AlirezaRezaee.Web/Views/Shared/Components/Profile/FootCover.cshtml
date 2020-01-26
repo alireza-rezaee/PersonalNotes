@@ -1,7 +1,8 @@
-﻿@using System.Web;
+﻿@model AlirezaRezaee.Web.Models.ViewModels.Profile.FootCoverViewModel
+@using System.Web;
 <div id="footer">
     <div class="rounded-circle p-3 bg-white mx-auto position-relative js-gotop gotop">
         <div class="upper"></div>
     </div>
-    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.ProfileOptions.SiteFootnote))
+    @Html.Raw(HttpUtility.HtmlDecode(Model.SiteFootnote))
 </div>
