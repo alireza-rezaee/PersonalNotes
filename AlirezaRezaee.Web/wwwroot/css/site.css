@@ -548,3 +548,7 @@ html, body {
             box-shadow: none;
         }
 }
+
+.fa-num {
+    font-family: IRANSansFaNum;
+}

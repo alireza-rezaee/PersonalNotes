@@ -10,6 +10,8 @@ using AlirezaRezaee.Web.Models;
 using AlirezaRezaee.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using AlirezaRezaee.Web.Models.ViewModels.Notes;
 
 namespace AlirezaRezaee.Web.Controllers
 {
@@ -35,12 +37,16 @@ namespace AlirezaRezaee.Web.Controllers
         // GET: Notes
         public async Task<IActionResult> Index()
         {
-            return _signInManager.IsSignedIn(User) ? View("IndexAdmin", await _context.Notes.ToListAsync()) : View("Index", await _context.Notes.ToListAsync());
+            return _signInManager.IsSignedIn(User) ?
+                View("IndexAdmin", new IndexAuthorNoteViewModel() { AuthorNotes = await _context.Notes.OrderByDescending(n=>n.DateTime).ToListAsync() }) : View("Index", await _context.Notes.OrderByDescending(n => n.DateTime).ToListAsync());
         }
-
+        
         // GET: Notes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            //return 404 for unauthenticated users
+            if (!_signInManager.IsSignedIn(User)) return NotFound();
+
             if (id == null)
             {
                 return NotFound();
@@ -56,42 +62,22 @@ namespace AlirezaRezaee.Web.Controllers
             return View(authorNoteModel);
         }
 
-        // GET: Notes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Notes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateTime,Content")] AuthorNoteModel authorNoteModel)
+        [Authorize]
+        public async Task<IActionResult> Create(IndexAuthorNoteViewModel newNote)
         {
+            newNote.SingleNote.DateTime = DateTime.Now;
             if (ModelState.IsValid)
             {
-                _context.Add(authorNoteModel);
+                _context.Add(newNote.SingleNote);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(authorNoteModel);
-        }
-
-        // GET: Notes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var authorNoteModel = await _context.Notes.FindAsync(id);
-            if (authorNoteModel == null)
-            {
-                return NotFound();
-            }
-            return View(authorNoteModel);
+            return View(newNote);
         }
 
         // POST: Notes/Edit/5
@@ -99,23 +85,25 @@ namespace AlirezaRezaee.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateTime,Content")] AuthorNoteModel authorNoteModel)
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, IndexAuthorNoteViewModel note)
         {
-            if (id != authorNoteModel.Id)
-            {
+            var Note = await _context.Notes.FirstOrDefaultAsync(n=>n.Id == id);
+
+            if (Note == null)
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(authorNoteModel);
+                    Note.Content = note.SingleNote.Content;
+                    _context.Update(Note);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AuthorNoteModelExists(authorNoteModel.Id))
+                    if (!AuthorNoteModelExists(note.SingleNote.Id))
                     {
                         return NotFound();
                     }
@@ -126,30 +114,13 @@ namespace AlirezaRezaee.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(authorNoteModel);
-        }
-
-        // GET: Notes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var authorNoteModel = await _context.Notes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (authorNoteModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(authorNoteModel);
+            return View(note);
         }
 
         // POST: Notes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var authorNoteModel = await _context.Notes.FindAsync(id);

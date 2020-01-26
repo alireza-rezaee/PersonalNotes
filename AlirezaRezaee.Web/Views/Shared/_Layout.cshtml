@@ -6,7 +6,8 @@
     <title>@ViewData["Title"]</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/4.4.1/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />
+        @*<link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />*@
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
@@ -26,16 +27,14 @@
     </environment>
     @RenderSection("Head", required: false)
     <style>
-        .timeago {
-            font-family: IRANSansFaNum;
-        }
+        
     </style>
 </head>
 <body>
     <div class="wrapper">
-        @await Component.InvokeAsync("Profile", new { page = "HeadCover" })
+        @await Component.InvokeAsync("HeaderFooter", new { page = "HeadCover" })
         @RenderBody()
-        @await Component.InvokeAsync("Profile", new { page = "FootCover" })
+        @await Component.InvokeAsync("HeaderFooter", new { page = "FootCover" })
     </div>
     <environment include="Development">
         <script src="~/lib/jquery/3.4.1/jquery.js"></script>

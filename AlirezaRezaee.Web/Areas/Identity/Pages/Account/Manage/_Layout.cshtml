@@ -1,5 +1,8 @@
 ﻿@{
-    Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_ContainerLayout.cshtml";
+}
+@section Head {
+    @RenderSection("Head", required: false)
 }
 
 <h1>Manage your account</h1>
