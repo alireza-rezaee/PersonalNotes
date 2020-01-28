@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AlirezaRezaee.Web.Areas.Identity.Data;
+using AlirezaRezaee.Web.Services.UserService;
+using Microsoft.AspNetCore.Routing;
+using AlirezaRezaee.Web.RouteConstraints;
 
 namespace AlirezaRezaee.Web
 {
@@ -38,6 +41,10 @@ namespace AlirezaRezaee.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            //Username Route Constraint
+            services.AddScoped<IUserService, UserService>();
+            services.Configure<RouteOptions>(options => options.ConstraintMap.Add("username", typeof(UsernameRouteConstraint)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +73,12 @@ namespace AlirezaRezaee.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}",
+                    new { controller = "Home", action = "Index" });// exclude user controller
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{username:username}/{action=Index}",
+                    new { controller = "user", action = "Index" });
                 endpoints.MapRazorPages();
             });
         }
