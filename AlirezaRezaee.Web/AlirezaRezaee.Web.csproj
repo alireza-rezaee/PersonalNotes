@@ -26,6 +26,14 @@
     <Compile Remove="Data\Migrations\20200112185654_AddAuthorNoteModel.Designer.cs" />
     <Compile Remove="Data\Migrations\20200112200912_AddAuthorNoteModel1.cs" />
     <Compile Remove="Data\Migrations\20200112200912_AddAuthorNoteModel1.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200128064632_a.cs" />
+    <Compile Remove="Data\Migrations\20200128064632_a.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200128065020_AddApplicationUser.cs" />
+    <Compile Remove="Data\Migrations\20200128065020_AddApplicationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200128065430_AddApplicationUser.cs" />
+    <Compile Remove="Data\Migrations\20200128065430_AddApplicationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200128065704_AddApplicationUser.cs" />
+    <Compile Remove="Data\Migrations\20200128065704_AddApplicationUser.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -12,16 +12,17 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using AlirezaRezaee.Web.Models.ViewModels.Notes;
+using AlirezaRezaee.Web.Areas.Identity.Data;
 
 namespace AlirezaRezaee.Web.Controllers
 {
     public class NotesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public NotesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public NotesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
