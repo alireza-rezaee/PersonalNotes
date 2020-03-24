@@ -11,7 +11,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("DELETE FROM [Option]");
+            migrationBuilder.Sql("DELETE FROM [Option] WHERE [OptionName] = N'AboutAuthorSummary'");
         }
     }
 }
