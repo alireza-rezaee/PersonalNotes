@@ -63,34 +63,6 @@
                 </small>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="my-3 p-3 bg-white rounded shadow-sm">
-                <a asp-controller="notes" asp-action="index" class="text-decoration-none text-dark"><h6 class="border-bottom border-gray pb-2 mb-0">تازه ترین پیام ها</h6></a>
-                @if (Model.Notes.Any())
-                {
-                    foreach (var note in Model.Notes)
-                    {
-                        <div class="media text-muted pt-3">
-                            <img src="/uploads/profile/avatar-32x.jpg" alt="" width="32" height="32" class="ml-2 rounded">
-                            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                <span class="d-block text-gray-dark">
-                                    <strong>@ViewData["FullName"]</strong> . <time class="timeago fa-num" datetime="@note.DateTime.ToString("yyyy-MM-ddTHH\\:mm\\:ss")"></time>
-                                </span>
-                                @note.Content
-                            </p>
-                        </div>
-                    }
-
-                    <small class="d-block text-left mt-3">
-                        <a asp-controller="notes" asp-action="index">نمایش همه پیام ها</a>
-                    </small>
-                }
-                else
-                {
-                    <div>پیامی جهت نمایش وجود ندارد.</div>
-                }
-            </div>
-        </div>
     </div>
 
 </div>

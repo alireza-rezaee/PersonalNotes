@@ -31,7 +31,6 @@ namespace AlirezaRezaee.Web.Controllers
 
             return View(
                 new HomeIndexViewModel() {
-                    Notes = _context.Notes.OrderByDescending(n => n.DateTime).Take(2).ToList(),
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
                     AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue
                 });
