@@ -1,0 +1,27 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the QuranAya component.
+// -----------------------------------------------------------------------------
+
+@font-face {
+    font-family: "QuranTaha";
+    src: url("/fonts/eot/QuranTaha.eot");
+    src: url("/fonts/eot/QuranTaha.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/ttf/QuranTaha.ttf") format("truetype"),
+        url("/fonts/woff/QuranTaha.woff") format("woff"),
+        url("/fonts/woff2/QuranTaha.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.text-quran {
+    font-family: QuranTaha;
+    font-size: 1.1rem;
+}
+
+.quran-logo {
+    height: 50px;
+    width: 50px;
+    max-width: 100%;
+    background: url(quranLogo.png) center no-repeat;
+    background-size: contain;
+}

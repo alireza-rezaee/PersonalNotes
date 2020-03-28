@@ -1,0 +1,8 @@
+.modal-header .close {
+    margin-left: -1rem;
+    margin-right: auto;
+}
+
+.modal-footer > :not(:last-child) {
+    margin-left: .25rem;
+}

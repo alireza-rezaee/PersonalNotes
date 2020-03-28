@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\sass\**" />
+    <Content Remove="wwwroot\sass\**" />
+    <EmbeddedResource Remove="wwwroot\sass\**" />
+    <None Remove="wwwroot\sass\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\Migrations\20200112050259_AddOption.cs" />
     <Compile Remove="Data\Migrations\20200112050259_AddOption.Designer.cs" />
     <Compile Remove="Data\Migrations\20200112052410_InsertDefaultOptions.cs" />
@@ -34,6 +41,10 @@
     <Compile Remove="Data\Migrations\20200128065430_AddApplicationUser.Designer.cs" />
     <Compile Remove="Data\Migrations\20200128065704_AddApplicationUser.cs" />
     <Compile Remove="Data\Migrations\20200128065704_AddApplicationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328042052_InsrtDefaultOptions4.cs" />
+    <Compile Remove="Data\Migrations\20200328042052_InsrtDefaultOptions4.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328042228_InsertDefaultOptions4.cs" />
+    <Compile Remove="Data\Migrations\20200328042228_InsertDefaultOptions4.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +69,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

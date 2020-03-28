@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/4.4.1/css/bootstrap.css" />
         @*<link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />*@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -23,7 +23,6 @@
               asp-fallback-test-class="material-icons"
               asp-fallback-test-property="white-space"
               asp-fallback-test-value="nowrap" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @RenderSection("Head", required: false)
     <style>
@@ -31,7 +30,7 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper position-relative">
         @await Component.InvokeAsync("HeaderFooter", new { page = "HeadCover" })
         @RenderBody()
         @await Component.InvokeAsync("HeaderFooter", new { page = "FootCover" })

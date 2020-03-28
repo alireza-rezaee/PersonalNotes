@@ -58,14 +58,506 @@
                         @Html.Raw(HttpUtility.HtmlDecode(Model.AboutAuthorSummary))
                     </p>
                 </div>
-                <small class="d-block text-left mt-3">
-                    <a href="#">اطلاعات بیشتر</a>
-                </small>
+                <div class="text-left mt-3">
+                    <a href="#" class="small">اطلاعات بیشتر</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <h6 class="border-bottom border-gray pb-2 mb-0">مطالب پیشنهادی</h6>
+                <div class="media text-muted pt-3">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <span class="d-block text-gray-dark">
+                            <strong>
+                                آموزش دریافت و نصب پیشرفته ویژوال
+                                استدیو
+                            </strong>
+                        </span> در این مقاله به نصب محبوب ترین IDE توسعه نرم افزاری خواهیم پرداخت.
+                    </p>
+                </div>
+                <div class="media text-muted pt-3">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <span class="d-block text-gray-dark"><strong>کار مردم نیست؛ کار اشرار است</strong></span> بیانات رهبر انقلاب درباره مسائل پیش‌آمده پس از اجرای طرح مدیریت مصرف سوخت
+                    </p>
+                </div>
+                <div class="text-left mt-3">
+                    <a href="#" class="small">فهرست آخرین مطالب پیشنهادی</a>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 my-2">
+            <div class="row">
+                <div class="col-6">
+                    <button class="rounded border-0 d-block w-100 p-2 text-white small" style="background-image: linear-gradient(45deg, #18c, #045);" data-toggle="modal" data-target="#model-contact">
+                        ارسال پیام مستقیم
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="rounded border-0 d-block w-100 p-2 text-white small" style="background-image: linear-gradient(45deg, #83c, #45d);" data-toggle="modal" data-target="#model-order-request">
+                        ثبت سفارش
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="model-contact" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">
+                            ارتباط مستقیم
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="model-contact-email">رایانامه <small>(پست الکترونیکی)</small></label>
+                            <input type="email" class="form-control" id="model-contact-email">
+                            <small class="form-text text-muted">
+                                در صورتی که نیاز به پاسخ دارید رایانامه
+                                خود را وارد کنید.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="model-contact-content">متن پیام</label>
+                            <textarea class="form-control" id="model-contact-content" rows="3"></textarea>
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="g-recaptcha" data-sitekey="6Le4keMUAAAAAEUadm6KKSDjYtH40WL1d3kj8gRo" data-size="compact" style="display: inline-block;"></div>
+                            <input type="hidden" class="form-control" id="model-contact-email">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-primary">ارسال پیام</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="model-order-request" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">
+                            ثبت سفارش جدید
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <small class="form-text text-muted mb-2">
+                            پیش از تکمیل فرم رزومه علیرضا رضائی را مطالعه کنید.
+                        </small>
+                        <hr>
+                        <div class="form-group">
+                            <label for="model-contact-email">نام و نام خانوادگی</label>
+                            <input type="email" class="form-control" id="model-contact-email">
+                        </div>
+                        <div class="form-group">
+                            <label for="model-contact-email">شماره تماس</small></label>
+                            <input type="email" class="form-control" id="model-contact-email">
+                            <small class="form-text text-muted">
+                                برای برقراری ارتباط با شما مورد استفاده قرار می
+                                گیرد.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="model-contact-email">رایانامه <small>(پست الکترونیکی)</small></label>
+                            <input type="email" class="form-control" id="model-contact-email">
+                        </div>
+                        <div class="form-group">
+                            <label for="model-contact-content">شرح سفارش</label>
+                            <textarea class="form-control" id="model-contact-content" rows="3"></textarea>
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="g-recaptcha" data-sitekey="6Le4keMUAAAAAEUadm6KKSDjYtH40WL1d3kj8gRo" data-size="compact" style="display: inline-block;"></div>
+                            <input type="hidden" class="form-control" id="model-contact-email">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-primary">ثبت سفارش</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<!-- begin: مطالب سایت -->
+<div class="container my-5">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-12 post">
+                    <div class="row">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">ایران</strong>
+                            <h3 class="mb-0">کار مردم نیست؛ کار اشرار است</h3>
+                            <div class="mb-1 text-muted">۲۷ آبان</div>
+                            <p class="card-text mb-auto">بیانات رهبر انقلاب درباره مسائل پیش‌آمده پس از اجرای طرح مدیریت مصرف سوخت</p>
+                            <div class="text-left">
+                                <a href="#" class="stretched-link">
+                                    در ادامه بخوانید
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image1.jpg);">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <ul class="row m-0 p-0">
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                            </a>
+                        </li>
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-12 post">
+                    <div class="row">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-success">برنامه نویسی</strong>
+                            <h3 class="mb-0">آموزش دریافت و نصب پیشرفته ویژوال استدیو</h3>
+                            <div class="mb-1 text-muted">
+                                <span class="badge badge-pill badge-danger">امروز</span> ۱۶ آذر
+                            </div>
+                            <p class="mb-auto">
+                                در این مقاله به نصب محبوب ترین IDE توسعه نرم افزاری خواهیم پرداخت.
+                            </p>
+                            <div class="text-left">
+                                <a href="#" class="stretched-link">
+                                    در ادامه بخوانید
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image2.jpg);">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <ul class="row m-0 p-0">
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                            </a>
+                        </li>
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-12 post">
+                    <div class="row">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">ایران</strong>
+                            <h3 class="mb-0">کار مردم نیست؛ کار اشرار است</h3>
+                            <div class="mb-1 text-muted">۲۷ آبان</div>
+                            <p class="card-text mb-auto">بیانات رهبر انقلاب درباره مسائل پیش‌آمده پس از اجرای طرح مدیریت مصرف سوخت</p>
+                            <div class="text-left">
+                                <a href="#" class="stretched-link">
+                                    در ادامه بخوانید
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image1.jpg);">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <ul class="row m-0 p-0">
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                            </a>
+                        </li>
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-12 post">
+                    <div class="row">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-success">برنامه نویسی</strong>
+                            <h3 class="mb-0">آموزش دریافت و نصب پیشرفته ویژوال استدیو</h3>
+                            <div class="mb-1 text-muted">
+                                <span class="badge badge-pill badge-danger">امروز</span> ۱۶ آذر
+                            </div>
+                            <p class="mb-auto">
+                                در این مقاله به نصب محبوب ترین IDE توسعه نرم افزاری خواهیم پرداخت.
+                            </p>
+                            <div class="text-left">
+                                <a href="#" class="stretched-link">
+                                    در ادامه بخوانید
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image2.jpg);">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <ul class="row m-0 p-0">
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                            </a>
+                        </li>
+                        <li class="col-12 border-top small" style="background-color: #eee;">
+                            <a href="#" class="p-2 d-block text-nowrap overflow-hidden text-secondary" style="text-overflow: ellipsis;">
+                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="javascript:void(0)" class="btn btn-primary shadow" style="border-radius: 1rem;">
+            <i class="fas fa-stream fa-flip-horizontal"></i> ادامه مطالب
+        </a>
+    </div>
+
+</div>
+<!-- end: پایان مطالب سایت -->
+<!-- begin: پیوند های سایت -->
+<div class="container my-5">
+    <div class="row">
+        <div class="col mb-3">
+            <div class="d-inline-block py-1 px-3" style="border: 5px dotted lightskyblue; border-radius: 3rem;">
+                <div class="d-inline-block align-middle" style="background: url(/img/flower.png) no-repeat center; background-size: contain; width: 50px; height: 50px;">
+                </div>
+                پیوند ها
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-11">
+
+            <div class="row links rounded justify-content-center">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2 position-relative">
+                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/001-imam-khomeiniـir.jpg);">
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="http://www.imam-khomeini.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <i class="material-icons align-middle">language</i>
+                            </a>
+                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">دفتر حفظ و نشر آثار امام خمینی (ره)</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2 position-relative">
+                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/002-Khamenei.ir.jpg);">
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="http://farsi.khamenei.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <i class="material-icons align-middle">language</i>
+                            </a>
+                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">دفتر حفظ و نشر آثار آیت الله خامنه‌ای (مد‌ظله‌العالی)</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2 position-relative">
+                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/006-book-khamenei.ir.jpg);">
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="http://book-khamenei.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <i class="material-icons align-middle">language</i>
+                            </a>
+                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">انتشارات انقلاب اسلامی</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2 position-relative">
+                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/003-dolat.ir.jpg);">
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="http://president.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <i class="material-icons align-middle">language</i>
+                            </a>
+                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">پایگاه اطلاع رسانی دولت (پاد)</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2 position-relative">
+                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/004-parliran.ir.jpg);">
+
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="https://www.parliran.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <i class="material-icons align-middle">language</i>
+                            </a>
+                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">مجلس شورای اسلامی</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2 position-relative">
+                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/005-dadiran.ir.jpg);">
+
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="http://www.dadiran.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <i class="material-icons align-middle">language</i>
+                            </a>
+                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">قوه قضاییه جمهوری اسلامی ایران</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <a href="#" class="small">
+                        <i class="fas fa-external-link-square-alt"></i> مشاهده دیگر پیوند ها
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: پیوند های سایت -->
+<!-- begin: گلبانگ اذان -->
+<div class="container my-5">
+    <div class="row">
+        <div class="col mb-3 text-center">
+            <div class="d-inline-block py-1 px-3" style="border: 5px dotted lightskyblue; border-radius: 3rem;">
+                <div class="d-inline-block align-middle" style="background: url(/img/flower.png) no-repeat center; background-size: contain; width: 50px; height: 50px;">
+                </div>
+                گلبانگ
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="row text-muted justify-content-center">
+                <div class="col-9 col-sm-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">اذان صبح:</div>
+                                <div class="col text-left">۰۵:۲۹</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">طلوع:</div>
+                                <div class="col text-left">۰۶:۵۹</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">اذان ظهر:</div>
+                                <div class="col text-left">۱۱:۵۵</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">اذان عصر:</div>
+                                <div class="col text-left">۱۴:۳۲</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9 col-sm-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">غروب:</div>
+                                <div class="col text-left">۱۶:۵۱</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">اذان مغرب:</div>
+                                <div class="col text-left">۱۷:۱۱</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">عشا:</div>
+                                <div class="col text-left">۱۸:۰۱</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col text-right">نیمه شب:</div>
+                                <div class="col text-left">۲۳:۱۰</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-3">
+                    <div class="alert alert-success small" role="alert" style="border-radius: 1.5rem;">
+                        پيامبر اکرم (ص): دعا كليد رحمت، وضو كليد نماز و نماز كليد بهشت است. &nbsp;&nbsp; نهج الفصاحه، ح ۱۵۸۸
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!-- end: گلبانگ اذان -->
 
 
 @section Scripts {
@@ -111,10 +603,6 @@
     </environment>
     <script>
         $(document).ready(function () {
-            $("#gallery").lightGallery();
-            $('.js-peyvandha-compact').mCustomScrollbar({
-                axis: "x" // horizontal scrollbar
-            });
             jQuery("time.timeago").timeago();
         });
     </script>
