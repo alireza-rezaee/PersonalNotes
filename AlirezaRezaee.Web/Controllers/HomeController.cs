@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using AlirezaRezaee.Web.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Models.ViewModels;
+using AlirezaRezaee.Web.Models.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlirezaRezaee.Web.Controllers
@@ -30,9 +30,22 @@ namespace AlirezaRezaee.Web.Controllers
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
             return View(
-                new HomeIndexViewModel() {
+                new IndexViewModel() {
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
                     AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue
+                });
+        }
+
+        [Route("/about")]
+        public IActionResult About()
+        {
+            ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
+            ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
+
+            return View(
+                new AboutViewModel()
+                {
+                    AboutContent = _context.Options.First(i => i.OptionName == "AboutAuthor").OptionValue
                 });
         }
 

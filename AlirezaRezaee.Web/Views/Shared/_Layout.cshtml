@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-    <div class="wrapper position-relative">
+    <div class="wrapper position-relative" style="min-height: 100vh">
         @await Component.InvokeAsync("HeaderFooter", new { page = "HeadCover" })
         @RenderBody()
         @await Component.InvokeAsync("HeaderFooter", new { page = "FootCover" })

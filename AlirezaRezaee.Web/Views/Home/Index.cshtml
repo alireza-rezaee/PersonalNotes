@@ -1,5 +1,5 @@
 ﻿@using System.Web;
-@model AlirezaRezaee.Web.Models.ViewModels.HomeIndexViewModel
+@model AlirezaRezaee.Web.Models.ViewModels.Home.IndexViewModel
 @section Head {
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
@@ -59,7 +59,7 @@
                     </p>
                 </div>
                 <div class="text-left mt-3">
-                    <a href="#" class="small">اطلاعات بیشتر</a>
+                    <a asp-action="about" class="small">اطلاعات بیشتر</a>
                 </div>
             </div>
         </div>
@@ -487,34 +487,41 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col text-center small my-2">
+            توجه: دقت محاسبات ۳± دقیقه می باشد.
+        </div>
+    </div>
     <div class="row text-center justify-content-center">
         <div class="col-12 col-md-6">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-9 col-md-6 text-center small mb-2">
+                    <button class="d-block w-100 p-2 bg-white" style="border-radius:1rem; border: 1px dotted #269; color: #168" data-toggle="" data-target="">
+                        <span class="material-icons align-bottom" style="font-size: 20px;">place</span>
+                        <span id="prayer-location"></span>
+                        (تغییر)
+                    </button>
+                </div>
+            </div>
             <div class="row text-muted justify-content-center">
                 <div class="col-9 col-sm-6">
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right">اذان صبح:</div>
-                                <div class="col text-left">۰۵:۲۹</div>
+                                <div class="col text-right small">اذان صبح:</div>
+                                <div class="col text-left num-fa" id="prayer-imsaak">--:--</div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right">طلوع:</div>
-                                <div class="col text-left">۰۶:۵۹</div>
+                                <div class="col text-right small">طلوع آفتاب:</div>
+                                <div class="col text-left num-fa" id="prayer-sunrise">--:--</div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right">اذان ظهر:</div>
-                                <div class="col text-left">۱۱:۵۵</div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col text-right">اذان عصر:</div>
-                                <div class="col text-left">۱۴:۳۲</div>
+                                <div class="col text-right small">اذان ظهر:</div>
+                                <div class="col text-left num-fa" id="prayer-noon">--:--</div>
                             </div>
                         </div>
                     </div>
@@ -523,26 +530,20 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right">غروب:</div>
-                                <div class="col text-left">۱۶:۵۱</div>
+                                <div class="col text-right small">غروب خورشید:</div>
+                                <div class="col text-left num-fa" id="prayer-sunset">--:--</div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right">اذان مغرب:</div>
-                                <div class="col text-left">۱۷:۱۱</div>
+                                <div class="col text-right small">مغرب:</div>
+                                <div class="col text-left num-fa" id="prayer-maghreb">--:--</div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right">عشا:</div>
-                                <div class="col text-left">۱۸:۰۱</div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col text-right">نیمه شب:</div>
-                                <div class="col text-left">۲۳:۱۰</div>
+                                <div class="col text-right small">نیمه شب:</div>
+                                <div class="col text-left num-fa" id="prayer-midnight">--:--</div>
                             </div>
                         </div>
                     </div>
@@ -604,6 +605,26 @@
     <script>
         $(document).ready(function () {
             jQuery("time.timeago").timeago();
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://prayer.aviny.com/api/prayertimes/1",
+                    dataType: "json",
+                type: "GET",
+                success: function (data) {
+                    //$("#prayer-today").text("");
+                    $("#prayer-qamari").text(data.TodayQamari);
+                    $("#prayer-imsaak").text(data.Imsaak.substring(0, 5));
+                    $("#prayer-sunrise").text(data.Sunrise.substring(0, 5));
+                    $("#prayer-noon").text(data.Noon.substring(0, 5));
+                    $("#prayer-sunset").text(data.Sunset.substring(0, 5));
+                    $("#prayer-maghreb").text(data.Maghreb.substring(0, 5));
+                    $("#prayer-midnight").text(data.Midnight.substring(0, 5));
+                    $("#prayer-location").text(data.CountryName + " - " + data.CityName);
+
+                }
+            });
         });
     </script>
 }
