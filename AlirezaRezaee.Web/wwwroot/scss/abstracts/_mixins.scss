@@ -32,3 +32,6 @@
   }
 }
 
+@mixin rounded-oval($radius: 1rem) {
+    border-radius: $radius;
+}

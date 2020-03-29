@@ -16,11 +16,11 @@
     "inputFiles": [
       "wwwroot/lib/timeago/1.6.7/jquery.timeago.js"
     ]
-  },
-  {
-    "outputFileName": "wwwroot/css/main.min.css",
-    "inputFiles": [
-      "wwwroot/css/main.css"
-    ]
-  }
+  }//,
+  //{
+    //"outputFileName": "wwwroot/css/main.min.css",
+    //"inputFiles": [
+    //  "wwwroot/css/main.css"
+    //]
+  //}
 ]
