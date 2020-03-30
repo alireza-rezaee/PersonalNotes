@@ -8,8 +8,9 @@ using Microsoft.Extensions.Logging;
 using AlirezaRezaee.Web.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Models.ViewModels.Home;
+using AlirezaRezaee.Web.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using AlirezaRezaee.Web.Models.ViewModels.Links;
 
 namespace AlirezaRezaee.Web.Controllers
 {
@@ -29,10 +30,19 @@ namespace AlirezaRezaee.Web.Controllers
             ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
+            var wholeLinks = _context.LinksModel.OrderBy(link => link.Rank)
+                .Select(list => new IllustratedLinkViewModel { Title = list.Title, ImagePath = list.ImagePath, Url = list.Url })
+                .ToList();
+
+            var numberOfPrimaryLinks = int.Parse(_context.Options.First(i => i.OptionName == "NumberOfPrimaryLinks").OptionValue);
+            var illustratedLinks = wholeLinks.Where(link => !string.IsNullOrEmpty(link.ImagePath)).Take(numberOfPrimaryLinks).ToList();
+
             return View(
-                new IndexViewModel() {
+                new AlirezaRezaee.Web.Models.ViewModels.Home.IndexViewModel()
+                {
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
-                    AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue
+                    AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue,
+                    IllustratedLinks = illustratedLinks
                 });
         }
 
@@ -43,7 +53,7 @@ namespace AlirezaRezaee.Web.Controllers
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
             return View(
-                new AboutViewModel()
+                new Models.ViewModels.Home.AboutViewModel()
                 {
                     AboutContent = _context.Options.First(i => i.OptionName == "AboutAuthor").OptionValue
                 });

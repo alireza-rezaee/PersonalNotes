@@ -380,94 +380,26 @@
         <div class="col-11">
 
             <div class="row links rounded justify-content-center">
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="my-2 position-relative">
-                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/001-imam-khomeiniـir.jpg);">
-                        </div>
-                        <div class="d-flex links-content links-item">
-                            <a href="http://www.imam-khomeini.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <i class="material-icons align-middle">language</i>
-                            </a>
-                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">دفتر حفظ و نشر آثار امام خمینی (ره)</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="my-2 position-relative">
-                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/002-Khamenei.ir.jpg);">
-                        </div>
-                        <div class="d-flex links-content links-item">
-                            <a href="http://farsi.khamenei.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <i class="material-icons align-middle">language</i>
-                            </a>
-                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">دفتر حفظ و نشر آثار آیت الله خامنه‌ای (مد‌ظله‌العالی)</i>
-                            </a>
+                @foreach (var link in Model.IllustratedLinks)
+                {
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="my-2 position-relative">
+                            <div class="bg-danger rounded-top links-cover" style="background-image: url(@link.ImagePath);">
+                            </div>
+                            <div class="d-flex links-content links-item">
+                                <a href="@link.Url" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                    <i class="material-icons align-middle">language</i>
+                                </a>
+                                <a href="@link.Url" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                    <i class="caption">@link.Title</i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="my-2 position-relative">
-                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/006-book-khamenei.ir.jpg);">
-                        </div>
-                        <div class="d-flex links-content links-item">
-                            <a href="http://book-khamenei.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <i class="material-icons align-middle">language</i>
-                            </a>
-                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">انتشارات انقلاب اسلامی</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="my-2 position-relative">
-                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/003-dolat.ir.jpg);">
-                        </div>
-                        <div class="d-flex links-content links-item">
-                            <a href="http://president.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <i class="material-icons align-middle">language</i>
-                            </a>
-                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">پایگاه اطلاع رسانی دولت (پاد)</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="my-2 position-relative">
-                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/004-parliran.ir.jpg);">
+                }
 
-                        </div>
-                        <div class="d-flex links-content links-item">
-                            <a href="https://www.parliran.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <i class="material-icons align-middle">language</i>
-                            </a>
-                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">مجلس شورای اسلامی</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="my-2 position-relative">
-                        <div class="bg-danger rounded-top links-cover" style="background-image: url(/uploads/links/005-dadiran.ir.jpg);">
-
-                        </div>
-                        <div class="d-flex links-content links-item">
-                            <a href="http://www.dadiran.ir/" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <i class="material-icons align-middle">language</i>
-                            </a>
-                            <a href="javascript:void(0)" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">قوه قضاییه جمهوری اسلامی ایران</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-12 text-center mt-3">
-                    <a href="#" class="small">
+                    <a asp-controller="links" asp-action="index" class="small">
                         <i class="fas fa-external-link-square-alt"></i> مشاهده دیگر پیوند ها
                     </a>
                 </div>
@@ -536,7 +468,7 @@
                         </div>
                         <div class="col-12">
                             <div class="row">
-                                <div class="col text-right small">مغرب:</div>
+                                <div class="col text-right small">اذان مغرب:</div>
                                 <div class="col text-left num-fa" id="prayer-maghreb">--:--</div>
                             </div>
                         </div>

@@ -47,6 +47,8 @@
     <Compile Remove="Data\Migrations\20200328042228_InsertDefaultOptions4.Designer.cs" />
     <Compile Remove="Data\Migrations\20200328080441_InsertDefaultOptions5.cs" />
     <Compile Remove="Data\Migrations\20200328080441_InsertDefaultOptions5.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200329152019_م.cs" />
+    <Compile Remove="Data\Migrations\20200329152019_م.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,6 +17,8 @@ namespace AlirezaRezaee.Web.Data
 
         public DbSet<OptionModel> Options { get; set; }
 
-        public DbSet<UserAbout> Abouts { get; set; }
+        public DbSet<UserAboutModel> Abouts { get; set; }
+
+        public DbSet<LinksModel> LinksModel { get; set; }
     }
 }

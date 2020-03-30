@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AlirezaRezaee.Web.Models
 {
-    public class UserAbout
+    public class UserAboutModel
     {
         public int Id { get; set; }
 

@@ -4,14 +4,16 @@ using AlirezaRezaee.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200329151448_AddLinks")]
+    partial class AddLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,12 +123,10 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
@@ -153,7 +153,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.ToTable("Options");
                 });
 
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.UserAboutModel", b =>
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.UserAbout", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
