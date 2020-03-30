@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AlirezaRezaee.Web.Models
 {
-    public class LinksModel
+    public class Link
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

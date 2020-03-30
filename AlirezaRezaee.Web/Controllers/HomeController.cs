@@ -30,7 +30,7 @@ namespace AlirezaRezaee.Web.Controllers
             ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
-            var wholeLinks = _context.LinksModel.OrderBy(link => link.Rank)
+            var wholeLinks = _context.Links.OrderBy(link => link.Rank)
                 .Select(list => new IllustratedLinkViewModel { Title = list.Title, ImagePath = list.ImagePath, Url = list.Url })
                 .ToList();
 

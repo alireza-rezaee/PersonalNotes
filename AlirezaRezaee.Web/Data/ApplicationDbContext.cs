@@ -15,10 +15,14 @@ namespace AlirezaRezaee.Web.Data
         {
         }
 
-        public DbSet<OptionModel> Options { get; set; }
+        public DbSet<Option> Options { get; set; }
 
-        public DbSet<UserAboutModel> Abouts { get; set; }
+        public DbSet<UserAbout> Abouts { get; set; }
 
-        public DbSet<LinksModel> LinksModel { get; set; }
+        public DbSet<Link> Links { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace AlirezaRezaee.Web.Controllers
         // GET: Links
         public IActionResult Index()
         {
-            var wholeLinks = _context.LinksModel.OrderBy(link => link.Rank)
+            var wholeLinks = _context.Links.OrderBy(link => link.Rank)
                 .Select(list => new IllustratedLinkViewModel { Title = list.Title, ImagePath = list.ImagePath, Url = list.Url })
                 .ToList();
 
@@ -46,7 +46,7 @@ namespace AlirezaRezaee.Web.Controllers
                 return NotFound();
             }
 
-            var linksModel = await _context.LinksModel
+            var linksModel = await _context.Links
                 .FirstOrDefaultAsync(m => m.Rank == id);
             if (linksModel == null)
             {
@@ -67,7 +67,7 @@ namespace AlirezaRezaee.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Rank,Title,Url,ImagePath")] LinksModel linksModel)
+        public async Task<IActionResult> Create([Bind("Rank,Title,Url,ImagePath")] Link linksModel)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace AlirezaRezaee.Web.Controllers
                 return NotFound();
             }
 
-            var linksModel = await _context.LinksModel.FindAsync(id);
+            var linksModel = await _context.Links.FindAsync(id);
             if (linksModel == null)
             {
                 return NotFound();
@@ -99,7 +99,7 @@ namespace AlirezaRezaee.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(short id, [Bind("Rank,Title,Url,ImagePath")] LinksModel linksModel)
+        public async Task<IActionResult> Edit(short id, [Bind("Rank,Title,Url,ImagePath")] Link linksModel)
         {
             if (id != linksModel.Rank)
             {
@@ -137,7 +137,7 @@ namespace AlirezaRezaee.Web.Controllers
                 return NotFound();
             }
 
-            var linksModel = await _context.LinksModel
+            var linksModel = await _context.Links
                 .FirstOrDefaultAsync(m => m.Rank == id);
             if (linksModel == null)
             {
@@ -152,15 +152,15 @@ namespace AlirezaRezaee.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(short id)
         {
-            var linksModel = await _context.LinksModel.FindAsync(id);
-            _context.LinksModel.Remove(linksModel);
+            var linksModel = await _context.Links.FindAsync(id);
+            _context.Links.Remove(linksModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LinksModelExists(short id)
         {
-            return _context.LinksModel.Any(e => e.Rank == id);
+            return _context.Links.Any(e => e.Rank == id);
         }
     }
 }

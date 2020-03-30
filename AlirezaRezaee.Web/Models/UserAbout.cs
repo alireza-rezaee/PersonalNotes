@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace AlirezaRezaee.Web.Models
 {
-    public class OptionModel
+    public class UserAbout
     {
         public int Id { get; set; }
 
-        public string OptionName { get; set; }
+        public string Summary { get; set; }
 
-        public string OptionValue { get; set; }
+        public string Content { get; set; }
     }
 }
