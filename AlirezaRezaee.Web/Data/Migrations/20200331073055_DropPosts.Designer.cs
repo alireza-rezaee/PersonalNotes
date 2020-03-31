@@ -4,14 +4,16 @@ using AlirezaRezaee.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200331073055_DropPosts")]
+    partial class DropPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,7 +113,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ACategory", b =>
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,66 +126,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ACategories");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Article", b =>
-                {
-                    b.Property<int>("ArticleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("HtmlContent")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LatestUpdateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PublishDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SourcesUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Summmary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
-                    b.HasKey("ArticleId");
-
-                    b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ArticleCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ArticleCategory");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("AlirezaRezaee.Web.Models.Link", b =>
@@ -226,88 +169,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Options");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.SCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SCategories");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Share", b =>
-                {
-                    b.Property<int>("ShareId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LatestUpdateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PublishDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Summmary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ShareId");
-
-                    b.ToTable("Shares");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ShareCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShareId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("SCategoryId");
-
-                    b.HasIndex("ShareId");
-
-                    b.ToTable("ShareCategory");
                 });
 
             modelBuilder.Entity("AlirezaRezaee.Web.Models.UserAbout", b =>
@@ -461,44 +322,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ArticleCategory", b =>
-                {
-                    b.HasOne("AlirezaRezaee.Web.Models.Article", "Article")
-                        .WithMany("ArticleCategories")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AlirezaRezaee.Web.Models.ACategory", "Category")
-                        .WithMany("ArticleCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ShareCategory", b =>
-                {
-                    b.HasOne("AlirezaRezaee.Web.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AlirezaRezaee.Web.Models.ACategory", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AlirezaRezaee.Web.Models.SCategory", null)
-                        .WithMany("ShareCategories")
-                        .HasForeignKey("SCategoryId");
-
-                    b.HasOne("AlirezaRezaee.Web.Models.Share", null)
-                        .WithMany("ShareCategories")
-                        .HasForeignKey("ShareId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

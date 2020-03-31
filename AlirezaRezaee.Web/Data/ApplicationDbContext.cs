@@ -21,8 +21,14 @@ namespace AlirezaRezaee.Web.Data
 
         public DbSet<Link> Links { get; set; }
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
+        //Categories for Articles
+        public DbSet<ACategory> ACategories { get; set; }
+
+        public DbSet<Share> Shares { get; set; }
+
+        //Cateories for Share
+        public DbSet<SCategory> SCategories { get; set; }
     }
 }
