@@ -5,6 +5,7 @@ using AlirezaRezaee.Web.Areas.Identity.Data;
 using AlirezaRezaee.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AlirezaRezaee.Web.Models.ViewModels.Posts;
 
 namespace AlirezaRezaee.Web.Data
 {
@@ -23,12 +24,8 @@ namespace AlirezaRezaee.Web.Data
 
         public DbSet<Article> Articles { get; set; }
 
-        //Categories for Articles
-        public DbSet<ACategory> ACategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public DbSet<Share> Shares { get; set; }
-
-        //Cateories for Share
-        public DbSet<SCategory> SCategories { get; set; }
     }
 }

@@ -12,7 +12,5 @@ namespace AlirezaRezaee.Web.Models
 
         [Display(Name = "نشانی پیوند")]
         public string Url { get; set; }
-
-        public ICollection<ShareCategory> ShareCategories { get; set; }
     }
 }

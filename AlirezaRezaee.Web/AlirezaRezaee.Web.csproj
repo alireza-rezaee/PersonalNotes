@@ -55,6 +55,10 @@
     <Compile Remove="Data\Migrations\20200330184121_AddPostsl.Designer.cs" />
     <Compile Remove="Data\Migrations\20200331073024_RemovePosts.cs" />
     <Compile Remove="Data\Migrations\20200331073024_RemovePosts.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200331143741_test.cs" />
+    <Compile Remove="Data\Migrations\20200331143741_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200331143836_test.cs" />
+    <Compile Remove="Data\Migrations\20200331143836_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,6 +18,6 @@ namespace AlirezaRezaee.Web.Models
         public Article Article { get; set; }
 
         [ForeignKey("CategoryId")]
-        public ACategory Category { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlirezaRezaee.Web.Models
 {
-    public class SCategory
+    public class Category
     {
         public int Id { get; set; }
 
@@ -14,6 +14,6 @@ namespace AlirezaRezaee.Web.Models
         [Required(ErrorMessage = "انتخاب {0} برای دسته بندی الزامی است.")]
         public string Title { get; set; }
 
-        public ICollection<ShareCategory> ShareCategories { get; set; }
+        public ICollection<ArticleCategory> ArticleCategories { get; set; }
     }
 }
