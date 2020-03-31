@@ -168,7 +168,7 @@
                             <input type="email" class="form-control" id="model-contact-email">
                         </div>
                         <div class="form-group">
-                            <label for="model-contact-email">شماره تماس</small></label>
+                            <label for="model-contact-email">شماره تماس</label>
                             <input type="email" class="form-control" id="model-contact-email">
                             <small class="form-text text-muted">
                                 برای برقراری ارتباط با شما مورد استفاده قرار می
@@ -203,158 +203,45 @@
 <!-- begin: مطالب سایت -->
 <div class="container my-5">
     <div class="row mb-2">
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col-12 post">
-                    <div class="row">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-primary">ایران</strong>
-                            <h3 class="mb-0">کار مردم نیست؛ کار اشرار است</h3>
-                            <div class="mb-1 text-muted">۲۷ آبان</div>
-                            <p class="card-text mb-auto">بیانات رهبر انقلاب درباره مسائل پیش‌آمده پس از اجرای طرح مدیریت مصرف سوخت</p>
-                            <div class="text-left">
-                                <a href="#" class="stretched-link">
-                                    در ادامه بخوانید
-                                    <i class="fas fa-angle-double-left"></i>
-                                </a>
+        @foreach (var post in Model.Posts)
+        {
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-12 post">
+                        <div class="row">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary">@post.Category</strong>
+                                <h3 class="mb-0">@post.Title</h3>
+                                <div class="mb-1 text-muted">۲۷ آبان</div>
+                                <p class="card-text mb-auto">@post.Summmary</p>
+                                <div class="text-left">
+                                    <a href="@post.PostUrl" class="stretched-link">
+                                        در ادامه بخوانید
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image1.jpg);">
+                            <div class="col-auto post-image" style="background-image: url(@post.ImageUrl);">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
-                    <ul class="row m-0 p-0">
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                            </a>
-                        </li>
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col-12 post">
-                    <div class="row">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-success">برنامه نویسی</strong>
-                            <h3 class="mb-0">آموزش دریافت و نصب پیشرفته ویژوال استدیو</h3>
-                            <div class="mb-1 text-muted">
-                                <span class="badge badge-pill badge-danger">امروز</span> ۱۶ آذر
-                            </div>
-                            <p class="mb-auto">
-                                در این مقاله به نصب محبوب ترین IDE توسعه نرم افزاری خواهیم پرداخت.
-                            </p>
-                            <div class="text-left">
-                                <a href="#" class="stretched-link">
-                                    در ادامه بخوانید
-                                    <i class="fas fa-angle-double-left"></i>
+                    <div class="col-12">
+                        <ul class="row m-0 p-0">
+                            <li class="col-12 border-top small bg-light-gray">
+                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                    رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
                                 </a>
-                            </div>
-                        </div>
-                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image2.jpg);">
-                        </div>
+                            </li>
+                            <li class="col-12 border-top small bg-light-gray">
+                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                    اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-12">
-                    <ul class="row m-0 p-0">
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                            </a>
-                        </li>
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col-12 post">
-                    <div class="row">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-primary">ایران</strong>
-                            <h3 class="mb-0">کار مردم نیست؛ کار اشرار است</h3>
-                            <div class="mb-1 text-muted">۲۷ آبان</div>
-                            <p class="card-text mb-auto">بیانات رهبر انقلاب درباره مسائل پیش‌آمده پس از اجرای طرح مدیریت مصرف سوخت</p>
-                            <div class="text-left">
-                                <a href="#" class="stretched-link">
-                                    در ادامه بخوانید
-                                    <i class="fas fa-angle-double-left"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image1.jpg);">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <ul class="row m-0 p-0">
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                            </a>
-                        </li>
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col-12 post">
-                    <div class="row">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-success">برنامه نویسی</strong>
-                            <h3 class="mb-0">آموزش دریافت و نصب پیشرفته ویژوال استدیو</h3>
-                            <div class="mb-1 text-muted">
-                                <span class="badge badge-pill badge-danger">امروز</span> ۱۶ آذر
-                            </div>
-                            <p class="mb-auto">
-                                در این مقاله به نصب محبوب ترین IDE توسعه نرم افزاری خواهیم پرداخت.
-                            </p>
-                            <div class="text-left">
-                                <a href="#" class="stretched-link">
-                                    در ادامه بخوانید
-                                    <i class="fas fa-angle-double-left"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-auto post-image" style="background-image: url(/uploads/articles/post-image2.jpg);">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <ul class="row m-0 p-0">
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                            </a>
-                        </li>
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 
     <div class="text-center">
@@ -365,6 +252,8 @@
 
 </div>
 <!-- end: پایان مطالب سایت -->
+
+
 <!-- begin: پیوند های سایت -->
 <div class="container my-5">
     <div class="row">

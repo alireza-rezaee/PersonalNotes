@@ -11,6 +11,7 @@ using AlirezaRezaee.Web.Data;
 using AlirezaRezaee.Web.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using AlirezaRezaee.Web.Models.ViewModels.Links;
+using AlirezaRezaee.Web.Models.ViewModels.Posts;
 
 namespace AlirezaRezaee.Web.Controllers
 {
@@ -25,23 +26,54 @@ namespace AlirezaRezaee.Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
+            //<Posts>
+            var articlePosts = await _context.Articles.Select(article => new PostSummaryViewModel
+            {
+                Id = article.ArticleId,
+                Title = article.Title,
+                Summmary = article.Summmary,
+                PublishDateTime = article.PublishDateTime,
+                LatestUpdateDateTime = article.LatestUpdateDateTime,
+                ImageUrl = article.ImageUrl,
+                Category = article.ArticleCategories.First().Category.Title
+            }).OrderByDescending(article => article.LatestUpdateDateTime).ThenByDescending(article => article.PublishDateTime).Take(8).ToListAsync();
+
+            var sharePosts = await _context.Shares.Select(share => new PostSummaryViewModel
+            {
+                Id = share.ShareId,
+                Title = share.Title,
+                Summmary = share.Summmary,
+                PublishDateTime = share.PublishDateTime,
+                LatestUpdateDateTime = share.LatestUpdateDateTime,
+                ImageUrl = share.ImageUrl,
+                Category = "بازنشر",
+                PostUrl = share.Url
+            }).OrderByDescending(share => share.LatestUpdateDateTime).ThenByDescending(share => share.PublishDateTime).Take(8).ToListAsync();
+
+            articlePosts.AddRange(sharePosts);
+            //</Posts>
+
+            //<Links>
             var wholeLinks = _context.Links.OrderBy(link => link.Rank)
                 .Select(list => new IllustratedLinkViewModel { Title = list.Title, ImagePath = list.ImagePath, Url = list.Url })
                 .ToList();
 
             var numberOfPrimaryLinks = int.Parse(_context.Options.First(i => i.OptionName == "NumberOfPrimaryLinks").OptionValue);
             var illustratedLinks = wholeLinks.Where(link => !string.IsNullOrEmpty(link.ImagePath)).Take(numberOfPrimaryLinks).ToList();
+            //</Links>
+
 
             return View(
-                new AlirezaRezaee.Web.Models.ViewModels.Home.IndexViewModel()
+                new Models.ViewModels.Home.IndexViewModel()
                 {
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
                     AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue,
+                    Posts = articlePosts.OrderByDescending(post => post.LatestUpdateDateTime).ThenByDescending(post => post.PublishDateTime).Take(8).ToList(),
                     IllustratedLinks = illustratedLinks
                 });
         }

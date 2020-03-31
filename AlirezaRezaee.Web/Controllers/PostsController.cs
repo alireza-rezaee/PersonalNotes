@@ -47,5 +47,13 @@ namespace AlirezaRezaee.Web.Controllers
 
             return View(articlePosts.OrderByDescending(post => post.LatestUpdateDateTime).ThenByDescending(post => post.PublishDateTime).Take(8).ToList());
         }
+
+        [Route("/article/{Id}")]
+        [Route("/article/{Id}/{Title}")]
+        public async Task<IActionResult> ViewPost(int id, string title)
+        {
+            ViewData["Title"] = title;
+            return View(await _context.Articles.Where(article => article.ArticleId == id).FirstAsync());
+        }
     }
 }
