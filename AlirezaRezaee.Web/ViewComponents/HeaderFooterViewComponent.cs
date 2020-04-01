@@ -24,19 +24,20 @@ namespace AlirezaRezaee.Web.ViewComponents
             if (page == "HeadCover")
                 return View(page, new HeadCoverViewModel()
                 {
-                    FullName = (await options.FirstAsync(i => i.OptionName == "FullName")).OptionValue,
-                    AvatarPath_64px = (await options.FirstAsync(i => i.OptionName == "AvatarPath_64px")).OptionValue,
-                    AvatarPath_100px = (await options.FirstAsync(i => i.OptionName == "AvatarPath_100px")).OptionValue,
-                    AvatarPath_125px = (await options.FirstAsync(i => i.OptionName == "AvatarPath_125px")).OptionValue,
-                    AvatarPath_150px = (await options.FirstAsync(i => i.OptionName == "AvatarPath_150px")).OptionValue,
-                    IllustratedNamePath = (await options.FirstAsync(i => i.OptionName == "IllustratedNamePath")).OptionValue,
-                    CoverPath = (await options.FirstAsync(i => i.OptionName == "CoverPath")).OptionValue
+                    //ToDo: What if null FirstOrDefaultAsync();
+                    FullName = (await options.FirstOrDefaultAsync(i => i.OptionName == "FullName")).OptionValue,
+                    AvatarPath_64px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_64px")).OptionValue,
+                    AvatarPath_100px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_100px")).OptionValue,
+                    AvatarPath_125px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_125px")).OptionValue,
+                    AvatarPath_150px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_150px")).OptionValue,
+                    IllustratedNamePath = (await options.FirstOrDefaultAsync(i => i.OptionName == "IllustratedNamePath")).OptionValue,
+                    CoverPath = (await options.FirstOrDefaultAsync(i => i.OptionName == "CoverPath")).OptionValue
                 });
             else if (page == "FootCover")
             {
-                ViewData["FootNote"] = (await options.FirstAsync(i => i.OptionName == "SiteFootnote")).OptionValue;
+                ViewData["FootNote"] = (await options.FirstOrDefaultAsync(i => i.OptionName == "SiteFootnote")).OptionValue;
                 return View(page, new FootCoverViewModel() {
-                    SiteFootnote = (await options.FirstAsync(i => i.OptionName == "SiteFootnote")).OptionValue
+                    SiteFootnote = (await options.FirstOrDefaultAsync(i => i.OptionName == "SiteFootnote")).OptionValue
                 });
             }
 
