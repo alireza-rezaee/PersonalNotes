@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlirezaRezaee.Web.Helpers
 {
-    interface IFileManager
+    public interface IFileManager
     {
         void SaveFile(IFormFile file, string path);
 

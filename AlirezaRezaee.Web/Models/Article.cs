@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace AlirezaRezaee.Web.Models
         [Display(Name = "نشانی منبع")]
         public string SourcesUrl { get; set; }
 
+        public string CoverUrl { get; set; }
+
         public ICollection<ArticleCategory> ArticleCategories { get; set; }
+
     }
 }

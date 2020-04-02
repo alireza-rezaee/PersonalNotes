@@ -39,7 +39,7 @@ namespace AlirezaRezaee.Web.Controllers
                 Summmary = article.Summmary,
                 PublishDateTime = article.PublishDateTime,
                 LatestUpdateDateTime = article.LatestUpdateDateTime,
-                ImageUrl = article.ImageUrl,
+                ThumbnailUrl = article.ThumbnailUrl,
                 Category = article.ArticleCategories.First().Category.Title
             }).OrderByDescending(article => article.LatestUpdateDateTime).ThenByDescending(article => article.PublishDateTime).Take(8).ToListAsync();
 
@@ -50,7 +50,7 @@ namespace AlirezaRezaee.Web.Controllers
                 Summmary = share.Summmary,
                 PublishDateTime = share.PublishDateTime,
                 LatestUpdateDateTime = share.LatestUpdateDateTime,
-                ImageUrl = share.ImageUrl,
+                ThumbnailUrl = share.ThumbnailUrl,
                 Category = "بازنشر",
                 PostUrl = share.Url
             }).OrderByDescending(share => share.LatestUpdateDateTime).ThenByDescending(share => share.PublishDateTime).Take(8).ToListAsync();

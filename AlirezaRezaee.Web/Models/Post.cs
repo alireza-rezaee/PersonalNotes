@@ -18,13 +18,12 @@ namespace AlirezaRezaee.Web.Models
         [Required(ErrorMessage = "انتخاب {0} برای ارسالی الزامی است.")]
         public string Summmary { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ThumbnailUrl { get; set; }
 
         [Display(Name = "تاریخ انتشار")]
-        [Required]
         public DateTime PublishDateTime { get; set; }
 
         [Display(Name = "تاریخ به روز رسانی")]
-        public DateTime LatestUpdateDateTime { get; set; }
+        public DateTime? LatestUpdateDateTime { get; set; }
     }
 }

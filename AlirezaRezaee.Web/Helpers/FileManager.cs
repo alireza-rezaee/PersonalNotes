@@ -26,6 +26,7 @@ namespace AlirezaRezaee.Web.Helpers
         public void SaveFile(IFormFile file, string path)
         {
             var absolutePath = Path.Combine(_env.WebRootPath, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
 
             using (var fileStream = new FileStream(absolutePath, FileMode.Create))
             {

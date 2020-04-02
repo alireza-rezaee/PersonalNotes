@@ -4,14 +4,16 @@ using AlirezaRezaee.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200401164353_AlterPosts")]
+    partial class AlterPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,6 +126,9 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.Property<string>("HtmlContent")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("LatestUpdateDateTime")
                         .HasColumnType("datetime2");
 
@@ -137,9 +142,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
-
-                    b.Property<string>("ThumbnailUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -238,6 +240,9 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("LatestUpdateDateTime")
                         .HasColumnType("datetime2");
 
@@ -248,9 +253,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
-
-                    b.Property<string>("ThumbnailUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
