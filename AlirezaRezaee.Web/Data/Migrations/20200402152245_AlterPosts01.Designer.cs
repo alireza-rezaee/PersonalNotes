@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200402195944_RemoveExtraTables")]
-    partial class RemoveExtraTables
+    [Migration("20200402152245_AlterPosts01")]
+    partial class AlterPosts01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -149,7 +149,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasMaxLength(150);
 
                     b.Property<string>("UrlTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
@@ -268,7 +267,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 

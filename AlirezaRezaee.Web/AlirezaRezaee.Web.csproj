@@ -55,14 +55,28 @@
     <Compile Remove="Data\Migrations\20200330184121_AddPostsl.Designer.cs" />
     <Compile Remove="Data\Migrations\20200331073024_RemovePosts.cs" />
     <Compile Remove="Data\Migrations\20200331073024_RemovePosts.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200331123449_DropSCategoriesAndDropShareCategoryAndEditShare.cs" />
+    <Compile Remove="Data\Migrations\20200331123449_DropSCategoriesAndDropShareCategoryAndEditShare.Designer.cs" />
     <Compile Remove="Data\Migrations\20200331143741_test.cs" />
     <Compile Remove="Data\Migrations\20200331143741_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200331143836_test.cs" />
     <Compile Remove="Data\Migrations\20200331143836_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200401164353_AlterPosts.cs" />
+    <Compile Remove="Data\Migrations\20200401164353_AlterPosts.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200402155348_AlterPosts02.cs" />
+    <Compile Remove="Data\Migrations\20200402155348_AlterPosts02.Designer.cs" />
     <Compile Remove="Data\Migrations\20200402164003_test.cs" />
     <Compile Remove="Data\Migrations\20200402164003_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200402164059_AlterPosts03.cs" />
+    <Compile Remove="Data\Migrations\20200402164059_AlterPosts03.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200402195820_AlterPosts04.cs" />
+    <Compile Remove="Data\Migrations\20200402195820_AlterPosts04.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200402195944_RemoveExtraTables.cs" />
+    <Compile Remove="Data\Migrations\20200402195944_RemoveExtraTables.Designer.cs" />
     <Compile Remove="Data\Migrations\20200402201644_p.cs" />
     <Compile Remove="Data\Migrations\20200402201644_p.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200402201716_AlterPosts05.cs" />
+    <Compile Remove="Data\Migrations\20200402201716_AlterPosts05.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

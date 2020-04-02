@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AlirezaRezaee.Web.Data.Migrations
 {
-    public partial class DropSCategoriesAndDropShareCategoryAndEditShare : Migration
+    public partial class AlterPosts01 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +19,77 @@ namespace AlirezaRezaee.Web.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "SCategories");
+
+            migrationBuilder.DropColumn(
+                name: "ImageUrl",
+                table: "Shares");
+
+            migrationBuilder.DropColumn(
+                name: "Summmary",
+                table: "Shares");
+
+            migrationBuilder.DropColumn(
+                name: "ImageUrl",
+                table: "Articles");
+
+            migrationBuilder.DropColumn(
+                name: "Summmary",
+                table: "Articles");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "LatestUpdateDateTime",
+                table: "Shares",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Summary",
+                table: "Shares",
+                maxLength: 250,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ThumbnailUrl",
+                table: "Shares",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "UrlTitle",
+                table: "Shares",
+                maxLength: 150,
+                nullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "LatestUpdateDateTime",
+                table: "Articles",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AddColumn<string>(
+                name: "CoverUrl",
+                table: "Articles",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Summary",
+                table: "Articles",
+                maxLength: 250,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ThumbnailUrl",
+                table: "Articles",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "UrlTitle",
+                table: "Articles",
+                maxLength: 150,
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Categories",
@@ -49,6 +121,78 @@ namespace AlirezaRezaee.Web.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropColumn(
+                name: "Summary",
+                table: "Shares");
+
+            migrationBuilder.DropColumn(
+                name: "ThumbnailUrl",
+                table: "Shares");
+
+            migrationBuilder.DropColumn(
+                name: "UrlTitle",
+                table: "Shares");
+
+            migrationBuilder.DropColumn(
+                name: "CoverUrl",
+                table: "Articles");
+
+            migrationBuilder.DropColumn(
+                name: "Summary",
+                table: "Articles");
+
+            migrationBuilder.DropColumn(
+                name: "ThumbnailUrl",
+                table: "Articles");
+
+            migrationBuilder.DropColumn(
+                name: "UrlTitle",
+                table: "Articles");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "LatestUpdateDateTime",
+                table: "Shares",
+                type: "datetime2",
+                nullable: false,
+                oldClrType: typeof(DateTime),
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "ImageUrl",
+                table: "Shares",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Summmary",
+                table: "Shares",
+                type: "nvarchar(250)",
+                maxLength: 250,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "LatestUpdateDateTime",
+                table: "Articles",
+                type: "datetime2",
+                nullable: false,
+                oldClrType: typeof(DateTime),
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "ImageUrl",
+                table: "Articles",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Summmary",
+                table: "Articles",
+                type: "nvarchar(250)",
+                maxLength: 250,
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.CreateTable(
                 name: "ACategories",
