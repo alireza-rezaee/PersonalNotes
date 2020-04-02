@@ -12,7 +12,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "1000, 2"),
                     Title = table.Column<string>(maxLength: 150, nullable: false),
                     Summmary = table.Column<string>(maxLength: 250, nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
