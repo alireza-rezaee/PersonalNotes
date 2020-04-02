@@ -26,7 +26,8 @@ namespace AlirezaRezaee.Web.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Articles.Select(article =>
-                new ArticleSummary {
+                new ArticleSummary
+                {
                     ArticleId = article.ArticleId,
                     Title = article.Title,
                     Summary = article.Summary,
@@ -102,6 +103,12 @@ namespace AlirezaRezaee.Web.Controllers
 
                 try
                 {
+                    if (createViewModel.Article.UrlTitle == null)
+                        createViewModel.Article.UrlTitle = createViewModel.Article.Title;
+                    foreach (char c in Path.GetInvalidFileNameChars())
+                        createViewModel.Article.UrlTitle = createViewModel.Article.UrlTitle.Replace(c, '-');
+
+
                     createViewModel.Thumbnail.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
                     createViewModel.Cover.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
 
@@ -178,6 +185,12 @@ namespace AlirezaRezaee.Web.Controllers
                 {
                     try
                     {
+                        if (editViewModel.Article.UrlTitle == null)
+                            editViewModel.Article.UrlTitle = editViewModel.Article.Title;
+                        foreach (char c in Path.GetInvalidFileNameChars())
+                            editViewModel.Article.UrlTitle = editViewModel.Article.UrlTitle.Replace(c, '-');
+
+
                         editViewModel.Article.LatestUpdateDateTime = dateTime;
                         _context.Update(editViewModel.Article);
                         await _context.SaveChangesAsync();
@@ -195,6 +208,13 @@ namespace AlirezaRezaee.Web.Controllers
                     {
                         var randomNumber = new Random();
                         var imagePath = Path.Combine("uploads/images/", persianDateTime.ToString("yyyy/MM/dd"));
+
+
+                        if (editViewModel.Article.UrlTitle == null)
+                            editViewModel.Article.UrlTitle = editViewModel.Article.Title;
+                        foreach (char c in Path.GetInvalidFileNameChars())
+                            editViewModel.Article.UrlTitle = editViewModel.Article.UrlTitle.Replace(c, '-');
+
 
                         if (editViewModel.Thumbnail != null && editViewModel.Cover != null)
                         {

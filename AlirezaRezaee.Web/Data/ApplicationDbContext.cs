@@ -29,9 +29,5 @@ namespace AlirezaRezaee.Web.Data
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Share> Shares { get; set; }
-
-        public DbSet<AlirezaRezaee.Web.Models.ViewModels.Articles.ArticleSummary> ArticleSummary { get; set; }
-
-        public DbSet<AlirezaRezaee.Web.Models.ViewModels.Shares.ShareSummary> ShareSummary { get; set; }
     }
 }

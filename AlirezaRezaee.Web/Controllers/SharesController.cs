@@ -25,7 +25,8 @@ namespace AlirezaRezaee.Web.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Shares.Select(share =>
-                new ShareSummary { 
+                new ShareSummary
+                {
                     ShareId = share.ShareId,
                     Title = share.Title,
                     Summary = share.Summary,
@@ -100,6 +101,12 @@ namespace AlirezaRezaee.Web.Controllers
 
                 try
                 {
+                    if (createViewModel.Share.UrlTitle == null)
+                        createViewModel.Share.UrlTitle = createViewModel.Share.Title;
+                    foreach (char c in Path.GetInvalidFileNameChars())
+                        createViewModel.Share.UrlTitle = createViewModel.Share.UrlTitle.Replace(c, '-');
+
+
                     createViewModel.Thumbnail.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
 
                     var randomNumber = new Random();
@@ -173,6 +180,12 @@ namespace AlirezaRezaee.Web.Controllers
                 {
                     try
                     {
+                        if (editViewModel.Share.UrlTitle == null)
+                            editViewModel.Share.UrlTitle = editViewModel.Share.Title;
+                        foreach (char c in Path.GetInvalidFileNameChars())
+                            editViewModel.Share.UrlTitle = editViewModel.Share.UrlTitle.Replace(c, '-');
+
+
                         editViewModel.Share.LatestUpdateDateTime = dateTime;
                         _context.Update(editViewModel.Share);
                         await _context.SaveChangesAsync();
@@ -188,6 +201,12 @@ namespace AlirezaRezaee.Web.Controllers
                 {
                     try
                     {
+                        if (editViewModel.Share.UrlTitle == null)
+                            editViewModel.Share.UrlTitle = editViewModel.Share.Title;
+                        foreach (char c in Path.GetInvalidFileNameChars())
+                            editViewModel.Share.UrlTitle = editViewModel.Share.UrlTitle.Replace(c, '-');
+
+
                         var randomNumber = new Random();
                         var imagePath = Path.Combine("uploads/images/", persianDateTime.ToString("yyyy/MM/dd"));
 

@@ -4,14 +4,16 @@ using AlirezaRezaee.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200402195820_AlterPosts04")]
+    partial class AlterPosts04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,6 +149,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasMaxLength(150);
 
                     b.Property<string>("UrlTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
@@ -165,12 +168,17 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ArticleSummaryArticleId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
+
+                    b.HasIndex("ArticleSummaryArticleId");
 
                     b.HasIndex("CategoryId");
 
@@ -265,6 +273,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
@@ -289,6 +298,81 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Abouts");
+                });
+
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.ViewModels.Articles.ArticleSummary", b =>
+                {
+                    b.Property<int>("ArticleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("LatestUpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PublishDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("UrlTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.HasKey("ArticleId");
+
+                    b.ToTable("ArticleSummary");
+                });
+
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.ViewModels.Shares.ShareSummary", b =>
+                {
+                    b.Property<int>("ShareId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("LatestUpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PublishDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrlTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.HasKey("ShareId");
+
+                    b.ToTable("ShareSummary");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -433,6 +517,10 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("AlirezaRezaee.Web.Models.ViewModels.Articles.ArticleSummary", null)
+                        .WithMany("ArticleCategories")
+                        .HasForeignKey("ArticleSummaryArticleId");
 
                     b.HasOne("AlirezaRezaee.Web.Models.Category", "Category")
                         .WithMany("ArticleCategories")

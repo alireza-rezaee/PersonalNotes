@@ -13,6 +13,10 @@ namespace AlirezaRezaee.Web.Models
         [Required(ErrorMessage = "انتخاب {0} برای نوشتار الزامی است.")]
         public string Title { get; set; }
 
+        [Display(Name = "عنوان نشانی")]
+        [MaxLength(150, ErrorMessage = "رعایت سقف {1} کاراکتری {0} ارسالی الزامی است.")]
+        public string UrlTitle { get; set; }
+
         [Display(Name = "خلاصه")]
         [MaxLength(250, ErrorMessage = "رعایت سقف {1} کاراکتری {0} ارسالی الزامی است.")]
         [Required(ErrorMessage = "انتخاب {0} برای ارسالی الزامی است.")]

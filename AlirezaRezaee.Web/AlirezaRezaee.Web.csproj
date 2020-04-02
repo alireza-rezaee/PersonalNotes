@@ -61,6 +61,8 @@
     <Compile Remove="Data\Migrations\20200331143836_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200402164003_test.cs" />
     <Compile Remove="Data\Migrations\20200402164003_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200402201644_p.cs" />
+    <Compile Remove="Data\Migrations\20200402201644_p.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
