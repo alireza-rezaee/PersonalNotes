@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AlirezaRezaee.Web.Areas.Identity.Data;
+using AlirezaRezaee.Web.Services.Email;
+using AlirezaRezaee.Web.Helpers;
 
 namespace AlirezaRezaee.Web
 {
@@ -38,6 +40,9 @@ namespace AlirezaRezaee.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IFileManager, FileManager>();
+            services.AddTransient<ISiteEmailSender, SiteEmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

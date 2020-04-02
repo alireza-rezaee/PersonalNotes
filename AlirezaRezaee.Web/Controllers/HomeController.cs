@@ -36,23 +36,24 @@ namespace AlirezaRezaee.Web.Controllers
             {
                 Id = article.ArticleId,
                 Title = article.Title,
-                Summmary = article.Summmary,
+                Summary = article.Summary,
                 PublishDateTime = article.PublishDateTime,
                 LatestUpdateDateTime = article.LatestUpdateDateTime,
                 ThumbnailUrl = article.ThumbnailUrl,
-                Category = article.ArticleCategories.First().Category.Title
+                Category = article.ArticleCategories.First().Category.Title,
+                PostUrl = "articles/" + article.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + article.Title
             }).OrderByDescending(article => article.LatestUpdateDateTime).ThenByDescending(article => article.PublishDateTime).Take(8).ToListAsync();
 
             var sharePosts = await _context.Shares.Select(share => new PostSummaryViewModel
             {
                 Id = share.ShareId,
                 Title = share.Title,
-                Summmary = share.Summmary,
+                Summary = share.Summary,
                 PublishDateTime = share.PublishDateTime,
                 LatestUpdateDateTime = share.LatestUpdateDateTime,
                 ThumbnailUrl = share.ThumbnailUrl,
                 Category = "بازنشر",
-                PostUrl = share.Url
+                PostUrl = "shares/go/" + share.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + share.Title
             }).OrderByDescending(share => share.LatestUpdateDateTime).ThenByDescending(share => share.PublishDateTime).Take(8).ToListAsync();
 
             articlePosts.AddRange(sharePosts);

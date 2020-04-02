@@ -6,6 +6,8 @@ using AlirezaRezaee.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AlirezaRezaee.Web.Models.ViewModels.Posts;
+using AlirezaRezaee.Web.Models.ViewModels.Articles;
+using AlirezaRezaee.Web.Models.ViewModels.Shares;
 
 namespace AlirezaRezaee.Web.Data
 {
@@ -27,5 +29,9 @@ namespace AlirezaRezaee.Web.Data
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Share> Shares { get; set; }
+
+        public DbSet<AlirezaRezaee.Web.Models.ViewModels.Articles.ArticleSummary> ArticleSummary { get; set; }
+
+        public DbSet<AlirezaRezaee.Web.Models.ViewModels.Shares.ShareSummary> ShareSummary { get; set; }
     }
 }

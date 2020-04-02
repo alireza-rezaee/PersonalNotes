@@ -16,7 +16,7 @@ namespace AlirezaRezaee.Web.Models
         [Display(Name = "خلاصه")]
         [MaxLength(250, ErrorMessage = "رعایت سقف {1} کاراکتری {0} ارسالی الزامی است.")]
         [Required(ErrorMessage = "انتخاب {0} برای ارسالی الزامی است.")]
-        public string Summmary { get; set; }
+        public string Summary { get; set; }
 
         public string ThumbnailUrl { get; set; }
 

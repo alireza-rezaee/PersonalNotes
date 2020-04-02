@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlirezaRezaee.Web.Controllers
 {
-    [Route("s")]
     public class SharesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,15 +24,24 @@ namespace AlirezaRezaee.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            //ToDo: Select Filter
-            return View(await _context.Shares.ToListAsync());
+            return View(await _context.Shares.Select(share =>
+                new ShareSummary { 
+                    ShareId = share.ShareId,
+                    Title = share.Title,
+                    Summary = share.Summary,
+                    ThumbnailUrl = share.ThumbnailUrl,
+                    PublishDateTime = share.PublishDateTime,
+                    LatestUpdateDateTime = share.LatestUpdateDateTime,
+                    Url = share.Url
+                }).ToListAsync());
         }
 
-        [Route("{year}/(month}/{day}/{shareTitle}")]
+        [Route("shares/{year:int}/{month:int}/{day:int}/{shareTitle}")]
         public async Task<IActionResult> Details(int year, int month, int day, string shareTitle)
         {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
             var share = await _context.Shares
-                .Where(s => s.PublishDateTime.Year == year && s.PublishDateTime.Month == month && s.PublishDateTime.Day == day && s.Title == shareTitle)
+                .Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -43,11 +51,12 @@ namespace AlirezaRezaee.Web.Controllers
         }
 
         [HttpGet]
-        [Route("delete/{year}/(month}/{day}/{shareTitle}")]
+        [Route("shares/delete/{year:int}/{month:int}/{day:int}/{shareTitle}")]
         public async Task<IActionResult> Delete(int year, int month, int day, string shareTitle)
         {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
             var share = await _context.Shares
-                .Where(s => s.PublishDateTime.Year == year && s.PublishDateTime.Month == month && s.PublishDateTime.Day == day && s.Title == shareTitle)
+                .Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -58,11 +67,12 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("delete/{year}/(month}/{day}/{shareTitle}")]
+        [Route("shares/delete/{year:int}/{month:int}/{day:int}/{shareTitle}")]
         public async Task<IActionResult> DeleteDone(int year, int month, int day, string shareTitle)
         {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
             var share = await _context.Shares
-                .Where(s => s.PublishDateTime.Year == year && s.PublishDateTime.Month == month && s.PublishDateTime.Day == day && s.Title == shareTitle)
+                .Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -126,11 +136,12 @@ namespace AlirezaRezaee.Web.Controllers
         }
 
         [HttpGet]
-        [Route("edit/{year}/(month}/{day}/{shareTitle}")]
+        [Route("shares/edit/{year:int}/{month:int}/{day:int}/{shareTitle}")]
         public async Task<IActionResult> Edit(int year, int month, int day, string shareTitle)
         {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
             var share = await _context.Shares
-                .Where(s => s.PublishDateTime.Year == year && s.PublishDateTime.Month == month && s.PublishDateTime.Day == day && s.Title == shareTitle)
+                .Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -141,11 +152,12 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("edit/{year}/(month}/{day}/{shareTitle}")]
+        [Route("shares/edit/{year:int}/{month:int}/{day:int}/{shareTitle}")]
         public async Task<IActionResult> Edit(int year, int month, int day, string shareTitle, CreateEditViewModel editViewModel)
         {
+            var publishedDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
             var share = await _context.Shares
-                .Where(a => a.PublishDateTime.Year == year && a.PublishDateTime.Month == month && a.PublishDateTime.Day == day && a.Title == shareTitle)
+                .Where(a => a.PublishDateTime.Year == publishedDateTime.Year && a.PublishDateTime.Month == publishedDateTime.Month && a.PublishDateTime.Day == publishedDateTime.Day && a.Title == shareTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -208,6 +220,26 @@ namespace AlirezaRezaee.Web.Controllers
             }
 
             return View(editViewModel);
+        }
+
+        [Route("shares/go/{year:int}/{month:int}/{day:int}/{shareTitle}")]
+        public async Task<IActionResult> Go(int year, int month, int day, string shareTitle)
+        {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            //var sharedLink = await _context.Shares
+            //    .Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
+            //    .Select(share => share.Url)
+            //    .FirstOrDefaultAsync();
+
+            var sharedLink = await _context.Shares
+                .Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day /*&& s.Title == shareTitle*/)
+                //.Select(share => share.Url)
+                .FirstOrDefaultAsync();
+
+            if (sharedLink == null)
+                return NotFound();
+
+            return Redirect(sharedLink.Url);
         }
     }
 }
