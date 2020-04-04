@@ -38,13 +38,15 @@ namespace AlirezaRezaee.Web.Controllers
                 }).ToListAsync());
         }
 
-        [Route("articles/{year:int}/{month:int}/{day:int}/{articleTitle}")]
-        public async Task<IActionResult> Details(int year, int month, int day, string articleTitle)
+        [Route("articles/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleTitle}")]
+        [Route("{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleId:regex(^[[0-9]]+[[02468]]$)}/{articleTitle?}")]
+        public async Task<IActionResult> Details(int year, int month, int day, int? articleId, string articleTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-            //var dateTime = PersianDateTime.Parse($"1395/5/06").ToDateTime();
-            var article = await _context.Articles
-                .Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
+
+            var article = (articleId != null)
+                ? await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.ArticleId == articleId).FirstOrDefaultAsync()
+                : await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
                 .FirstOrDefaultAsync();
 
             if (article == null)
@@ -54,12 +56,14 @@ namespace AlirezaRezaee.Web.Controllers
         }
 
         [HttpGet]
-        [Route("articles/delete/{year:int}/{month:int}/{day:int}/{articleTitle}")]
-        public async Task<IActionResult> Delete(int year, int month, int day, string articleTitle)
+        [Route("articles/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleTitle}")]
+        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleId:regex(^[[0-9]]+[[02468]]$)}/{articleTitle?}")]
+        public async Task<IActionResult> Delete(int year, int month, int day, int? articleId, string articleTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-            var article = await _context.Articles
-                .Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
+            var article = (articleId != null)
+                ? await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.ArticleId == articleId).FirstOrDefaultAsync()
+                : await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
                 .FirstOrDefaultAsync();
 
             if (article == null)
@@ -70,12 +74,15 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("articles/delete/{year:int}/{month:int}/{day:int}/{articleTitle}")]
-        public async Task<IActionResult> DeleteDone(int year, int month, int day, string articleTitle)
+        [Route("articles/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleTitle}")]
+        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleId:regex(^[[0-9]]+[[02468]]$)}/{articleTitle?}")]
+        public async Task<IActionResult> DeleteDone(int year, int month, int day, int? articleId, string articleTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-            var article = await _context.Articles
-                .Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
+
+            var article = (articleId != null)
+                ? await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.ArticleId == articleId).FirstOrDefaultAsync()
+                : await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
                 .FirstOrDefaultAsync();
 
             if (article == null)
@@ -148,12 +155,15 @@ namespace AlirezaRezaee.Web.Controllers
         }
 
         [HttpGet]
-        [Route("articles/edit/{year:int}/{month:int}/{day:int}/{articleTitle}")]
-        public async Task<IActionResult> Edit(int year, int month, int day, string articleTitle)
+        [Route("articles/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleTitle}")]
+        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleId:regex(^[[0-9]]+[[02468]]$)}/{articleTitle?}")]
+        public async Task<IActionResult> Edit(int year, int month, int day, int? articleId, string articleTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-            var article = await _context.Articles
-                .Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
+
+            var article = (articleId != null)
+                ? await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.ArticleId == articleId).FirstOrDefaultAsync()
+                : await _context.Articles.Where(a => a.PublishDateTime.Year == dateTime.Year && a.PublishDateTime.Month == dateTime.Month && a.PublishDateTime.Day == dateTime.Day && a.Title == articleTitle)
                 .FirstOrDefaultAsync();
 
             if (article == null)
@@ -164,13 +174,15 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("articles/edit/{year:int}/{month:int}/{day:int}/{articleTitle}")]
-        public async Task<IActionResult> Edit(int year, int month, int day, string articleTitle, CreateEditViewModel editViewModel)
+        [Route("articles/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleTitle}")]
+        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{articleId:regex(^[[0-9]]+[[02468]]$)}/{articleTitle?}")]
+        public async Task<IActionResult> Edit(int year, int month, int day, int? articleId, string articleTitle, CreateEditViewModel editViewModel)
         {
             var publishedDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-            var article = await _context.Articles
-                .Where(a => a.PublishDateTime.Year == publishedDateTime.Year && a.PublishDateTime.Month == publishedDateTime.Month && a.PublishDateTime.Day == publishedDateTime.Day && a.Title == articleTitle)
-                .FirstOrDefaultAsync();
+
+            var article = (articleId != null)
+                ? await _context.Articles.Where(a => a.PublishDateTime.Year == publishedDateTime.Year && a.PublishDateTime.Month == publishedDateTime.Month && a.PublishDateTime.Day == publishedDateTime.Day && a.ArticleId == articleId).FirstOrDefaultAsync()
+                : await _context.Articles.Where(a => a.PublishDateTime.Year == publishedDateTime.Year && a.PublishDateTime.Month == publishedDateTime.Month && a.PublishDateTime.Day == publishedDateTime.Day && a.Title == articleTitle).FirstOrDefaultAsync();
 
             if (article == null)
                 return NotFound();

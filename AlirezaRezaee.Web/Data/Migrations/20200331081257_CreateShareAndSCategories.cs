@@ -45,7 +45,7 @@ namespace AlirezaRezaee.Web.Data.Migrations
                 columns: table => new
                 {
                     ShareId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1000, 3"),
+                        .Annotation("SqlServer:Identity", "1001, 2"),
                     Title = table.Column<string>(maxLength: 150, nullable: false),
                     Summmary = table.Column<string>(maxLength: 250, nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
