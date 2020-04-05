@@ -13,8 +13,8 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.HtmlContent)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HtmlContent)
+        <dd class="col-sm-10">
+            @Html.Raw(Model.HtmlContent)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SourcesUrl)

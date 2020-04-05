@@ -37,15 +37,15 @@ namespace AlirezaRezaee.Web.Controllers
                 }).ToListAsync());
         }
 
-        [Route("shares/details/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareTitle}")]
-        [Route("details/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareTitle?}")]
-        public async Task<IActionResult> Details(int year, int month, int day, int? shareId, string shareTitle)
+        [Route("shares/details/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareUrlTitle}")]
+        [Route("details/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareUrlTitle?}")]
+        public async Task<IActionResult> Details(int year, int month, int day, int? shareId, string shareUrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
             var share = (shareId != null)
                 ? await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.ShareId == shareId).FirstOrDefaultAsync()
-                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
+                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.UrlTitle == shareUrlTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -55,15 +55,15 @@ namespace AlirezaRezaee.Web.Controllers
         }
 
         [HttpGet]
-        [Route("shares/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareTitle}")]
-        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareTitle?}")]
-        public async Task<IActionResult> Delete(int year, int month, int day, int? shareId, string shareTitle)
+        [Route("shares/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareUrlTitle}")]
+        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareUrlTitle?}")]
+        public async Task<IActionResult> Delete(int year, int month, int day, int? shareId, string shareUrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
             var share = (shareId != null)
                 ? await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.ShareId == shareId).FirstOrDefaultAsync()
-                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
+                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.UrlTitle == shareUrlTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -74,15 +74,15 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("shares/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareTitle}")]
-        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareTitle?}")]
-        public async Task<IActionResult> DeleteDone(int year, int month, int day, int? shareId, string shareTitle)
+        [Route("shares/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareUrlTitle}")]
+        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareUrlTitle?}")]
+        public async Task<IActionResult> DeleteDone(int year, int month, int day, int? shareId, string shareUrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
             var share = (shareId != null)
                 ? await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.ShareId == shareId).FirstOrDefaultAsync()
-                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
+                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.UrlTitle == shareUrlTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -152,15 +152,15 @@ namespace AlirezaRezaee.Web.Controllers
         }
 
         [HttpGet]
-        [Route("shares/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareTitle}")]
-        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareTitle?}")]
-        public async Task<IActionResult> Edit(int year, int month, int day, int? shareId, string shareTitle)
+        [Route("shares/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareUrlTitle}")]
+        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareUrlTitle?}")]
+        public async Task<IActionResult> Edit(int year, int month, int day, int? shareId, string shareUrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
             var share = (shareId != null)
                 ? await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.ShareId == shareId).FirstOrDefaultAsync()
-                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
+                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.UrlTitle == shareUrlTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -171,15 +171,15 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("shares/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareTitle}")]
-        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareTitle?}")]
-        public async Task<IActionResult> Edit(int year, int month, int day, int? shareId, string shareTitle, CreateEditViewModel editViewModel)
+        [Route("shares/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareUrlTitle}")]
+        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareUrlTitle?}")]
+        public async Task<IActionResult> Edit(int year, int month, int day, int? shareId, string shareUrlTitle, CreateEditViewModel editViewModel)
         {
             var publishedDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
             var share = (shareId != null)
                 ? await _context.Shares.Where(s => s.PublishDateTime.Year == publishedDateTime.Year && s.PublishDateTime.Month == publishedDateTime.Month && s.PublishDateTime.Day == publishedDateTime.Day && s.ShareId == shareId).FirstOrDefaultAsync()
-                : await _context.Shares.Where(s => s.PublishDateTime.Year == publishedDateTime.Year && s.PublishDateTime.Month == publishedDateTime.Month && s.PublishDateTime.Day == publishedDateTime.Day && s.Title == shareTitle)
+                : await _context.Shares.Where(s => s.PublishDateTime.Year == publishedDateTime.Year && s.PublishDateTime.Month == publishedDateTime.Month && s.PublishDateTime.Day == publishedDateTime.Day && s.UrlTitle == shareUrlTitle)
                 .FirstOrDefaultAsync();
 
             if (share == null)
@@ -256,16 +256,16 @@ namespace AlirezaRezaee.Web.Controllers
             return View(editViewModel);
         }
 
-        [Route("shares/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareTitle}")]
-        [Route("{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareTitle?}")]
-        public async Task<IActionResult> GoToLink(int year, int month, int day, int? shareId, string shareTitle)
+        [Route("shares/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareUrlTitle}")]
+        [Route("{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{shareId:regex(^[[0-9]]+[[13579]]$)}/{shareUrlTitle?}")]
+        public async Task<IActionResult> GoToLink(int year, int month, int day, int? shareId, string shareUrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
             var sharedLink = (shareId != null)
                 ? await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.ShareId == shareId)
                 .Select(s => s.Url).FirstOrDefaultAsync()
-                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.Title == shareTitle)
+                : await _context.Shares.Where(s => s.PublishDateTime.Year == dateTime.Year && s.PublishDateTime.Month == dateTime.Month && s.PublishDateTime.Day == dateTime.Day && s.UrlTitle == shareUrlTitle)
                 .Select(s => s.Url).FirstOrDefaultAsync();
 
             if (string.IsNullOrEmpty(sharedLink))
