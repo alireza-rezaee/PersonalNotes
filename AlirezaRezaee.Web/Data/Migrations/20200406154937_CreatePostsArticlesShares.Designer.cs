@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200402152245_AlterPosts01")]
-    partial class AlterPosts01
+    [Migration("20200406154937_CreatePostsArticlesShares")]
+    partial class CreatePostsArticlesShares
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,10 +115,8 @@ namespace AlirezaRezaee.Web.Data.Migrations
 
             modelBuilder.Entity("AlirezaRezaee.Web.Models.Article", b =>
                 {
-                    b.Property<int>("ArticleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CoverUrl")
                         .HasColumnType("nvarchar(max)");
@@ -126,73 +124,12 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.Property<string>("HtmlContent")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LatestUpdateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PublishDateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("SourcesUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ThumbnailUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
-                    b.Property<string>("UrlTitle")
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
-                    b.HasKey("ArticleId");
+                    b.HasKey("PostId");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ArticleCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ArticleCategory");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("AlirezaRezaee.Web.Models.Link", b =>
@@ -237,9 +174,9 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.ToTable("Options");
                 });
 
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Share", b =>
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.Post", b =>
                 {
-                    b.Property<int>("ShareId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -263,14 +200,24 @@ namespace AlirezaRezaee.Web.Data.Migrations
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UrlTitle")
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
-                    b.HasKey("ShareId");
+                    b.HasKey("Id");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.Share", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RedirectToUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PostId");
 
                     b.ToTable("Shares");
                 });
@@ -428,17 +375,20 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.ArticleCategory", b =>
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.Article", b =>
                 {
-                    b.HasOne("AlirezaRezaee.Web.Models.Article", "Article")
-                        .WithMany("ArticleCategories")
-                        .HasForeignKey("ArticleId")
+                    b.HasOne("AlirezaRezaee.Web.Models.Post", "Post")
+                        .WithOne("Article")
+                        .HasForeignKey("AlirezaRezaee.Web.Models.Article", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("AlirezaRezaee.Web.Models.Category", "Category")
-                        .WithMany("ArticleCategories")
-                        .HasForeignKey("CategoryId")
+            modelBuilder.Entity("AlirezaRezaee.Web.Models.Share", b =>
+                {
+                    b.HasOne("AlirezaRezaee.Web.Models.Post", "Post")
+                        .WithOne("Share")
+                        .HasForeignKey("AlirezaRezaee.Web.Models.Share", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

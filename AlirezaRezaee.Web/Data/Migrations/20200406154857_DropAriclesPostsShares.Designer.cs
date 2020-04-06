@@ -4,14 +4,16 @@ using AlirezaRezaee.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlirezaRezaee.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200406154857_DropAriclesPostsShares")]
+    partial class DropAriclesPostsShares
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,25 +113,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Article", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CoverUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HtmlContent")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SourcesUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PostId");
-
-                    b.ToTable("Articles");
-                });
-
             modelBuilder.Entity("AlirezaRezaee.Web.Models.Link", b =>
                 {
                     b.Property<short>("Rank")
@@ -170,54 +153,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Options");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("LatestUpdateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PublishDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ThumbnailUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
-                    b.Property<string>("UrlTitle")
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Share", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RedirectToUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PostId");
-
-                    b.ToTable("Shares");
                 });
 
             modelBuilder.Entity("AlirezaRezaee.Web.Models.UserAbout", b =>
@@ -371,24 +306,6 @@ namespace AlirezaRezaee.Web.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Article", b =>
-                {
-                    b.HasOne("AlirezaRezaee.Web.Models.Post", "Post")
-                        .WithOne("Article")
-                        .HasForeignKey("AlirezaRezaee.Web.Models.Article", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AlirezaRezaee.Web.Models.Share", b =>
-                {
-                    b.HasOne("AlirezaRezaee.Web.Models.Post", "Post")
-                        .WithOne("Share")
-                        .HasForeignKey("AlirezaRezaee.Web.Models.Share", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

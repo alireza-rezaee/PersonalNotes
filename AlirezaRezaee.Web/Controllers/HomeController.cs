@@ -12,6 +12,7 @@ using AlirezaRezaee.Web.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using AlirezaRezaee.Web.Models.ViewModels.Links;
 using AlirezaRezaee.Web.Models.ViewModels.Posts;
+using AlirezaRezaee.Web.Helpers.Enums;
 
 namespace AlirezaRezaee.Web.Controllers
 {
@@ -32,31 +33,40 @@ namespace AlirezaRezaee.Web.Controllers
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
             //<Posts>
-            var articlePosts = await _context.Articles.Select(article => new PostSummaryViewModel
+            var posts = new List<PostSummaryViewModel>();
+            foreach (var post in await _context.Posts.Include(p=>p.Article).Include(p=>p.Share).OrderByDescending(p => p.PublishDateTime).Take(8).ToListAsync())
             {
-                Id = article.ArticleId,
-                Title = article.Title,
-                Summary = article.Summary,
-                PublishDateTime = article.PublishDateTime,
-                LatestUpdateDateTime = article.LatestUpdateDateTime,
-                ThumbnailUrl = article.ThumbnailUrl,
-                Category = article.ArticleCategories.First().Category.Title,
-                PostUrl = article.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + article.ArticleId + "/" + article.UrlTitle
-            }).OrderByDescending(article => article.LatestUpdateDateTime).ThenByDescending(article => article.PublishDateTime).Take(8).ToListAsync();
-
-            var sharePosts = await _context.Shares.Select(share => new PostSummaryViewModel
-            {
-                Id = share.ShareId,
-                Title = share.Title,
-                Summary = share.Summary,
-                PublishDateTime = share.PublishDateTime,
-                LatestUpdateDateTime = share.LatestUpdateDateTime,
-                ThumbnailUrl = share.ThumbnailUrl,
-                Category = "بازنشر",
-                PostUrl = share.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + share.ShareId + "/" + share.UrlTitle
-            }).OrderByDescending(share => share.LatestUpdateDateTime).ThenByDescending(share => share.PublishDateTime).Take(8).ToListAsync();
-
-            articlePosts.AddRange(sharePosts);
+                var postType = DetectPostType(post);
+                switch (postType)
+                {
+                    case PostType.Article:
+                        posts.Add(new PostSummaryViewModel
+                        {
+                            Title = post.Title,
+                            Type = PostType.Article,
+                            PublishDateTime = post.PublishDateTime,
+                            LatestUpdateDateTime = post.LatestUpdateDateTime,
+                            Summary = post.Summary,
+                            ThumbnailUrl = post.ThumbnailUrl,
+                            PostUrl = post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.UrlTitle}"
+                        });
+                        break;
+                    case PostType.Share:
+                        posts.Add(new PostSummaryViewModel
+                        {
+                            Title = post.Title,
+                            Type = PostType.Share,
+                            PublishDateTime = post.PublishDateTime,
+                            LatestUpdateDateTime = post.LatestUpdateDateTime,
+                            Summary = post.Summary,
+                            ThumbnailUrl = post.ThumbnailUrl,
+                            PostUrl = post.Share.RedirectToUrl
+                        });
+                        break;
+                    default:
+                        continue; //نباید تحت هیچ عنوان به اینجا وارد بشه، باید تدابیری اندیشه بشه که اگر چنین اتفاقی افتاد مدیر سایت باخبر بشه، از طریق ایمیل یا لاگ انداختن
+                }
+            }
             //</Posts>
 
             //<Links>
@@ -74,7 +84,7 @@ namespace AlirezaRezaee.Web.Controllers
                 {
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
                     AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue,
-                    Posts = articlePosts.OrderByDescending(post => post.LatestUpdateDateTime).ThenByDescending(post => post.PublishDateTime).Take(8).ToList(),
+                    Posts = posts,
                     IllustratedLinks = illustratedLinks
                 });
         }
@@ -101,6 +111,17 @@ namespace AlirezaRezaee.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private PostType? DetectPostType(Models.Post post)
+        {
+            if ((post.Article == null && post.Share == null) || (post.Article != null && post.Share != null))
+                return null;
+
+            if (post.Article != null)
+                return PostType.Article;
+            else // if (post.Share != null)
+                return PostType.Share;
         }
     }
 }
