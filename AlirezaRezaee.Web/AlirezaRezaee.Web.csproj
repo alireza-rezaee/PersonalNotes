@@ -125,6 +125,8 @@
     <Compile Remove="Data\Migrations\20200406154529_CreatePostsArticlesShares.Designer.cs" />
     <Compile Remove="Data\Migrations\20200406162441_AlterSharesPostsArticles.cs" />
     <Compile Remove="Data\Migrations\20200406162441_AlterSharesPostsArticles.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200408121203_test.cs" />
+    <Compile Remove="Data\Migrations\20200408121203_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -34,7 +34,7 @@ namespace AlirezaRezaee.Web.Controllers
 
             //<Posts>
             var posts = new List<PostSummaryViewModel>();
-            foreach (var post in await _context.Posts.Include(p=>p.Article).Include(p=>p.Share).OrderByDescending(p => p.PublishDateTime).Take(8).ToListAsync())
+            foreach (var post in await _context.Posts.Include(p => p.Article).Include(p => p.Share).OrderByDescending(p => p.PublishDateTime).Take(8).ToListAsync())
             {
                 var postType = DetectPostType(post);
                 switch (postType)
@@ -48,7 +48,7 @@ namespace AlirezaRezaee.Web.Controllers
                             LatestUpdateDateTime = post.LatestUpdateDateTime,
                             Summary = post.Summary,
                             ThumbnailUrl = post.ThumbnailUrl,
-                            PostUrl = post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.UrlTitle}"
+                            PostUrl = post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Article.UrlTitle}"
                         });
                         break;
                     case PostType.Share:

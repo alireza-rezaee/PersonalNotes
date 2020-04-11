@@ -23,14 +23,15 @@ namespace AlirezaRezaee.Web.Helpers
                 File.Delete(absolutePath);
         }
 
-        public void SaveFile(IFormFile file, string path)
+        public async Task SaveFile(IFormFile file, string path)
         {
-            var absolutePath = Path.Combine(_env.WebRootPath, path);
+            var absolutePath = Path.GetFullPath(path, _env.WebRootPath);
+
             Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
 
             using (var fileStream = new FileStream(absolutePath, FileMode.Create))
             {
-                file.CopyTo(fileStream);
+                await file.CopyToAsync(fileStream);
             }
         }
     }

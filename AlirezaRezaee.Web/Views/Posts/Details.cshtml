@@ -1,0 +1,89 @@
+﻿@using System
+@using static AlirezaRezaee.Web.Extensions.IntExtensions
+@model AlirezaRezaee.Web.Models.Post
+
+@{
+    Layout = "_PostLayout";
+    ViewData["Title"] = Model.Title;
+
+    var Avatar = new
+    {
+        x150 = "/uploads/profile/avatar-150x.jpg",
+        x125 = "/uploads/profile/avatar-125x.jpg",
+        x100 = "/uploads/profile/avatar-100x.jpg",
+        x64 = "/uploads/profile/avatar-64x.jpg"
+    };
+
+
+    var fullName = "علیرضا رضائی";
+
+    var postUrl = Model.PublishDateTime.ToPersianDateTime().ToString("/yyyy/MM/dd/") + $"{Model.Id}/{Model.Article.UrlTitle}";
+
+
+    var postDate = Model.LatestUpdateDateTime == null ? Model.PublishDateTime : Model.LatestUpdateDateTime;
+    var persianPostDate = postDate.Value.ToPersianDateTime();
+}
+
+<div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px); height: 45vh">
+    <div id="hnav-besm" class="mx-auto py-2"></div>
+    <div class="container h-100 text-right">
+        <div class="cover h-100 rounded-top" style="background-image: url(@Model.Article.CoverUrl);"></div>
+        <nav id="hnav" style="padding-right: 0;">
+            <div class="d-inline-block" style="background-color: #08c; color: white; line-height: 3; padding-left: 10px; padding-right: 10px; border-right: 5px solid #006293;">
+                یادداشت
+            </div>
+            <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
+                <div class="mr-auto position-relative">
+                    <button type="button"
+                            class="btn btn-default h-100 d-block d-sm-none material-icons nav-shortcuts-trigger" id="js-nav-shortcuts-trigger">
+                        menu
+                    </button>
+                    <ul class="d-none d-sm-flex align-items-center pr-0 nav-shortcuts" id="js-nav-shortcuts">
+                        <li class="d-block"><a asp-controller="home" asp-action="index" class="material-icons p-2">home</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">create</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">camera</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">people</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">message</a></li>
+                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">notifications</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div style="height: 1px;"></div>
+
+<div class="container">
+    <a href="@postUrl" class="d-block text-center text-dark font-weight-bold text-decoration-none mb-3 rounded" style="line-height: 3; color: #006293; font-size: 1.5rem; background-color: #eee;">
+        @Model.Title
+    </a>
+
+    <div class="text-center text-muted small mb-3 pb-2" style="border-bottom: 1px solid #eee;">
+        <span class="mx-2">
+            <img src="@Avatar.x64" alt="@fullName" class="rounded-circle" style="width: 25px;" />
+        </span>
+        •
+        <time class="mx-2" datetime="@postDate">
+            @persianPostDate.Day.EnglishToPersian()
+            @persianPostDate.MonthName
+            @persianPostDate.Year.EnglishToPersian()
+        </time>
+        •
+        <span class="mx-2">
+            زمان مطالعه: ۳ دقیقه
+        </span>
+    </div>
+
+    <div class="text-left dir-ltr">
+        <div class="d-flex border rounded-oval mb-4 overflow-hidden text-nowrap small" style="height:30px; width: 210px;">
+            <div class="d-block h-100 material-icons px-2 align-middle border-right" style="line-height: 1.5; font-size: 18px; width: 40px">
+                insert_link
+            </div>
+            <div class="d-block align-middle text-muted text-center w-100" style="line-height: 2.2">
+                https://go.rezaee.org/abcde
+            </div>
+        </div>
+    </div>
+
+    @Html.Raw(Model.Article.HtmlContent)
+</div>

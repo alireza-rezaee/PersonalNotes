@@ -1,0 +1,67 @@
+﻿@model IEnumerable<AlirezaRezaee.Web.Models.ViewModels.Posts.PostSummaryViewModel>
+
+@{
+    ViewData["Title"] = "ارسالی ها";
+}
+
+<div class="container my-5">
+    <div class="row links rounded justify-content-center mb-3">
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="my-2 position-relative">
+                <div class="d-flex links-content links-item">
+                    <a asp-controller="posts" asp-action="Create" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                        <i class="material-icons align-middle">language</i>
+                    </a>
+                    <a asp-controller="posts" asp-action="Create" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                        <i class="caption">ارسال مطلب جدید</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mb-2">
+        @foreach (var post in Model)
+        {
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-12 post">
+                        <div class="row">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
+                                <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
+                                <div class="mb-1 text-muted">۲۷ آبان</div>
+                                <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
+                                <div class="text-left">
+                                    <a href="@post.PostUrl" class="stretched-link">
+                                        در ادامه بخوانید
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <ul class="row m-0 p-0">
+                            <li class="col-12 border-top small bg-light-gray">
+                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                    رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                                </a>
+                            </li>
+                            <li class="col-12 border-top small bg-light-gray">
+                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                    اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

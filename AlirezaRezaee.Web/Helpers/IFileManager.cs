@@ -8,7 +8,7 @@ namespace AlirezaRezaee.Web.Helpers
 {
     public interface IFileManager
     {
-        void SaveFile(IFormFile file, string path);
+        Task SaveFile(IFormFile file, string path);
 
         void DeleteFile(string path);
     }

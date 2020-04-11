@@ -46,5 +46,7 @@ namespace AlirezaRezaee.Web.Data
                     .HasForeignKey<Share>(s => s.PostId);
             });
         }
+
+        public DbSet<AlirezaRezaee.Web.Models.ViewModels.Posts.PostSummaryViewModel> PostSummaryViewModel { get; set; }
     }
 }

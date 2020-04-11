@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "مطلب جدید";
+}
+
+<div class="container my-5">
+    <div class="row links rounded justify-content-center mb-3" style="margin-top: 5rem;">
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="my-2 position-relative">
+                <div class="d-flex links-content links-item">
+                    <a asp-controller="posts" asp-action="CreateArticle" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                        <i class="material-icons align-middle">language</i>
+                    </a>
+                    <a asp-controller="posts" asp-action="CreateArticle" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                        <i class="caption">افزودن مقاله</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="my-2 position-relative">
+                <div class="d-flex links-content links-item">
+                    <a asp-controller="posts" asp-action="CreateShare" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                        <i class="material-icons align-middle">language</i>
+                    </a>
+                    <a asp-controller="posts" asp-action="CreateShare" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                        <i class="caption">بازنشر رسانه</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
