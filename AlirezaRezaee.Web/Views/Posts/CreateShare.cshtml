@@ -1,9 +1,8 @@
 ﻿@using System
 @using static AlirezaRezaee.Web.Extensions.IntExtensions
-@model AlirezaRezaee.Web.Models.ViewModels.Posts.CreateEditArticlePostViewModel
+@model AlirezaRezaee.Web.Models.ViewModels.Posts.CreateEditSharePostViewModel
 @{
-    Layout = "_PostLayout";
-    ViewData["Title"] = "مقاله جدید";
+    ViewData["Title"] = "بازنشر رسانه";
 
     var Avatar = new
     {
@@ -46,43 +45,8 @@
         });
     </script>
 }
-
-<form asp-controller="Posts" asp-action="CreatingArticle" enctype="multipart/form-data">
-    <div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px); height: 45vh">
-        <div id="hnav-besm" class="mx-auto py-2"></div>
-        <div class="container h-100 text-right">
-            <label asp-for="CoverImage" id="CoverImage-preview" class="btn cover h-100 w-100 rounded-top border border-danger cursor-pointer mb-1 d-flex justify-content-center align-items-center bg-size-cover bg-no-repeat" style="background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px);">
-                <span class="badge badge-secondary">
-                    محل نمایش تصویر جلد
-                </span>
-            </label>
-            <input type="file" class="d-none" asp-for="CoverImage" id="CoverImage" />
-            <nav id="hnav" style="padding-right: 0;">
-                <div class="d-inline-block" style="background-color: #08c; color: white; line-height: 3; padding-left: 10px; padding-right: 10px; border-right: 5px solid #006293;">
-                    یادداشت
-                </div>
-                <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
-                    <div class="mr-auto position-relative">
-                        <button type="button"
-                                class="btn btn-default h-100 d-block d-sm-none material-icons nav-shortcuts-trigger" id="js-nav-shortcuts-trigger">
-                            menu
-                        </button>
-                        <ul class="d-none d-sm-flex align-items-center pr-0 nav-shortcuts" id="js-nav-shortcuts">
-                            <li class="d-block"><a asp-controller="home" asp-action="index" class="material-icons p-2">home</a></li>
-                            <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">create</a></li>
-                            <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">camera</a></li>
-                            <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">people</a></li>
-                            <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">message</a></li>
-                            <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">notifications</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <div style="height: 1px;"></div>
-
-    <div class="container">
+<form asp-controller="Posts" asp-action="CreatingShare" enctype="multipart/form-data">
+    <div class="container mt-3">
         <div class="row">
             <div class="col">
                 <input asp-for="Post.Title" class="form-control text-center mb-3" placeholder="عنوانی وارد کنید" style="line-height: 3; color: #006293; font-size: 1.5rem;">
@@ -95,13 +59,15 @@
                 <input type="text" id="post-publish-datepicker" class="form-control text-center" placeholder="@persianPostDate.ToString("dd MMMM yyyy").EnglishToPersian()" readonly>
                 <input type="hidden" asp-for="Post.PublishDateTime" id="post-publish-date" class="form-control text-center" value="@DateTime.Now">
             </div>
-            <div class="col-12 col-md-4 text-center my-1 my-md-0">
-                <input type="number" class="form-control text-center" placeholder="زمان مطالعه (دقیقه)" min="1">
-            </div>
         </div>
 
-        <label asp-for="Article.HtmlContent" class="my-2">محتوا:</label>
-        <textarea asp-for="Article.HtmlContent"></textarea>
+
+        <div class="row">
+            <div class="col">
+                <label asp-for="Share.RedirectToUrl" class="my-2">نشانی پیوند:</label>
+                <input asp-for="Share.RedirectToUrl" class="form-control text-left mb-3 dir-ltr" placeholder="https://wwww.example.com" style="color: #006293;">
+            </div>
+        </div>
 
         <div class="row mt-5">
             <div class="col-12 col-md-6 my-3">
@@ -127,7 +93,7 @@
                 انصراف
             </button>
             <button type="submit" class="btn btn-primary">
-                ارسال مقاله
+                ارسال بازنشر
             </button>
         </div>
     </div>
@@ -151,7 +117,5 @@
                 URL.revokeObjectURL(preview.src);
             }
         });
-
-
     </script>
 }

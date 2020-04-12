@@ -169,6 +169,7 @@ namespace AlirezaRezaee.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -188,7 +189,8 @@ namespace AlirezaRezaee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateEditArticlePostViewModel createPostVM)
+        [Route("posts/create/article")]
+        public async Task<IActionResult> CreatingArticle(CreateEditArticlePostViewModel createPostVM)
         {
             if (ModelState.IsValid)
             {
@@ -229,12 +231,13 @@ namespace AlirezaRezaee.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(createPostVM);
+            return View(nameof(CreateArticle), createPostVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateShare(CreateEditSharePostViewModel createShareVM)
+        [Route("posts/create/share")]
+        public async Task<IActionResult> CreatingShare(CreateEditSharePostViewModel createPostVM)
         {
             if (ModelState.IsValid)
             {
@@ -243,21 +246,19 @@ namespace AlirezaRezaee.Web.Controllers
 
                 try
                 {
-                    createShareVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
+                    createPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
 
-                    var thumbnailPath = Path.Combine(
-                        "uploads/images/",
-                        persianDateTime.ToString("yyyy/MM/dd"),
-                        persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999) + "-" + createShareVM.ThumbnailImage.FileName);
+                    var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{ValidateName(createPostVM.ThumbnailImage.FileName)}";
 
-                    _ifileManager.SaveFile(createShareVM.ThumbnailImage, thumbnailPath);
+                    await _ifileManager.SaveFile(createPostVM.ThumbnailImage, thumbnailPath);
 
-                    createShareVM.Post.ThumbnailUrl = thumbnailPath;
+                    createPostVM.Post.ThumbnailUrl = $"/{thumbnailPath}";
 
-                    createShareVM.Post.PublishDateTime = dateTime;
+                    createPostVM.Post.PublishDateTime = dateTime;
 
-                    createShareVM.Share.Post = createShareVM.Post;
-                    _context.Add(createShareVM.Share);
+                    createPostVM.Share.Post = createPostVM.Post;
+
+                    _context.Add(createPostVM.Share);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -268,7 +269,7 @@ namespace AlirezaRezaee.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(createShareVM);
+            return View(nameof(CreateShare), createPostVM);
         }
 
         [HttpGet]
