@@ -72,6 +72,10 @@ namespace AlirezaRezaee.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapControllerRoute(
+                //    name: "EditArticle",
+                //    pattern: "edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}");
+
                 endpoints.MapRazorPages();
             });
         }

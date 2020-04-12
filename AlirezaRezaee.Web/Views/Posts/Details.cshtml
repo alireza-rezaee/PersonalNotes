@@ -72,6 +72,10 @@
         <span class="mx-2">
             زمان مطالعه: ۳ دقیقه
         </span>
+        •
+        <button type="button" class="btn btn-sm btn-light text-secondary material-icons align-middle" data-toggle="modal" data-target="#modal-post-settings">
+            settings
+        </button>
     </div>
 
     <div class="text-left dir-ltr">
@@ -86,4 +90,18 @@
     </div>
 
     @Html.Raw(Model.Article.HtmlContent)
+</div>
+
+<div class="modal fade" id="modal-post-settings" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="m-1">
+                <a href="/edit/@persianPostDate.Year/@persianPostDate.Month/@persianPostDate.Day/@Model.Id/@Model.Title" class="btn btn-block btn-primary">ویرایش و اصلاح مقاله</a>
+                <a href="javascript:void(0)" class="btn btn-block btn-secondary">تغییر نوع ارسالی</a>
+                <a asp-controller="Posts" asp-action="Delete" class="btn btn-block btn-danger">حذف مقاله</a>
+                <hr />
+                <button data-dismiss="modal" class="btn btn-block btn-warning">انصراف</button>
+            </div>
+        </div>
+    </div>
 </div>
