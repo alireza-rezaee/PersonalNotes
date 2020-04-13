@@ -24,5 +24,7 @@ namespace AlirezaRezaee.Web.Models.ViewModels.Posts
         public PostType Type { get; set; }
 
         public string PostUrl { get; set; }
+
+        public string PostEditUrl { get; set; }
     }
 }

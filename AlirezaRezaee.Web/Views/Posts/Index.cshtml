@@ -25,42 +25,68 @@
     <div class="row mb-2">
         @foreach (var post in Model)
         {
-            <div class="col-md-6">
-                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col-12 post">
-                        <div class="row">
-                            <div class="col p-4 d-flex flex-column position-static">
-                                <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
-                                <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
-                                <div class="mb-1 text-muted">۲۷ آبان</div>
-                                <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
-                                <div class="text-left">
-                                    <a href="@post.PostUrl" class="stretched-link">
-                                        در ادامه بخوانید
-                                        <i class="fas fa-angle-double-left"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-12 post">
+                    <div class="row">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
+                            <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
+                            <div class="mb-1 text-muted">۲۷ آبان</div>
+                            <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
+                            <div class="text-left">
+                                <a href="@post.PostUrl" class="stretched-link">
+                                    در ادامه بخوانید
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <ul class="row m-0 p-0">
-                            <li class="col-12 border-top small bg-light-gray">
-                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                    رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                                </a>
-                            </li>
-                            <li class="col-12 border-top small bg-light-gray">
-                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                    اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
+                        </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <ul class="row m-0 p-0">
+                        <li class="col-12 border-top small bg-light-gray">
+                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                            </a>
+                        </li>
+                        <li class="col-12 border-top small bg-light-gray">
+                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            @if (post.Type != null)
+            {
+                <div class="dropdown position-absolute" style="left:0; top:0; z-index: 99;">
+                    <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
+                        more_horiz
+                    </button>
+                    @if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Article)
+                    {
+                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                            <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
+                            <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
+                            <a href="#" class="dropdown-item">تغییر نوع ارسالی</a>
+                            <a href="#" class="dropdown-item">حذف مقاله</a>
+                        </div>
+                    }
+                    else if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Share)
+                    {
+                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                            <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
+                            <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
+                            <a href="#" class="dropdown-item">تغییر نوع ارسالی</a>
+                            <a href="#" class="dropdown-item">حذف پیوند</a>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
         }
     </div>
 
