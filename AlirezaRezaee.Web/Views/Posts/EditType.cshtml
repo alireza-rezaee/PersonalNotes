@@ -1,0 +1,27 @@
+﻿@model IEnumerable<AlirezaRezaee.Web.Models.ViewModels.Posts.SwitchPostTypeViewModel>
+@{
+    ViewData["Title"] = "تغییر نوع ارسالی";
+}
+
+<div class="container my-5">
+    <div class="row links rounded justify-content-center mb-3" style="margin-top: 5rem;">
+
+        @foreach (var postType in Model)
+        {
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2 position-relative">
+                    <div class="d-flex links-content links-item">
+                        <a href="@postType.SwitchUrl" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                            <i class="material-icons align-middle">language</i>
+                        </a>
+                        <a href="@postType.SwitchUrl" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                            <i class="caption">@postType.PostTypeName</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

@@ -25,69 +25,149 @@
     <div class="row mb-2">
         @foreach (var post in Model)
         {
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col-12 post">
-                    <div class="row">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
-                            <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
-                            <div class="mb-1 text-muted">۲۷ آبان</div>
-                            <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
-                            <div class="text-left">
-                                <a href="@post.PostUrl" class="stretched-link">
-                                    در ادامه بخوانید
-                                    <i class="fas fa-angle-double-left"></i>
-                                </a>
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-12 post">
+                        <div class="row">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
+                                <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
+                                <div class="mb-1 text-muted">۲۷ آبان</div>
+                                <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
+                                <div class="text-left">
+                                    <a href="@post.PostUrl" class="stretched-link">
+                                        در ادامه بخوانید
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
                             </div>
                         </div>
-                        <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
+                    </div>
+                    <div class="col-12">
+                        <ul class="row m-0 p-0">
+                            <li class="col-12 border-top small bg-light-gray">
+                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                    رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
+                                </a>
+                            </li>
+                            <li class="col-12 border-top small bg-light-gray">
+                                <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                    اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                @if (post.Type != null)
+                {
+                    <div class="dropdown position-absolute" style="left:0; top:0; z-index: 99;">
+                        <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
+                            more_horiz
+                        </button>
+                        @if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Article)
+                        {
+                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
+                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
+                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مقاله" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مقاله</button>
+                            </div>
+                        }
+                        else if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Share)
+                        {
+                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
+                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
+                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modals -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal-delete-post">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="alert alert-danger alert-dismissible fade show" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+                <strong class="font-weight-bold">هشدار:</strong>
+                <span class="modal-post-type"></span>
+                انتخاب شده برای همیشه حدف خواهد شد. آیا از این کار اطمینان دارید؟
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="mb-3">
+                <div class="container">
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col-12 post">
+                            <div class="row">
+                                <div class="col p-4 d-flex flex-column position-static">
+                                    <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
+                                    <h3 class="mb-0 modal-post-title"></h3>
+                                    <div class="mb-1 text-muted modal-post-datetime"></div>
+                                    <p class="card-text mb-auto modal-post-summary"></p>
+                                    <div class="text-left">
+                                        <a href="javascript:void(0)" class="modal-post-show">
+                                            مشاهده
+                                            <span class="modal-post-type"></span>
+                                            <i class="fas fa-angle-double-left"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto post-image modal-post-thumbnail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 my-1 my-md-0">
+                            <button class="btn btn-warning btn-block" data-dismiss="modal">
+                                انصراف
+                            </button>
+                        </div>
+                        <div class="col-12 col-md-6 my-1 my-md-0">
+                            <form method="post">
+                                <button type="submit" class="btn btn-danger btn-block">
+                                    حذف نهایی
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <ul class="row m-0 p-0">
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                            </a>
-                        </li>
-                        <li class="col-12 border-top small bg-light-gray">
-                            <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
-            @if (post.Type != null)
-            {
-                <div class="dropdown position-absolute" style="left:0; top:0; z-index: 99;">
-                    <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
-                        more_horiz
-                    </button>
-                    @if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Article)
-                    {
-                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                            <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
-                            <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
-                            <a href="#" class="dropdown-item">تغییر نوع ارسالی</a>
-                            <a href="#" class="dropdown-item">حذف مقاله</a>
-                        </div>
-                    }
-                    else if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Share)
-                    {
-                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                            <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
-                            <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
-                            <a href="#" class="dropdown-item">تغییر نوع ارسالی</a>
-                            <a href="#" class="dropdown-item">حذف پیوند</a>
-                        </div>
-                    }
-                </div>
-            }
         </div>
-        }
     </div>
-
 </div>
+
+@section Scripts {
+    <script>
+        $('#modal-delete-post').on('show.bs.modal', function (event) {
+            var trigger = $(event.relatedTarget);
+            var type = trigger.data('type');
+            var title = trigger.data('title');
+            var summary = trigger.data('summary');
+            var thumbnailUrl = trigger.data('thumbnail');
+            var postUrl = trigger.data('url');
+            var dateTime = trigger.data('datetime');
+            var deleteAction = trigger.data('deleteAction');
+
+            var modal = $(this);
+            modal.find('form').attr('action', deleteAction);
+            console.log(dateTime);
+            modal.find('.modal-post-datetime').text(dateTime);
+            modal.find('.modal-post-type').text(type);
+            modal.find('.modal-post-title').html(title);
+            modal.find('.modal-post-summary').html(summary);
+            modal.find('.modal-post-thumbnail').css('background-image', "url('" + thumbnailUrl + "')");
+            modal.find('.modal-post-show').attr('href', postUrl)
+            modal.find('.modal-post-datetime').text(dateTime);
+        });
+    </script>
+}

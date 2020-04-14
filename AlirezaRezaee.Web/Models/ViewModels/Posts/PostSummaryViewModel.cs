@@ -21,10 +21,14 @@ namespace AlirezaRezaee.Web.Models.ViewModels.Posts
 
         public DateTime? LatestUpdateDateTime { get; set; }
 
-        public PostType Type { get; set; }
+        public PostType? Type { get; set; }
 
         public string PostUrl { get; set; }
 
         public string PostEditUrl { get; set; }
+
+        public string postDeleteUrl { get; set; }
+
+        public string postEditTypeUrl { get; set; }
     }
 }

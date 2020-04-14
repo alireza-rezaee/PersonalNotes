@@ -50,7 +50,9 @@ namespace AlirezaRezaee.Web.Controllers
                             Summary = post.Summary,
                             ThumbnailUrl = post.ThumbnailUrl,
                             PostUrl = post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Article.UrlTitle}",
-                            PostEditUrl = "edit/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Article.UrlTitle}"
+                            PostEditUrl = "edit/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Article.UrlTitle}",
+                            postDeleteUrl = "delete/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Article.UrlTitle}",
+                            postEditTypeUrl = "edit/type/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Article.UrlTitle}"
                         });
                         break;
                     case PostType.Share:
@@ -64,7 +66,9 @@ namespace AlirezaRezaee.Web.Controllers
                             Summary = post.Summary,
                             ThumbnailUrl = post.ThumbnailUrl,
                             PostUrl = post.Share.RedirectToUrl,
-                            PostEditUrl = "edit/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + post.Id
+                            PostEditUrl = "edit/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + post.Id,
+                            postDeleteUrl = "delete/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + post.Id,
+                            postEditTypeUrl = "edit/type/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + post.Id
                         });
                         break;
                     default:
@@ -74,10 +78,24 @@ namespace AlirezaRezaee.Web.Controllers
             return View(posts);
         }
 
-        private async Task<PostType?> DetectPostType(int postId)
+        private async Task<PostType> DetectPostType(int postId)
         {
             var post = await _context.Posts.Where(p => p.Id == postId).Select(p => new { p.Article, p.Share }).FirstOrDefaultAsync();
 
+            if (post == null)
+                throw new Exception("در مرحله تشخیص نوع مطلب، نوعی برای مطلب یافت نشد.");
+
+            if ((post.Article == null && post.Share == null) || (post.Article != null && post.Share != null))
+                throw new Exception("در مرحله تشخیص نوع مطلب، بیش از یک نوع برای مطلب یافت شد.");
+
+            if (post.Article != null)
+                return PostType.Article;
+            else // if (post.Share != null)
+                return PostType.Share;
+        }
+
+        private PostType? DetectPostType(Post post)
+        {
             if (post == null)
                 return null;
 
@@ -102,73 +120,21 @@ namespace AlirezaRezaee.Web.Controllers
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-            var postType = DetectPostType(postId).Result;
-
-            if (postType == null) //Because this will check existance too
-                return NotFound();
-
-            if (postType == PostType.Article)
-                return View(await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).FirstOrDefaultAsync());
-            else if (postType == PostType.Share)
-                return Redirect(await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).Select(p => p.Share.RedirectToUrl).FirstOrDefaultAsync());
-            else
-                return NotFound();
-        }
-
-        [HttpGet]
-        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
-        public async Task<IActionResult> Delete(int year, int month, int day, int postId, string UrlTitle)
-        {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-
-            var postType = DetectPostType(postId).Result;
-
-            if (postType == null) //Because this will check existance too
-                return NotFound();
-
-            if (postType == PostType.Article)
-                return View(await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).FirstOrDefaultAsync());
-            else if (postType == PostType.Share)
-                return Redirect(await _context.Posts.Include(p => p.Share).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).Select(p => p.Share.RedirectToUrl).FirstOrDefaultAsync());
-            else
-                return NotFound();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
-        public async Task<IActionResult> DeleteDone(int year, int month, int day, int postId, string UrlTitle)
-        {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-
-            var postType = DetectPostType(postId).Result;
-
-            if (postType == null) //Because this will check existance too
-                return NotFound();
-
-            if (postType == PostType.Article)
+            try
             {
-                var post = await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).FirstOrDefaultAsync();
+                var postType = await DetectPostType(postId);
 
-                _ifileManager.DeleteFile(post.ThumbnailUrl);
-                _ifileManager.DeleteFile(post.Article.CoverUrl);
-
-                _context.Remove(post.Article);
-                _context.Remove(post);
-                await _context.SaveChangesAsync();
+                if (postType == PostType.Article)
+                    return View(await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).FirstOrDefaultAsync());
+                else if (postType == PostType.Share)
+                    return Redirect(await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).Select(p => p.Share.RedirectToUrl).FirstOrDefaultAsync());
             }
-            else if (postType == PostType.Share)
+            catch (Exception)
             {
-                var post = await _context.Posts.Include(p => p.Article).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).FirstOrDefaultAsync();
-
-                _ifileManager.DeleteFile(post.ThumbnailUrl);
-
-                _context.Remove(post.Share);
-                _context.Remove(post);
-                await _context.SaveChangesAsync();
+                throw; //نمایش صفحه خطا
             }
 
-            return RedirectToAction(nameof(Index));
+            return NotFound();
         }
 
         [HttpGet]
@@ -302,10 +268,13 @@ namespace AlirezaRezaee.Web.Controllers
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-            var post = await _context.Posts.Include(p => p.Article).Where(p => p.PublishDateTime.Year == dateTime.Year && p.PublishDateTime.Month == dateTime.Month && p.PublishDateTime.Day == dateTime.Day && p.Id == postId).FirstOrDefaultAsync();
+            var post = await _context.Posts.Include(p => p.Article).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
 
             if (post == null)
                 return NotFound();
+
+            if (post.Article == null)
+                post.Article = new Article();
 
             return View(new CreateEditArticlePostViewModel
             {
@@ -319,9 +288,11 @@ namespace AlirezaRezaee.Web.Controllers
         [Route("edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> EditArticle(CreateEditArticlePostViewModel editPostVM, int year, int month, int day, int postId, string UrlTitle)
         {
-            var previousPost = await _context.Posts.Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.Share).AsNoTracking().FirstOrDefaultAsync();
+            var publishDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            var previousPost = await _context.Posts.Where(p => p.PublishDateTime.Date == publishDateTime && p.Id == postId).Include(p => p.Article).Include(p => p.Share).AsNoTracking().FirstOrDefaultAsync();
             if (previousPost == null)
                 return NotFound();
+            var previousType = DetectPostType(previousPost);
 
             if (ModelState.IsValid)
             {
@@ -342,10 +313,14 @@ namespace AlirezaRezaee.Web.Controllers
                     if (editPostVM.CoverImage != null)
                     {
                         var coverPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{ValidateName(editPostVM.CoverImage.FileName)}";
-                        _ifileManager.DeleteFile(previousPost.Article.CoverUrl);
+
+                        if (previousType == PostType.Article)
+                            _ifileManager.DeleteFile(previousPost.Article.CoverUrl);
+
                         await _ifileManager.SaveFile(editPostVM.CoverImage, coverPath);
                         editPostVM.Article.CoverUrl = $"/{coverPath}";
                     }
+                    else if (previousType != PostType.Share) throw new Exception("مرحله ذخیره سازی مقاله به دلیل عدم انتخاب تصویر جلد با خطا رو به رو شد.");
                     else editPostVM.Article.CoverUrl = previousPost.Article.CoverUrl;
 
                     if (editPostVM.ThumbnailImage != null)
@@ -357,14 +332,21 @@ namespace AlirezaRezaee.Web.Controllers
                     }
                     else editPostVM.Post.ThumbnailUrl = previousPost.ThumbnailUrl;
 
-                    if (previousPost.Share != null) _context.Remove(previousPost.Share);
-
                     editPostVM.Post.LatestUpdateDateTime = dateTime;
-                    editPostVM.Article.PostId = postId;
                     editPostVM.Post.Id = postId;
-                    editPostVM.Post.Article = editPostVM.Article;
+                    editPostVM.Article.Post = editPostVM.Post;
 
-                    _context.Update(editPostVM.Post);
+                    if (previousType != PostType.Article)
+                    {
+                        if (previousType == PostType.Share) await DeleteShare(previousPost.Share);
+                        //other types (except PostType.Share)
+                    }
+                    else
+                    {
+                        editPostVM.Article.PostId = postId;
+                    }
+
+                    _context.Update(editPostVM.Article);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -384,7 +366,7 @@ namespace AlirezaRezaee.Web.Controllers
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-            var post = await _context.Posts.Include(p => p.Share).Where(p => p.PublishDateTime.Year == dateTime.Year && p.PublishDateTime.Month == dateTime.Month && p.PublishDateTime.Day == dateTime.Day && p.Id == postId).FirstOrDefaultAsync();
+            var post = await _context.Posts.Include(p => p.Share).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
 
             if (post == null)
                 return NotFound();
@@ -401,7 +383,7 @@ namespace AlirezaRezaee.Web.Controllers
         [Route("edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
         public async Task<IActionResult> EditShare(CreateEditSharePostViewModel editPostVM, int year, int month, int day, int postId)
         {
-            var previousPost = await _context.Posts.Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.Share).AsNoTracking().FirstOrDefaultAsync();
+            var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.Share).FirstOrDefaultAsync();
             if (previousPost == null)
                 return NotFound();
 
@@ -421,15 +403,27 @@ namespace AlirezaRezaee.Web.Controllers
                     }
                     else editPostVM.Post.ThumbnailUrl = previousPost.ThumbnailUrl;
 
-                    if (previousPost.Article != null) _context.Remove(previousPost.Article);
-
                     editPostVM.Post.LatestUpdateDateTime = dateTime;
-                    editPostVM.Share.PostId = postId;
                     editPostVM.Post.Id = postId;
-                    editPostVM.Post.Share = editPostVM.Share;
+                    editPostVM.Share.Post = editPostVM.Post;
 
-                    _context.Update(editPostVM.Post);
+                    var previousType = DetectPostType(previousPost);
+                    if (previousType != PostType.Share)
+                    {
+                        if (previousType == PostType.Article) await DeleteArticle(previousPost.Article);
+                        //other types (except PostType.Share)
+                    }
+                    else
+                    {
+                        editPostVM.Share.PostId = postId;
+                    }
+
+                    _context.Update(editPostVM.Share);
                     await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+
                 }
                 catch (Exception e)
                 {
@@ -442,119 +436,101 @@ namespace AlirezaRezaee.Web.Controllers
             return View(editPostVM);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        public async Task<IActionResult> Delete(int year, int month, int day, int postId)
+        {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
-        //public async Task<IActionResult> Edit(int year, int month, int day, int postId, string UrlTitle, CreateEditArticlePostViewModel editArticleVM)
-        //{
-        //    var publishedDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).Include(p => p.Article).Include(p => p.Share).AsNoTracking().FirstOrDefaultAsync();
+            if (post == null)
+                return NotFound();
 
-        //    var post = await _context.Posts.Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.Share).FirstOrDefaultAsync();
+            var postType = DetectPostType(post);
 
-        //    if (post == null)
-        //        return NotFound();
+            try
+            {
+                if (postType == PostType.Article) await DeleteArticle(post.Article);
+                else if (postType == PostType.Share) await DeleteShare(post.Share);
+                else throw new Exception("در مرحله تشخیص نوع مطلب خطایی رخ داد.");
 
+                await DeletePost(post);
+            }
+            catch (Exception e)
+            {
+                TempData["PostDeleteStatus"] = e.Message;
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        var persianDateTime = PersianDateTime.Now;
-        //        var dateTime = persianDateTime.ToDateTime();
+            TempData["PostDeleteStatus"] = "OK";
+            return RedirectToAction(nameof(Index));
+        }
 
-        //        //From here
-        //        if (editArticleVM.ThumbnailImage == null && editArticleVM.CoverImage == null)
-        //        {
-        //            try
-        //            {
-        //                if (editArticleVM.Article.UrlTitle == null)
-        //                    editArticleVM.Article.UrlTitle = editArticleVM.Post.Title;
-        //                foreach (char c in Path.GetInvalidFileNameChars())
-        //                    editArticleVM.Article.UrlTitle = editArticleVM.Article.UrlTitle.Replace(c, '-');
+        private async Task DeleteArticle(Article article)
+        {
+            _ifileManager.DeleteFile(article.CoverUrl);
 
+            article.Post = null;
+            _context.Remove(article);
+            await _context.SaveChangesAsync();
+        }
 
-        //                editArticleVM.Post.LatestUpdateDateTime = dateTime;
-        //                editArticleVM.Article.Post = editArticleVM.Post;
+        private async Task DeleteShare(Share share)
+        {
+            share.Post = null;
+            _context.Remove(share);
+            await _context.SaveChangesAsync();
+        }
 
-        //                //if (post.Share != null)
-        //                //    _context.Remove(post.Share);
+        private async Task DeletePost(Post post)
+        {
+            _ifileManager.DeleteFile(post.ThumbnailUrl);
 
-        //                _context.Update(editArticleVM.Article);
-        //                await _context.SaveChangesAsync();
-        //                TempData["ArticleEditStatus"] = "OK";
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                TempData["ArticleEditStatus"] = e.Message;
-        //                return View(editArticleVM);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            try
-        //            {
-        //                var randomNumber = new Random();
-        //        var imagePath = Path.Combine("uploads/images/", persianDateTime.ToString("yyyy/MM/dd"));
+            _context.Remove(post);
+            await _context.SaveChangesAsync();
+        }
 
+        [Route("edit/type/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        public async Task<IActionResult> EditType(int year, int month, int day, int postId, string UrlTitle)
+        {
+            var switchAbleTypes = new List<SwitchPostTypeViewModel>();
+            try
+            {
+                var postType = await DetectPostType(postId);
 
-        //                if (editViewModel.Article.UrlTitle == null)
-        //                    editViewModel.Article.UrlTitle = editViewModel.Article.Title;
-        //                foreach (char c in Path.GetInvalidFileNameChars())
-        //                    editViewModel.Article.UrlTitle = editViewModel.Article.UrlTitle.Replace(c, '-');
+                if (postType != PostType.Article) switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Article, PostTypeName = "تغییر به مقاله", SwitchUrl = $"/edit/switch/to-article/{year}/{month}/{day}/{postId}" });
+                if (postType != PostType.Share) switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Share, PostTypeName = "تغییر به بازنشر", SwitchUrl = $"/edit/switch/to-share/{year}/{month}/{day}/{postId}" });
+            }
+            catch (Exception)
+            {
+                throw; // نمایش صفحهی مخصوص خطا
+            }
 
+            return View(switchAbleTypes);
+        }
 
-        //                if (editViewModel.Thumbnail != null && editViewModel.Cover != null)
-        //                {
-        //                    editViewModel.Thumbnail.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-        //                    var thumbnailPath = Path.Combine(imagePath, persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999) + "-" + editViewModel.Thumbnail.FileName);
-        //    _ifileManager.SaveFile(editViewModel.Thumbnail, thumbnailPath);
-        //                    editViewModel.Article.ThumbnailUrl = thumbnailPath;
+        [Route("edit/switch/to-article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        public async Task<IActionResult> SwitchToArticle(int year, int month, int day, int postId, string UrlTitle)
+        {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-        //                    editViewModel.Cover.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-        //                    var coverPath = Path.Combine(imagePath, persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999) + "-" + editViewModel.Cover.FileName);
-        //_ifileManager.SaveFile(editViewModel.Cover, coverPath);
-        //                    editViewModel.Article.CoverUrl = coverPath;
-        //                }
-        //                else if (editViewModel.Thumbnail != null)
-        //                {
-        //                    editViewModel.Thumbnail.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-        //                    var thumbnailPath = Path.Combine(imagePath, persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999) + "-" + editViewModel.Thumbnail.FileName);
-        //_ifileManager.SaveFile(editViewModel.Thumbnail, thumbnailPath);
-        //                    editViewModel.Article.ThumbnailUrl = thumbnailPath;
-        //                }
-        //                else // if (editViewModel.Cover != null)
-        //                {
-        //                    editViewModel.Cover.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-        //                    var coverPath = Path.Combine(imagePath, persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999) + "-" + editViewModel.Cover.FileName);
-        //_ifileManager.SaveFile(editViewModel.Cover, coverPath);
-        //                    editViewModel.Article.CoverUrl = coverPath;
-        //                }
+            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            if (post == null)
+                return NotFound();
 
-        //                editViewModel.Article.LatestUpdateDateTime = dateTime;
+            return RedirectToAction(nameof(EditArticle), new { year = year, month = month, day = day, postId = postId });
+        }
 
-        //                _context.Update(editViewModel.Article);
-        //                await _context.SaveChangesAsync();
-        //TempData["ArticleEditStatus"] = "OK";
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                TempData["ArticleEditStatus"] = e.Message;
-        //                return View(editViewModel);
-        //            }
-        //        }
+        [Route("edit/switch/to-share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        public async Task<IActionResult> SwitchToShare(int year, int month, int day, int postId)
+        {
+            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-        //        return RedirectToAction("Details",
-        //            new
-        //            {
-        //                year = dateTime.Year,
-        //                month = dateTime.Month,
-        //                day = dateTime.Day,
-        //                postId = postId,
-        //                UrlTitle = editArticleVM.Article.UrlTitle
+            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            if (post == null)
+                return NotFound();
 
-        //            });
-        //    }
-
-        //    return View(editArticleVM);
-        //}
+            return RedirectToAction(nameof(EditShare), new { year = year, month = month, day = day, postId = postId });
+        }
     }
 }
