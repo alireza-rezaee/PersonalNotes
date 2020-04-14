@@ -34,7 +34,7 @@ namespace AlirezaRezaee.Web.Controllers
 
             //<Posts>
             var posts = new List<PostSummaryViewModel>();
-            foreach (var post in await _context.Posts.Include(p => p.Article).Include(p => p.Share).OrderByDescending(p => p.PublishDateTime).Take(8).ToListAsync())
+            foreach (var post in await _context.Posts.Include(p => p.Article).Include(p => p.Share).Include(p => p.Markdown).OrderByDescending(p => p.PublishDateTime).Take(8).ToListAsync())
             {
                 var postType = DetectPostType(post);
                 switch (postType)
@@ -61,6 +61,18 @@ namespace AlirezaRezaee.Web.Controllers
                             Summary = post.Summary,
                             ThumbnailUrl = post.ThumbnailUrl,
                             PostUrl = post.Share.RedirectToUrl
+                        });
+                        break;
+                    case PostType.Markdown:
+                        posts.Add(new PostSummaryViewModel
+                        {
+                            Title = post.Title,
+                            Type = PostType.Markdown,
+                            PublishDateTime = post.PublishDateTime,
+                            LatestUpdateDateTime = post.LatestUpdateDateTime,
+                            Summary = post.Summary,
+                            ThumbnailUrl = post.ThumbnailUrl,
+                            PostUrl = post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}"
                         });
                         break;
                     default:
@@ -113,15 +125,20 @@ namespace AlirezaRezaee.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private PostType? DetectPostType(Models.Post post)
+        private PostType? DetectPostType(Post post)
         {
-            if ((post.Article == null && post.Share == null) || (post.Article != null && post.Share != null))
+            if (post == null)
+                return null;
+
+            if ((post.Article == null && post.Share == null && post.Markdown == null) || (post.Article != null && post.Share != null && post.Markdown != null))
                 return null;
 
             if (post.Article != null)
                 return PostType.Article;
-            else // if (post.Share != null)
+            else if (post.Share != null)
                 return PostType.Share;
+            else //if (post.Markdown != null)
+                return PostType.Markdown;
         }
     }
 }

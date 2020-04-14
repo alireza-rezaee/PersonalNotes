@@ -28,6 +28,8 @@ namespace AlirezaRezaee.Web.Data
 
         public DbSet<Share> Shares { get; set; }
 
+        public DbSet<Markdown> Markdowns { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -44,6 +46,13 @@ namespace AlirezaRezaee.Web.Data
                 entity.HasOne(s => s.Post)
                     .WithOne(s => s.Share)
                     .HasForeignKey<Share>(s => s.PostId);
+            });
+
+            builder.Entity<Markdown>(entity => {
+                entity.HasKey(s => s.PostId);
+                entity.HasOne(s => s.Post)
+                    .WithOne(s => s.Markdown)
+                    .HasForeignKey<Markdown>(s => s.PostId);
             });
         }
 

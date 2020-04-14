@@ -1,10 +1,8 @@
 ﻿@using System
 @using static AlirezaRezaee.Web.Extensions.IntExtensions
-@model AlirezaRezaee.Web.Models.ViewModels.Posts.DetailArticlePostViewModel
-
+@model AlirezaRezaee.Web.Models.ViewModels.Posts.DetailMarkdownPostViewModel
 @{
-    Layout = "_PostLayout";
-    ViewData["Title"] = Model.Post.Title;
+    ViewData["Title"] = "بازنشر رسانه";
 
     var Avatar = new
     {
@@ -13,47 +11,14 @@
         x100 = "/uploads/profile/avatar-100x.jpg",
         x64 = "/uploads/profile/avatar-64x.jpg"
     };
-
-
     var fullName = "علیرضا رضائی";
 
-
-    var postDate = Model.Post.LatestUpdateDateTime == null ? Model.Post.PublishDateTime : Model.Post.LatestUpdateDateTime;
+    var postDate = Model.Markdown.Post.LatestUpdateDateTime == null ? Model.Markdown.Post.PublishDateTime : Model.Markdown.Post.LatestUpdateDateTime;
     var persianPostDate = postDate.Value.ToPersianDateTime();
 }
-
-<div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px); height: 45vh">
-    <div id="hnav-besm" class="mx-auto py-2"></div>
-    <div class="container h-100 text-right">
-        <div class="cover h-100 rounded-top" style="background-image: url(@Model.Post.Article.CoverUrl);"></div>
-        <nav id="hnav" style="padding-right: 0;">
-            <div class="d-inline-block" style="background-color: #08c; color: white; line-height: 3; padding-left: 10px; padding-right: 10px; border-right: 5px solid #006293;">
-                یادداشت
-            </div>
-            <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
-                <div class="mr-auto position-relative">
-                    <button type="button"
-                            class="btn btn-default h-100 d-block d-sm-none material-icons nav-shortcuts-trigger" id="js-nav-shortcuts-trigger">
-                        menu
-                    </button>
-                    <ul class="d-none d-sm-flex align-items-center pr-0 nav-shortcuts" id="js-nav-shortcuts">
-                        <li class="d-block"><a asp-controller="home" asp-action="index" class="material-icons p-2">home</a></li>
-                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">create</a></li>
-                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">camera</a></li>
-                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">people</a></li>
-                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">message</a></li>
-                        <li class="d-block"><a href="javascript:void(0)" class="material-icons p-2">notifications</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<div style="height: 1px;"></div>
-
 <div class="container">
     <a href="@Model.PostDetailUrl" class="d-block text-center text-dark font-weight-bold text-decoration-none mb-3 rounded" style="line-height: 3; color: #006293; font-size: 1.5rem; background-color: #eee;">
-        @Model.Post.Title
+        @Model.Markdown.Post.Title
     </a>
 
     <div class="text-center text-muted small mb-3 pb-2" style="border-bottom: 1px solid #eee;">
@@ -71,14 +36,16 @@
             زمان مطالعه: ۳ دقیقه
         </span>
         •
+
         <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-light text-secondary material-icons align-middle" data-toggle="dropdown">
                 more_horiz
             </button>
             <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                <a href="@Model.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
+                <a href="@Model.PostEditProperties" class="dropdown-item">ویرایش مشخصات مطلب</a>
+                <a href="@Model.Markdown.ContributeUrl" class="dropdown-item">ویرایش محتوا</a>
                 <a href="@Model.PostEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item">حذف مقاله</button>
+                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item">حذف مطلب</button>
             </div>
         </div>
     </div>
@@ -94,7 +61,9 @@
         </div>
     </div>
 
-    @Html.Raw(Model.Post.Article.HtmlContent)
+    <div>
+        @Html.Raw(Model.HtmlContent)
+    </div>
 </div>
 
 <!-- Modals -->
@@ -104,7 +73,7 @@
             <div class="alert alert-danger alert-dismissible fade show" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
                 <strong class="font-weight-bold">هشدار:</strong>
                 <span class="modal-post-type"></span>
-                این مقاله برای همیشه حذف خواهد شد. آیا از این کار اطمینان دارید؟
+                این مطلب برای همیشه حذف خواهد شد. آیا از این کار اطمینان دارید؟
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -116,11 +85,11 @@
                             <div class="row">
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
-                                    <h3 class="mb-0">@Model.Post.Title</h3>
-                                    <div class="mb-1 text-muted">@Model.Post.PublishDateTime</div>
-                                    <p class="card-text mb-auto">@Model.Post.Summary</p>
+                                    <h3 class="mb-0">@Model.Markdown.Post.Title</h3>
+                                    <div class="mb-1 text-muted">@Model.Markdown.Post.PublishDateTime</div>
+                                    <p class="card-text mb-auto">@Model.Markdown.Post.Summary</p>
                                 </div>
-                                <div class="col-auto post-image" style="background-image: url('@Model.Post.ThumbnailUrl')">
+                                <div class="col-auto post-image" style="background-image: url('@Model.Markdown.Post.ThumbnailUrl')">
                                 </div>
                             </div>
                         </div>

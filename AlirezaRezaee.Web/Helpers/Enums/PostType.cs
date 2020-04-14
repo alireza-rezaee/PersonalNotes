@@ -8,6 +8,7 @@ namespace AlirezaRezaee.Web.Helpers.Enums
     public enum PostType
     {
         Article,
-        Share
+        Share,
+        Markdown
     }
 }

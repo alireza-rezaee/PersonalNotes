@@ -1,0 +1,136 @@
+﻿@using System
+@using static AlirezaRezaee.Web.Extensions.IntExtensions
+@model AlirezaRezaee.Web.Models.ViewModels.Posts.CreateEditMarkdownPostViewModel
+@{
+    ViewData["Title"] = "ویرایش مطلب نشانه دار";
+
+    var Avatar = new
+    {
+        x150 = "/uploads/profile/avatar-150x.jpg",
+        x125 = "/uploads/profile/avatar-125x.jpg",
+        x100 = "/uploads/profile/avatar-100x.jpg",
+        x64 = "/uploads/profile/avatar-64x.jpg"
+    };
+    var fullName = "علیرضا رضائی";
+
+    var persianPostDate = PersianDateTime.Now;
+
+    var DefaultImage =
+    new
+    {
+        ThumbnailImage = Model.Post.ThumbnailUrl != null ? $"background-image: url('{Model.Post.ThumbnailUrl}');" : "background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px);"
+    };
+}
+@section Head {
+    <link href="~/lib/PersianDateTimePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+    <style>
+        .bg-size-cover {
+            background-size: cover;
+        }
+
+        .bg-no-repeat {
+            background-repeat: no-repeat;
+        }
+    </style>
+    <script src="https://cdn.tiny.cloud/1/dm1gkjqyitq2ij8h1ccm84t9kc01tqrwtmehtb30xqe4bc4s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            directionality: 'rtl',
+            language: 'fa',
+
+            plugins: "code image searchreplace wordcount",
+
+            content_style: "body {font-family: IRANSans;}",
+
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
+        });
+    </script>
+}
+<form asp-controller="Posts" asp-action="EditMarkdown" enctype="multipart/form-data">
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col">
+                <input asp-for="Post.Title" class="form-control text-center mb-3" placeholder="عنوانی وارد کنید" style="line-height: 3; color: #006293; font-size: 1.5rem;">
+            </div>
+        </div>
+
+        <div class="form-row justify-content-center align-items-center">
+            <img src="@Avatar.x64" alt="@fullName" class="rounded-circle my-1 my-md-0" style="width: 25px; height:25px;" />
+            <div class="col-12 col-md-4 text-center my-1 my-md-0" id="datepicker">
+                <input type="text" id="post-publish-datepicker" class="form-control text-center" placeholder="@persianPostDate.ToString("dd MMMM yyyy").EnglishToPersian()" readonly>
+                <input type="hidden" asp-for="Post.PublishDateTime" class="form-control text-center" value="@Model.Post.PublishDateTime">
+                <input type="hidden" asp-for="Post.LatestUpdateDateTime" id="post-publish-date" class="form-control text-center" value="@DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss")">
+            </div>
+            <div class="col-12 col-md-4 text-center my-1 my-md-0">
+                <input type="number" class="form-control text-center" placeholder="زمان مطالعه (دقیقه)" min="1">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label asp-for="Markdown.FileUrl" class="my-2">نشانی متن نشانه دار:</label>
+                <input asp-for="Markdown.FileUrl" class="form-control text-left mb-3 dir-ltr" placeholder="https://wwww.example.com" style="color: #006293;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="Markdown.ContributeUrl" class="my-2">نشانی مشارکت در فایل:</label>
+                <input asp-for="Markdown.ContributeUrl" class="form-control text-left mb-3 dir-ltr" placeholder="https://wwww.example.com" style="color: #006293;">
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-6 my-3">
+                <label asp-for="ThumbnailImage">تصویر بندانگشتی:</label>
+                <small class="form-text text-muted small mb-2">تصویری کوچک که در فهرست مطالب به جای جلد نمایش داده می شود.</small>
+                <label asp-for="ThumbnailImage" id="ThumbnailImage-preview" class="btn post-image w-100 rounded border border-danger d-flex justify-content-center align-items-center bg-size-cover bg-no-repeat" style="@DefaultImage.ThumbnailImage height: 200px;">
+                    <span class="badge badge-secondary">
+                        محل نمایش تصویر بندانگشتی
+                    </span>
+                </label>
+                <input type="file" asp-for="ThumbnailImage" class="d-none" id="ThumbnailImage" />
+            </div>
+            <div class="col-12 col-md-6 my-3">
+                <div class="form-group">
+                    <label asp-for="Post.Summary">چکیده:</label>
+                    <small class="form-text text-muted small mb-2">متنی که به عنوان چکیده در کنار تصویر بندانگشتی نمایش داده میشود.</small>
+                    <textarea asp-for="Post.Summary" id="Post_Summary"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="text-left">
+            <button class="btn btn-warning">
+                انصراف
+            </button>
+            <button type="submit" class="btn btn-primary">
+                ویرایش متن نشانه دار
+            </button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/PersianDateTimePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+    <script>
+        $('#datepicker').MdPersianDateTimePicker({
+            targetTextSelector: '#post-publish-datepicker',
+            targetDateSelector: '#post-publish-date',
+            textFormat: 'dd MMMM yyyy'
+        });
+
+        $('#CoverImage, #ThumbnailImage').change(function (e) {
+            var preview = $('#' + $(e.target).attr('id') + '-preview');
+
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            preview.css('background-image', 'url(' + preview.src + ')');
+            preview.onload = function () {
+                URL.revokeObjectURL(preview.src);
+            }
+        });
+    </script>
+}

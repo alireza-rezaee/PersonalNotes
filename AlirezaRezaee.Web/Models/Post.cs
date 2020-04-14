@@ -33,6 +33,8 @@ namespace AlirezaRezaee.Web.Models
         public Article Article { get; set; }
 
         public Share Share { get; set; }
+
+        public Markdown Markdown { get; set; }
         #endregion
     }
 }

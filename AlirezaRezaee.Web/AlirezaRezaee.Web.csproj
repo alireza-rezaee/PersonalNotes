@@ -127,6 +127,8 @@
     <Compile Remove="Data\Migrations\20200406162441_AlterSharesPostsArticles.Designer.cs" />
     <Compile Remove="Data\Migrations\20200408121203_test.cs" />
     <Compile Remove="Data\Migrations\20200408121203_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200414093005_AlterMarkdowns0.cs" />
+    <Compile Remove="Data\Migrations\20200414093005_AlterMarkdowns0.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -143,6 +145,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.18.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />

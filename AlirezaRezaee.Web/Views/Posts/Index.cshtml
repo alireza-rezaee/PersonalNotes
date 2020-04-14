@@ -84,6 +84,15 @@
                                 <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
                             </div>
                         }
+                        else if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Markdown)
+                        {
+                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                <a href="@post.PostUrl" class="dropdown-item">مشاهده مطلب</a>
+                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مطلب</a>
+                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مطلب نشانه دار" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مطلب نشانه دار</button>
+                            </div>
+                        }
                     </div>
                 }
             </div>
