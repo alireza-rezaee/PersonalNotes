@@ -30,6 +30,8 @@ namespace AlirezaRezaee.Web.Data
 
         public DbSet<Markdown> Markdowns { get; set; }
 
+        public DbSet<Recommendeds> Recommendeds { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -53,6 +55,13 @@ namespace AlirezaRezaee.Web.Data
                 entity.HasOne(s => s.Post)
                     .WithOne(s => s.Markdown)
                     .HasForeignKey<Markdown>(s => s.PostId);
+            });
+
+            builder.Entity<Recommendeds>(entity => {
+                entity.HasKey(s => s.PostId);
+                entity.HasOne(s => s.Post)
+                    .WithOne(s => s.RecommendedPost)
+                    .HasForeignKey<Recommendeds>(s => s.PostId);
             });
         }
 

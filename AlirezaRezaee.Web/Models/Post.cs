@@ -35,6 +35,8 @@ namespace AlirezaRezaee.Web.Models
         public Share Share { get; set; }
 
         public Markdown Markdown { get; set; }
+
+        public Recommendeds RecommendedPost { get; set; }
         #endregion
     }
 }

@@ -6,3 +6,7 @@
 .modal-footer > :not(:last-child) {
     margin-left: .25rem;
 }
+
+.btn-group, .btn-group-vertical {
+    flex-direction: row-reverse;
+}
