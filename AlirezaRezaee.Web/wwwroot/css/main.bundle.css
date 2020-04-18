@@ -720,7 +720,8 @@ This set of fonts are used in this project under the license: (.....)
 
 /* .post {} */
 .post h3 {
-  font-size: 1rem; }
+  font-size: 1.5rem;
+  font-weight: 500; }
 
 .post .post-image {
   width: 200px;
@@ -763,5 +764,8 @@ This set of fonts are used in this project under the license: (.....)
 
 .btn-group, .btn-group-vertical {
   flex-direction: row-reverse; }
+
+.tooltip {
+  font-family: IRANSans; }
 
 /*# sourceMappingURL=main.bundle.css.map */
