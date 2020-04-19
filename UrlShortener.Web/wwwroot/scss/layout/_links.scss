@@ -1,0 +1,91 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the links of the site/application.
+// -----------------------------------------------------------------------------
+
+.links-item {
+    background-color: #eee;
+    transition: background-color 0.3s;
+    border-radius: 0 0 0.5rem 0.5rem;
+    color: #000;
+    transition: all 0.1s;
+}
+
+.links-item:hover {
+    background-color: #e8e8e8;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.links-site-link {
+    background-color: #d5d5d5;
+    transition: all 0.3s;
+    color: #888 !important;
+}
+
+.links a:hover {
+    color: #000;
+}
+
+.links-site-link:hover {
+    background-color: #0c7ab7;
+    color: #fff !important;
+}
+
+.links-link.stretched-link {
+    text-overflow: ellipsis;
+}
+
+.links-link.stretched-link .caption {
+    font-style: normal;
+    border-bottom: 3px solid transparent;
+    transition: border 0.3s;
+}
+
+.links-link.stretched-link:hover .caption {
+    border-color: #cecece;
+}
+
+.links-link {
+    font-weight: lighter;
+    color: #000;
+    text-decoration: none !important;
+}
+
+.links-content {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.links-cover {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 200px;
+}
+
+.links-compact-item {
+    background-color: #a6a6a6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 64px;
+    height: 64px;
+}
+
+.links-compact-item::after {
+    font-family: 'Material Icons';
+    font-size: 24px;
+    line-height: 1;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.links-compact-item.links-web::after {
+    content: "language";
+}

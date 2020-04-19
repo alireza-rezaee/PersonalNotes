@@ -1,0 +1,76 @@
+﻿@model UrlShortener.Web.Models.ViewModels.UrlCreateEditViewModel
+@{
+    ViewData["Title"] = "کوتاه کننده لینک • وبسایت شخصی علیرضا رضائی";
+}
+@section Head {
+    <style>
+        #shortlink::before {
+            content: "https://";
+        }
+    </style>
+}
+
+<div class="container mt-5">
+    <h1 class="d-inline-block font-weight-bold p-2 bg-dark text-white rounded-left" style="font-size:1.5rem">کوتاه کننده لینک</h1>
+
+    <div class="alert alert-success my-3">
+        لینک شما آماده است.
+    </div>
+
+    <div class="input-group mb-3 dir-ltr">
+        <input id="shortlink" class="form-control dir-ltr text-left text-primary cursor-pointer" readonly value="https://r.rezaee.org/@ViewData["ShortLink"]" data-toggle="popover" title="متن">
+        <label for="shortlink" class="input-group-append" style="direction: rtl;">
+            <span class="input-group-text">نشانی</span>
+        </label>
+        <div class="position-absolute" style="z-index: 99; bottom: 100%;">
+            <div id="toast-copy" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header" style="direction: rtl">
+                    <span class="material-icons js-icon mx-2"></span>
+                    <strong class="ml-auto js-title">Bootstrap</strong>
+                    <button type="button" class="mr-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body js-content" style="direction: rtl;">
+                    Hello, world! This is a toast message.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-9 col-md-6 mx-auto">
+            <a asp-controller="Url" asp-action="Index" class="btn btn-block btn-primary">از نو</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#toast-copy').toast({
+            delay: 2500
+
+        });
+
+        var copyTextareaBtn = document.querySelector('#shortlink');
+
+        copyTextareaBtn.addEventListener('click', function (event) {
+            var copyTextarea = document.querySelector('#shortlink');
+            copyTextarea.focus();
+            copyTextarea.select();
+            var toast = $("#toast-copy");
+            try {
+                var successful = document.execCommand('copy');
+                toast.find('.js-icon').text('tag_faces');
+                toast.find('.js-title').text('رونوشت گرفته شد');
+                toast.find('.js-content').text('اکنون هر کجا بخواهید میتوانید آنرا الصاق کنید.');
+                toast.toast('show');
+            } catch (err) {
+                toast.find('.js-icon').text('sentiment_dissatisfied');
+                toast.find('.js-title').text("مو");
+                toast.find('.js-content').text('However, you can copy it yourself.');
+                toast.toast('show'); 
+            }
+        });
+    </script>
+}

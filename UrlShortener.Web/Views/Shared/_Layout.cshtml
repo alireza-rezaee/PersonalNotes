@@ -1,49 +1,81 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - UrlShortener.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>@ViewData["Title"]</title>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/4.4.1/css/bootstrap.css" />
+        @*<link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />*@
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
+        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/4.4.1/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined"
+              asp-fallback-href="~/fonts/Material-Icons/material-icons.min.css"
+              asp-fallback-test-class="material-icons"
+              asp-fallback-test-property="white-space"
+              asp-fallback-test-value="nowrap" />
+    </environment>
+    @RenderSection("Head", required: false)
+    <style>
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">UrlShortener.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="wrapper position-relative mnh-100vh">
+        <div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px);">
+            <div id="hnav-besm" class="mx-auto py-2"></div>
+            <div class="container h-100 text-right">
+                <div class="cover h-100 rounded" style="background-image: url(/uploads/profile/cover.jpg);"></div>
+                <nav id="hnav">
+                    <div class="cover-avatar d-inline-block">
+                        <picture>
+                            <source media="(min-width: 992px)" srcset="/uploads/profile/avatar-150x.jpg">
+                            <source media="(min-width: 768px)" srcset="/uploads/profile/avatar-125x.jpg">
+                            <source media="(min-width: 576px)" srcset="/uploads/profile/avatar-100x.jpg">
+                            <img src="/uploads/profile/avatar-64x.jpg" alt="&#x639;&#x644;&#x6CC;&#x631;&#x636;&#x627; &#x631;&#x636;&#x627;&#x626;&#x6CC;" class="rounded-circle h-100 img-fluid">
+                        </picture>
+                    </div>
+                    <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
+                        <a href="/"><img src="/uploads/profile/logo.png" alt="&#x639;&#x644;&#x6CC;&#x631;&#x636;&#x627; &#x631;&#x636;&#x627;&#x626;&#x6CC;"></a>
+                    </div>
+                </nav>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - UrlShortener.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <div style="height: 1px;"></div>
+        @RenderBody()
+        <div id="footer">
+            <div class="rounded-circle p-3 bg-white mx-auto position-relative js-gotop gotop">
+                <div class="upper"></div>
+            </div>
+            <div class="container"><div class="row"><div class="col mx-auto"><div class="text-center small">به تارنمای شخصی علیرضا رضائی خوش آمدید.<br>پیام ها، بازخورد ها و سفارشات خود را با من درمیان بگذارید.</div></div></div><div class="row"><div class="col"><div class="text-center small text-secondary my-3"><a href="https://alireza.rezaee.org/" class="text-secondary">Alireza.Rezaee.org</a> is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="text-secondary">Creative Commons Attribution 4.0 International License</a></div></div></div></div>
+        </div>
+    </div>
+    <environment include="Development">
+        <script src="~/lib/jquery/3.4.1/jquery.js"></script>
+        <script src="~/lib/bootstrap/4.4.1/js/bootstrap.bundle.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/3.4.1/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

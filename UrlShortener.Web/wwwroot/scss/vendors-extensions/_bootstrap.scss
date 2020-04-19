@@ -1,0 +1,36 @@
+.modal-header .close {
+    margin-left: -1rem;
+    margin-right: auto;
+}
+
+.modal-footer > :not(:last-child) {
+    margin-left: .25rem;
+}
+
+.btn-group, .btn-group-vertical {
+    flex-direction: row-reverse;
+}
+
+.tooltip {
+    font-family: IRANSans;
+}
+
+.custom-control {
+    padding-right: 1.5rem;
+    padding-left: 0;
+}
+
+.custom-control-input {
+    left: auto;
+    right: 0;
+}
+
+.custom-control-label::before {
+    right: -1.5rem;
+    left: auto;
+}
+
+.custom-control-label::after {
+    right: -1.5rem;
+    left: auto;
+}

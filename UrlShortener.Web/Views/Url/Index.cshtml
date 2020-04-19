@@ -1,0 +1,78 @@
+﻿@model UrlShortener.Web.Models.ViewModels.UrlCreateEditViewModel
+@{
+    ViewData["Title"] = "کوتاه کننده لینک • وبسایت شخصی علیرضا رضائی";
+}
+@section Head {
+    <script src="https://www.google.com/recaptcha/api.js?hl=fa" async defer></script>
+    <style>
+        body > div:last-child {
+            direction: rtl;
+            overflow-x: hidden;
+        }
+    </style>
+}
+
+<div class="container mt-5">
+    <h1 class="d-inline-block font-weight-bold p-2 bg-dark text-white rounded-left" style="font-size:1.5rem">کوتاه کننده لینک</h1>
+
+    <form class="mt-3" asp-controller="Url" asp-action="Add" autocomplete="off">
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mb-3 dir-ltr">
+                    <input asp-for="Url" class="form-control dir-ltr text-left" placeholder="https://www.example.com/ - نشانی کامل را وارد کنید">
+                    <label asp-for="Url" class="input-group-append" style="direction: rtl;">
+                        <span class="input-group-text">نشانی</span>
+                    </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                    <input id="is-custom" asp-for="IsCustomShortLink" type="checkbox" class="custom-control-input" checked="">
+                    <label for="is-custom" asp-for="IsCustomShortLink" class="custom-control-label">نشانی دلخواه</label>
+                </div>
+
+                <div class="input-group my-3 dir-ltr" id="custom-shortlink-input">
+                    <label asp-for="CustomShortLink" class="input-group-prepend text-left">
+                        <span class="input-group-text">https://r.rezaee.org/</span>
+                    </label>
+                    <input asp-for="CustomShortLink" class="form-control dir-ltr text-left" placeholder="Select the short link you want - نشانی دلخواهی انتخاب کنید">
+                </div>
+
+                <div class="text-center">
+                    <div class="d-inline-block text-center g-recaptcha" data-sitekey="6LfKS-sUAAAAAJSBBvRF7oKHW3AmAGm5ijt2lBrc" data-callback="recaptcha" data-expired-callback="recaptchaExpired"></div>
+                    <input id="recaptcha" asp-for="Recaptcha" type="hidden" />
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-9 col-md-6 mx-auto">
+                <button type="submit" class="btn btn-block btn-success">دریافت</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div></div>
+@section Scripts {
+    <script>
+        document.getElementById("is-custom").checked = false;
+
+        function recaptcha(response) {
+            document.getElementById('recaptcha').value = response;
+        }
+
+        function recaptchaExpired() {
+            document.getElementById('recaptcha').value = "";
+        }
+
+        function ResetCustomShortlinkInput() {
+            var isCustom = document.getElementById("is-custom");
+            if (isCustom.checked === true)
+                $(document.getElementById("custom-shortlink-input")).show();
+            else if (isCustom.checked === false)
+                $(document.getElementById("custom-shortlink-input")).hide();
+        }
+
+        //ResetCustomShortlinkInput
+        ResetCustomShortlinkInput();
+        document.getElementById('is-custom').addEventListener("change", () => ResetCustomShortlinkInput());
+    </script>
+}
