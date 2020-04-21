@@ -8,7 +8,7 @@ namespace UrlShortener.Web.Helpers
 {
     public class Transducer
     {
-        public static readonly string Alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public static readonly string Alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
         public static readonly int Base = Alphabet.Length;
 
         public static string Encode(int i)

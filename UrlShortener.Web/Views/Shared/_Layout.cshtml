@@ -6,8 +6,6 @@
     <title>@ViewData["Title"]</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/4.4.1/css/bootstrap.css" />
-        @*<link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />*@
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
         <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
@@ -18,11 +16,7 @@
               asp-fallback-test-value="absolute"
               asp-suppress-fallback-integrity="true"
               integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined"
-              asp-fallback-href="~/fonts/Material-Icons/material-icons.min.css"
-              asp-fallback-test-class="material-icons"
-              asp-fallback-test-property="white-space"
-              asp-fallback-test-value="nowrap" />
+        <link rel="stylesheet" href="~/css/main.css" />
     </environment>
     @RenderSection("Head", required: false)
     <style>
@@ -74,7 +68,7 @@
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 asp-suppress-fallback-integrity="true"
                 integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js"></script>
     </environment>
     @RenderSection("Scripts", required: false)
 </body>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -30,36 +31,42 @@ namespace UrlShortener.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("")]
-        public async Task<IActionResult> Add(UrlCreateEditViewModel createViewModel)
+        public async Task<IActionResult> Index(UrlCreateEditViewModel createViewModel)
         {
+
             if (ModelState.IsValid)
             {
-                if (!await RecaptchaCheckAsync(createViewModel.Recaptcha)) return BadRequest();
+                try
+                {
+                    await RecaptchaCheckAsync(createViewModel.Recaptcha);
 
-                if (!createViewModel.IsCustomShortLink)
-                {
-                    var createdShortLink = await Create(createViewModel.Url);
-                    if (!string.IsNullOrEmpty(createdShortLink))
+                    if (!createViewModel.IsCustomShortLink)
                     {
-                        ViewData["ShortLink"] = createdShortLink;
-                        return View("Result");
+                        var createdShortLink = await Create(createViewModel.Url);
+                        if (!string.IsNullOrEmpty(createdShortLink))
+                        {
+                            ViewData["ShortLink"] = createdShortLink;
+                            return View("Result");
+                        }
                     }
-                    else return BadRequest();
+                    else
+                    {
+                        var createdShortLink = await CreateCustom(createViewModel.Url, createViewModel.CustomShortLink);
+                        if (!string.IsNullOrEmpty(createdShortLink))
+                        {
+                            ViewData["ShortLink"] = createdShortLink;
+                            return View("Result");
+                        }
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    var createdShortLink = await CreateCustom(createViewModel.Url, createViewModel.CustomShortLink);
-                    if (!string.IsNullOrEmpty(createdShortLink))
-                    {
-                        ViewData["ShortLink"] = createdShortLink;
-                        return View("Result");
-                    }
-                    else return BadRequest();
+                    TempData["Error"] = e.Message;
+                    throw e;
                 }
             }
 
-            return NotFound();
+            return View(createViewModel);
         }
 
         [HttpPost]
@@ -107,16 +114,17 @@ namespace UrlShortener.Web.Controllers
         {
             try
             {
-                if (!url.StartsWith("https://") && !url.StartsWith("https://"))
+                if (!url.StartsWith("http://") && !url.StartsWith("https://"))
                     url = $"http://{url}";
                 if (!IsValidUri(url))
-                    return null;
+                    throw new Exception("عبارت وارد شده به عنوان نشانی پشتیبانی نمی شود.");
+                await IsAvailableUrl(url);
 
                 var scheme = GetProtocol(url);
                 url = RemoveUrlScheme(url);
                 var protocol = await _context.Protocols.FirstOrDefaultAsync(p => p.ProtocolName == scheme);
                 if (protocol == null)
-                    return null;
+                    throw new Exception("پروتکل نشانی وارد شده هنوز پشتیبانی نمی شود.");
 
                 var shortLink = await GetCustomShortLink(url, scheme);
                 if (shortLink != null)
@@ -139,8 +147,8 @@ namespace UrlShortener.Web.Controllers
             }
             catch (Exception e)
             {
-
-                throw;
+                TempData["Error"] = e.Message;
+                throw e;
             }
         }
 
@@ -148,10 +156,11 @@ namespace UrlShortener.Web.Controllers
         {
             try
             {
-                if (!url.StartsWith("https://") && !url.StartsWith("https://"))
+                if (!url.StartsWith("http://") && !url.StartsWith("https://"))
                     url = $"http://{url}";
                 if (!IsValidUri(url))
                     return null;
+                await IsAvailableUrl(url);
 
                 var scheme = GetProtocol(url);
                 url = RemoveUrlScheme(url);
@@ -178,34 +187,91 @@ namespace UrlShortener.Web.Controllers
             }
             catch (Exception e)
             {
-
-                throw;
+                TempData["Error"] = e.Message;
+                throw e;
             }
         }
 
         private async Task<string> GetShortLink(string url, string scheme)
         {
-            var existingUrl = await _context.Urls.Include(u => u.Protocol).Where(u => u.Location == url && u.Protocol.ProtocolName == scheme).Select(u => new { u.Id }).FirstOrDefaultAsync();
-            if (existingUrl != null)
-                return Transducer.Encode(existingUrl.Id);
-            return null;
+            try
+            {
+                var link = await _context.Urls.Include(u => u.Protocol).Where(u => u.Location == url && u.Protocol.ProtocolName == scheme).Select(u => new { u.Id }).FirstOrDefaultAsync();
+                if (link == null) return null;
+                return Transducer.Encode(link.Id);
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                throw e;
+            }
         }
 
         private async Task<string> GetCustomShortLink(string url, string scheme)
         {
-            var shortLink = await _context.CustomUrls.Include(u => u.Protocol).Where(u => u.Location == url && u.Protocol.ProtocolName == scheme).Select(u => u.CostomShortLink).FirstOrDefaultAsync();
-            if (shortLink != null)
-                return shortLink;
-            return null;
+            try
+            {
+                var link = await _context.CustomUrls.Include(u => u.Protocol).Where(u => u.Location == url && u.Protocol.ProtocolName == scheme).Select(u => u.CostomShortLink).FirstOrDefaultAsync();
+                if (string.IsNullOrEmpty(link)) return null;
+                return link;
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                throw e;
+            }
         }
 
-        private async Task<string> GetCustomUrl(string shortlink) => await _context.CustomUrls.Include(u => u.Protocol).Where(u => u.CostomShortLink == shortlink)
-            .Select(u => $"{u.Protocol.ProtocolName}://{u.Location}").FirstOrDefaultAsync();
+        private async Task<string> GetCustomUrl(string shortlink)
+        {
+            try
+            {
+                return await _context.CustomUrls.Include(u => u.Protocol).Where(u => u.CostomShortLink == shortlink).Select(u => $"{u.Protocol.ProtocolName}://{u.Location}").FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                throw e;
+            }
 
-        private async Task<string> GetUrl(int id) =>
-             await _context.Urls.Include(u => u.Protocol).Where(u => u.Id == id).Select(u => $"{u.Protocol.ProtocolName}://{u.Location}").FirstOrDefaultAsync();
+        }
 
-        private bool IsValidUri(string uri) => Uri.IsWellFormedUriString(uri, UriKind.Absolute);
+        private async Task<string> GetUrl(int id)
+        {
+            try
+            {
+                return await _context.Urls.Include(u => u.Protocol).Where(u => u.Id == id).Select(u => $"{u.Protocol.ProtocolName}://{u.Location}").FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                throw e;
+            }
+
+        }
+
+        private bool IsValidUri(string uri) => Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute);
+
+        private async Task<bool> IsAvailableUrl(string uri)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var content = new StringContent(string.Empty);
+                    var result = await client.PostAsync(uri, content);
+                    var status = result.StatusCode;
+                    string resultContent = await result.Content.ReadAsStringAsync();
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = "<p class=\"mb-2\">در حال حاضر نشانی درخواستی خارج از دسترس ماست.</p><p>پس از بررسی این موارد دوباره تلاش کنید:<p><ul><li><b class=\"font-weight-bold\">درستی نشانی</b> وارد شده را بررسی کنید.</li><li>از مجرمانه یا <b class=\"font-weight-bold\">فیلتر نبودن</b> نبودن سایت مطمئن شوید.</li><li>از <b class=\"font-weight-bold\">تحریم نبودن</b> ایران اطمینان حاصل کنید.</li></ul>";
+                throw e;
+            }
+
+        }
 
         private string GetProtocol(string url) => new Uri(url).Scheme;
 
@@ -231,10 +297,17 @@ namespace UrlShortener.Web.Controllers
                     return recaptcha.Success;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                TempData["Error"] = "احراز هویت «من ربات نیستم» تایید نشد.";
+                throw e;
             }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
