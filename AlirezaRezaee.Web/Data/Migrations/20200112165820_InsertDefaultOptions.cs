@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System.Web;
 
-namespace AlirezaRezaee.Web.Data.Migrations
+namespace Rezaee.Alireza.Web.Data.Migrations
 {
     public partial class InsertDefaultOptions : Migration
     {

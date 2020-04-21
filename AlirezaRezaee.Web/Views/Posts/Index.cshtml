@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AlirezaRezaee.Web.Models.ViewModels.Posts.PostSummaryViewModel>
+﻿@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel>
 
 @{
     ViewData["Title"] = "ارسالی ها";
@@ -106,7 +106,7 @@
                         <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
                             more_horiz
                         </button>
-                        @if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Article)
+                        @if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Article)
                         {
                             <div class="dropdown-menu text-right shadow" style="direction: rtl;">
                                 <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
@@ -115,7 +115,7 @@
                                 <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مقاله" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مقاله</button>
                             </div>
                         }
-                        else if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Share)
+                        else if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Share)
                         {
                             <div class="dropdown-menu text-right shadow" style="direction: rtl;">
                                 <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
@@ -124,7 +124,7 @@
                                 <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
                             </div>
                         }
-                        else if (post.Type == AlirezaRezaee.Web.Helpers.Enums.PostType.Markdown)
+                        else if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Markdown)
                         {
                             <div class="dropdown-menu text-right shadow" style="direction: rtl;">
                                 <a href="@post.PostUrl" class="dropdown-item">مشاهده مطلب</a>

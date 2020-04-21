@@ -1,11 +1,11 @@
-﻿using AlirezaRezaee.Web.Models.ViewModels.Links;
-using AlirezaRezaee.Web.Models.ViewModels.Posts;
+﻿using Rezaee.Alireza.Web.Models.ViewModels.Links;
+using Rezaee.Alireza.Web.Models.ViewModels.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AlirezaRezaee.Web.Models.ViewModels.Home
+namespace Rezaee.Alireza.Web.Models.ViewModels.Home
 {
     public class IndexViewModel
     {

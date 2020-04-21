@@ -1,6 +1,6 @@
 using System;
 
-namespace AlirezaRezaee.Web.Models
+namespace Rezaee.Alireza.Web.Models
 {
     public class ErrorViewModel
     {

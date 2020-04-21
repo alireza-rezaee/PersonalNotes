@@ -8,15 +8,15 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using AlirezaRezaee.Web.Data;
+using Rezaee.Alireza.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AlirezaRezaee.Web.Areas.Identity.Data;
-using AlirezaRezaee.Web.Services.Email;
-using AlirezaRezaee.Web.Helpers;
+using Rezaee.Alireza.Web.Areas.Identity.Data;
+using Rezaee.Alireza.Web.Services.Email;
+using Rezaee.Alireza.Web.Helpers;
 
-namespace AlirezaRezaee.Web
+namespace Rezaee.Alireza.Web
 {
     public class Startup
     {

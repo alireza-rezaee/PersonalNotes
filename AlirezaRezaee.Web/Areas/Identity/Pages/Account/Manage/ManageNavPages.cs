@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace AlirezaRezaee.Web.Areas.Identity.Pages.Account.Manage
+namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {

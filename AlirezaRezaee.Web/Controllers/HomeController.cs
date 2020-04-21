@@ -5,16 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AlirezaRezaee.Web.Models;
+using Rezaee.Alireza.Web.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
-using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Models.ViewModels;
+using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using AlirezaRezaee.Web.Models.ViewModels.Links;
-using AlirezaRezaee.Web.Models.ViewModels.Posts;
-using AlirezaRezaee.Web.Helpers.Enums;
+using Rezaee.Alireza.Web.Models.ViewModels.Links;
+using Rezaee.Alireza.Web.Models.ViewModels.Posts;
+using Rezaee.Alireza.Web.Helpers.Enums;
 
-namespace AlirezaRezaee.Web.Controllers
+namespace Rezaee.Alireza.Web.Controllers
 {
     public class HomeController : Controller
     {

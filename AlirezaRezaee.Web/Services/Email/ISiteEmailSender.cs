@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace AlirezaRezaee.Web.Services.Email
+namespace Rezaee.Alireza.Web.Services.Email
 {
     public interface ISiteEmailSender
     {

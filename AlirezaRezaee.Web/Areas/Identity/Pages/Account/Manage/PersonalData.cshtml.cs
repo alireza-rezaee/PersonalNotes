@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using AlirezaRezaee.Web.Areas.Identity.Data;
+using Rezaee.Alireza.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace AlirezaRezaee.Web.Areas.Identity.Pages.Account.Manage
+namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {

@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using AlirezaRezaee.Web.Areas.Identity.Data;
+using Rezaee.Alireza.Web.Areas.Identity.Data;
 
-namespace AlirezaRezaee.Web.Areas.Identity.Pages.Account
+namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel

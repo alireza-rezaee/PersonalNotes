@@ -1,5 +1,5 @@
-﻿using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Models.ViewModels.HeaderFooter;
+﻿using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Models.ViewModels.HeaderFooter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AlirezaRezaee.Web.ViewComponents
+namespace Rezaee.Alireza.Web.ViewComponents
 {
     public class HeaderFooterViewComponent : ViewComponent
     {

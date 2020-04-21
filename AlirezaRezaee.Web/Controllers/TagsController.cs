@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlirezaRezaee.Web.Controllers
+namespace Rezaee.Alireza.Web.Controllers
 {
     public class TagsController : Controller
     {

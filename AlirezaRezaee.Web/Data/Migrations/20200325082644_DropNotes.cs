@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AlirezaRezaee.Web.Data.Migrations
+namespace Rezaee.Alireza.Web.Data.Migrations
 {
     public partial class DropNotes : Migration
     {

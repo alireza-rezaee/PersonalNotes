@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Models;
-using AlirezaRezaee.Web.Models.ViewModels.Links;
+using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Models;
+using Rezaee.Alireza.Web.Models.ViewModels.Links;
 
-namespace AlirezaRezaee.Web.Controllers
+namespace Rezaee.Alireza.Web.Controllers
 {
     public class LinksController : Controller
     {

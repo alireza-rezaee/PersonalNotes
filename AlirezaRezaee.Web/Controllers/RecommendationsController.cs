@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Models;
-using AlirezaRezaee.Web.Models.ViewModels.Recommendeds;
+using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Models;
+using Rezaee.Alireza.Web.Models.ViewModels.Recommendeds;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlirezaRezaee.Web.Controllers
+namespace Rezaee.Alireza.Web.Controllers
 {
     public class RecommendationsController : Controller
     {

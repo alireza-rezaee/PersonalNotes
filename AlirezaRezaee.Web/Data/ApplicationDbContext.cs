@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AlirezaRezaee.Web.Areas.Identity.Data;
-using AlirezaRezaee.Web.Models;
+using Rezaee.Alireza.Web.Areas.Identity.Data;
+using Rezaee.Alireza.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using AlirezaRezaee.Web.Models.ViewModels.Posts;
+using Rezaee.Alireza.Web.Models.ViewModels.Posts;
 
-namespace AlirezaRezaee.Web.Data
+namespace Rezaee.Alireza.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -65,6 +65,6 @@ namespace AlirezaRezaee.Web.Data
             });
         }
 
-        public DbSet<AlirezaRezaee.Web.Models.ViewModels.Posts.PostSummaryViewModel> PostSummaryViewModel { get; set; }
+        public DbSet<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel> PostSummaryViewModel { get; set; }
     }
 }

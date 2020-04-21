@@ -6,18 +6,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using AlirezaRezaee.Web.Data;
-using AlirezaRezaee.Web.Extensions;
-using AlirezaRezaee.Web.Helpers;
-using AlirezaRezaee.Web.Helpers.Enums;
-using AlirezaRezaee.Web.Models;
-using AlirezaRezaee.Web.Models.ViewModels.Posts;
+using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Extensions;
+using Rezaee.Alireza.Web.Helpers;
+using Rezaee.Alireza.Web.Helpers.Enums;
+using Rezaee.Alireza.Web.Models;
+using Rezaee.Alireza.Web.Models.ViewModels.Posts;
 using Markdig;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlirezaRezaee.Web.Controllers
+namespace Rezaee.Alireza.Web.Controllers
 {
     public class PostsController : Controller
     {

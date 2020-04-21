@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AlirezaRezaee.Web.Helpers
+namespace Rezaee.Alireza.Web.Helpers
 {
     public interface IFileManager
     {
