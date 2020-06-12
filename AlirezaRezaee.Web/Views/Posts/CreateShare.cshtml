@@ -33,9 +33,14 @@
             directionality: 'rtl',
             language: 'fa',
 
-            plugins: "code image searchreplace wordcount",
+            plugins: "code image searchreplace wordcount link paste",
 
             content_style: "body {font-family: IRANSans;}",
+
+            rel_list: [
+                { title: 'No Referrer', value: 'noreferrer' },
+                { title: 'External Link', value: 'external' }
+            ],
 
             setup: function (editor) {
                 editor.on('change', function () {
