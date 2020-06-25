@@ -1,25 +1,20 @@
 /* .post {} */
 
-.post h3 {
+.post h2 {
     font-size: 1.5rem;
     font-weight: 500;
 }
 
-.post .post-image {
-    width: 200px;
-    height: 250px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+.post .card-footer {
+    padding: 0.5rem 1.25rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(127, 127, 127, 0.15);
 }
 
-@media(max-width: 991px) {
-    .post .post-image {
-        display: block;
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 100%;
-        opacity: 0.15;
-    }
+.post .card-footer:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.post .post-summary, .post .card-footer {
+    position: relative;
 }

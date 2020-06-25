@@ -26,6 +26,36 @@
         .bg-no-repeat {
             background-repeat: no-repeat;
         }
+
+        .tags {
+            color: #8e8e8e;
+            background-color: #f8f8f8;
+            font-size: small;
+            border-radius: 0.25rem !important;
+            border: 1px solid #dee2e6 !important;
+            padding: 0.25rem !important;
+            margin: 0.15rem;
+            float: right;
+        }
+
+            .tags .remove {
+                color: #fff;
+                background-color: #b5b5b5;
+                cursor: pointer;
+                line-height: 1 !important;
+                border-radius: 0.25rem !important;
+                padding: 0.1rem 0.2rem !important;
+                display: inline-block;
+                font-weight: 700;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                margin-left: 0.25rem;
+            }
+
+                .tags .remove::after {
+                    content: "×";
+                }
     </style>
     <script src="https://cdn.tiny.cloud/1/dm1gkjqyitq2ij8h1ccm84t9kc01tqrwtmehtb30xqe4bc4s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -127,6 +157,41 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 col-md-6 my-3">
+                <label for="test">برچسب ها:</label>
+                <small class="form-text text-muted small mb-2">واژه های پر اهمیت متن را انتخاب کنید؛ برچسب ها برای بهینه سازی موتور جستوجو، پیشنهاد مطالب و ... به کار می روند.</small>
+                <div class="input-group mb-2 mr-sm-2 dir-ltr">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
+                    </div>
+                    <input list="encodings" class="custom-select custom-select" id="new-tag-input" style="direction: rtl;">
+                    <datalist id="encodings">
+                        <option value="برچسب یک">برچسب یک</option>
+                        <option value="برچسب دو">برچسب دو</option>
+                        <option value="برچسب سه">برچسب سه</option>
+                    </datalist>
+                </div>
+                <input type="hidden" asp-for="PostTags" id="postTags" />
+                <div class="mx-2" id="selected-tags"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 my-3">
+                <label for="test">برچسب ها:</label>
+                <small class="form-text text-muted small mb-2">واژه های پر اهمیت متن را انتخاب کنید؛ برچسب ها برای بهینه سازی موتور جستوجو، پیشنهاد مطالب و ... به کار می روند.</small>
+                <div class="input-group mb-2 mr-sm-2 dir-ltr">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
+                    </div>
+                    <input list="tag-suggestions" class="custom-select custom-select" id="new-tag-input" style="direction: rtl;">
+                    <datalist id="tag-suggestions">
+                    </datalist>
+                </div>
+                <input type="hidden" asp-for="PostTags" id="postTags" />
+                <div class="mx-2" id="selected-tags"></div>
+            </div>
+        </div>
         <div class="text-left">
             <button class="btn btn-warning">
                 انصراف
@@ -157,6 +222,89 @@
             }
         });
 
+        document.getElementById("add-new-tag").addEventListener("click", function () {
+            tags.addTags(document.getElementById("new-tag-input").value.trim());
+            document.getElementById("new-tag-input").value = '';
+        });
 
+        document.getElementById("new-tag-input").onkeypress = function (e) {
+            if (e.keyCode == 44 || e.keyCode == 1548) {
+                tags.addTags(document.getElementById("new-tag-input").value.trim());
+                document.getElementById("new-tag-input").value = '';
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        var tags = {
+            addTag: function (tagName) {
+                if (tagName.trim() == "" || tags.isNameExist(tagName)) return;
+
+                var innerNewTag = document.createElement("span"), newTag = document.createElement("span");
+
+                //innerNewTag.appendChild(document.createTextNode("\u00D7"));
+                innerNewTag.classList.add("remove");
+
+                newTag.appendChild(innerNewTag);
+                newTag.appendChild(document.createTextNode(tagName));
+                newTag.classList.add("tags");
+                newTag.style.display = "none";
+
+                document.getElementById("selected-tags").appendChild(newTag);
+                $(newTag).show(300);
+
+                //on click (x) remove tag
+                innerNewTag.addEventListener("click", function () {
+                    $(newTag).hide(300, function () {
+                        newTag.remove();
+                    });
+                });
+            },
+            addTags: function (concatTagNames) {
+                //debugger;
+
+                if (concatTagNames == '')
+                    return;
+
+                var tagsArray = [];
+                if (concatTagNames.includes('،'))
+                    concatTagNames = concatTagNames.split('،').join(',');
+                if (concatTagNames.includes(','))
+                    tagsArray = concatTagNames.split(',');
+                else tagsArray.push(concatTagNames);
+
+                for (var item in tagsArray) {
+                    tags.addTag(tagsArray[item]);
+                }
+            },
+            getList: function () {
+                var list = [];
+                document.querySelectorAll("#selected-tags>.tags").forEach(function (elem) {
+                    list.push(elem.textContent);
+                });
+                return list;
+            },
+            concatTagNames: function () {
+                var concatenated = "";
+                tags.getList().forEach(function (tagName, index) {
+                    concatenated += index != 0 ? "," + tagName : tagName;
+                });
+                return concatenated;
+            },
+            isNameExist: function (tagName) {
+                var tagNames = tags.getList();
+                for (var item in tagNames)
+                    if (tagNames[item] == tagName) return true;
+
+                return false;
+            }
+        };
+
+        //onload
+        tags.addTags(document.getElementById("postTags").value);
+
+        document.querySelector('form').addEventListener("submit", function () {
+            document.getElementById("postTags").value = tags.concatTagNames();
+        });
     </script>
 }

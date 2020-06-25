@@ -15,5 +15,7 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.Posts
         public IFormFile ThumbnailImage { get; set; }
 
         public IFormFile CoverImage { get; set; }
+
+        public string PostTags { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.Posts
         public Share Share { get; set; }
 
         public IFormFile ThumbnailImage { get; set; }
+
+        public string PostTags { get; set; }
     }
 }

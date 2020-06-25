@@ -32,6 +32,12 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Recommendeds> Recommendeds { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<PostTag> PostTags { get; set; }
+
+        public DbSet<DestructivePost> DestructivePosts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -63,8 +69,22 @@ namespace Rezaee.Alireza.Web.Data
                     .WithOne(s => s.RecommendedPost)
                     .HasForeignKey<Recommendeds>(s => s.PostId);
             });
-        }
 
-        public DbSet<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel> PostSummaryViewModel { get; set; }
+
+
+            //Posts -> (many to many) <- Tags
+            builder.Entity<PostTag>()
+                .HasKey(pt => new { pt.PostId, pt.TagId });
+
+            builder.Entity<PostTag>()
+                .HasOne(pt => pt.Post)
+                .WithMany(p => p.PostTags)
+                .HasForeignKey(pt => pt.PostId);
+
+            builder.Entity<PostTag>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.PostTags)
+                .HasForeignKey(pt => pt.TagId);
+        }
     }
 }

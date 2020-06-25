@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel>
+﻿@using Rezaee.Alireza.Web.Extensions;
+@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel>
 
 @{
     ViewData["Title"] = "ارسالی ها";
@@ -34,7 +35,22 @@
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
                                     <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
-                                    <div class="mb-1 text-muted">۲۷ آبان</div>
+                                    <div class="mb-1 text-muted">
+                                        <div class="d-inline-block border rounded small p-1">
+                                            <svg class="bi bi-calendar ml-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
+                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
+                                            </svg>
+                                            @if (post.LatestUpdateDateTime != null)
+                                            {
+                                                <text>@(((DateTime)post.LatestUpdateDateTime).ToPersianDateTime().ToString("dd MMMM").EnglishToPersian())</text>
+                                            }
+                                            else
+                                            {
+                                                <text>@post.PublishDateTime.ToPersianDateTime().ToString("dd MMMM").EnglishToPersian()</text>
+                                            }
+                                        </div>
+                                    </div>
                                     <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
                                     <div class="text-left">
                                         <a href="@post.PostUrl" class="stretched-link">
@@ -47,20 +63,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12" style="opacity: 0.7;">
-                            <ul class="row m-0 p-0">
-                                <li class="col-12 border-top small bg-light-gray">
-                                    <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                        رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                                    </a>
-                                </li>
-                                <li class="col-12 border-top small bg-light-gray">
-                                    <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                        اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        @if (post.RelatedPosts.Any())
+                        {
+                            <div class="col-12" style="opacity: 0.7;">
+                                <ul class="row m-0 p-0">
+                                    @foreach (var relatedPost in post.RelatedPosts)
+                                    {
+                                        <li class="col-12 border-top small bg-light-gray">
+                                            <a href="@relatedPost.PostUrl" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                                @relatedPost.Title
+                                            </a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </div>
+                        }
                     </div>
                 }
                 else
@@ -71,33 +89,52 @@
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
                                     <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
-                                    <div class="mb-1 text-muted">۲۷ آبان</div>
+                                    <div class="mb-1 text-muted">
+                                        <div class="d-inline-block border rounded small p-1">
+                                            <svg class="bi bi-calendar ml-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
+                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
+                                            </svg>
+                                            @if (post.LatestUpdateDateTime != null)
+                                            {
+                                                <text>@(((DateTime)post.LatestUpdateDateTime).ToPersianDateTime().ToString("dd MMMM").EnglishToPersian())</text>
+                                            }
+                                            else
+                                            {
+                                                <text>@post.PublishDateTime.ToPersianDateTime().ToString("dd MMMM").EnglishToPersian()</text>
+                                            }
+                                        </div>
+                                    </div>
                                     <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
                                     <div class="text-left">
-                                        <a href="@post.PostUrl" class="stretched-link">
-                                            در ادامه بخوانید
-                                            <i class="fas fa-angle-double-left"></i>
-                                        </a>
+                                        <div class="text-left">
+                                            <a href="@post.PostUrl" class="stretched-link">
+                                                در ادامه بخوانید
+                                                <i class="fas fa-angle-double-left"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <ul class="row m-0 p-0">
-                                <li class="col-12 border-top small bg-light-gray">
-                                    <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                        رهبر انقلاب: کشور را به سمت جنگ نمی‌بریم اما در مقابل تحمیل با قدرت می‌ایستیم
-                                    </a>
-                                </li>
-                                <li class="col-12 border-top small bg-light-gray">
-                                    <a href="#" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                        اغلب مطالبات مردم حق، ولی فتنه سازی کار دشمن بود
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        @if (post.RelatedPosts.Any())
+                        {
+                            <div class="col-12" style="opacity: 0.7;">
+                                <ul class="row m-0 p-0">
+                                    @foreach (var relatedPost in post.RelatedPosts)
+                                    {
+                                        <li class="col-12 border-top small bg-light-gray">
+                                            <a href="@relatedPost.PostUrl" class="d-block text-truncate bg-light-gray text-secondary p-2">
+                                                @relatedPost.Title
+                                            </a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </div>
+                        }
                     </div>
                 }
                 @if (post.Type != null)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rezaee.Alireza.Web.Data;
 
 namespace Rezaee.Alireza.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200623094834_DropPostSummaryViewModel")]
+    partial class DropPostSummaryViewModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,22 +271,6 @@ namespace Rezaee.Alireza.Web.Data.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PostId");
-
-                    b.ToTable("DestructivePosts");
-                });
-
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.Link", b =>
                 {
                     b.Property<short>("Rank")
@@ -514,15 +500,6 @@ namespace Rezaee.Alireza.Web.Data.Migrations
                     b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
                         .WithOne("Article")
                         .HasForeignKey("Rezaee.Alireza.Web.Models.Article", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
-                {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
-                        .WithOne("DestructivePosts")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.DestructivePost", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -129,6 +129,12 @@
     <Compile Remove="Data\Migrations\20200408121203_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200414093005_AlterMarkdowns0.cs" />
     <Compile Remove="Data\Migrations\20200414093005_AlterMarkdowns0.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200612150311_AlterTags.cs" />
+    <Compile Remove="Data\Migrations\20200612150311_AlterTags.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200612182126_AlterTags01.cs" />
+    <Compile Remove="Data\Migrations\20200612182126_AlterTags01.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200623094543_AlterTags05.cs" />
+    <Compile Remove="Data\Migrations\20200623094543_AlterTags05.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -146,18 +152,20 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
-    <PackageReference Include="PersianDateTime.Core" Version="1.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="PersianDateTime.Core" Version="1.0.8" />
   </ItemGroup>
 
 

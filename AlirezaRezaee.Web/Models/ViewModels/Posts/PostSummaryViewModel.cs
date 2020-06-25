@@ -30,5 +30,7 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.Posts
         public string postDeleteUrl { get; set; }
 
         public string postEditTypeUrl { get; set; }
+
+        public List<PostSummaryInShortViewModel> RelatedPosts { get; set; }
     }
 }

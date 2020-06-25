@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rezaee.Alireza.Web.Data;
 
 namespace Rezaee.Alireza.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200619162704_AlterTags04")]
+    partial class AlterTags04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,22 +271,6 @@ namespace Rezaee.Alireza.Web.Data.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PostId");
-
-                    b.ToTable("DestructivePosts");
-                });
-
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.Link", b =>
                 {
                     b.Property<short>("Rank")
@@ -458,6 +444,48 @@ namespace Rezaee.Alireza.Web.Data.Migrations
                     b.ToTable("Abouts");
                 });
 
+            modelBuilder.Entity("Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("LatestUpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostEditUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("postDeleteUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("postEditTypeUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostSummaryViewModel");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -514,15 +542,6 @@ namespace Rezaee.Alireza.Web.Data.Migrations
                     b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
                         .WithOne("Article")
                         .HasForeignKey("Rezaee.Alireza.Web.Models.Article", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
-                {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
-                        .WithOne("DestructivePosts")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.DestructivePost", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
