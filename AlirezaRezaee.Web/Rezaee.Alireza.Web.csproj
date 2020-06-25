@@ -174,4 +174,23 @@
     <Folder Include="wwwroot\uploads\images\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Update="Data\SqlQueries\InsertSimplePostsAndTags\part5.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\SqlQueries\InsertSimplePostsAndTags\part4.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\SqlQueries\InsertSimplePostsAndTags\part3.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\SqlQueries\InsertSimplePostsAndTags\part2.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\SqlQueries\InsertSimplePostsAndTags\part1.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

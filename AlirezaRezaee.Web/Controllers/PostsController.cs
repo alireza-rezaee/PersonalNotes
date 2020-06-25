@@ -951,7 +951,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 isShare = IsShare(post),
                 isMarkdown = IsMarkdown(post);
 
-            var postTypes = (new bool[] { isArticle, isShare, isMarkdown }).Select(postType => postType == true).Count();
+            var postTypes = (new bool[] { isArticle, isShare, isMarkdown }).Where(postType => postType == true).Count();
             if (postTypes == 0)
                 throw new Exception("در فرایند تشخیص نوع مطلب، نوعی پیدا نشد!");
             else if (postTypes > 1)
