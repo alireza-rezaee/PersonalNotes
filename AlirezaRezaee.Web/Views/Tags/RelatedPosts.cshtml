@@ -1,0 +1,177 @@
+﻿@model Rezaee.Alireza.Web.Models.ViewModels.Tags.RelatedPostsViewModel
+
+@{
+    ViewData["Title"] = "مطالب مرتبط به برچسب «" + Model.Tag.Title + "»";
+}
+
+@section Head {
+    <style>
+        .tag {
+            color: #8e8e8e;
+            background-color: #f8f8f8;
+            font-size: small;
+            border-radius: 0.25rem !important;
+            border: 1px solid #dee2e6 !important;
+            padding: 0.25rem !important;
+            margin: 0.15rem;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+            .tag:hover {
+                color: #8e8e8e;
+                text-decoration: none;
+            }
+
+        button.tag:hover,
+        a.tag:focus {
+            background-color: #e6e6e6;
+            border-color: #b1b1b1 !important;
+        }
+
+        button.tag:focus,
+        a.tag:focus {
+            outline: none;
+        }
+
+        .tag .remove {
+            color: #fff;
+            background-color: #b5b5b5;
+            cursor: pointer;
+            line-height: 1 !important;
+            border-radius: 0.25rem !important;
+            padding: 0.1rem 0.2rem !important;
+            display: inline-block;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            margin-left: 0.25rem;
+        }
+
+            .tag .remove::after {
+                content: "×";
+            }
+        }
+    </style>
+
+    <div class="container my-5">
+        <div class="row links rounded justify-content-center mb-3">
+
+            <div class="col-12">
+                <h1 class="font-weight-bold my-4 text-muted" style="font-size: 1.5rem;">مطالب مربوط به برچسب <a href="javascript:void(0)" class="tag"><span class="remove"></span> @Model.Tag.Title</a></h1>
+
+                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#modal-edit-tag">اصلاح عنوان برچسب «@Model.Tag.Title»</button>
+                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modal-delete-tag">حذف برچسب «@Model.Tag.Title»</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- begin: مطالب سایت -->
+    <div class="container my-5">
+        @if (Model.Posts.Any())
+        {
+            <div class="card-columns">
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="post card shadow-sm" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
+                        @if (post.PublishDateTime.Date > DateTime.Now)
+                        {
+                            <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
+                                    style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
+                                    data-toggle="tooltip"
+                                    title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
+                            </button>
+                        }
+                        <div class="post-summary">
+                            <img src="@post.ThumbnailUrl" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">@Html.Raw(@post.Title)</h2>
+                                <p class="card-text">@Html.Raw(post.Summary)</p>
+                                <div class="text-left">
+                                    <a href="@post.PostUrl" class="stretched-link">
+                                        در ادامه بخوانید
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="text-center">
+            <a asp-controller="posts" asp-action="index" class="btn btn-primary shadow rounded-oval">
+                <i class="fas fa-stream fa-flip-horizontal"></i> ادامه مطالب
+            </a>
+        </div>
+
+    </div>
+    <!-- end: پایان مطالب سایت -->
+    <!-- Modal -->
+    <div class="modal fade" id="modal-delete-tag" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form asp-controller="tags" asp-action="delete" asp-route-id="@Model.Tag.Id" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            هشدار حذف برچسب
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        هشدار: پس از تایید،
+                        برچسب «<span class="font-weight-bold text-danger">@Model.Tag.Title</span>» به همراه همه وابستگی ها
+                        <span class="text-danger">حذف</span>
+                        میشود و آنگاه قابل بازگشت نخواهد بود.
+                        آیا از این اقدام اطمینان دارید؟
+
+                        <div class="text-left mt-4">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                            <button type="submit" class="btn btn-danger">تایید</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-edit-tag" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form asp-controller="tags" asp-action="edit" asp-route-id="@Model.Tag.Id" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            اصلاح عنوان برچسب
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="new-title" class="text-muted">عنوان جدید (جایگزین <span class="font-weight-bold">@Model.Tag.Title</span>):</label>
+                        <input type="text" class="form-control" id="new-title" name="newName" placeholder="اینجا عنوانی جدید برای برچسب بنویسید" value="@Model.Tag.Title" style="direction: rtl;">
+
+                        <div class="text-left mt-4">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                            <button type="submit" class="btn btn-success">تایید</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+<script>
+    $('#modal-edit-tag').on('shown.bs.modal', function (event) {
+        var input = $('#new-title');
+        var tmp = input.val();
+        input.focus().val('').val(tmp);
+    })
+</script>
+}

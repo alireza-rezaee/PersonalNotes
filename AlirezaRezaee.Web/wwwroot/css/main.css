@@ -743,6 +743,14 @@ This set of fonts are used in this project under the license: (.....)
 .post .post-summary, .post .card-footer {
   position: relative; }
 
+.post .card-footer.more-related-posts {
+  padding-top: 0;
+  padding-bottom: 0; }
+  .post .card-footer.more-related-posts button {
+    padding: 0; }
+    .post .card-footer.more-related-posts button:focus {
+      box-shadow: none; }
+
 @font-face {
   font-family: "QuranTaha";
   src: url("/fonts/eot/QuranTaha.eot");

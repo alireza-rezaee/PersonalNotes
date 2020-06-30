@@ -1,0 +1,218 @@
+﻿@using Rezaee.Alireza.Web.Extensions
+@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Tags.TagSortByAlphabet>
+
+@{
+    ViewData["Title"] = "فهرست برچسب ها";
+}
+@section Head {
+    <style>
+        .tag {
+            color: #8e8e8e;
+            background-color: #f8f8f8;
+            font-size: small;
+            border-radius: 0.25rem !important;
+            border: 1px solid #dee2e6 !important;
+            padding: 0.25rem !important;
+            margin: 0.15rem;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+            .tag:hover {
+                color: #8e8e8e;
+                text-decoration: none;
+            }
+
+        button.tag:hover,
+        a.tag:focus {
+            background-color: #e6e6e6;
+            border-color: #b1b1b1 !important;
+        }
+
+        button.tag:focus,
+        a.tag:focus {
+            outline: none;
+        }
+
+
+        .tag .remove {
+            color: #fff;
+            background-color: #b5b5b5;
+            cursor: pointer;
+            line-height: 1 !important;
+            border-radius: 0.25rem !important;
+            padding: 0.1rem 0.2rem !important;
+            display: inline-block;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            margin-left: 0.25rem;
+        }
+
+            .tag .remove::after {
+                content: "×";
+            }
+
+        #selected-tags .tag {
+            float: right;
+        }
+
+        #selected-tags:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+    </style>
+}
+
+<div class="container">
+    <h1 class="font-weight-bold my-4 text-muted" style="font-size: 2.25rem;"><span class="border-bottom">@ViewData["Title"]</span></h1>
+    <div class="row mb-4">
+        <div class="col">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#model-new-tags">افزودن برچسب جدید</button>
+        </div>
+    </div>
+
+
+    @foreach (var tags in Model)
+    {
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="font-weight-bold" style="font-size: 2rem;">@tags.Alphabet</h2>
+                <div class="small text-muted mb-2">(شامل @tags.Tags.Count.EnglishToPersian() برچسب)</div>
+                <div>
+                    @foreach (var tag in tags.Tags)
+                    {
+                        <a asp-controller="tags" asp-action="RelatedPosts" asp-route-id="@tag.Id" target="_blank" class="tag">@tag.Title</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="model-new-tags" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="tags" asp-action="create">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">
+                        افزودن برچسب های جدید
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="input-group mb-2 mr-sm-2 dir-ltr">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
+                        </div>
+                        <input class="custom-select" id="new-tag-input" style="direction: rtl;" autocomplete="off">
+                    </div>
+                    <input type="text" name="newTags" class="d-none" id="postTags" />
+                    <div class="mx-2" id="selected-tags"></div>
+
+                    <div class="text-left mt-4">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-success">ذخیره برچسب های جدید</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("add-new-tag").addEventListener("click", function () {
+            tags.addTags(document.getElementById("new-tag-input").value.trim());
+            document.getElementById("new-tag-input").value = '';
+        });
+
+        document.getElementById("new-tag-input").onkeypress = function (e) {
+            if (e.keyCode == 44 || e.keyCode == 1548) {
+                tags.addTags(document.getElementById("new-tag-input").value.trim());
+                document.getElementById("new-tag-input").value = '';
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        var tags = {
+            addTag: function (tagName) {
+                if (tagName.trim() == "" || tags.isNameExist(tagName)) return;
+
+                var innerNewTag = document.createElement("span"),
+                    newTag = document.createElement("span");
+
+                //innerNewTag.appendChild(document.createTextNode("\u00D7"));
+                innerNewTag.classList.add("remove");
+
+                newTag.appendChild(innerNewTag);
+                newTag.appendChild(document.createTextNode(tagName));
+                newTag.classList.add("tag");
+                newTag.style.display = "none";
+
+                document.getElementById("selected-tags").appendChild(newTag);
+                $(newTag).show(300);
+
+                //on click (x) remove tag
+                innerNewTag.addEventListener("click", function () {
+                    $(newTag).hide(300, function () {
+                        newTag.remove();
+                    });
+                });
+            },
+            addTags: function (concatTagNames) {
+                //debugger;
+
+                if (concatTagNames == '')
+                    return;
+
+                var tagsArray = [];
+                if (concatTagNames.includes('،'))
+                    concatTagNames = concatTagNames.split('،').join(',');
+                if (concatTagNames.includes(','))
+                    tagsArray = concatTagNames.split(',');
+                else tagsArray.push(concatTagNames);
+
+                for (var item in tagsArray) {
+                    tags.addTag(tagsArray[item]);
+                }
+            },
+            getList: function () {
+                var list = [];
+                document.querySelectorAll("#selected-tags>.tag").forEach(function (elem) {
+                    list.push(elem.textContent);
+                });
+                return list;
+            },
+            concatTagNames: function () {
+                var concatenated = "";
+                tags.getList().forEach(function (tagName, index) {
+                    concatenated += index != 0 ? "," + tagName : tagName;
+                });
+                return concatenated;
+            },
+            isNameExist: function (tagName) {
+                var tagNames = tags.getList();
+                for (var item in tagNames)
+                    if (tagNames[item] == tagName) return true;
+
+                return false;
+            }
+        };
+
+        document.querySelector('form').addEventListener("submit", function (e) {
+            e.preventDefault();
+            document.getElementById("postTags").value = tags.concatTagNames();
+            console.log(tags.concatTagNames());
+            $(this).submit();
+        });
+
+    </script>
+}

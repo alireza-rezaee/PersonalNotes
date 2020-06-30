@@ -21,162 +21,117 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="row mb-2">
-        @foreach (var post in Model)
-        {
-            <div class="col-md-6">
-                @if (post.PublishDateTime.Date > DateTime.Now)
-                {
-                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="border: 2px dotted #08f !important;">
-                        <div class="col-12 post" style="opacity: 0.6;">
-                            <div class="row">
-                                <div class="col p-4 d-flex flex-column position-static">
-                                    <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
-                                    <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
-                                    <div class="mb-1 text-muted">
-                                        <div class="d-inline-block border rounded small p-1">
-                                            <svg class="bi bi-calendar ml-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
-                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
-                                            </svg>
-                                            @if (post.LatestUpdateDateTime != null)
-                                            {
-                                                <text>@(((DateTime)post.LatestUpdateDateTime).ToPersianDateTime().ToString("dd MMMM").EnglishToPersian())</text>
-                                            }
-                                            else
-                                            {
-                                                <text>@post.PublishDateTime.ToPersianDateTime().ToString("dd MMMM").EnglishToPersian()</text>
-                                            }
-                                        </div>
-                                    </div>
-                                    <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
-                                    <div class="text-left">
-                                        <a href="@post.PostUrl" class="stretched-link">
-                                            در ادامه بخوانید
-                                            <i class="fas fa-angle-double-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
-                                </div>
-                            </div>
-                        </div>
-                        @if (post.RelatedPosts.Any())
-                        {
-                            <div class="col-12" style="opacity: 0.7;">
-                                <ul class="row m-0 p-0">
-                                    @foreach (var relatedPost in post.RelatedPosts)
-                                    {
-                                        <li class="col-12 border-top small bg-light-gray">
-                                            <a href="@relatedPost.PostUrl" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                                @relatedPost.Title
-                                            </a>
-                                        </li>
-
-                                    }
-                                </ul>
-                            </div>
-                        }
-                    </div>
-                }
-                else
-                {
-                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                        <div class="col-12 post">
-                            <div class="row">
-                                <div class="col p-4 d-flex flex-column position-static">
-                                    <strong class="d-inline-block mb-2 text-primary">محل دسته بندی</strong>
-                                    <h3 class="mb-0">@Html.Raw(@post.Title)</h3>
-                                    <div class="mb-1 text-muted">
-                                        <div class="d-inline-block border rounded small p-1">
-                                            <svg class="bi bi-calendar ml-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
-                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
-                                            </svg>
-                                            @if (post.LatestUpdateDateTime != null)
-                                            {
-                                                <text>@(((DateTime)post.LatestUpdateDateTime).ToPersianDateTime().ToString("dd MMMM").EnglishToPersian())</text>
-                                            }
-                                            else
-                                            {
-                                                <text>@post.PublishDateTime.ToPersianDateTime().ToString("dd MMMM").EnglishToPersian()</text>
-                                            }
-                                        </div>
-                                    </div>
-                                    <p class="card-text mb-auto">@Html.Raw(post.Summary)</p>
-                                    <div class="text-left">
-                                        <div class="text-left">
-                                            <a href="@post.PostUrl" class="stretched-link">
-                                                در ادامه بخوانید
-                                                <i class="fas fa-angle-double-left"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto post-image" style="background-image: url(@post.ThumbnailUrl);">
-                                </div>
-                            </div>
-                        </div>
-                        @if (post.RelatedPosts.Any())
-                        {
-                            <div class="col-12" style="opacity: 0.7;">
-                                <ul class="row m-0 p-0">
-                                    @foreach (var relatedPost in post.RelatedPosts)
-                                    {
-                                        <li class="col-12 border-top small bg-light-gray">
-                                            <a href="@relatedPost.PostUrl" class="d-block text-truncate bg-light-gray text-secondary p-2">
-                                                @relatedPost.Title
-                                            </a>
-                                        </li>
-
-                                    }
-                                </ul>
-                            </div>
-                        }
-                    </div>
-                }
-                @if (post.Type != null)
-                {
-                    <div class="dropdown position-absolute" style="left:0; top:0; z-index: 99;">
-                        <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
-                            more_horiz
-                        </button>
-                        @if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Article)
-                        {
-                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                                <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
-                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
-                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مقاله" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مقاله</button>
-                            </div>
-                        }
-                        else if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Share)
-                        {
-                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                                <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
-                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
-                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
-                            </div>
-                        }
-                        else if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Markdown)
-                        {
-                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                                <a href="@post.PostUrl" class="dropdown-item">مشاهده مطلب</a>
-                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مطلب</a>
-                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مطلب نشانه دار" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مطلب نشانه دار</button>
-                            </div>
-                        }
-                    </div>
-                }
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="my-2 position-relative">
+                <div class="d-flex links-content links-item">
+                    <a asp-controller="tags" asp-action="index" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                        <i class="material-icons align-middle">language</i>
+                    </a>
+                    <a asp-controller="tags" asp-action="index" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                        <i class="caption">فهرست برچسب ها</i>
+                    </a>
+                </div>
             </div>
-        }
+        </div>
     </div>
+
+    <hr />
 </div>
 
+<!-- begin: مطالب سایت -->
+<div class="container my-5">
+    @if (Model.Any())
+    {
+        <div class="card-columns">
+            @foreach (var post in Model)
+            {
+                <div class="post card shadow-sm  position-relative" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
+                    @if (post.PublishDateTime.Date > DateTime.Now)
+                    {
+                        <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
+                                style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
+                                data-toggle="tooltip"
+                                title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
+                        </button>
+                    }
+                    <div class="post-summary">
+                        <img src="@post.ThumbnailUrl" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h2 class="card-title">@Html.Raw(@post.Title)</h2>
+                            <p class="card-text">@Html.Raw(post.Summary)</p>
+                            <div class="text-left">
+                                <a href="@post.PostUrl" class="stretched-link">
+                                    در ادامه بخوانید
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @if (post.RelatedPosts.Any())
+                    {
+                        <div class="js-related-posts">
+                            @foreach (var relatedPost in post.RelatedPosts)
+                            {
+                                <div class="card-footer">
+                                    <a href="@relatedPost.PostUrl" class="stretched-link"><small class="text-muted small">@relatedPost.Title</small></a>
+                                </div>
+                            }
+                        </div>
+                        @if (post.RelatedPosts.Count == 2)
+                        {
+                            <div class="card-footer text-center more-related-posts">
+                                <button type="button" class="btn btn-default stretched-link js-more-related-posts">
+                                    <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        }
+                    }
+
+
+
+                    @if (post.Type != null)
+                    {
+                        <div class="dropleft position-absolute" style="right:0; top:0; z-index: 99;">
+                            <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
+                                more_horiz
+                            </button>
+                            @if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Article)
+                            {
+                                <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                    <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
+                                    <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
+                                    <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                    <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مقاله" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مقاله</button>
+                                </div>
+                            }
+                            else if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Share)
+                            {
+                                <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                    <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
+                                    <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
+                                    <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                    <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
+                                </div>
+                            }
+                            else if (post.Type == Rezaee.Alireza.Web.Helpers.Enums.PostType.Markdown)
+                            {
+                                <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                    <a href="@post.PostUrl" class="dropdown-item">مشاهده مطلب</a>
+                                    <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مطلب</a>
+                                    <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                    <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مطلب نشانه دار" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مطلب نشانه دار</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+<!-- end: پایان مطالب سایت -->
 <!-- Modals -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal-delete-post">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -254,6 +209,20 @@
             modal.find('.modal-post-thumbnail').css('background-image', "url('" + thumbnailUrl + "')");
             modal.find('.modal-post-show').attr('href', postUrl)
             modal.find('.modal-post-datetime').text(dateTime);
+        });
+
+        $('.js-more-related-posts').click(function (e) {
+            $.ajax({
+                url: "/posts/" + $(e.target).parents('.post').data("post-id") + "/related-posts?count=5",
+                dataType: "json",
+                type: "GET",
+                success: function (posts) {
+                    var relatedPosts = '';
+                    for (var post in posts)
+                        relatedPosts += '<div class="card-footer"><a href="' + posts[post].postUrl + '" class="stretched-link"><small class="text-muted small">' + posts[post].title + '</small></a></div>';;
+                    $(e.target).parents('.post').find('.js-related-posts').html(relatedPosts);
+                }
+            });
         });
     </script>
 }

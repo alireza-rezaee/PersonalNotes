@@ -139,7 +139,7 @@
                     <div class="input-group-prepend">
                         <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
                     </div>
-                    <input list="tag-suggestions" class="custom-select custom-select" id="new-tag-input" style="direction: rtl;">
+                    <input list="tag-suggestions" class="custom-select" id="new-tag-input" style="direction: rtl;" autocomplete="off">
                     <datalist id="tag-suggestions">
                     </datalist>
                 </div>
@@ -180,6 +180,7 @@
         document.getElementById("add-new-tag").addEventListener("click", function () {
             tags.addTags(document.getElementById("new-tag-input").value.trim());
             document.getElementById("new-tag-input").value = '';
+            tags.clearSuggestions();
         });
 
         document.getElementById("new-tag-input").onkeypress = function (e) {
@@ -252,11 +253,37 @@
                     if (tagNames[item] == tagName) return true;
 
                 return false;
-            }
+            },
+            clearSuggestions: function () {
+                document.getElementById('tag-suggestions').textContent = '';
+            },
+            retrieveSuggestions: function () {
+                var elemInput = $('#new-tag-input');
+                var elemSugestions = document.getElementById('tag-suggestions');
+
+                $.ajax({
+                    url: "/tags/suggestions?q=" + elemInput.val(),
+                    dataType: "json",
+                    type: "GET",
+                    success: function (suggestions) {
+                        tags.clearSuggestions();
+                        for (var index in suggestions) {
+                            //suggestions[index].id
+                            var newSuggestion = document.createElement("option");
+                            newSuggestion.setAttribute('value', suggestions[index].title);
+                            elemSugestions.appendChild(newSuggestion);
+                        }
+                    }
+                });
+            },
         };
 
         //onload
         tags.addTags(document.getElementById("postTags").value);
+
+        document.getElementById('new-tag-input').addEventListener('keyup', function () {
+            tags.retrieveSuggestions();
+        });
 
         document.querySelector('form').addEventListener("submit", function () {
             document.getElementById("postTags").value = tags.concatTagNames();

@@ -20,6 +20,7 @@ using System.Threading;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
+    [Route("posts")]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -33,11 +34,13 @@ namespace Rezaee.Alireza.Web.Controllers
             _env = env;
         }
 
+        [Route("")]
         public async Task<IActionResult> Index() => View(await RetrieveLatestPostsSummary(count: 10));
 
+        [NonAction]
         public async Task<List<PostSummaryViewModel>> LoadPosts(int count, int skip) => await RetrieveLatestPostsSummary(count: count, skip: skip);
 
-        [Route("{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> Details(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -94,7 +97,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet]
-        [Route("md/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/md/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> DetailMarkdown(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -129,24 +132,25 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet]
+        [Route("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Route("posts/create/article")]
+        [Route("create/article")]
         public IActionResult CreateArticle()
         {
             return View();
         }
 
-        [Route("posts/create/share")]
+        [Route("create/share")]
         public IActionResult CreateShare()
         {
             return View();
         }
 
-        [Route("posts/create/markdown")]
+        [Route("create/markdown")]
         public IActionResult CreateMarkdown()
         {
             return View();
@@ -154,7 +158,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("posts/create/article")]
+        [Route("create/article")]
         public async Task<IActionResult> CreatingArticle(CreateEditArticlePostViewModel createPostVM)
         {
             if (ModelState.IsValid)
@@ -221,7 +225,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("posts/create/share")]
+        [Route("create/share")]
         public async Task<IActionResult> CreatingShare(CreateEditSharePostViewModel createPostVM)
         {
             if (ModelState.IsValid)
@@ -280,7 +284,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("posts/create/markdown")]
+        [Route("create/markdown")]
         public async Task<IActionResult> CreatingMarkdown(CreateEditMarkdownPostViewModel createPostVM)
         {
             if (ModelState.IsValid)
@@ -342,7 +346,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet]
-        [Route("edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> Edit(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -364,7 +368,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet]
-        [Route("edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditArticle")]
+        [Route("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditArticle")]
         public async Task<IActionResult> EditArticle(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -395,7 +399,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> EditArticle(CreateEditArticlePostViewModel editPostVM, int year, int month, int day, int postId, string UrlTitle)
         {
             var publishDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -502,7 +506,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet]
-        [Route("edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}", Name = "EditShare")]
+        [Route("/edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}", Name = "EditShare")]
         public async Task<IActionResult> EditShare(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -530,7 +534,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Route("/edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
         public async Task<IActionResult> EditShare(CreateEditSharePostViewModel editPostVM, int year, int month, int day, int postId)
         {
             var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
@@ -614,7 +618,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet]
-        [Route("edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditMarkdown")]
+        [Route("/edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditMarkdown")]
         public async Task<IActionResult> EditMarkdown(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -642,7 +646,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> EditMarkdown(CreateEditMarkdownPostViewModel editPostVM, int year, int month, int day, int postId)
         {
             var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
@@ -728,7 +732,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> Delete(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -785,7 +789,7 @@ namespace Rezaee.Alireza.Web.Controllers
             await _context.SaveChangesAsync();
         }
 
-        [Route("edit/type/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Route("/edit/type/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> EditType(int year, int month, int day, int postId, string UrlTitle)
         {
             var switchAbleTypes = new List<SwitchPostTypeViewModel>();
@@ -805,7 +809,7 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(switchAbleTypes);
         }
 
-        [Route("edit/switch/to-article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Route("/edit/switch/to-article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
         public async Task<IActionResult> SwitchToArticle(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -817,7 +821,7 @@ namespace Rezaee.Alireza.Web.Controllers
             return RedirectToAction(nameof(EditArticle), new { year = year, month = month, day = day, postId = postId });
         }
 
-        [Route("edit/switch/to-share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Route("/edit/switch/to-share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
         public async Task<IActionResult> SwitchToShare(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -829,7 +833,7 @@ namespace Rezaee.Alireza.Web.Controllers
             return RedirectToAction(nameof(EditShare), new { year = year, month = month, day = day, postId = postId });
         }
 
-        [Route("edit/switch/to-markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Route("/edit/switch/to-markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
         public async Task<IActionResult> SwitchToMarkdown(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -899,14 +903,22 @@ namespace Rezaee.Alireza.Web.Controllers
         {
             var postIds = new List<int>();
             foreach (var post in posts)
-                foreach (var postTag in post.PostTags)
-                    foreach (var innerPostTag in postTag.Tag.PostTags)
-                        if (!postIds.Any(pid => pid == innerPostTag.PostId)) postIds.Add(innerPostTag.PostId);
+                postIds.AddRange(RetrievePostIdsForRelatedPosts(post));
 
             return postIds;
         }
 
-        private static List<PostSummaryInShortViewModel> MostRelatedPostsToTags(Post post)
+        private static List<int> RetrievePostIdsForRelatedPosts(Post post)
+        {
+            var postIds = new List<int>();
+            foreach (var postTag in post.PostTags)
+                foreach (var innerPostTag in postTag.Tag.PostTags)
+                    if (!postIds.Any(pid => pid == innerPostTag.PostId)) postIds.Add(innerPostTag.PostId);
+
+            return postIds;
+        }
+
+        private static List<PostSummaryInShortViewModel> MostRelatedPostsToTags(Post post, int count = 2, int skip = 0)
         {
             var postsAndPoints = new List<RelatedPostPointViewModel>();
             foreach (var postTag in post.PostTags)
@@ -922,7 +934,7 @@ namespace Rezaee.Alireza.Web.Controllers
             }
 
 
-            postsAndPoints = postsAndPoints.OrderByDescending(pap => pap.Point).ThenByDescending(pap => Math.Abs(pap.Post.PublishDateTime.CompareTo(post.PublishDateTime))).Take(2).ToList();
+            postsAndPoints = postsAndPoints.OrderByDescending(pap => pap.Point).ThenByDescending(pap => Math.Abs(pap.Post.PublishDateTime.CompareTo(post.PublishDateTime))).Skip(skip).Take(count).ToList();
 
             var mostRelatedPosts = new List<PostSummaryInShortViewModel>();
             postsAndPoints.ForEach(pap => mostRelatedPosts.Add(
@@ -938,11 +950,34 @@ namespace Rezaee.Alireza.Web.Controllers
             return mostRelatedPosts;
         }
 
+        [Route("{postId}/related-posts")]
+        public async Task<List<PostSummaryInShortViewModel>> MostRelatedPosts(int postId, int count = 5, int skip = 0)
+        {
+            var retrievePost = await _context.Posts
+                .Include(p => p.Article)
+                .Include(p => p.Share)
+                .Include(p => p.Markdown)
+                .Include(p => p.DestructivePosts)
+                .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
+                .FirstOrDefaultAsync(post => post.Id == postId);
+            if (retrievePost == null)
+                return null;
+
+            await _context.Posts.Where(p => RetrievePostIdsForRelatedPosts(retrievePost).Contains(p.Id))
+                .Include(p => p.Article)
+                .Include(p => p.Share)
+                .Include(p => p.Markdown)
+                .Include(p => p.DestructivePosts)
+                .ToListAsync();
+
+            return MostRelatedPostsToTags(post: retrievePost, count: count, skip: skip);
+        }
+
         //Detect PostType
         private async Task<PostType> DetectPostType(int postId)
-            => DetectPostType(await _context.Posts.Where(p => p.Id == postId).Select(post => new Post { Article = post.Article, Share = post.Share, Markdown = post.Markdown}).FirstOrDefaultAsync());
+            => DetectPostType(await _context.Posts.Where(p => p.Id == postId).Select(post => new Post { Article = post.Article, Share = post.Share, Markdown = post.Markdown }).FirstOrDefaultAsync());
 
-        private static PostType DetectPostType(Post post)
+        public static PostType DetectPostType(Post post)
         {
             if (post == null)
                 throw new Exception("مطلبی یافت نشد!");
@@ -971,12 +1006,12 @@ namespace Rezaee.Alireza.Web.Controllers
         private static bool IsDestructive(Post post) => post.DestructivePosts != null;
 
         //Get post Address(es)
-        private static string GetPostUrl(Post post)
+        public static string GetPostUrl(Post post)
         {
             return (DetectPostType(post)) switch
             {
-                PostType.Article => $"{post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd")}/{post.Id}/{post.Article.UrlTitle}",
-                PostType.Markdown => $"{post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd")}/{post.Id}/{post.Markdown.UrlTitle}",
+                PostType.Article => $"/{post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd")}/{post.Id}/{post.Article.UrlTitle}",
+                PostType.Markdown => $"/{post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd")}/{post.Id}/{post.Markdown.UrlTitle}",
                 PostType.Share => post.Share.RedirectToUrl,
                 _ => throw new Exception("در فرایند دریافت نشانی، نوع مطلب پیدا نشد."),
             };
