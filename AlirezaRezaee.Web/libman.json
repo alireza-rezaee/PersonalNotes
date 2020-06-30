@@ -2,12 +2,12 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "destination": "wwwroot/lib/fontawesome/5.11.2",
-      "library": "font-awesome@5.11.2"
+      "destination": "wwwroot/lib/fontawesome/5.13.1",
+      "library": "font-awesome@5.13.1"
     },
     {
-      "destination": "wwwroot/lib/lightgallery/1.6.12",
-      "library": "lightgallery@1.6.12"
+      "destination": "wwwroot/lib/lightgallery/1.7.2",
+      "library": "lightgallery@1.7.2"
     },
     {
       "destination": "wwwroot/lib/malihu-custom-scrollbar-plugin/3.1.5",
@@ -22,12 +22,12 @@
       "destination": "wwwroot/lib/jquery-mousewheel/3.1.13"
     },
     {
-      "library": "jquery@3.4.1",
-      "destination": "wwwroot/lib/jquery/3.4.1"
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/3.5.1"
     },
     {
-      "library": "twitter-bootstrap@4.4.1",
-      "destination": "wwwroot/lib/bootstrap/4.4.1"
+      "library": "twitter-bootstrap@4.5.0",
+      "destination": "wwwroot/lib/bootstrap/4.5.0"
     },
     {
       "library": "jquery-timeago@1.6.7",
