@@ -845,9 +845,6 @@ namespace Rezaee.Alireza.Web.Controllers
             return RedirectToAction(nameof(EditMarkdown), new { year = year, month = month, day = day, postId = postId });
         }
 
-
-
-
         private string ValidateName(string Name)
         {
             foreach (char c in Path.GetInvalidFileNameChars())
@@ -893,7 +890,7 @@ namespace Rezaee.Alireza.Web.Controllers
                     PostEditUrl = GetPostEditUrl(post),
                     postDeleteUrl = GetPostDeleteUrl(post),
                     postEditTypeUrl = GetPostEditTypeUrl(post),
-                    RelatedPosts = MostRelatedPostsToTags(post)
+                    RelatedPosts = MostRelatedPostsToTagsSummary(post)
                 });
             }
             return posts;
@@ -918,7 +915,31 @@ namespace Rezaee.Alireza.Web.Controllers
             return postIds;
         }
 
-        private static List<PostSummaryInShortViewModel> MostRelatedPostsToTags(Post post, int count = 2, int skip = 0)
+        private static List<Post> MostRelatedPostsToTags(Post post, int count = 10, int skip = 0)
+        {
+            var postsAndPoints = new List<RelatedPostPointViewModel>();
+            foreach (var postTag in post.PostTags)
+            {
+                foreach (var innerPostTag in postTag.Tag.PostTags)
+                {
+                    if (innerPostTag.Post.Id == post.Id) continue;
+                    else if (!postsAndPoints.Any(pp => pp.Post == innerPostTag.Post))
+                        postsAndPoints.Add(new RelatedPostPointViewModel { Post = innerPostTag.Post, Point = 1 });
+                    else
+                        postsAndPoints.Where(pp => pp.Post == innerPostTag.Post).ToList().ForEach(pp => pp.Point++);
+                }
+            }
+
+
+            postsAndPoints = postsAndPoints.OrderByDescending(pap => pap.Point).ThenByDescending(pap => Math.Abs(pap.Post.PublishDateTime.CompareTo(post.PublishDateTime))).Skip(skip).Take(count).ToList();
+
+            var mostRelatedPosts = new List<Post>();
+            postsAndPoints.ForEach(pap => mostRelatedPosts.Add(pap.Post));
+
+            return mostRelatedPosts;
+        }
+
+        private static List<PostSummaryInShortViewModel> MostRelatedPostsToTagsSummary(Post post, int count = 2, int skip = 0)
         {
             var postsAndPoints = new List<RelatedPostPointViewModel>();
             foreach (var postTag in post.PostTags)
@@ -950,7 +971,7 @@ namespace Rezaee.Alireza.Web.Controllers
             return mostRelatedPosts;
         }
 
-        [Route("{postId}/related-posts")]
+        [Route("{postId}/related-posts.json")]
         public async Task<List<PostSummaryInShortViewModel>> MostRelatedPosts(int postId, int count = 5, int skip = 0)
         {
             var retrievePost = await _context.Posts
@@ -970,12 +991,67 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.DestructivePosts)
                 .ToListAsync();
 
-            return MostRelatedPostsToTags(post: retrievePost, count: count, skip: skip);
+            return MostRelatedPostsToTagsSummary(post: retrievePost, count: count, skip: skip);
+        }
+
+        [Route("{postId}/related-posts")]
+        public async Task<IActionResult> RelatedPosts(int postId, int count = 10, int skip = 0)
+        {
+            var retrievePost = await _context.Posts
+                .Include(p => p.Article)
+                .Include(p => p.Share)
+                .Include(p => p.Markdown)
+                .Include(p => p.DestructivePosts)
+                .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
+                .FirstOrDefaultAsync(post => post.Id == postId);
+            if (retrievePost == null)
+                return null;
+
+            await _context.Posts.Where(p => RetrievePostIdsForRelatedPosts(retrievePost).Contains(p.Id))
+                .Include(p => p.Article)
+                .Include(p => p.Share)
+                .Include(p => p.Markdown)
+                .Include(p => p.DestructivePosts)
+                .ToListAsync();
+
+            return View(new RelatedPostsViewModel {
+                TargetPost = new PostSummaryViewModel
+                {
+                    Id = retrievePost.Id,
+                    Title = retrievePost.Title,
+                    Type = DetectPostType(retrievePost),
+                    PublishDateTime = retrievePost.PublishDateTime,
+                    LatestUpdateDateTime = retrievePost.LatestUpdateDateTime,
+                    Summary = retrievePost.Summary,
+                    ThumbnailUrl = retrievePost.ThumbnailUrl,
+                    PostUrl = GetPostUrl(retrievePost),
+                    PostEditUrl = GetPostEditUrl(retrievePost),
+                    postDeleteUrl = GetPostDeleteUrl(retrievePost),
+                    postEditTypeUrl = GetPostEditTypeUrl(retrievePost),
+                    RelatedPosts = MostRelatedPostsToTagsSummary(retrievePost)
+                },
+                RelatedPosts = MostRelatedPostsToTags(post: retrievePost, count: count, skip: skip)
+                .Select(post => new PostSummaryViewModel
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Type = DetectPostType(post),
+                    PublishDateTime = post.PublishDateTime,
+                    LatestUpdateDateTime = post.LatestUpdateDateTime,
+                    Summary = post.Summary,
+                    ThumbnailUrl = post.ThumbnailUrl,
+                    PostUrl = GetPostUrl(post),
+                    PostEditUrl = GetPostEditUrl(post),
+                    postDeleteUrl = GetPostDeleteUrl(post),
+                    postEditTypeUrl = GetPostEditTypeUrl(post),
+                    RelatedPosts = MostRelatedPostsToTagsSummary(post)
+                }).ToList()
+            });
         }
 
         //Detect PostType
         private async Task<PostType> DetectPostType(int postId)
-            => DetectPostType(await _context.Posts.Where(p => p.Id == postId).Select(post => new Post { Article = post.Article, Share = post.Share, Markdown = post.Markdown }).FirstOrDefaultAsync());
+                => DetectPostType(await _context.Posts.Where(p => p.Id == postId).Select(post => new Post { Article = post.Article, Share = post.Share, Markdown = post.Markdown }).FirstOrDefaultAsync());
 
         public static PostType DetectPostType(Post post)
         {

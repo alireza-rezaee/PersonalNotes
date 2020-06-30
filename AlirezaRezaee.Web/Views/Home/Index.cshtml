@@ -288,7 +288,7 @@
                         @if (post.RelatedPosts.Count == 2)
                         {
                             <div class="card-footer text-center more-related-posts">
-                                <button type="button" class="btn btn-default stretched-link js-more-related-posts">
+                                <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
                                     <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
                                     </svg>
@@ -524,8 +524,9 @@
     </environment>
     <script>
         $('.js-more-related-posts').click(function (e) {
+            var buttonContainer = $(e.target).parent('.more-related-posts');
             $.ajax({
-                url: "/posts/" + $(e.target).parents('.post').data("post-id") + "/related-posts?count=5",
+                url: "/posts/" + $(e.target).parents('.post').data("post-id") + "/related-posts.json?count=5",
                 dataType: "json",
                 type: "GET",
                 success: function (posts) {
@@ -533,6 +534,10 @@
                     for (var post in posts)
                         relatedPosts += '<div class="card-footer"><a href="' + posts[post].postUrl + '" class="stretched-link"><small class="text-muted small">' + posts[post].title + '</small></a></div>';;
                     $(e.target).parents('.post').find('.js-related-posts').html(relatedPosts);
+
+                    var elemLoadMoreRelatedPosts = document.createElement('a');
+                    elemLoadMoreRelatedPosts.classList.add('btn', 'stretched-link', 'js-more-related-posts');
+                    $(elemLoadMoreRelatedPosts).attr('href', '/posts/' + buttonContainer.find('.js-more-related-posts').data('post-id') + '/related-posts').css('font-size', 'small').html('<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.5 3A1.5 1.5 0 0 0 13 1.5H3A1.5 1.5 0 0 0 1.5 3v5a.5.5 0 0 0 1 0V3a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H9a.5.5 0 0 0 0 1h4a1.5 1.5 0 0 0 1.5-1.5V3z"/><path fill-rule="evenodd" d="M4.5 6a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V6.5H5a.5.5 0 0 1-.5-.5z"/><path fill-rule="evenodd" d="M10.354 5.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z"/></svg> مطالب بیشتر').appendTo(buttonContainer.text(''));
                 }
             });
         });
