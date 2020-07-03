@@ -31,6 +31,8 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.Posts
 
         public string postEditTypeUrl { get; set; }
 
+        public Pin Pin { get; set; }
+
         public List<PostSummaryInShortViewModel> RelatedPosts { get; set; }
     }
 }

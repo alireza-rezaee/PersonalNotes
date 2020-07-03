@@ -63,7 +63,6 @@
             z-index: 5;
             top: 15px;
             right: 15px;
-            background-color: rgba(0,0,0, 0.3);
         }
 
         @@media (min-width: 768px) {
@@ -105,8 +104,7 @@
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <h6 class="border-bottom border-gray pb-2 mb-0">درباره نویسنده</h6>
                 <div class="media text-muted pt-3">
-                    <img src="/uploads/profile/avatar-32x.jpg" alt="" width="32" height="32"
-                         class="ml-2 rounded-circle">
+                    <img src="/uploads/profile/avatar-32x.jpg" alt="" width="32" height="32" class="ml-2 rounded-circle">
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                         @Html.Raw(HttpUtility.HtmlDecode(Model.AboutAuthorSummary))
                     </p>
@@ -275,7 +273,7 @@
                             <h2 class="card-title">@Html.Raw(post.Title)</h2>
                             <p class="card-text">@Html.Raw(post.Summary)</p>
                             <div class="text-left">
-                                <button class="position-relative btn btn-outline-light shadow border rounded-oval position-absolute pin-button">
+                                <button class="position-relative btn shadow border rounded-oval position-absolute pin-button js-pin-post @if (post.Pin != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M11 4a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                                         <path d="M7.5 4h1v9a.5.5 0 0 1-1 0V4z" />
@@ -569,6 +567,26 @@
             });
         });
 
+        $('.js-pin-post').click(function (e) {
+            var target = $(e.target);
+            var button = target.is('button') ? target : target.parents('button');
+            console.log(target);
+            console.log(target.is('button'));
+            console.log(button);
+            var postId = button.parents('.post').data('post-id');
+            console.log(postId);
+            var wasPinned = button.hasClass('pinned');
+
+            $.ajax({
+                url: "/pins/" + (wasPinned ? 'un-pin' : 'pin') + "/" + postId,
+                dataType: "text",
+                type: "GET",
+                success: function (content) {
+                    if (wasPinned) button.removeClass('btn-light pinned').addClass('btn-outline-light');
+                    else button.removeClass('btn-outline-light').addClass('btn-light pinned');
+                }
+            });
+        });
         $(document).ready(function () {
             jQuery("time.timeago").timeago();
         });

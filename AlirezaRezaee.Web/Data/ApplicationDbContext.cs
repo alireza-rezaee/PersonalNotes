@@ -40,6 +40,8 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Page> Pages { get; set; }
 
+        public DbSet<Pin> Pins { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -87,6 +89,9 @@ namespace Rezaee.Alireza.Web.Data
                 .HasOne(pt => pt.Tag)
                 .WithMany(t => t.PostTags)
                 .HasForeignKey(pt => pt.TagId);
+
+
+            builder.Entity<Pin>().HasIndex(pin => pin.PostId).IsUnique();
         }
     }
 }
