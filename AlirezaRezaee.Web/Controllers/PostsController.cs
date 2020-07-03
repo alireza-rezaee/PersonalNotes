@@ -737,7 +737,13 @@ namespace Rezaee.Alireza.Web.Controllers
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
 
-            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).Include(p => p.Article).Include(p => p.Share).Include(p => p.Markdown).AsNoTracking().FirstOrDefaultAsync();
+            var post = await _context.Posts
+                .Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId)
+                .Include(p => p.Article)
+                .Include(p => p.Share)
+                .Include(p => p.Markdown)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
             if (post == null)
                 return NotFound();
 
@@ -845,7 +851,8 @@ namespace Rezaee.Alireza.Web.Controllers
             return RedirectToAction(nameof(EditMarkdown), new { year = year, month = month, day = day, postId = postId });
         }
 
-        private string ValidateName(string Name)
+        [NonAction]
+        public static string ValidateName(string Name)
         {
             foreach (char c in Path.GetInvalidFileNameChars())
                 Name = Name.Replace(c, ' ');

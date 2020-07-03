@@ -38,6 +38,8 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<DestructivePost> DestructivePosts { get; set; }
 
+        public DbSet<Page> Pages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
