@@ -42,6 +42,8 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Pin> Pins { get; set; }
 
+        public DbSet<Posterpins> Posterpins { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -92,6 +94,8 @@ namespace Rezaee.Alireza.Web.Data
 
 
             builder.Entity<Pin>().HasIndex(pin => pin.PostId).IsUnique();
+
+            builder.Entity<Posterpins>().HasIndex(pin => pin.PostId).IsUnique();
         }
     }
 }

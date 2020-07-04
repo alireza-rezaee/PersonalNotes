@@ -865,9 +865,11 @@ namespace Rezaee.Alireza.Web.Controllers
         {
             var posts = new List<PostSummaryViewModel>();
             var retrievePosts = await context.Posts
-                .OrderByDescending(p => p.Pin.Id)
+                .OrderByDescending(p => p.Posterpins.Id)
+                .ThenByDescending(p => p.Pin.Id)
                 .ThenByDescending(p => p.PublishDateTime)
                 .Include(p => p.Pin)
+                .Include(p => p.Posterpins)
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
@@ -900,7 +902,8 @@ namespace Rezaee.Alireza.Web.Controllers
                     postDeleteUrl = GetPostDeleteUrl(post),
                     postEditTypeUrl = GetPostEditTypeUrl(post),
                     RelatedPosts = MostRelatedPostsToTagsSummary(post),
-                    Pin = post.Pin
+                    Pin = post.Pin,
+                    Posterpins = post.Posterpins
                 });
             }
             return posts;

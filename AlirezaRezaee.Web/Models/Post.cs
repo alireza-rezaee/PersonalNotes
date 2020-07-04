@@ -43,6 +43,8 @@ namespace Rezaee.Alireza.Web.Models
         public ICollection<PostTag> PostTags { get; set; }
 
         public Pin Pin { get; set; }
+
+        public Posterpins Posterpins { get; set; }
         #endregion
     }
 }

@@ -33,6 +33,8 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.Posts
 
         public Pin Pin { get; set; }
 
+        public Posterpins Posterpins { get; set; }
+
         public List<PostSummaryInShortViewModel> RelatedPosts { get; set; }
     }
 }
