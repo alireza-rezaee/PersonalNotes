@@ -44,6 +44,8 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Posterpins> Posterpins { get; set; }
 
+        public DbSet<Block> Blocks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

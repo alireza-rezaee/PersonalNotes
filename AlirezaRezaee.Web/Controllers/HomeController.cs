@@ -47,7 +47,8 @@ namespace Rezaee.Alireza.Web.Controllers
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
                     AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue,
                     Posts = await PostsController.RetrieveLatestPostsSummary(count: 8, context: _context),
-                    IllustratedLinks = illustratedLinks
+                    IllustratedLinks = illustratedLinks,
+                    Blocks = await BlocksController.GetBlocks(context: _context)
                 });
         }
 
