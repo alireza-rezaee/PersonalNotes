@@ -32,6 +32,18 @@
     {
       "library": "jquery-timeago@1.6.7",
       "destination": "wwwroot/lib/timeago/1.6.7"
+    },
+    {
+      "library": "highlight.js@10.1.1",
+      "destination": "wwwroot/lib/highlight.js/10.1.1"
+    },
+    {
+      "library": "codemirror@5.55.0",
+      "destination": "wwwroot/lib/codemirror/5.55.0"
+    },
+    {
+      "library": "tinymce@5.4.1",
+      "destination": "wwwroot/lib/tinymce/5.4.1"
     }
   ],
   "version": "1.0"

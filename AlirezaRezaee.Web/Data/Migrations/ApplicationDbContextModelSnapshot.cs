@@ -289,6 +289,12 @@ namespace Rezaee.Alireza.Web.Data.Migrations
                     b.Property<byte?>("Rank")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("Scripts")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Styles")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Blocks");

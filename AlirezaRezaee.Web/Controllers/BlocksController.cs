@@ -5,9 +5,12 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Markdig.Syntax;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Extensions;
 using Rezaee.Alireza.Web.Models;
 using Rezaee.Alireza.Web.Models.ViewModels.Blocks;
 using Block = Rezaee.Alireza.Web.Models.Block;
@@ -25,27 +28,44 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         /// <summary>
+        /// صفحه افزودن بلاک
+        /// </summary>
+        /// <returns></returns>
+        [Route("create")]
+        [HttpGet]
+        public IActionResult Create() => View();
+
+        /// <summary>
         /// افزودن بلاک
         /// </summary>
-        /// <param name="blockVM">مدلی از یک بلاک</param>
+        /// <param name="createVM">مدلی از یک بلاک</param>
+        /// <param name="returnUrl">نشانی بازگشت</param>
         /// <returns></returns>
-        [Route("add")]
-        public async Task<IActionResult> Add([FromBody] CreateEditViewModel createVM)
+        [Route("create")]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateEditViewModel createVM, string returnUrl)
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(createVM.Html) && string.IsNullOrEmpty(createVM.Styles) && string.IsNullOrEmpty(createVM.Scripts))
+                    return BadRequest();
+
                 try
                 {
-                    ///ERROR
                     await _context.AddAsync(new Block
                     {
                         Html = createVM.Html,
                         IsEnable = createVM.IsEnable,
                         Position = (BlockPosition)createVM.PositionNo,
-                        Rank = createVM.Rank
+                        Rank = createVM.Rank,
+                        Styles = createVM.Styles,
+                        Scripts = createVM.Scripts
                     });
                     await _context.SaveChangesAsync();
-                    return Ok();
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        return Redirect(returnUrl);
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ControllerName());
                 }
                 catch (Exception e)
                 {
@@ -53,23 +73,31 @@ namespace Rezaee.Alireza.Web.Controllers
                 }
             }
 
-            return BadRequest(createVM);
+            return RedirectToAction(nameof(Create), nameof(BlocksController).ControllerName(), createVM);
         }
 
         /// <summary>
-        /// حذف بلاک
+        /// اصلاح بلاک
         /// </summary>
-        /// <param name="id">شناسه بلاک</param>
-        [Route("remove/{id}")]
-        public async Task<IActionResult> Remove(int id)
+        /// <returns></returns>
+        [Route("edit/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
             var block = await _context.Blocks.FindAsync(id);
-            if (block == null) return NotFound();
+            if (block == null)
+                return NotFound();
 
-            _context.Remove(block);
-            await _context.SaveChangesAsync();
-
-            return Ok();
+            return View(new CreateEditViewModel
+            {
+                Id = id,
+                Html = block.Html,
+                Styles = block.Styles,
+                Scripts = block.Scripts,
+                PositionNo = (byte)block.Position,
+                Rank = block.Rank,
+                IsEnable = block.IsEnable
+            });
         }
 
         /// <summary>
@@ -77,26 +105,35 @@ namespace Rezaee.Alireza.Web.Controllers
         /// </summary>
         /// <param name="id">شناسه بلاک</param>
         /// <param name="editVM">مدلی از بلاک اصلاح شده</param>
-        /// <returns></returns>
+        /// <param name="returnUrl">نشانی بازگشت</param>
         [Route("edit/{id}")]
-        public async Task<IActionResult> Edit(int id, CreateEditViewModel editVM)
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CreateEditViewModel editVM, string returnUrl)
         {
             if (ModelState.IsValid)
             {
+                var block = await _context.Blocks.FindAsync(id);
+                if (block == null)
+                    return NotFound();
+
+                if (string.IsNullOrEmpty(editVM.Html) && string.IsNullOrEmpty(editVM.Styles) && string.IsNullOrEmpty(editVM.Scripts))
+                    return BadRequest();
+
                 try
                 {
-                    var block = await _context.Blocks.FindAsync(id);
-                    if (block == null) return NotFound();
+                    block.Html = editVM.Html;
+                    block.Styles = editVM.Styles;
+                    block.Scripts = editVM.Scripts;
+                    block.IsEnable = editVM.IsEnable;
+                    block.Rank = editVM.Rank;
+                    block.Position = (BlockPosition)editVM.PositionNo;
 
-                    _context.Update(new Block
-                    {
-                        Id = id,
-                        Html = editVM.Html,
-                        IsEnable = editVM.IsEnable,
-                        Position = (BlockPosition)editVM.PositionNo
-                    });
+                    _context.Update(block);
                     await _context.SaveChangesAsync();
 
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        return Redirect(returnUrl);
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ControllerName());
                 }
                 catch (Exception e)
                 {
@@ -104,7 +141,33 @@ namespace Rezaee.Alireza.Web.Controllers
                 }
             }
 
-            return BadRequest(editVM);
+            return RedirectToAction(nameof(Edit), nameof(BlocksController).ControllerName(), editVM);
+        }
+
+        /// <summary>
+        /// حذف بلاک
+        /// </summary>
+        /// <param name="id">شناسه بلاک</param>
+        [Route("remove/{id}")]
+        public async Task<IActionResult> Delete(int id, string returnUrl)
+        {
+            try
+            {
+                var block = await _context.Blocks.FindAsync(id);
+                if (block == null) return NotFound();
+
+                _context.Remove(block);
+                await _context.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(returnUrl))
+                    return Redirect(returnUrl);
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ControllerName());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
         }
 
         /// <summary>
@@ -112,8 +175,8 @@ namespace Rezaee.Alireza.Web.Controllers
         /// </summary>
         /// <param name="id">شناسه بلاک</param>
         /// <returns></returns>
-         [Route("enable/{id}")]
-       public async Task<IActionResult> Enable(int id)
+        [Route("enable/{id}")]
+        public async Task<IActionResult> Enable(int id)
         {
             try
             {

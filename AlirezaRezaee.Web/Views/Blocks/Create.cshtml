@@ -1,0 +1,265 @@
+﻿@using Rezaee.Alireza.Web.Extensions;
+@model Rezaee.Alireza.Web.Models.ViewModels.Blocks.CreateEditViewModel
+@{
+    ViewData["Title"] = "ایجاد بلاک جدید";
+}
+
+@section Head {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/codemirror/5.55.0/codemirror.css" />
+        <link rel="stylesheet" href="~/lib/codemirror/5.55.0/addon/hint/show-hint.css" />
+
+        <script src="~/lib/codemirror/5.55.0/codemirror.js"></script>
+        <script src="~/lib/codemirror/5.55.0/mode/xml/xml.js"></script>
+        <script src="~/lib/codemirror/5.55.0/mode/javascript/javascript.js"></script>
+        <script src="~/lib/codemirror/5.55.0/mode/css/css.min.js"></script>
+        <script src="~/lib/codemirror/5.55.0/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="~/lib/codemirror/5.55.0/addon/selection/active-line.js"></script>
+        <script src="~/lib/codemirror/5.55.0/addon/edit/matchbrackets.js"></script>
+        <script src="~/lib/codemirror/5.55.0/addon/hint/show-hint.js"></script>
+        <script src="~/lib/codemirror/5.55.0/addon/hint/css-hint.js"></script>
+
+        <script src="~/lib/tinymce/5.4.1/tinymce.min.js"></script>
+        <script src="~/lib/tinymce/5.4.1/langs/fa.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/codemirror.min.css"
+              asp-fallback-href="~/lib/codemirror/5.55.0/codemirror.min.css"
+              asp-fallback-test-class="CodeMirror-gutters"
+              asp-fallback-test-property="white-space"
+              asp-fallback-test-value="nowrap"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha512-/BlxZbYLtYGExexketXsTi47eHp+r2kTeq2OHecQPZlfbc7WFXVrwbVW9HOYjI6c9Ti+P60ASmVLxittZ0EBGw=="
+              crossorigin="anonymous" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/show-hint.min.css"
+              asp-fallback-href="~/lib/codemirror/5.55.0/addon/hint/show-hint.min.css"
+              asp-fallback-test-class="CodeMirror-hints"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha512-OmcLQEy8iGiD7PSm85s06dnR7G7C9C0VqahIPAj/KHk5RpOCmnC6R2ob1oK4/uwYhWa9BF1GC6tzxsC8TIx7Jg=="
+              crossorigin="anonymous" />
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/codemirror.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/codemirror.min.js"
+                asp-fallback-test="window.CodeMirror"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-ipquLAQ1BQSTjqPDqkXNGXfHBv6ivlhE5Di0mhI/YraFhJPEagKt1MKUY7eqCqfsDEGcinRhEMuCsk2eBlydrw=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/xml/xml.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/mode/xml/xml.min.js"
+                asp-fallback-test="CodeMirror.modes.xml"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-k1HnoY9EXahEfPz7kq/lD9DltloKH9OrB9XNKYoUQrNz9epe5F4mQP5PfuIfeRfoXHkNrE0gF3Mx4LhC5BVl9Q=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/javascript/javascript.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/mode/javascript/javascript.min.js"
+                asp-fallback-test="CodeMirror.modes.javascript"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-9miXlEjnHTF+nVGdc2IGOLGTFW2wWkWbd1/7Ltlre+dM53ZSCUQ/PNN+jtsmYqr3ndiD5RW6XQJUm/Hz8JvyOQ=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/css/css.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/mode/css/css.min.js"
+                asp-fallback-test="CodeMirror.modes.css"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-RCkQ1LsqQ/Ujpz8LDVh/KRxdrn/lnh/BRzMq1If22wlcnNC2xSNBLJdZzV0VPF+5SLrxRDgymgVvVw5LK1TMgA=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/htmlmixed/htmlmixed.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/mode/htmlmixed/htmlmixed.min.js"
+                asp-fallback-test="CodeMirror.modes.htmlmixed"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-p15qsXPrhaUkH+/RPE6QzCmxUAPkCRw89ityx+tWC1lAYI6Et2L0UpN+iqifxUdt+ss1FQ+9CuzxpBeT9mR3/w=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/selection/active-line.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/addon/selection/active-line.min.js"
+                asp-fallback-test="CodeMirror.optionHandlers.styleActiveLine"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-ysQeDEwbdvERZqZCqFd64rVjSx4ExrC/r581h40cMF4e6rFWS6VxvdVxmSf/cLr+oe9mVxxzWSMhPJYSFyiVew=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/edit/matchbrackets.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/addon/edit/matchbrackets.min.js"
+                asp-fallback-test="CodeMirror.optionHandlers.matchBrackets"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-zgTUY40c9HFb3Kr25lTW3gpnSt+xVc0yWPYwa6Yu7kChiaOHfNlyA4bM8Y3YLzjeQfrNFy40UcbOE/Cmmb29nQ=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/show-hint.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/addon/hint/show-hint.min.js"
+                asp-fallback-test="CodeMirror.showHint"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-vKAkYoB3TzFRod9vTPImONmTAkZjBOHQJkomWlAI5/mjOgDTAjRQgIRJvFVFyGzdauNufQrq+ndje1zmP8jxpw=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/css-hint.min.js"
+                asp-fallback-src="~/lib/codemirror/5.55.0/addon/hint/css-hint.min.js"
+                asp-fallback-test="CodeMirror.hint.css"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-iXuwWkAmdAUNuO5rUtzmJZ/LoeJoSG8ZeQVdcUBCkV0dxfe7bxfzQMKCwQ6uNNs0FZ9jmSrN/jzJX7G1bOs4Nw=="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.1/tinymce.min.js"
+                asp-fallback-src="~/lib/tinymce/5.4.1/tinymce.min.js"
+                asp-fallback-test="window.tinymce"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-c46AnRoKXNp7Sux2K56XDjljfI5Om/v1DvPt7iRaOEPU5X+KZt8cxzN3fFzemYC6WCZRhmpSlZvPA1pttfO9DQ=="
+                crossorigin="anonymous"></script>
+
+        <script src="~/lib/tinymce/5.4.1/langs/fa.js"></script>
+    </environment>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea.js-html',
+            directionality: 'rtl',
+            language: 'fa',
+            plugins: "code image searchreplace wordcount link",
+
+            content_style: "body {font-family: IRANSans;}",
+
+            rel_list: [
+                { title: 'No Referrer', value: 'noreferrer' },
+                { title: 'External Link', value: 'external' }
+            ],
+
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
+        });
+    </script>
+}
+
+<div class="container">
+    <div class="my-5">
+        <div class="card card-body" id="block-new">
+            <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Create)">
+                <ul class="nav nav-tabs" id="newBlockTab">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#js-block-content">بدنه</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#js-block-styles">استایل</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#js-block-scripts">اسکریپت</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="js-block-content">
+                        <textarea asp-for="Html" class="js-html"></textarea>
+                        <div class="form-row mt-3">
+                            <div class="form-group col-12 col-md-6">
+                                <label for="inputState">محل جایگیری:</label>
+                                <select asp-for="PositionNo" class="form-control">
+                                    <option value="0">بالای مطالب</option>
+                                    <option value="1">بین مطالب و پیوند ها</option>
+                                    <option value="2" selected>پایین پیوند ها</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-md-6">
+                                <label for="inputPassword4">ترتیب جایگیری:</label>
+                                <input asp-for="Rank" min="1" max="255" class="form-control" id="block-new-rank" placeholder="شماره جایگاه" name="Rank">
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox my-3">
+                            <input asp-for="IsEnable" class="custom-control-input" checked="checked">
+                            <label asp-for="IsEnable" class="custom-control-label">آیا برای عموم نمایش داده شود؟</label>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="js-block-styles">
+                        <label asp-for="Styles" class="p-1">استایل ها:</label>
+                        <span class="small text-secondary">در انتهای &#60;head&#62; سند افزوده می شود.</span>
+                        <div class="dir-ltr text-left">
+                            <textarea asp-for="Styles" class="js-styles"></textarea>
+                        </div>
+                        <span class="small font-weight-light text-danger">
+                            در قسمت استایل ها یا اسکریپت ها، حتماً آنها را همراه با تگ تعریف کنید. مانند:
+                            <code class="d-inline-block dir-ltr">&#60;style&#62;.selector { color: red; }&#60;&#8725;style&#62;</code>
+                            یا
+                            <code class="d-inline-block dir-ltr">&#60;link rel="stylesheet" href="..." &#8725;&#62;</code>
+                        </span>
+                    </div>
+                    <div class="tab-pane fade" id="js-block-scripts">
+                        <label for="block-scripts-textarea" class="p-1">اسکریپت ها:</label>
+                        <span class="small text-secondary">در انتهای &#60;body&#62; سند افزوده می شود.</span>
+                        <div class="text-left dir-ltr">
+                            <textarea asp-for="Scripts" class="js-scripts"></textarea>
+                        </div>
+                        <span class="small font-weight-light text-danger">
+                            در قسمت استایل ها یا اسکریپت ها، حتماً آنها را همراه با تگ تعریف کنید. مانند:
+                            <code class="d-inline-block dir-ltr">&#60;script&#62;alert("Hello World!");&#60;&#8725;script&#62;</code>
+                            یا
+                            <code class="d-inline-block dir-ltr">&#60;script src="..."&#62;&#60;&#8725;script&#62;</code>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="text-left">
+                    <input type="hidden" value="/" name="returnUrl" />
+                    <button type="submit" class="btn btn-success">
+                        افزودن بلاک
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var mixedMode = {
+            name: "htmlmixed",
+            scriptTypes: [{
+                matches: /\/x-handlebars-template|\/x-mustache/i,
+                mode: null
+            }, {
+                matches: /(text|application)\/(x-)?vb(a|script)/i,
+                mode: "vbscript"
+            }]
+        };
+
+        var cm1, cm2;
+        $(document).ready(function () {
+            $('#newBlockTab button').on('shown.bs.tab', function () {
+                cm1.refresh();
+                cm2.refresh();
+            });
+            cm1 = CodeMirror.fromTextArea(document.querySelector("textarea.js-styles"), {
+                lineNumbers: true,
+                styleActiveLine: true,
+                matchBrackets: true,
+                mode: mixedMode,
+                extraKeys: { "Ctrl-Space": "autocomplete" }
+            });
+            cm2 = CodeMirror.fromTextArea(document.querySelector("textarea.js-scripts"), {
+                lineNumbers: true,
+                styleActiveLine: true,
+                matchBrackets: true,
+                mode: mixedMode,
+                extraKeys: { "Ctrl-Space": "autocomplete" }
+            });
+
+            cm1.getDoc().setValue('<style></style>');
+            cm2.getDoc().setValue('\<script\>\<\/script\>');
+        });
+
+        var elemNewBlock = document.querySelector('#block-new form');
+        elemNewBlock.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var elemHtml = document.querySelector('textarea.js-html');
+            elemHtml.value = window.parent.tinyMCE.get(elemHtml.id).getContent();
+            document.querySelector('textarea.js-styles').value = cm1.getValue();
+            document.querySelector('textarea.js-scripts').value = cm2.getValue();
+            elemNewBlock.submit();
+        });
+    </script>
+}

@@ -781,4 +781,20 @@ This set of fonts are used in this project under the license: (.....)
 .tooltip {
   font-family: IRANSans; }
 
+.rounded-top-0 {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0; }
+
+.rounded-bottom-0 {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0; }
+
+.rounded-left-0 {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
+
+.rounded-right-0 {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0; }
+
 /*# sourceMappingURL=main.css.map */

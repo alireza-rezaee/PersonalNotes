@@ -6,32 +6,41 @@
 }
 @section Head {
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
-        <link rel="stylesheet" href="~/lib/lightgallery/1.6.12/css/lightgallery.css" />
-        <link rel="stylesheet" href="~/lib/fontawesome/5.11.2/css/all.css" />
+        @*<link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
+            <link rel="stylesheet" href="~/lib/lightgallery/1.6.12/css/lightgallery.css" />*@
+        @*<link rel="stylesheet" href="~/lib/highlight.js/10.1.1/styles/vs2015.min.css" />*@
+        @*<link rel="stylesheet" href="~/lib/fontawesome/5.11.2/css/all.css" />*@
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
-              asp-fallback-href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
-              asp-fallback-test-class="mCustomScrollBox"
-              asp-fallback-test-property="position"
-              asp-fallback-test-value="relative"
-              asp-suppress-fallback-integrity="true"
-              integrity="sha256-JHGEmB629pipTkMag9aMaw32I8zle24p3FpsEeI6oZU=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"
-              asp-fallback-href="~/lib/lightgallery/1.6.12/css/lightgallery.min.css"
-              asp-fallback-test-class="lg-icon"
-              asp-fallback-test-property="font-family"
-              asp-fallback-test-value="lg"
-              asp-suppress-fallback-integrity="true"
-              integrity="sha256-8rfHbJr+ju3Oc099jFJMR1xAPu8CTPHU8uP5J3X/VAY=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
-              asp-fallback-href="~/lib/fontawesome/5.11.2/css/all.min.css"
-              asp-fallback-test-class="fa"
-              asp-fallback-test-property="font-weight"
-              asp-fallback-test-value="900"
-              asp-suppress-fallback-integrity="true"
-              integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
+                      asp-fallback-href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
+                      asp-fallback-test-class="mCustomScrollBox"
+                      asp-fallback-test-property="position"
+                      asp-fallback-test-value="relative"
+                      asp-suppress-fallback-integrity="true"
+                      integrity="sha256-JHGEmB629pipTkMag9aMaw32I8zle24p3FpsEeI6oZU=" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"
+                    asp-fallback-href="~/lib/lightgallery/1.6.12/css/lightgallery.min.css"
+                    asp-fallback-test-class="lg-icon"
+                    asp-fallback-test-property="font-family"
+                    asp-fallback-test-value="lg"
+                    asp-suppress-fallback-integrity="true"
+                    integrity="sha256-8rfHbJr+ju3Oc099jFJMR1xAPu8CTPHU8uP5J3X/VAY=" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+                    asp-fallback-href="~/lib/fontawesome/5.11.2/css/all.min.css"
+                    asp-fallback-test-class="fa"
+                    asp-fallback-test-property="font-weight"
+                    asp-fallback-test-value="900"
+                    asp-suppress-fallback-integrity="true"
+                    integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />*@
+        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs2015.min.css"
+            asp-fallback-href="~/lib/highlight.js/10.1.1/styles/vs2015.min.css"
+            asp-fallback-test-class="hljs"
+            asp-fallback-test-property="padding"
+            asp-fallback-test-value=".5em"
+            asp-suppress-fallback-integrity="true"
+            integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ==" crossorigin="anonymous" />*@
+        <link rel="stylesheet" href="~/lib/fontawesome/5.11.2/css/all.css" />
     </environment>
 
     <style>
@@ -68,6 +77,11 @@
             right: 15px;
         }
 
+        .block {
+            padding: 0.25rem;
+            border-radius: 1rem;
+        }
+
         @@media (min-width: 768px) {
             .card-columns {
                 -webkit-column-count: 2;
@@ -85,35 +99,43 @@
         }
     </style>
 
-    <script src="https://cdn.tiny.cloud/1/dm1gkjqyitq2ij8h1ccm84t9kc01tqrwtmehtb30xqe4bc4s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            directionality: 'rtl',
-            language: 'fa',
-
-            plugins: "code image searchreplace wordcount link",
-
-            content_style: "body {font-family: IRANSans;}",
-
-            rel_list: [
-                { title: 'No Referrer', value: 'noreferrer' },
-                { title: 'External Link', value: 'external' }
-            ],
-
-            setup: function (editor) {
-                editor.on('change', function () {
-                    editor.save();
-                });
-            }
-        });
-    </script>
+    @foreach (var block in Model.Blocks)
+    {
+        @Html.Raw(block.Styles)
+    }
 }
 
-@foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.First_BetweenHomeAndPosts).OrderBy(block => block.Rank).ThenBy(block => block.Id))
+<div class="container text-right mt-5">
+    <a asp-controller="Blocks" asp-action="Create" class="btn btn-light">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+        </svg>
+        افزودن بلاک جدید
+    </a>
+</div>
+
+@if (Model.Blocks.Any(block => block.Position == BlockPosition.First_BetweenHomeAndPosts))
 {
-    <div class="block @if (!block.IsEnable) { <text>disabled</text> } ">
-        @Html.Raw(block.Html)
+    <div class="container">
+        @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.First_BetweenHomeAndPosts).OrderBy(block => block.Rank).ThenBy(block => block.Id))
+        {
+            <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2" style="border-style: dotted;">
+                <div>
+                    <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
+                       asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
+                       asp-route-id="@block.Id" class="btn btn-light rounded-0">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+                            <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+                            <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+                        </svg>
+                        ویرایش | حذف
+                    </a>
+                </div>
+                @Html.Raw(block.Html)
+            </div>
+        }
     </div>
 }
 
@@ -241,10 +263,27 @@
 </div>
 <!-- end: پایان مطالب سایت -->
 
-@foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Second_betweenPostsAndLinks).OrderByDescending(block => block.Rank).ThenByDescending(block => block.Id))
+@if (Model.Blocks.Any(block => block.Position == BlockPosition.Second_betweenPostsAndLinks))
 {
-    <div class="block @if (!block.IsEnable) { <text>disabled</text> } ">
-        @Html.Raw(block.Html)
+    <div class="container">
+        @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Second_betweenPostsAndLinks).OrderBy(block => block.Rank).ThenBy(block => block.Id))
+        {
+            <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2" style="border-style: dotted;">
+                <div>
+                    <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
+                       asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
+                       asp-route-id="@block.Id" class="btn btn-light rounded-0">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+                            <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+                            <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+                        </svg>
+                        ویرایش | حذف
+                    </a>
+                </div>
+                @Html.Raw(block.Html)
+            </div>
+        }
     </div>
 }
 
@@ -292,84 +331,62 @@
 </div>
 <!-- end: پیوند های سایت -->
 
-
-<div class="container">
-    <div class="my-5">
-        <button class="btn btn-light btn-block border" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" type="button" data-toggle="collapse" data-target="#block-new">
-            افزودن بلاک جدید
-        </button>
-
-        <div class="collapse" id="block-new">
-            <div class="card card-body" style="border-top-left-radius: 0; border-top-right-radius: 0;">
-                <textarea id="js-block-textarea"></textarea>
-
-                <div class="form-row mt-3">
-                    <div class="form-group col-12 col-md-6">
-                        <label for="inputState">محل جایگیری:</label>
-                        <select id="block-new-position" class="form-control">
-                            <option value="0">بالای مطالب</option>
-                            <option value="1">بین مطالب و پیوند ها</option>
-                            <option value="2" selected>پایین پیوند ها</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-12 col-md-6">
-                        <label for="inputPassword4">ترتیب جایگیری:</label>
-                        <input type="number" min="1" max="255" class="form-control" id="block-new-rank" placeholder="شماره جایگاه">
-                    </div>
-
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="block-new-isEnable">
-                        <label class="custom-control-label" for="block-new-isEnable">آیا نمایش داده شود؟</label>
-                    </div>
-                </div>
-
-                <div class="text-left">
-                    <button type="submit" class="btn btn-success">
-                        افزودن بلاک
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Third_BetweenLinksAndFooter).OrderByDescending(block => block.Rank).ThenByDescending(block => block.Id))
+@if (Model.Blocks.Any(block => block.Position == BlockPosition.Third_BetweenLinksAndFooter))
 {
-    <div class="block @if (!block.IsEnable) { <text>disabled</text> } ">
-        @Html.Raw(block.Html)
+    <div class="container">
+        @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Third_BetweenLinksAndFooter).OrderBy(block => block.Rank).ThenBy(block => block.Id))
+        {
+            <div class="block @if (!block.IsEnable) { <text>disabled</text> } my-2 shadow-sm" style="border-style: dotted;">
+                <div>
+                    <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
+                       asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
+                       asp-route-id="@block.Id" class="btn btn-light rounded-0">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+                            <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+                            <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+                        </svg>
+                        ویرایش | حذف
+                    </a>
+                </div>
+                @Html.Raw(block.Html)
+            </div>
+        }
     </div>
 }
 
 @section Scripts {
     <environment include="Development">
-        <script src="~/lib/picturefill/3.0.3/picturefill.js"></script>
-        <script src="~/lib/lightgallery/1.6.12/js/lightgallery-all.js"></script>
-        <script src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.js"></script>
-        <script src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        @*<script src="~/lib/picturefill/3.0.3/picturefill.js"></script>
+            <script src="~/lib/lightgallery/1.6.12/js/lightgallery-all.js"></script>
+            <script src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.js"></script>
+            <script src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>*@
         <script src="~/lib/timeago/1.6.7/jquery.timeago.js"></script>
         <script src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"></script>
+        @*<script src="~/lib/highlight.js/10.1.1/highlight.min.js"></script>*@
+        <script src="~/js/site.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js"
-                asp-fallback-src="~/lib/picturefill/3.0.3/picturefill.min.js"
-                asp-fallback-test="picturefill"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-iT+n/otuaeKCgxnASny7bxKeqCDbaV1M7VdX1ZRQtqg=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js"
-                asp-fallback-src="~/lib/lightgallery/1.6.12/js/lightgallery-all.min.js"
-                asp-fallback-test="$(document).lightGallery"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-w14QFJrxOYkUnF0hb8pVFCSgYcsF0hMIKrqGb8A7J8A=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
-                asp-fallback-src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
-                asp-fallback-test="$(document).mousewheel"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-jnOjDTXIPqall8M0MyTSt98JetJuZ7Yu+1Jm7hLTF7U=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
-                asp-fallback-src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
-                asp-fallback-test="jQuery.mCustomScrollbar"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-/YAntTqXy9V4LoXFkI5WPDl3ZwP/knn1BljmMJJ7QWc=" crossorigin="anonymous"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js"
+                    asp-fallback-src="~/lib/picturefill/3.0.3/picturefill.min.js"
+                    asp-fallback-test="picturefill"
+                    asp-suppress-fallback-integrity="true"
+                    integrity="sha256-iT+n/otuaeKCgxnASny7bxKeqCDbaV1M7VdX1ZRQtqg=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js"
+                    asp-fallback-src="~/lib/lightgallery/1.6.12/js/lightgallery-all.min.js"
+                    asp-fallback-test="$(document).lightGallery"
+                    asp-suppress-fallback-integrity="true"
+                    integrity="sha256-w14QFJrxOYkUnF0hb8pVFCSgYcsF0hMIKrqGb8A7J8A=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
+                    asp-fallback-src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
+                    asp-fallback-test="$(document).mousewheel"
+                    asp-suppress-fallback-integrity="true"
+                    integrity="sha256-jnOjDTXIPqall8M0MyTSt98JetJuZ7Yu+1Jm7hLTF7U=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
+                    asp-fallback-src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
+                    asp-fallback-test="jQuery.mCustomScrollbar"
+                    asp-suppress-fallback-integrity="true"
+                    integrity="sha256-/YAntTqXy9V4LoXFkI5WPDl3ZwP/knn1BljmMJJ7QWc=" crossorigin="anonymous"></script>*@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js"
                 asp-fallback-src="~/lib/timeago/1.6.7/jquery.timeago.min.js"
                 asp-fallback-test="window.jQuery & jQuery.timeago"
@@ -380,6 +397,12 @@
                 asp-fallback-test="jQuery.timeago"
                 asp-suppress-fallback-integrity="true"
                 integrity="sha256-sFVsGcmCR6b20l9bCjpuTslNmrPlE0+k7o1nv+eC7og=" crossorigin="anonymous"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"
+            asp-fallback-src="~/lib/highlight.js/10.1.1/highlight.min.js"
+            asp-fallback-test="hljs"
+            asp-suppress-fallback-integrity="true"
+            integrity="sha512-lnOllyZZlRk/gQIyjS3+h+LUy54uyM4aGq2zbGc82KTvBlp/fodSpdh/pywPztpU9zUqHcJr+jP+a1zLa9oCJw==" crossorigin="anonymous"></script>*@
+        <script src="~/js/site.min.js"></script>
     </environment>
     <script>
         $('.js-more-related-posts').click(function (e) {
@@ -397,28 +420,6 @@
                     var elemLoadMoreRelatedPosts = document.createElement('a');
                     elemLoadMoreRelatedPosts.classList.add('btn', 'stretched-link', 'js-more-related-posts');
                     $(elemLoadMoreRelatedPosts).attr('href', '/posts/' + buttonContainer.find('.js-more-related-posts').data('post-id') + '/related-posts').css('font-size', 'small').html('<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.5 3A1.5 1.5 0 0 0 13 1.5H3A1.5 1.5 0 0 0 1.5 3v5a.5.5 0 0 0 1 0V3a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H9a.5.5 0 0 0 0 1h4a1.5 1.5 0 0 0 1.5-1.5V3z"/><path fill-rule="evenodd" d="M4.5 6a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V6.5H5a.5.5 0 0 1-.5-.5z"/><path fill-rule="evenodd" d="M10.354 5.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z"/></svg> مطالب بیشتر').appendTo(buttonContainer.text(''));
-                }
-            });
-        });
-
-        var elemNewBlock = $('#block-new');
-        elemNewBlock.find('button[type=submit]').click(function (e) {
-
-            var model = {
-                Html: window.parent.tinyMCE.get('js-block-textarea').getContent(),
-                PositionNo: elemNewBlock.find('#block-new-position').val(),
-                Rank: elemNewBlock.find('#block-new-rank').val(),
-                IsEnable: elemNewBlock.find('#block-new-isEnable').is(":checked")
-            };
-
-            $.ajax({
-                url: "/blocks/add",
-                data: JSON.stringify(model),
-                dataType: "json",
-                type: "POST",
-                contentType: "application/json",
-                success: function (data) {
-
                 }
             });
         });
@@ -446,5 +447,34 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+                    //function sendNewBlock(e) {
+                    //    const xhr = new XMLHttpRequest();
+                    //    var a = false;
+                    //    xhr.onload = () => {
+                    //        if (xhr.status >= 200 && xhr.status < 300) {
+                    //            d(5);
+                    //        }
+                    //    };
+
+                    //    xhr.open('POST', '/blocks/add');
+                    //    xhr.setRequestHeader('Content-Type', 'application/json');
+                    //    xhr.send(JSON.stringify(
+                    //        {
+                    //            Html: window.parent.tinyMCE.get('js-block-textarea').getContent(),
+                    //            PositionNo: elemNewBlock.find('#block-new-position').val(),
+                    //            Rank: elemNewBlock.find('#block-new-rank').val(),
+                    //            IsEnable: elemNewBlock.find('#block-new-isEnable').is(":checked"),
+                    //            Styles: cm1.getValue(),
+                    //            Scripts: cm2.getValue()
+                    //        }));
+                    //    return a;
+                    //}
+
     </script>
+
+    @foreach (var block in Model.Blocks)
+    {
+        @Html.Raw(block.Scripts)
+    }
 }

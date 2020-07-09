@@ -21,6 +21,10 @@ namespace Rezaee.Alireza.Web.Models
         [Display(Name = "محتوا")]
         public string Html { get; set; }
 
+        public string Scripts { get; set; }
+
+        public string Styles { get; set; }
+
         [Display(Name = "آیا فعال است؟")]
         public bool IsEnable { get; set; }
 

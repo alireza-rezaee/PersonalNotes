@@ -91,6 +91,5 @@ namespace Rezaee.Alireza.Web.Controllers
             else //if (post.Markdown != null)
                 return PostType.Markdown;
         }
-
     }
 }
