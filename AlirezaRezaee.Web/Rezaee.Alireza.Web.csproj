@@ -171,12 +171,16 @@
 
 
   <ItemGroup>
+    <Folder Include="Data\SqlQueries\InsertDefaultBlocks\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\uploads\images\" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <None Update="Data\SqlQueries\InsertDefaultBlocks\InsertDefaults01.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\SqlQueries\InsertSimplePostsAndTags\part5.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
