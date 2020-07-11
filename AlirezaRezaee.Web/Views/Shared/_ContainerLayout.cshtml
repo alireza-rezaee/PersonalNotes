@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> SignInManager
+@inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Head {
@@ -6,7 +9,17 @@
 }
 
 <div class="container mt-5">
-    @RenderBody()
+    <div class="row">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="col-12 col-sm-3">
+                <partial name="/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml">
+            </div>
+        }
+        <div class="col-12 col-sm">
+            @RenderBody()
+        </div>
+    </div>
 </div>
 
 @section Scripts {

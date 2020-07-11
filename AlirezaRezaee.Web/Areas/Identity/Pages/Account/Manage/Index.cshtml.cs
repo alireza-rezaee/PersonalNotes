@@ -34,8 +34,26 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "شماره تلفن")]
             public string PhoneNumber { get; set; }
+
+            [StringLength(100)]
+            [Display(Name = "نام")]
+            public string FirstName { get; set; }
+
+            [StringLength(100)]
+            [Display(Name = "نام خانوادگی")]
+            public string LastName { get; set; }
+
+            [StringLength(100)]
+            [Display(Name = "نام نمایشی")]
+            public string DisplayName { get; set; }
+
+            [Display(Name = "تاریخ تولد")]
+            public DateTime? BirthDate { get; set; }
+
+            [StringLength(150)]
+            public string ProfileImagePath { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)

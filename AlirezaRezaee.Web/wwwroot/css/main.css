@@ -21,53 +21,64 @@ time, mark, audio, video {
   border: 0;
   font-size: 100%;
   font: inherit;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
 /* make sure to set some focus styles for accessibility */
 :focus {
-  outline: 0; }
+  outline: 0;
+}
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-  display: block; }
+  display: block;
+}
 
 body {
-  line-height: 1; }
+  line-height: 1;
+}
 
 ol, ul {
-  list-style: none; }
+  list-style: none;
+}
 
 blockquote, q {
-  quotes: none; }
+  quotes: none;
+}
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-  content: '';
-  content: none; }
+  content: "";
+  content: none;
+}
 
 table {
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0;
+}
 
 input[type=search]::-webkit-search-cancel-button,
 input[type=search]::-webkit-search-decoration,
 input[type=search]::-webkit-search-results-button,
 input[type=search]::-webkit-search-results-decoration {
   -webkit-appearance: none;
-  -moz-appearance: none; }
+  -moz-appearance: none;
+}
 
 input[type=search] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
-  box-sizing: content-box; }
+  box-sizing: content-box;
+}
 
 textarea {
   overflow: auto;
   vertical-align: top;
-  resize: vertical; }
+  resize: vertical;
+}
 
 /**
  * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
@@ -78,7 +89,8 @@ video {
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 /**
  * Prevent modern browsers from displaying `audio` without controls.
@@ -86,14 +98,16 @@ video {
  */
 audio:not([controls]) {
   display: none;
-  height: 0; }
+  height: 0;
+}
 
 /**
  * Address styling not present in IE 7/8/9, Firefox 3, and Safari 4.
  * Known issue: no IE 6 support.
  */
 [hidden] {
-  display: none; }
+  display: none;
+}
 
 /**
  * 1. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
@@ -107,20 +121,23 @@ html {
   -webkit-text-size-adjust: 100%;
   /* 2 */
   -ms-text-size-adjust: 100%;
-  /* 2 */ }
+  /* 2 */
+}
 
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 a:focus {
-  outline: thin dotted; }
+  outline: thin dotted;
+}
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 a:active,
 a:hover {
-  outline: 0; }
+  outline: 0;
+}
 
 /**
  * 1. Remove border when inside `a` element in IE 6/7/8/9 and Firefox 3.
@@ -130,19 +147,22 @@ img {
   border: 0;
   /* 1 */
   -ms-interpolation-mode: bicubic;
-  /* 2 */ }
+  /* 2 */
+}
 
 /**
  * Address margin not present in IE 6/7/8/9, Safari 5, and Opera 11.
  */
 figure {
-  margin: 0; }
+  margin: 0;
+}
 
 /**
  * Correct margin displayed oddly in IE 6/7.
  */
 form {
-  margin: 0; }
+  margin: 0;
+}
 
 /**
  * Define consistent border, margin, and padding.
@@ -150,7 +170,8 @@ form {
 fieldset {
   border: 1px solid #c0c0c0;
   margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em; }
+  padding: 0.35em 0.625em 0.75em;
+}
 
 /**
  * 1. Correct color not being inherited in IE 6/7/8/9.
@@ -164,7 +185,8 @@ legend {
   white-space: normal;
   /* 2 */
   *margin-left: -7px;
-  /* 3 */ }
+  /* 3 */
+}
 
 /**
  * 1. Correct font size not being inherited in all browsers.
@@ -183,7 +205,8 @@ textarea {
   vertical-align: baseline;
   /* 3 */
   *vertical-align: middle;
-  /* 3 */ }
+  /* 3 */
+}
 
 /**
  * Address Firefox 3+ setting `line-height` on `input` using `!important` in
@@ -191,7 +214,8 @@ textarea {
  */
 button,
 input {
-  line-height: normal; }
+  line-height: normal;
+}
 
 /**
  * Address inconsistent `text-transform` inheritance for `button` and `select`.
@@ -201,7 +225,8 @@ input {
  */
 button,
 select {
-  text-transform: none; }
+  text-transform: none;
+}
 
 /**
  * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
@@ -213,22 +238,24 @@ select {
  *    Known issue: inner spacing remains in IE 6.
  */
 button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+html input[type=button],
+input[type=reset],
+input[type=submit] {
   -webkit-appearance: button;
   /* 2 */
   cursor: pointer;
   /* 3 */
   *overflow: visible;
-  /* 4 */ }
+  /* 4 */
+}
 
 /**
  * Re-set default cursor for disabled elements.
  */
 button[disabled],
 html input[disabled] {
-  cursor: default; }
+  cursor: default;
+}
 
 /**
  * 1. Address box sizing set to content-box in IE 8/9.
@@ -236,8 +263,8 @@ html input[disabled] {
  * 3. Remove excess padding in IE 7.
  *    Known issue: excess padding remains in IE 6.
  */
-input[type="checkbox"],
-input[type="radio"] {
+input[type=checkbox],
+input[type=radio] {
   box-sizing: border-box;
   /* 1 */
   padding: 0;
@@ -245,28 +272,31 @@ input[type="radio"] {
   *height: 13px;
   /* 3 */
   *width: 13px;
-  /* 3 */ }
+  /* 3 */
+}
 
 /**
  * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
  * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
  *    (include `-moz` to future-proof).
  */
-input[type="search"] {
+input[type=search] {
   -webkit-appearance: textfield;
   /* 1 */
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
   /* 2 */
-  box-sizing: content-box; }
+  box-sizing: content-box;
+}
 
 /**
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none; }
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
 
 /**
  * Remove inner padding and border in Firefox 3+.
@@ -274,7 +304,8 @@ input[type="search"]::-webkit-search-decoration {
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 /**
  * 1. Remove default vertical scrollbar in IE 6/7/8/9.
@@ -284,46 +315,55 @@ textarea {
   overflow: auto;
   /* 1 */
   vertical-align: top;
-  /* 2 */ }
+  /* 2 */
+}
 
 /**
  * Remove most spacing between table cells.
  */
 table {
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0;
+}
 
 html,
 button,
 input,
 select,
 textarea {
-  color: #222; }
+  color: #222;
+}
 
 ::-moz-selection {
   background: #b3d4fc;
-  text-shadow: none; }
+  text-shadow: none;
+}
 
 ::selection {
   background: #b3d4fc;
-  text-shadow: none; }
+  text-shadow: none;
+}
 
 img {
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 fieldset {
   border: 0;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 textarea {
-  resize: vertical; }
+  resize: vertical;
+}
 
 .chromeframe {
   margin: 0.2em 0;
   background: #ccc;
   color: #000;
-  padding: 0.2em 0; }
+  padding: 0.2em 0;
+}
 
 html,
 body {
@@ -333,13 +373,15 @@ body {
   text-align: right;
   direction: rtl;
   font-family: IRANSans;
-  line-height: 1.5; }
+  line-height: 1.5;
+}
 
 /**
  * Set up a decent box model on the root element
  */
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 /**
  * Make all elements from the DOM inherit from the parent box-sizing
@@ -350,46 +392,106 @@ html {
 *,
 *::before,
 *::after {
-  box-sizing: inherit; }
+  box-sizing: inherit;
+}
 
 .dir-ltr {
-  direction: ltr; }
+  direction: ltr;
+}
 
 .cursor-pointer {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .rounded-oval {
-  border-radius: 1rem; }
+  border-radius: 1rem;
+}
 
 .mnh-100vh {
-  min-height: 100vh; }
+  min-height: 100vh;
+}
 
 .section {
   border: 5px dotted lightskyblue;
-  border-radius: 3rem; }
-  .section-bg {
-    background: url(/img/flower.png) no-repeat center;
-    background-size: contain;
-    width: 50px;
-    height: 50px; }
+  border-radius: 3rem;
+}
+.section-bg {
+  background: url(/img/flower.png) no-repeat center;
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+}
 
 .no-outline {
-  outline: none; }
-  .no-outline-events:hover, .no-outline-events:active, .no-outline-events:focus {
-    outline: none; }
+  outline: none;
+}
+.no-outline-events:hover, .no-outline-events:active, .no-outline-events:focus {
+  outline: none;
+}
 
 .bg-glin-blue {
-  background-image: linear-gradient(45deg, #18c, #045) !important; }
+  background-image: linear-gradient(45deg, #18c, #045) !important;
+}
 
 .bg-glin-magenta {
-  background-image: linear-gradient(45deg, #83c, #45d) !important; }
+  background-image: linear-gradient(45deg, #83c, #45d) !important;
+}
 
 .bg-light-gray {
-  background-color: #eee; }
+  background-color: #eee;
+}
+
+.text-size-1 {
+  font-size: 0.25rem !important;
+}
+
+.text-size-2 {
+  font-size: 0.5rem !important;
+}
+
+.text-size-3 {
+  font-size: 0.75rem !important;
+}
+
+.text-size-4 {
+  font-size: 1rem !important;
+}
+
+.text-size-5 {
+  font-size: 1.25rem !important;
+}
+
+.text-size-6 {
+  font-size: 1.5rem !important;
+}
+
+.text-size-7 {
+  font-size: 1.75rem !important;
+}
+
+.text-size-8 {
+  font-size: 2rem !important;
+}
+
+.text-size-9 {
+  font-size: 2.25rem !important;
+}
+
+.text-size-10 {
+  font-size: 2.5rem !important;
+}
+
+.text-size-11 {
+  font-size: 2.75rem !important;
+}
+
+.text-size-12 {
+  font-size: 3rem !important;
+}
 
 /**
- * Basic typography style for copy text
- */
+* Basic typography style for copy text
+*/
 /**
 *
 *	Name:			IRAN Sans-Serif Font
@@ -413,116 +515,137 @@ This set of fonts are used in this project under the license: (.....)
   font-style: normal;
   font-weight: 900;
   src: url("/fonts/eot/IRANSansWeb_Black.eot");
-  src: url("../fonts/eot/IRANSansWeb_Black.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_Black.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_Black.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_Black.ttf") format("truetype"); }
+  src: url("../fonts/eot/IRANSansWeb_Black.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_Black.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_Black.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_Black.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSans;
   font-style: normal;
   font-weight: bold;
   src: url("../fonts/eot/IRANSansWeb_Bold.eot");
-  src: url("../fonts/eot/IRANSansWeb_Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb_Bold.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_Bold.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_Bold.ttf") format("truetype"); }
+  src: url("../fonts/eot/IRANSansWeb_Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/woff2/IRANSansWeb_Bold.woff2") format("woff2"), url("../fonts/woff/IRANSansWeb_Bold.woff") format("woff"), url("../fonts/ttf/IRANSansWeb_Bold.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSans;
   font-style: normal;
   font-weight: 500;
   src: url("/fonts/eot/IRANSansWeb_Medium.eot");
-  src: url("/fonts/eot/IRANSansWeb_Medium.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_Medium.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb_Medium.woff") format("woff"), url("/fonts/ttf/IRANSansWeb_Medium.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb_Medium.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_Medium.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb_Medium.woff") format("woff"), url("/fonts/ttf/IRANSansWeb_Medium.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSans;
   font-style: normal;
   font-weight: 300;
   src: url("/fonts/eot/IRANSansWeb_Light.eot");
-  src: url("/fonts/eot/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_Light.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb_Light.woff") format("woff"), url("/fonts/ttf/IRANSansWeb_Light.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_Light.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb_Light.woff") format("woff"), url("/fonts/ttf/IRANSansWeb_Light.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSans;
   font-style: normal;
   font-weight: 200;
   src: url("/fonts/eot/IRANSansWeb_UltraLight.eot");
-  src: url("/fonts/eot/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_UltraLight.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"), url("/fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb_UltraLight.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"), url("/fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSans;
   font-style: normal;
   font-weight: normal;
   src: url("/fonts/eot/IRANSansWeb.eot");
-  src: url("/fonts/eot/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb.woff") format("woff"), url("/fonts/ttf/IRANSansWeb.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb.woff") format("woff"), url("/fonts/ttf/IRANSansWeb.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSansFaNum;
   font-style: normal;
   font-weight: 900;
   src: url("/fonts/eot/IRANSansWeb(FaNum)_Black.eot");
-  src: url("/fonts/eot/IRANSansWeb(FaNum)_Black.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Black.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Black.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Black.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb(FaNum)_Black.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Black.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Black.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Black.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSansFaNum;
   font-style: normal;
   font-weight: bold;
   src: url("/fonts/eot/IRANSansWeb(FaNum)_Bold.eot");
-  src: url("/fonts/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Bold.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Bold.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Bold.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Bold.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Bold.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Bold.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSansFaNum;
   font-style: normal;
   font-weight: 500;
   src: url("/fonts/eot/IRANSansWeb(FaNum)_Medium.eot");
-  src: url("/fonts/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Medium.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Medium.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Medium.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Medium.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Medium.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Medium.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSansFaNum;
   font-style: normal;
   font-weight: 300;
   src: url("/fonts/eot/IRANSansWeb(FaNum)_Light.eot");
-  src: url("/fonts/eot/IRANSansWeb(FaNum)_Light.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Light.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Light.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Light.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb(FaNum)_Light.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_Light.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_Light.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_Light.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSansFaNum;
   font-style: normal;
   font-weight: 200;
   src: url("/fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot");
-  src: url("/fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_UltraLight.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_UltraLight.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_UltraLight.ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum)_UltraLight.woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum)_UltraLight.woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum)_UltraLight.ttf") format("truetype");
+}
 @font-face {
   font-family: IRANSansFaNum;
   font-style: normal;
   font-weight: normal;
   src: url("/fonts/eot/IRANSansWeb(FaNum).eot");
-  src: url("/fonts/eot/IRANSansWeb(FaNum).eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum).woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum).woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum).ttf") format("truetype"); }
+  src: url("/fonts/eot/IRANSansWeb(FaNum).eot?#iefix") format("embedded-opentype"), url("/fonts/woff2/IRANSansWeb(FaNum).woff2") format("woff2"), url("/fonts/woff/IRANSansWeb(FaNum).woff") format("woff"), url("/fonts/ttf/IRANSansWeb(FaNum).ttf") format("truetype");
+}
 .num-fa {
-  font-family: IRANSansFaNum; }
+  font-family: IRANSansFaNum;
+}
 
 #header {
   position: relative;
   width: 100%;
   height: 33vh;
-  background-color: #eee; }
+  background-color: #eee;
+}
 
 #hnav-besm {
   background: url(../img/besm.png) no-repeat center;
   background-size: contain;
   width: 75px;
   height: 26px;
-  box-sizing: content-box; }
+  box-sizing: content-box;
+}
 
 #header nav {
-  padding-right: 75px; }
+  padding-right: 75px;
+}
 
 #header .container {
-  position: relative; }
+  position: relative;
+}
 
 #header .cover {
   height: 100%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  border-bottom-left-radius: 0 !important; }
+  border-bottom-left-radius: 0 !important;
+}
 
 #header .cover-avatar {
   width: 150px;
   height: 150px;
   margin-top: -75px;
   text-align: left;
-  min-width: 64px; }
+  min-width: 64px;
+}
 
 #header .cover-avatar img {
-  border: 5px solid #fff; }
+  border: 5px solid #fff;
+}
 
 #hnav {
   display: -webkit-flex;
   /* Safari */
-  display: flex; }
+  display: flex;
+}
 
 #hnav-list {
   display: inline-block;
@@ -532,43 +655,52 @@ This set of fonts are used in this project under the license: (.....)
   /* IE 10 */
   flex: 1;
   background-color: #eee;
-  height: 3rem; }
+  height: 3rem;
+}
 
 #hnav-list > li {
   position: relative;
   display: inline-block;
   height: 100%;
   z-index: 0;
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 #hnav-list li a {
-  display: inline-block; }
+  display: inline-block;
+}
 
 .nav-shortcuts a {
-  font-family: 'Material Icons Outlined';
+  font-family: "Material Icons Outlined";
   font-size: 20px;
   transition: all 0.2s;
-  color: #7b7b7b; }
+  color: #7b7b7b;
+}
 
 .nav-shortcuts a:hover {
   background-color: #d0d0d0;
   border-radius: 1rem;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 .nav-shortcuts-trigger {
   color: #7b7b7b;
-  width: 50px; }
+  width: 50px;
+}
 
 .nav-shortcuts-trigger:hover {
   background-color: #d0d0d0;
-  border-radius: 1rem; }
+  border-radius: 1rem;
+}
 
 .nav-shortcuts-trigger:focus {
-  box-shadow: none; }
+  box-shadow: none;
+}
 
 .nav-shortcuts {
   height: 100%;
-  margin: 0 10px; }
+  margin: 0 10px;
+}
 
 @media (max-width: 576px) {
   .nav-shortcuts.open {
@@ -585,49 +717,65 @@ This set of fonts are used in this project under the license: (.....)
     padding: 0.5rem 0;
     /*  */
     height: unset !important;
-    margin: unset !important; } }
+    margin: unset !important;
+  }
+}
 @media (max-width: 1200px) {
   #header nav {
-    padding-right: 50px; }
+    padding-right: 50px;
+  }
 
   #header .cover-avatar {
     width: 125px;
     height: 125px;
-    margin-top: -50px; } }
+    margin-top: -50px;
+  }
+}
 @media (max-width: 992px) {
   #header nav {
-    padding-right: 20px; }
+    padding-right: 20px;
+  }
 
   #header .cover-avatar {
     width: 100px;
     height: 100px;
-    margin-top: -25px; } }
+    margin-top: -25px;
+  }
+}
 @media (max-width: 768px) {
   #header nav {
-    padding-right: 5px; }
+    padding-right: 5px;
+  }
 
   #header .cover-avatar {
     width: 64px;
     height: 64px;
-    margin-top: -5px; } }
+    margin-top: -5px;
+  }
+}
 @media (max-width: 576px) {
   #header .container {
     padding-right: 0;
-    padding-left: 0; }
+    padding-left: 0;
+  }
 
   #header .cover {
-    border-radius: 0 !important; } }
+    border-radius: 0 !important;
+  }
+}
 .tazhib {
   background: url(../img/tazhib.png) no-repeat top;
   background-size: contain;
-  min-height: 45px; }
+  min-height: 45px;
+}
 
 #footer {
   background-color: #eee;
   position: absolute;
   bottom: 0;
   right: 0;
-  left: 0; }
+  left: 0;
+}
 
 .upper {
   border: 2px solid #000;
@@ -641,66 +789,80 @@ This set of fonts are used in this project under the license: (.....)
   left: 0;
   right: 0;
   bottom: 0;
-  margin: auto; }
+  margin: auto;
+}
 
 .gotop {
   width: 50px;
   height: 50px;
   box-shadow: 0 4px 3px rgba(0, 0, 0, 0.3);
   transform: translateY(-50%);
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .tazhib.tazhib-rotated {
-  transform: rotate(180deg); }
+  transform: rotate(180deg);
+}
 
 .links-item {
   background-color: #eee;
   transition: background-color 0.3s;
   border-radius: 0 0 0.5rem 0.5rem;
   color: #000;
-  transition: all 0.1s; }
+  transition: all 0.1s;
+}
 
 .links-item:hover {
   background-color: #e8e8e8;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
 
 .links-site-link {
   background-color: #d5d5d5;
   transition: all 0.3s;
-  color: #888 !important; }
+  color: #888 !important;
+}
 
 .links a:hover {
-  color: #000; }
+  color: #000;
+}
 
 .links-site-link:hover {
   background-color: #0c7ab7;
-  color: #fff !important; }
+  color: #fff !important;
+}
 
 .links-link.stretched-link {
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis;
+}
 
 .links-link.stretched-link .caption {
   font-style: normal;
   border-bottom: 3px solid transparent;
-  transition: border 0.3s; }
+  transition: border 0.3s;
+}
 
 .links-link.stretched-link:hover .caption {
-  border-color: #cecece; }
+  border-color: #cecece;
+}
 
 .links-link {
   font-weight: lighter;
   color: #000;
-  text-decoration: none !important; }
+  text-decoration: none !important;
+}
 
 .links-content {
   overflow: hidden;
-  white-space: nowrap; }
+  white-space: nowrap;
+}
 
 .links-cover {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 200px; }
+  height: 200px;
+}
 
 .links-compact-item {
   background-color: #a6a6a6;
@@ -708,10 +870,11 @@ This set of fonts are used in this project under the license: (.....)
   background-repeat: no-repeat;
   background-size: cover;
   width: 64px;
-  height: 64px; }
+  height: 64px;
+}
 
 .links-compact-item::after {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-size: 24px;
   line-height: 1;
   display: block;
@@ -722,79 +885,116 @@ This set of fonts are used in this project under the license: (.....)
   height: 24px;
   background-color: #fff;
   border-radius: 50%;
-  overflow: hidden; }
+  overflow: hidden;
+}
 
 .links-compact-item.links-web::after {
-  content: "language"; }
+  content: "language";
+}
 
 /* .post {} */
 .post h2 {
   font-size: 1.5rem;
-  font-weight: 500; }
+  font-weight: 500;
+}
 
 .post .card-footer {
   padding: 0.5rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1px solid rgba(127, 127, 127, 0.15); }
+  border-top: 1px solid rgba(127, 127, 127, 0.15);
+}
 
 .post .card-footer:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.125); }
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
 
 .post .post-summary, .post .card-footer {
-  position: relative; }
+  position: relative;
+}
 
 .post .card-footer.more-related-posts {
   padding-top: 0;
-  padding-bottom: 0; }
-  .post .card-footer.more-related-posts button {
-    padding: 0; }
-    .post .card-footer.more-related-posts button:focus {
-      box-shadow: none; }
+  padding-bottom: 0;
+}
+.post .card-footer.more-related-posts button {
+  padding: 0;
+}
+.post .card-footer.more-related-posts button:focus {
+  box-shadow: none;
+}
 
 @font-face {
   font-family: "QuranTaha";
   src: url("/fonts/eot/QuranTaha.eot");
   src: url("/fonts/eot/QuranTaha.eot?#iefix") format("embedded-opentype"), url("/fonts/ttf/QuranTaha.ttf") format("truetype"), url("/fonts/woff/QuranTaha.woff") format("woff"), url("/fonts/woff2/QuranTaha.woff2") format("woff2");
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+}
 .text-quran {
   font-family: QuranTaha;
-  font-size: 1.1rem; }
+  font-size: 1.1rem;
+}
 
 .quran-logo {
   height: 50px;
   width: 50px;
   max-width: 100%;
   background: url(quranLogo.png) center no-repeat;
-  background-size: contain; }
+  background-size: contain;
+}
+
+.nav-pills-light {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #fafafa;
+}
+.nav-pills-light .nav-item:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+.nav-pills-light .nav-link {
+  color: #444;
+}
+.nav-pills-light .nav-link.active {
+  border-right: 3px solid #e16e00;
+  background-color: inherit;
+  color: inherit;
+}
 
 .modal-header .close {
   margin-left: -1rem;
-  margin-right: auto; }
+  margin-right: auto;
+}
 
 .modal-footer > :not(:last-child) {
-  margin-left: .25rem; }
+  margin-left: 0.25rem;
+}
 
 .btn-group, .btn-group-vertical {
-  flex-direction: row-reverse; }
+  flex-direction: row-reverse;
+}
 
 .tooltip {
-  font-family: IRANSans; }
+  font-family: IRANSans;
+}
 
 .rounded-top-0 {
   border-top-right-radius: 0;
-  border-top-left-radius: 0; }
+  border-top-left-radius: 0;
+}
 
 .rounded-bottom-0 {
   border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0; }
+  border-bottom-left-radius: 0;
+}
 
 .rounded-left-0 {
   border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
+  border-bottom-left-radius: 0;
+}
 
 .rounded-right-0 {
   border-top-right-radius: 0;
-  border-bottom-right-radius: 0; }
+  border-bottom-right-radius: 0;
+}
 
 /*# sourceMappingURL=main.css.map */

@@ -1,0 +1,23 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the Nav component.
+// -----------------------------------------------------------------------------
+
+.nav-pills-light {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    background-color: #fafafa;
+
+    .nav-item:not(:last-child) {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nav-link {
+        color: #444;
+
+        &.active {
+            border-right: 3px solid #e16e00;
+            background-color: inherit;
+            color: inherit;
+        }
+    }
+}

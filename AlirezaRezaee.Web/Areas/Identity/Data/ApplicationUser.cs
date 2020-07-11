@@ -10,12 +10,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Data
     public class ApplicationUser : IdentityUser
     {
         [PersonalData]
-        [Required]
+        //[Required] -> It was removed due to speeding up the registration
         [StringLength(100)]
         public string FirstName { get; set; }
 
         [PersonalData]
-        [Required]
+        //[Required] -> It was removed due to speeding up the registration
         [StringLength(100)]
         public string LastName { get; set; }
 
@@ -24,10 +24,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Data
         public string DisplayName { get; set; }
 
         [PersonalData]
-        public DateTime BirthDate { get; set; }
-
-        [PersonalData]
-        public bool IsMale { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         [PersonalData]
         public DateTime RegisteredDateTime { get; set; }

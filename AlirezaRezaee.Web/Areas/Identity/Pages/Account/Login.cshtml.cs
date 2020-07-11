@@ -43,15 +43,17 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "{0} نوشته نشده است.")]
+            [EmailAddress(ErrorMessage = "{0} به صورت صحیح وارد نشده است.")]
+            [Display(Name = "رایانامه")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} نوشته نشده است.")]
             [DataType(DataType.Password)]
+            [Display(Name = "گذرواژه")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "ورود من را به خاطر سپار")]
             public bool RememberMe { get; set; }
         }
 

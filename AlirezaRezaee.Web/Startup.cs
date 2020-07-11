@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Rezaee.Alireza.Web.Areas.Identity.Data;
 using Rezaee.Alireza.Web.Services.Email;
 using Rezaee.Alireza.Web.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Rezaee.Alireza.Web
 {
@@ -36,12 +37,18 @@ namespace Rezaee.Alireza.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString(connectionString)));
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
             services.AddRazorPages();
 
             services.AddTransient<IFileManager, FileManager>();
@@ -62,7 +69,7 @@ namespace Rezaee.Alireza.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
