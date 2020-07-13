@@ -5,6 +5,22 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
+@section Head {
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/md.bootstrappersiandatetimepicker@3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css"
+              asp-fallback-href="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css"
+              asp-fallback-test-class="select-year-inline-box"
+              asp-fallback-test-property="z-index"
+              asp-fallback-test-value="9999999"
+              asp-suppress-fallback-integrity="true"
+              integrity="sha256-kwJ+3ubWqE8DzqcNVQITqpIaiNBfxLAv9PAxZuFkOYA="
+              crossorigin="anonymous">
+    </environment>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css" />
+    </environment>
+}
+
 <h4>@ViewData["Title"]</h4>
 <hr />
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -12,14 +28,55 @@
     <div class="col-md-9">
         <form id="profile-form" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+            <div class="row mb-2">
+                <div class="col-12 col-md">
+                    <label asp-for="Input.DisplayName"></label>
+                    <input asp-for="Input.DisplayName" class="form-control" />
+                </div>
+                <div class="col-12 col-md">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control" disabled />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <div class="row mb-2">
+                <div class="col-12 col-md">
+                    <label asp-for="Input.FirstName"></label>
+                    <input asp-for="Input.FirstName" class="form-control" />
+                </div>
+                <div class="col-12 col-md">
+                    <label asp-for="Input.LastName"></label>
+                    <input asp-for="Input.LastName" class="form-control" />
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12 col-md-6">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 dir-ltr text-right">
+                    <label asp-for="Input.BirthDate"></label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button type="button" class="input-group-text" id="birthDatePickerTrigger">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar4-event" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M14 2H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zM2 1a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
+                                    <path fill-rule="evenodd" d="M14 2H2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zM2 1a2 2 0 0 0-2 2v2h16V3a2 2 0 0 0-2-2H2z" />
+                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
+                                    <rect width="2" height="2" x="11" y="7" rx=".5" />
+                                </svg>
+                            </button>
+                        </div>
+                        <input type="text" value="" class="form-control" id="inputTextBirthDate" />
+                    </div>
+                    <input asp-for="Input.BirthDate" type="hidden" class="form-control" id="inputBirthDate" />
+                    <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="text-center my-4">
+                <button id="update-profile-button" type="submit" class="btn btn-success rounded-oval px-4">ذخیره</button>
             </div>
         </form>
     </div>
@@ -28,12 +85,39 @@
         <div class="text-left">
             <img src="https://avatars2.githubusercontent.com/u/55509086?s=400&u=be0dbe6929e7503f79715f36534a39d1a23b74aa&v=4" alt="..." class="rounded-circle img-fluid" />
         </div>
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-light rounded-oval px-2 text-size-3 border">تغییر تصویر</button>
+        </div>
     </div>
-</div>
-<div class="text-left">
-    <button id="update-profile-button" type="submit" class="btn btn-success rounded-oval">ذخیره</button>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <environment exclude="Development">
+        <script src="https://cdn.jsdelivr.net/npm/md.bootstrappersiandatetimepicker@3.8.0/dist/jquery.md.bootstrap.datetimepicker.js"
+                asp-fallback-src="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.js"
+                asp-fallback-test="$().MdPersianDateTimePicker"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha256-oIJB3j4RkgilEv0X3ztSZqQWClRGMy36muTB3r1ND2E="
+                crossorigin="anonymous"></script>
+    </environment>
+    <environment include="Development">
+        <script src="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.js"></script>
+    </environment>
+
+    <script>
+
+        $('#birthDatePickerTrigger').MdPersianDateTimePicker({
+            targetTextSelector: '#inputTextBirthDate',
+            targetDateSelector: '#inputBirthDate',
+            disableAfterToday: 'true'
+        });
+
+        $('#inputTextBirthDate').MdPersianDateTimePicker({
+            targetTextSelector: '#inputTextBirthDate',
+            targetDateSelector: '#inputBirthDate',
+            disableAfterToday: 'true',
+            trigger: 'focus'
+        });
+    </script>
 }

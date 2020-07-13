@@ -23,6 +23,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
+        [Display(Name = "شناسه کاربری")]
         public string Username { get; set; }
 
         [TempData]
@@ -34,8 +35,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "شماره تلفن")]
+            [Display(Name = "شماره تماس")]
             public string PhoneNumber { get; set; }
+
+            [EmailAddress]
+            [Display(Name = "رایانامه")]
+            public string Email { get; set; }
 
             [StringLength(100)]
             [Display(Name = "نام")]

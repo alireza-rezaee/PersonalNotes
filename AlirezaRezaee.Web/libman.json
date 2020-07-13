@@ -44,6 +44,19 @@
     {
       "library": "tinymce@5.4.1",
       "destination": "wwwroot/lib/tinymce/5.4.1"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "md.bootstrappersiandatetimepicker@3.8.0",
+      "destination": "wwwroot/lib/md.datetimepicker/3.8.0",
+      "files": [
+        "dist/jquery.md.bootstrap.datetimepicker.js", //it's minified by it self
+        //"dist/jquery.md.bootstrap.datetimepicker.js.map",
+        //"dist/jquery.md.bootstrap.datetimepicker.min.js", //do not use it. see https://cdn.jsdelivr.net/npm/md.bootstrappersiandatetimepicker@3.8.0/dist/jquery.md.bootstrap.datetimepicker.min.js
+        "dist/jquery.md.bootstrap.datetimepicker.style.css",
+        "dist/jquery.md.bootstrap.datetimepicker.style.css.map",
+        "dist/jquery.md.bootstrap.datetimepicker.style.min.css"
+      ]
     }
   ],
   "version": "1.0"
