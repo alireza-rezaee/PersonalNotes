@@ -54,7 +54,11 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             [Display(Name = "نام نمایشی")]
             public string DisplayName { get; set; }
 
-            [Display(Name = "تاریخ تولد")]
+            [StringLength(100)]
+            [Display(Name = "محل زندگی")]
+            public string LocationName { get; set; }
+
+            [Display(Name = "زادروز")]
             public DateTime? BirthDate { get; set; }
 
             [StringLength(150)]
