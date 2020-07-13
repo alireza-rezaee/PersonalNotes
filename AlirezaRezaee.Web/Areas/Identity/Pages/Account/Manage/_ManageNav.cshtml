@@ -2,7 +2,7 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column nav-pills-light">
+<ul class="nav nav-pills flex-column nav-pills-light pr-0 mb-5">
     <li class="nav-item"><a class="nav-link font-weight-light @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">نمایه</a></li>
     <li class="nav-item"><a class="nav-link font-weight-light @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">رایانامه</a></li>
     <li class="nav-item"><a class="nav-link font-weight-light @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">گذرواژه</a></li>
