@@ -11,6 +11,7 @@ using Rezaee.Alireza.Web.Data;
 using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models.ViewModels.Pages;
 using Rezaee.Alireza.Web.Extensions;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -78,7 +79,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 var newImage = createVM.CoverImage;
                 try
                 {
-                    newPage.Url = PostsController.ValidateName(newPage.Url);
+                    newPage.Url = Helpers.File.ValidateName(newPage.Url);
 
                     if (newPage.HasLayout == true && newImage != null)
                         throw new Exception("در صورت انتخاب «مستقل از پوسته سایت» نباید از این طریق تصویری انتخاب شود.");
@@ -89,7 +90,7 @@ namespace Rezaee.Alireza.Web.Controllers
                         newImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
                         var newImagePath = "uploads/images/"
                             + persianDateTime.ToString("yyyy/MM/dd/yyyyMMddhhmmss")
-                            + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999) + "_" + PostsController.ValidateName(newImage.FileName);
+                            + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999) + "_" + Helpers.File.ValidateName(newImage.FileName);
                         await _ifileManager.SaveFile(newImage, newImagePath);
                         newPage.ImageCoverPath = "/" + newImagePath;
                     }
@@ -135,7 +136,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
                 try
                 {
-                    newPage.Url = PostsController.ValidateName(newPage.Url);
+                    newPage.Url = Helpers.File.ValidateName(newPage.Url);
 
                     if (newPage.HasLayout == true && newImage != null)
                         throw new Exception("در صورت انتخاب «مستقل از پوسته سایت» نباید از این طریق تصویری انتخاب شود.");
@@ -146,7 +147,7 @@ namespace Rezaee.Alireza.Web.Controllers
                         newImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
                         var newImagePath = "uploads/images/"
                             + persianDateTime.ToString("yyyy/MM/dd/yyyyMMddhhmmss")
-                            + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999) + "_" + PostsController.ValidateName(newImage.FileName);
+                            + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999) + "_" + Helpers.File.ValidateName(newImage.FileName);
                         await _ifileManager.SaveFile(newImage, newImagePath);
                         newPage.ImageCoverPath = "/" + newImagePath;
                     }

@@ -7,7 +7,7 @@ namespace Rezaee.Alireza.Web.Extensions
 {
     public static class IntExtensions
     {
-        public static string EnglishToPersian(this string EnglishStr)
+        public static string EnglishNumberToPersian(this string EnglishStr)
         {
             Dictionary<char, char> LettersDictionary = new Dictionary<char, char>
             {
@@ -30,7 +30,7 @@ namespace Rezaee.Alireza.Web.Extensions
             return EnglishStr;
         }
 
-        public static string PersianToEnglish(this string persianStr)
+        public static string PersianNumberToEnglish(this string persianStr)
         {
             Dictionary<char, char> LettersDictionary = new Dictionary<char, char>
             {
@@ -53,8 +53,8 @@ namespace Rezaee.Alireza.Web.Extensions
             return persianStr;
         }
 
-        public static string PersianToEnglish(this int persianNumber) => PersianToEnglish(persianNumber.ToString());
+        public static string PersianToEnglish(this int persianNumber) => PersianNumberToEnglish(persianNumber.ToString());
 
-        public static string EnglishToPersian(this int EnglishStr) => EnglishToPersian(EnglishStr.ToString());
+        public static string EnglishToPersian(this int EnglishStr) => EnglishNumberToPersian(EnglishStr.ToString());
     }
 }

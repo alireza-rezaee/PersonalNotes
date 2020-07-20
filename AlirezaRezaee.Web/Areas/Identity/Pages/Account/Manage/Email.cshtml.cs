@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Rezaee.Alireza.Web.Areas.Identity.Data;
+using Rezaee.Alireza.Web.Services.Email;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -18,12 +19,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly ISiteEmailSender _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            ISiteEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,6 +33,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 
         public string Username { get; set; }
 
+        [Display(Name = "نشانی رایانامه")]
         public string Email { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -46,7 +48,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "نشانی جدید رایانامه")]
             public string NewEmail { get; set; }
         }
 
@@ -99,10 +101,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailSender.SendAsync(
+                    from: Helpers.EmailTypes.NoReply,
+                    to: Input.NewEmail,
+                    subject: "Confirm your email",
+                    body: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                    isBodyHtml: true);
 
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return RedirectToPage();
@@ -135,10 +139,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            await _emailSender.SendAsync(
+                from: Helpers.EmailTypes.NoReply,
+                to: Input.NewEmail,
+                subject: "Confirm your email",
+                body: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                isBodyHtml: true);
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

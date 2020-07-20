@@ -7,6 +7,10 @@ using Rezaee.Alireza.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Rezaee.Alireza.Web.Extensions;
+using System.Text;
+using Microsoft.AspNetCore.Http;
+using Rezaee.Alireza.Web.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -14,17 +18,17 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IFileManager _ifileManager;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IFileManager ifileManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _ifileManager = ifileManager;
         }
-
-        [Display(Name = "شناسه کاربری")]
-        public string Username { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -34,6 +38,9 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "شناسه کاربری")]
+            public string Username { get; set; }
+
             [Phone]
             [Display(Name = "شماره تماس")]
             public string PhoneNumber { get; set; }
@@ -67,14 +74,18 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                Username = await _userManager.GetUserNameAsync(user),
+                PhoneNumber = (await _userManager.GetPhoneNumberAsync(user)).EnglishNumberToPersian(),
+                Email = await _userManager.GetEmailAsync(user),
+                DisplayName = user.DisplayName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                ProfileImagePath = user.ProfileImagePath,
+                BirthDate = user.BirthDate,
+                LocationName = user.Location
             };
         }
 
@@ -83,7 +94,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
             }
 
             await LoadAsync(user);
@@ -93,30 +104,69 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+            //Invalid UserID
             if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                await LoadAsync(user);
-                return Page();
-            }
+                var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+                if (Input.PhoneNumber != phoneNumber)
+                {
+                    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber.PersianNumberToEnglish());
+                    if (!setPhoneResult.Succeeded)
+                    {
+                        var userId = await _userManager.GetUserIdAsync(user);
+                        throw new InvalidOperationException($"تنظیم شماره تماس برای کاربر '{userId}' با خطا مواجه شد..");
+                    }
+                }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                user.DisplayName = Input.DisplayName;
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.BirthDate = Input.BirthDate;
+                user.Location = Input.LocationName;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"به روز رسانی نمایه برای کاربر '{userId}' با خطا مواجه شد..");
                 }
+
+                await _signInManager.RefreshSignInAsync(user);
+                StatusMessage = "نمایه به روز شد.";
+                return RedirectToPage();
             }
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            //Invalid Model
+            await LoadAsync(user);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSetProfileImageAsync(IFormFile image)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            //Invalid UserID
+            if (user == null)
+                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
+
+            if(image == null)
+                return RedirectToPage();
+
+            if (!string.IsNullOrEmpty(user.ProfileImagePath))
+                _ifileManager.DeleteFile(user.ProfileImagePath);
+            var avatarPath = $"uploads/avatars/{PersianDateTime.Now.ToString("yyyy/MM/dd/yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(image.FileName)}";
+            await _ifileManager.SaveFile(image, avatarPath);
+            user.ProfileImagePath = $"/{avatarPath}";
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                var userId = await _userManager.GetUserIdAsync(user);
+                throw new InvalidOperationException($"به روز رسانی تصویر نمایه برای کاربر '{userId}' با خطا مواجه شد..");
+            }
+
+            StatusMessage = "تصویر نمایه به روز شد.";
             return RedirectToPage();
         }
     }

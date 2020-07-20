@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Rezaee.Alireza.Web.Helpers
 {
@@ -19,8 +19,8 @@ namespace Rezaee.Alireza.Web.Helpers
         public void DeleteFile(string path)
         {
             var absolutePath = _env.WebRootPath + path;
-            if (File.Exists(absolutePath))
-                File.Delete(absolutePath);
+            if (System.IO.File.Exists(absolutePath))
+                System.IO.File.Delete(absolutePath);
         }
 
         public async Task SaveFile(IFormFile file, string path)

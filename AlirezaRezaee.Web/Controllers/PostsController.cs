@@ -170,15 +170,15 @@ namespace Rezaee.Alireza.Web.Controllers
                 {
                     if (createPostVM.Article.UrlTitle == null)
                         createPostVM.Article.UrlTitle = createPostVM.Post.Title;
-                    createPostVM.Article.UrlTitle = ValidateName(createPostVM.Article.UrlTitle);
+                    createPostVM.Article.UrlTitle = Helpers.File.ValidateName(createPostVM.Article.UrlTitle);
 
                     createPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
                     createPostVM.CoverImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
 
                     var randomNumber = new Random();
                     var imagePath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd");
-                    var thumbnailPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{ValidateName(createPostVM.ThumbnailImage.FileName)}";
-                    var coverPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{ValidateName(createPostVM.CoverImage.FileName)}";
+                    var thumbnailPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{Helpers.File.ValidateName(createPostVM.ThumbnailImage.FileName)}";
+                    var coverPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{Helpers.File.ValidateName(createPostVM.CoverImage.FileName)}";
 
                     await _ifileManager.SaveFile(createPostVM.ThumbnailImage, thumbnailPath);
                     await _ifileManager.SaveFile(createPostVM.CoverImage, coverPath);
@@ -237,7 +237,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 {
                     createPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
 
-                    var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{ValidateName(createPostVM.ThumbnailImage.FileName)}";
+                    var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(createPostVM.ThumbnailImage.FileName)}";
 
                     await _ifileManager.SaveFile(createPostVM.ThumbnailImage, thumbnailPath);
 
@@ -296,11 +296,11 @@ namespace Rezaee.Alireza.Web.Controllers
                 {
                     if (createPostVM.Markdown.UrlTitle == null)
                         createPostVM.Markdown.UrlTitle = createPostVM.Post.Title;
-                    createPostVM.Markdown.UrlTitle = ValidateName(createPostVM.Markdown.UrlTitle);
+                    createPostVM.Markdown.UrlTitle = Helpers.File.ValidateName(createPostVM.Markdown.UrlTitle);
 
                     createPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
 
-                    var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{ValidateName(createPostVM.ThumbnailImage.FileName)}";
+                    var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(createPostVM.ThumbnailImage.FileName)}";
 
                     await _ifileManager.SaveFile(createPostVM.ThumbnailImage, thumbnailPath);
 
@@ -416,7 +416,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 {
                     if (editPostVM.Article.UrlTitle == null)
                         editPostVM.Article.UrlTitle = editPostVM.Post.Title;
-                    editPostVM.Article.UrlTitle = ValidateName(editPostVM.Article.UrlTitle);
+                    editPostVM.Article.UrlTitle = Helpers.File.ValidateName(editPostVM.Article.UrlTitle);
 
                     var randomNumber = new Random();
                     var imagePath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd");
@@ -426,7 +426,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
                     if (editPostVM.CoverImage != null)
                     {
-                        var coverPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{ValidateName(editPostVM.CoverImage.FileName)}";
+                        var coverPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{Helpers.File.ValidateName(editPostVM.CoverImage.FileName)}";
 
                         if (previousType == PostType.Article)
                             _ifileManager.DeleteFile(previousPost.Article.CoverUrl);
@@ -439,7 +439,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
                     if (editPostVM.ThumbnailImage != null)
                     {
-                        var thumbnailPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{ValidateName(editPostVM.ThumbnailImage.FileName)}";
+                        var thumbnailPath = $"{imagePath}/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + randomNumber.Next(1000000, 9999999)}_{Helpers.File.ValidateName(editPostVM.ThumbnailImage.FileName)}";
                         _ifileManager.DeleteFile(previousPost.ThumbnailUrl);
                         await _ifileManager.SaveFile(editPostVM.ThumbnailImage, thumbnailPath);
                         editPostVM.Post.ThumbnailUrl = $"/{thumbnailPath}";
@@ -551,7 +551,7 @@ namespace Rezaee.Alireza.Web.Controllers
                     if (editPostVM.ThumbnailImage != null)
                     {
                         editPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-                        var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{ValidateName(editPostVM.ThumbnailImage.FileName)}";
+                        var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(editPostVM.ThumbnailImage.FileName)}";
                         await _ifileManager.SaveFile(editPostVM.ThumbnailImage, thumbnailPath);
                         editPostVM.Post.ThumbnailUrl = $"/{thumbnailPath}";
                     }
@@ -663,7 +663,7 @@ namespace Rezaee.Alireza.Web.Controllers
                     if (editPostVM.ThumbnailImage != null)
                     {
                         editPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-                        var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{ValidateName(editPostVM.ThumbnailImage.FileName)}";
+                        var thumbnailPath = "uploads/images/" + persianDateTime.ToString("yyyy/MM/dd") + $"/{persianDateTime.ToString("yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(editPostVM.ThumbnailImage.FileName)}";
                         await _ifileManager.SaveFile(editPostVM.ThumbnailImage, thumbnailPath);
                         editPostVM.Post.ThumbnailUrl = $"/{thumbnailPath}";
                     }
@@ -849,14 +849,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 return NotFound();
 
             return RedirectToAction(nameof(EditMarkdown), new { year = year, month = month, day = day, postId = postId });
-        }
-
-        [NonAction]
-        public static string ValidateName(string Name)
-        {
-            foreach (char c in Path.GetInvalidFileNameChars())
-                Name = Name.Replace(c, ' ');
-            return Regex.Replace(Name, @"\s+", "-");
         }
 
         private async Task<List<PostSummaryViewModel>> RetrieveLatestPostsSummary(int count, int skip = 0) => await RetrieveLatestPostsSummary(count: count, skip: skip, context: _context);

@@ -36,18 +36,18 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "گذرواژه فعلی")]
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "حد مجاز طول {0} از حداقل {2} تا حداکثر {1} کارامتر است.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "گذرواژه جدید")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "تکرار گذرواژه جدید")]
+            [Compare("NewPassword", ErrorMessage = "گذرواژه جدید با تکرار آن مطابقت ندارد!")]
             public string ConfirmPassword { get; set; }
         }
 

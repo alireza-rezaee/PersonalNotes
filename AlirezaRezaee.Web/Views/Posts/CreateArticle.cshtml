@@ -122,7 +122,7 @@
         <div class="form-row justify-content-center align-items-center">
             <img src="@Avatar.x64" alt="@fullName" class="rounded-circle my-1 my-md-0" style="width: 25px; height:25px;" />
             <div class="col-12 col-md-4 text-center my-1 my-md-0" id="datepicker">
-                <input type="text" id="post-publish-datepicker" class="form-control text-center" placeholder="@persianPostDate.ToString("dd MMMM yyyy").EnglishToPersian()" readonly>
+                <input type="text" id="post-publish-datepicker" class="form-control text-center" placeholder="@persianPostDate.ToString("dd MMMM yyyy").EnglishNumberToPersian()" readonly>
                 <input type="hidden" asp-for="Post.PublishDateTime" id="post-publish-date" class="form-control text-center" value="@DateTime.Now">
             </div>
             <div class="col-12 col-md-4 text-center my-1 my-md-0">

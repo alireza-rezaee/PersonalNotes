@@ -31,5 +31,9 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Data
 
         [StringLength(150)]
         public string ProfileImagePath { get; set; }
+
+        [StringLength(100)]
+        [Display(Name = "محل زندگی")]
+        public string Location { get; set; }
     }
 }
