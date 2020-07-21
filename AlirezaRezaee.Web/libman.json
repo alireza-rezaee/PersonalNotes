@@ -57,6 +57,11 @@
         "dist/jquery.md.bootstrap.datetimepicker.style.css.map",
         "dist/jquery.md.bootstrap.datetimepicker.style.min.css"
       ]
+    },
+    {
+      "library": "qrcodejs@1.0.0",
+      "destination": "wwwroot/lib/qrcodejs/1.0.0",
+      "files": [ "qrcode.js", "qrcode.min.js" ]
     }
   ],
   "version": "1.0"

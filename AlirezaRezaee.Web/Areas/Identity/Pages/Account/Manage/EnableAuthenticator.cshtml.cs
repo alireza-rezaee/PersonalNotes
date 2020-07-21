@@ -48,9 +48,9 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = "طول مجاز برای {0} حداقل {1} کاراکتر و حداکثر {2} کاراکتر است.", MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Verification Code")]
+            [Display(Name = "کد فعال سازی")]
             public string Code { get; set; }
         }
 
@@ -59,7 +59,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
             }
 
             await LoadSharedKeyAndQrCodeUriAsync(user);
@@ -72,7 +72,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
             }
 
             if (!ModelState.IsValid)
@@ -89,16 +89,16 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 
             if (!is2faTokenValid)
             {
-                ModelState.AddModelError("Input.Code", "Verification code is invalid.");
+                ModelState.AddModelError("Input.Code", "کد فعال سازی نامعتبر است.");
                 await LoadSharedKeyAndQrCodeUriAsync(user);
                 return Page();
             }
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var userId = await _userManager.GetUserIdAsync(user);
-            _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+            _logger.LogInformation($"حساب کاربری با شناسه '{userId}' دارای احراز هویت فعال است.", userId);
 
-            StatusMessage = "Your authenticator app has been verified.";
+            StatusMessage = "نرم افزار احراز هویت شما فعال شد.";
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {
@@ -149,7 +149,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("Rezaee.Alireza.Web"),
+                _urlEncoder.Encode("Alireza Rezaee"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

@@ -1,54 +1,92 @@
 ﻿@page
 @model EnableAuthenticatorModel
 @{
-    ViewData["Title"] = "Configure authenticator app";
+    ViewData["Title"] = "تنظیم نرم افزار احراز هویت";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h4>@ViewData["Title"]</h4>
+<hr />
 <div>
-    <p>To use an authenticator app go through the following steps:</p>
+    <p>برای استفاده از نرم افزار احراز هویت مطابق مراحل زیر پیش روید:</p>
     <ol class="list">
         <li>
             <p>
-                Download a two-factor authenticator app like Microsoft Authenticator for
-                <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
-                <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
-                <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
-                Google Authenticator for
-                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
-                <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+                نرم افزار احراز هویت خود را آماده کنید. در صورت نیاز می توانید
+                Microsoft Authenticator
+                را برای
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825072">اندروید</a>،
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825071">ویندوز موبایل</a>
+                و
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> یا
+                Google Authenticator
+                را برای
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">اندروید</a> و
+                <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>
+                دریافت کنید.
             </p>
         </li>
         <li>
-            <p>Scan the QR Code or enter this key <kbd>@Model.SharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
-            <div class="alert alert-info">Learn how to <a href="https://go.microsoft.com/fwlink/?Linkid=852423">enable QR code generation</a>.</div>
-            <div id="qrCode"></div>
-            <div id="qrCodeData" data-url="@Html.Raw(@Model.AuthenticatorUri)"></div>
-        </li>
-        <li>
-            <p>
-                Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
-                with a unique code. Enter the code in the confirmation box below.
-            </p>
             <div class="row">
-                <div class="col-md-6">
-                    <form id="send-code" method="post">
+                <div class="col-12 col-md-6">
+                    <p>
+                        QR Code را با نرم افزار اسکن یا کد زیر را وارد کنید.
+                        <kbd class="text-nowrap">@Model.SharedKey</kbd>
+                        (فاصله ها اهمیت ندارند)
+                    </p>
+                    <div id="qrCodeData" data-url="@Html.Raw(@Model.AuthenticatorUri)"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div id="qrCode"></div>
+                </div>
+            </div>
+        </li>
+        <li class="mt-3">
+            <p>
+                بلافاصله پس از اسکن کد یا وارد کردن کد بالا، نرم افزار احراز هویت به شما کدی یکتا میدهد. آن کد را در قسمت زیر وارد کنید.
+            </p>
+            <form id="send-code" method="post">
+                <div class="row">
+                    <div class="col-md col-md-6">
                         <div class="form-group">
-                            <label asp-for="Input.Code" class="control-label">Verification Code</label>
+                            <label asp-for="Input.Code" class="control-label">
+                                کد فعال سازی
+                            </label>
                             <input asp-for="Input.Code" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Input.Code" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Verify</button>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success rounded-oval">تایید</button>
+                </div>
+            </form>
         </li>
     </ol>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <environment include="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+                asp-fallback-src="~/lib/qrcodejs/1.0.0/qrcode.min.js"
+                asp-fallback-test="QRCode"
+                asp-suppress-fallback-integrity="true"
+                integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+                crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/qrcodejs/1.0.0/qrcode.js"></script>
+    </environment>
+    <script type="text/javascript">
+        new QRCode(document.getElementById("qrCode"),
+            {
+                text: "@Html.Raw(Model.AuthenticatorUri)",
+                width: 150,
+                height: 150
+            });
+    </script>
+
 }
