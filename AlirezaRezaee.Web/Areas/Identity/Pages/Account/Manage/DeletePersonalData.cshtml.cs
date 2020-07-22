@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -43,7 +44,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
@@ -55,7 +56,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
@@ -63,7 +64,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    ModelState.AddModelError(string.Empty, "گذرواژه اشتباه است.");
                     return Page();
                 }
             }
@@ -72,12 +73,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
+                throw new InvalidOperationException($"خطای پیش بینی نشده حین حذف کاربر '{userId}' پیش آمد.");
             }
 
             await _signInManager.SignOutAsync();
 
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            _logger.LogInformation($"User with ID '{userId}' deleted themselves.");
 
             return Redirect("~/");
         }

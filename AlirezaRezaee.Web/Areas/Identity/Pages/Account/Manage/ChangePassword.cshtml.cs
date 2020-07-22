@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
+
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
@@ -56,7 +58,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -78,7 +80,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
@@ -92,8 +94,8 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _logger.LogInformation($"User changed their password successfully (For user with ID '{_userManager.GetUserId(User)}').");
+            StatusMessage = "گذرواژه شما تغییر کرد.";
 
             return RedirectToPage();
         }

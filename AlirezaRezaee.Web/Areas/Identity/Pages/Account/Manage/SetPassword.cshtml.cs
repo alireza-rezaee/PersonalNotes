@@ -7,6 +7,7 @@ using Rezaee.Alireza.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -32,14 +33,14 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "طول مجاز {0} باید حداقل {2} کاراکتر و حداکثر {1} باشد.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "گذرواژه جدید")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "تکرار گذرواژه جدید")]
+            [Compare("NewPassword", ErrorMessage = "گذرواژه جدید و تکرار آن دارای مطابقت نیستند.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -48,7 +49,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -71,7 +72,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
@@ -85,7 +86,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "گذرواژه ثبت شد.";
 
             return RedirectToPage();
         }

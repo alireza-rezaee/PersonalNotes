@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Rezaee.Alireza.Web.Areas.Identity.Data;
 using Rezaee.Alireza.Web.Services.Email;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -70,7 +71,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             await LoadAsync(user);
@@ -82,7 +83,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             if (!ModelState.IsValid)
@@ -102,17 +103,17 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
                     values: new { userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
                 await _emailSender.SendAsync(
-                    from: Helpers.EmailTypes.NoReply,
+                    from: Web.Helpers.EmailTypes.NoReply,
                     to: Input.NewEmail,
-                    subject: "Confirm your email",
-                    body: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                    subject: "تایید رایانامه",
+                    body: $"لطفاً حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",
                     isBodyHtml: true);
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "نشانی تاییدیه به رایانامه ارسال شد. لطفاً رایانامه خود را بررسی کنید.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "رایانامه شما تغییر نکرد.";
             return RedirectToPage();
         }
 
@@ -121,7 +122,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             if (!ModelState.IsValid)
@@ -140,13 +141,13 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
             await _emailSender.SendAsync(
-                from: Helpers.EmailTypes.NoReply,
+                from: Web.Helpers.EmailTypes.NoReply,
                 to: Input.NewEmail,
-                subject: "Confirm your email",
-                body: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                subject: "تایید رایانامه",
+                body: $"لطفاً حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",
                 isBodyHtml: true);
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "رایانامه تاییدیه ارسال شد. لطفاً رایانامه خود را بررسی کنید.";
             return RedirectToPage();
         }
     }

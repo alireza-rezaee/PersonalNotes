@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -37,7 +38,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             CurrentLogins = await _userManager.GetLoginsAsync(user);
@@ -53,18 +54,18 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             var result = await _userManager.RemoveLoginAsync(user, loginProvider, providerKey);
             if (!result.Succeeded)
             {
-                StatusMessage = "The external login was not removed.";
+                StatusMessage = $"ورود خارجی برای کاربر با شناسه '{_userManager.GetUserId(User)}' حذف شد.";
                 return RedirectToPage();
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "The external login was removed.";
+            StatusMessage = $"ورود خارجی برای کاربر با شناسه '{_userManager.GetUserId(User)}' حذف نشد.";
             return RedirectToPage();
         }
 
@@ -84,26 +85,26 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             var info = await _signInManager.GetExternalLoginInfoAsync(await _userManager.GetUserIdAsync(user));
             if (info == null)
             {
-                throw new InvalidOperationException($"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
+                throw new InvalidOperationException($"خطای پیش بینی نشده در حین بارگذاری اطلاعات ورود خارجی برای کاربر '{user.Id}' پیش آمد.");
             }
 
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                StatusMessage = "The external login was not added. External logins can only be associated with one account.";
+                StatusMessage = "ورود خارجی اضافه نشد. امکان استفاده همزمان از یک ورود خارجی، همزمان تنها برای یک حساب کاربری امکان پذیر است.";
                 return RedirectToPage();
             }
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "ورود خارجی اضافه شد.";
             return RedirectToPage();
         }
     }

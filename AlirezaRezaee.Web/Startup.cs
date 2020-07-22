@@ -16,6 +16,7 @@ using Rezaee.Alireza.Web.Areas.Identity.Data;
 using Rezaee.Alireza.Web.Services.Email;
 using Rezaee.Alireza.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 
 namespace Rezaee.Alireza.Web
 {
@@ -42,7 +43,8 @@ namespace Rezaee.Alireza.Web
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddErrorDescriber<PersianIdentityErrorDescriber>();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>

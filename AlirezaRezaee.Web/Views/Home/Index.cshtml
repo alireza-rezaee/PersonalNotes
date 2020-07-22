@@ -120,7 +120,7 @@
     <div class="container">
         @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.First_BetweenHomeAndPosts).OrderBy(block => block.Rank).ThenBy(block => block.Id))
         {
-            <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2" style="border-style: dotted;">
+            <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2">
                 <div>
                     <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
                        asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
@@ -268,7 +268,7 @@
     <div class="container">
         @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Second_betweenPostsAndLinks).OrderBy(block => block.Rank).ThenBy(block => block.Id))
         {
-            <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2" style="border-style: dotted;">
+            <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2">
                 <div>
                     <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
                        asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
@@ -336,7 +336,7 @@
     <div class="container">
         @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Third_BetweenLinksAndFooter).OrderBy(block => block.Rank).ThenBy(block => block.Id))
         {
-            <div class="block @if (!block.IsEnable) { <text>disabled</text> } my-2 shadow-sm" style="border-style: dotted;">
+            <div class="block @if (!block.IsEnable) { <text>disabled</text> } my-2 shadow-sm">
                 <div>
                     <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
                        asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
