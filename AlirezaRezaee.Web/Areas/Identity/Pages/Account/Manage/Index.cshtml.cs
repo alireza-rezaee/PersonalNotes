@@ -157,7 +157,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 
             if (!string.IsNullOrEmpty(user.ProfileImagePath))
                 _ifileManager.DeleteFile(user.ProfileImagePath);
-            var avatarPath = $"uploads/avatars/{PersianDateTime.Now.ToString("yyyy/MM/dd/yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(image.FileName)}";
+            var avatarPath = $"uploads/avatars/{PersianDateTime.Now.ToString("yyyy/MM/dd/yyyyMMddhhmmss") + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Web.Helpers.File.ValidateName(image.FileName)}";
             await _ifileManager.SaveFile(image, avatarPath);
             user.ProfileImagePath = $"/{avatarPath}";
             var result = await _userManager.UpdateAsync(user);

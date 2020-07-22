@@ -17,6 +17,8 @@ using Rezaee.Alireza.Web.Services.Email;
 using Rezaee.Alireza.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Rezaee.Alireza.Web.Areas.Identity.Helpers;
+using Rezaee.Alireza.Web.Models;
+using Newtonsoft.Json;
 
 namespace Rezaee.Alireza.Web
 {
@@ -45,6 +47,30 @@ namespace Rezaee.Alireza.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                 .AddErrorDescriber<PersianIdentityErrorDescriber>();
+
+            var microsoftAuth = Configuration.GetSection("Authentication").GetSection("Microsoft");
+            var gitHubAuth = Configuration.GetSection("Authentication").GetSection("GitHub");
+            var stackExchangeAuth = Configuration.GetSection("Authentication").GetSection("StackExchange");
+            services.AddAuthentication()
+                .AddMicrosoftAccount(microsoftOptions =>
+                {
+                    microsoftOptions.ClientId = microsoftAuth.GetSection("ClientId").Value;
+                    microsoftOptions.ClientSecret = microsoftAuth.GetSection("ClientSecret").Value;
+                    microsoftOptions.CallbackPath = "/signin-microsoft";
+                })
+                .AddGitHub(gitHubOptions =>
+                {
+                    gitHubOptions.ClientId = gitHubAuth.GetSection("ClientId").Value;
+                    gitHubOptions.ClientSecret = gitHubAuth.GetSection("ClientSecret").Value;
+                    gitHubOptions.CallbackPath = "/signin-github";
+                })
+                .AddStackExchange(stackExchangeOptions =>
+                {
+                    stackExchangeOptions.ClientId = stackExchangeAuth.GetSection("ClientId").Value;
+                    stackExchangeOptions.ClientSecret = stackExchangeAuth.GetSection("ClientSecret").Value;
+                    stackExchangeOptions.CallbackPath = "/signin-stackexchange";
+                    stackExchangeOptions.RequestKey = stackExchangeAuth.GetSection("Key").Value;
+                });
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
