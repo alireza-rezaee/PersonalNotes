@@ -1,14 +1,14 @@
 ﻿@page
 @model LoginWith2faModel
 @{
-    ViewData["Title"] = "Two-factor authentication";
+    ViewData["Title"] = "احراز هویت دو مرحله ای";
 }
 
 <h1>@ViewData["Title"]</h1>
 <hr />
-<p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
+<p>حساب کاربری شما از طریق نرم افزار احراز هویت محافظت میشود. کد نرم افزار را وارد کنید.</p>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-12 col-md-6">
         <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
             <input asp-for="RememberMe" type="hidden" />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -26,14 +26,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Log in</button>
+                <button type="submit" class="btn btn-primary">ورود</button>
             </div>
         </form>
     </div>
 </div>
 <p>
-    Don't have access to your authenticator device? You can
-    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>.
+    به دستگاه خود دسترسی ندارد؟
+    برای ورود از
+    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">کد های پشتیبانی</a>
+    استفاده کنید.
 </p>
 
 @section Scripts {

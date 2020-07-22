@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Rezaee.Alireza.Web.Services.Email;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
 {
@@ -22,14 +23,14 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly ISiteEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            ISiteEmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -51,6 +52,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "رایانامه")]
             public string Email { get; set; }
         }
 
@@ -72,13 +74,13 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
             {
-                ErrorMessage = $"Error from external provider: {remoteError}";
+                ErrorMessage = $"خطایی از سمت تامین کننده خارجی پیش آمد: {remoteError}";
                 return RedirectToPage("./Login", new {ReturnUrl = returnUrl });
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                ErrorMessage = "Error loading external login information.";
+                ErrorMessage = "خطا در بارگذاری اطلاعات ورود خارجی پیش آمد.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
@@ -86,7 +88,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
             if (result.Succeeded)
             {
-                _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
+                _logger.LogInformation($"{info.Principal.Identity.Name} logged in with {info.LoginProvider} provider.");
                 return LocalRedirect(returnUrl);
             }
             if (result.IsLockedOut)
@@ -116,7 +118,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                ErrorMessage = "Error loading external login information during confirmation.";
+                ErrorMessage = "خطایی در  بارگذاری اطلاعات ورود خارجی پیش آمد.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
@@ -129,7 +131,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        _logger.LogInformation($"User created an account using {info.LoginProvider} provider.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -147,8 +149,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        await _emailSender.SendAsync(
+                            from: Web.Helpers.EmailTypes.NoReply,
+                            to: Input.Email,
+                            subject: "تایید رایانامه",
+                            body: $"حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",
+                            isBodyHtml: true);
 
                         return LocalRedirect(returnUrl);
                     }

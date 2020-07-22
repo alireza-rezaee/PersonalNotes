@@ -95,10 +95,10 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendAsync(
-                        from: Helpers.EmailTypes.NoReply,
+                        from: Web.Helpers.EmailTypes.NoReply,
                         to: Input.Email, 
-                        subject: "Confirm your email",
-                        body: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                        subject: "تایید رایانامه",
+                        body: $"حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",
                         isBodyHtml: true);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

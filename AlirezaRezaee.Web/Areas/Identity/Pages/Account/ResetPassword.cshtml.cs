@@ -30,16 +30,18 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "رایانامه")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "طول {0} نباید از حد مجاز (حداقل {2} و حداکثر {1} کاراکتر) فراتر رود.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            [Display(Name = "گذرواژه")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "تکرار گذرواژه")]
+            [Compare("Password", ErrorMessage = "گذرواژه و تکرار آن دارای مطابقت نیستند.")]
             public string ConfirmPassword { get; set; }
 
             public string Code { get; set; }
@@ -49,7 +51,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return BadRequest("کد بازیابی گذرواژه باید تامین شود.");
             }
             else
             {

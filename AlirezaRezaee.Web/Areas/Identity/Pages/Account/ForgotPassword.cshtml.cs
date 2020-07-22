@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Rezaee.Alireza.Web.Areas.Identity.Data;
+using Rezaee.Alireza.Web.Services.Email;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
 {
@@ -18,9 +19,9 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly ISiteEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, ISiteEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -33,6 +34,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "رایانامه")]
             public string Email { get; set; }
         }
 
@@ -57,10 +59,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailSender.SendAsync(
+                    from: Web.Helpers.EmailTypes.NoReply,
+                    to: Input.Email,
+                    subject: "تنظیم مجدد گذرواژه",
+                    body: $"برای تنظیم مجدد گذرواژه <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>اینجا</a> کلیک کنید.",
+                    isBodyHtml: true);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

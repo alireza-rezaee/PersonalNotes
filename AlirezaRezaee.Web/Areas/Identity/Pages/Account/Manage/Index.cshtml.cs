@@ -11,6 +11,7 @@ using Rezaee.Alireza.Web.Extensions;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Rezaee.Alireza.Web.Helpers;
+using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -94,7 +95,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
             }
 
             await LoadAsync(user);
@@ -106,7 +107,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             //Invalid UserID
             if (user == null)
-                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
 
             if (ModelState.IsValid)
             {
@@ -149,9 +150,9 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             //Invalid UserID
             if (user == null)
-                return NotFound($"کاربری با شناسه '{_userManager.GetUserId(User)}' یافت نشد.");
+                return NotFound(Describer.UnableToLoadUser(_userManager.GetUserId(User), Language.English));
 
-            if(image == null)
+            if (image == null)
                 return RedirectToPage();
 
             if (!string.IsNullOrEmpty(user.ProfileImagePath))
