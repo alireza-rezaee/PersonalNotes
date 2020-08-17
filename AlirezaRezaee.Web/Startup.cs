@@ -46,6 +46,7 @@ namespace Rezaee.Alireza.Web
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
+                .AddRoles<IdentityRole>()
                 .AddErrorDescriber<PersianIdentityErrorDescriber>();
 
             var microsoftAuth = Configuration.GetSection("Authentication").GetSection("Microsoft");
@@ -108,8 +109,13 @@ namespace Rezaee.Alireza.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "Areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 //endpoints.MapControllerRoute(
                 //    name: "EditArticle",
                 //    pattern: "edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}");

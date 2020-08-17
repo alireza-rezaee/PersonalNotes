@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> SignInManager
 @inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
-@{ 
+@{
     var user = await UserManager.GetUserAsync(User);
 }
 @addTagHelper *, Rezaee.Alireza.Web
@@ -43,11 +43,11 @@
     var avatar = (await UserManager.GetUserAsync(User)).ProfileImagePath;
     <li class="d-none d-sm-block ">
         <a asp-area="Identity" asp-page="/account/manage/index" class="p-1" style="line-height:0;">
-            
+
 
             @if (string.IsNullOrEmpty(avatar))
             {
-            <img-gravatar gravatar-size="35" gravatar-email="@await UserManager.GetEmailAsync(user)" alt="" class="rounded-circle img-fluid"></img-gravatar>
+                <img-gravatar gravatar-size="35" gravatar-email="@await UserManager.GetEmailAsync(user)" alt="" class="rounded-circle img-fluid"></img-gravatar>
             }
             else
             {
