@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Rezaee.Alireza.Web.Areas.Identity.Helpers;
+using Rezaee.Alireza.Web.Helpers;
 
 namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -15,15 +16,18 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly IFileManager _ifileManager;
 
         public DeletePersonalDataModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            IFileManager ifileManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _ifileManager = ifileManager;
         }
 
         [BindProperty]
@@ -75,6 +79,9 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
             {
                 throw new InvalidOperationException($"خطای پیش بینی نشده حین حذف کاربر '{userId}' پیش آمد.");
             }
+
+            //Delete User's Profile Image
+            _ifileManager.DeleteFile(user.ProfileImagePath);
 
             await _signInManager.SignOutAsync();
 
