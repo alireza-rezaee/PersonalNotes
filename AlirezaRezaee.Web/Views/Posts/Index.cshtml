@@ -1,47 +1,14 @@
 ﻿@using Rezaee.Alireza.Web.Helpers
 @using Rezaee.Alireza.Web.Helpers.Enums
+@using Rezaee.Alireza.Web.Extensions
 @inject Microsoft.AspNetCore.Identity.UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
 @model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel>
 
 @{
     ViewData["Title"] = "ارسالی ها";
+    var lastPageNumber = (int)ViewData["LastPageNumber"];
+    var currentPageNumber = (int)ViewData["PageNumber"];
 }
-
-<div class="container my-5">
-    <div class="row links rounded justify-content-center mb-3">
-
-        @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostCreateMarkdown))
-        {
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="my-2 position-relative">
-                    <div class="d-flex links-content links-item">
-                        <a asp-controller="posts" asp-action="Create" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                            <i class="material-icons align-middle">language</i>
-                        </a>
-                        <a asp-controller="posts" asp-action="Create" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                            <i class="caption">ارسال مطلب جدید</i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        }
-
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="my-2 position-relative">
-                <div class="d-flex links-content links-item">
-                    <a asp-controller="tags" asp-action="index" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                        <i class="material-icons align-middle">language</i>
-                    </a>
-                    <a asp-controller="tags" asp-action="index" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                        <i class="caption">فهرست برچسب ها</i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <hr />
-</div>
 
 <!-- begin: مطالب سایت -->
 <div class="container my-5">
@@ -113,8 +80,8 @@
                         @if (post.Type != null)
                         {
                             @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
-                           User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
-                           User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
+                   User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
+                   User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
                             {
                                 <div class="dropleft position-absolute" style="right:0; top:0; z-index: 99;">
                                     <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
@@ -130,7 +97,7 @@
                                             }
 
                                             @if ((User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)) ||
-                                         (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
+                                 (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
                                             {
                                                 <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
                                             }
@@ -151,7 +118,7 @@
                                             }
 
                                             @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) ||
-                                         (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
+                                 (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
                                             {
                                                 <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
                                             }
@@ -173,7 +140,7 @@
                                             }
 
                                             @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) ||
-                                          (User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)))
+                                  (User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)))
                                             {
                                                 <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
                                             }
@@ -191,12 +158,109 @@
                 }
             }
         </div>
+
+        if (lastPageNumber > 1)
+        {
+            var pageNumbers = Rezaee.Alireza.Web.Controllers.PostsController.PaginationPages(currentPage: currentPageNumber, rangeLength: 5, lastPage: lastPageNumber);
+            <nav>
+                <ul class="pagination justify-content-center dir-ltr">
+                    @if (currentPageNumber != lastPageNumber)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-route-page="@(currentPageNumber + 1)" asp-action="Index" asp-controller="Posts">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                            </a>
+                        </li>
+                    }
+
+                    @foreach (var pageNumber in pageNumbers.OrderByDescending(page => page))
+                    {
+                        if (pageNumber == currentPageNumber)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link text-danger" href="javascript:void(0)">@pageNumber.EnglishToPersian()</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-route-page="@pageNumber" asp-action="Index" asp-controller="Posts">@pageNumber.EnglishToPersian()</a></li>
+                        }
+                    }
+
+                    @if (currentPageNumber != 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-route-page="@(currentPageNumber - 1)" asp-action="Index" asp-controller="Posts">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
     }
 </div>
 <!-- end: پایان مطالب سایت -->
 
 @if (User.IsInRole(Roles.PostDeleteArticle) || User.IsInRole(Roles.PostDeleteShare) || User.IsInRole(Roles.PostDeleteMarkdown))
 {
+    <div class="container my-5">
+        <hr />
+        <div class="row links rounded justify-content-center mb-3">
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2 position-relative">
+                    <div class="d-flex links-content links-item">
+                        <a asp-controller="posts" asp-action="Create" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                            <i class="material-icons align-middle">language</i>
+                        </a>
+                        <a asp-controller="posts" asp-action="Create" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                            <i class="caption">ارسال مطلب جدید</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2 position-relative">
+                    <div class="d-flex links-content links-item">
+                        <a asp-controller="tags" asp-action="index" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                            <i class="material-icons align-middle">language</i>
+                        </a>
+                        <a asp-controller="tags" asp-action="index" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                            <i class="caption">مدیریت برچسب ها</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Modals -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal-delete-post">
         <div class="modal-dialog modal-lg modal-dialog-centered">

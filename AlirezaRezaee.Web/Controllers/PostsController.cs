@@ -36,8 +36,15 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("")]
-        public async Task<IActionResult> Index() => View(await RetrieveLatestPostsSummary(count: 10));
+        [Route("page/{page:int:min(1)}")]
+        public async Task<IActionResult> Index(int page = 1)
+        {
+            ViewData["PageNumber"] = page;
+            ViewData["LastPageNumber"] = (int)Math.Ceiling(await _context.Posts.CountAsync() / 10d);
+            return View(await RetrieveLatestPostsSummary(count: 10, skip: (page - 1) * 10));
+        }
 
+        [Route("load-posts")]
         public async Task<List<PostSummaryViewModel>> LoadPosts(int count, int skip) => await RetrieveLatestPostsSummary(count: count, skip: skip);
 
         [Route("/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
@@ -1147,6 +1154,40 @@ namespace Rezaee.Alireza.Web.Controllers
                 PostType.Share => $"/edit/type/{post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd")}/{post.Id}",
                 _ => throw new Exception("در فرایند دریافت مسیر تغییر نوع، نوع فعلی مطلب پیدا نشد."),
             };
+        }
+
+        [NonAction]
+        public static List<int> PaginationPages(int currentPage, int rangeLength, int lastPage)
+        {
+            if (rangeLength % 2 == 0) throw new ArgumentOutOfRangeException(paramName: nameof(rangeLength), message: "The length of the range must be odd number.");
+            var delta = (rangeLength - 1) / 2;
+
+            if (currentPage - delta >= 1 && currentPage + delta <= lastPage)
+                return RangeOfNumbers(currentPage - delta, currentPage + delta);
+            else
+            {
+                var previousShortage = (currentPage - delta - 1 < 0) ? -(currentPage - delta - 1) : 0;
+                var nextShortage = (currentPage + delta - lastPage > 0) ? currentPage + delta - lastPage : 0;
+
+                if (previousShortage != 0 && nextShortage != 0)
+                    return RangeOfNumbers(1, lastPage);
+                else if (previousShortage != 0) // Reached 1
+                    return RangeOfNumbers(1, currentPage + delta + previousShortage);
+                else if (nextShortage != 0) // Reach lastPage
+                    return RangeOfNumbers(currentPage - delta - nextShortage, lastPage);
+            }
+
+            return null;
+        }
+
+        private static List<int> RangeOfNumbers(int min, int max)
+        {
+            var numbers = new List<int>();
+
+            for (int i = min; i <= max; i++)
+                numbers.Add(i);
+
+            return numbers;
         }
     }
 }
