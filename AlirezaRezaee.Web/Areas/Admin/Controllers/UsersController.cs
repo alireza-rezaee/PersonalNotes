@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ using Rezaee.Alireza.Web.Helpers;
 namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Route("admin/users")]
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -24,11 +27,15 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
             _signInManager = signInManager;
         }
 
+        [Route("")]
+        [Authorize(Roles = Roles.UsersList)]
         public async Task<IActionResult> Index()
         {
             return View(await _userManager.Users.ToListAsync());
         }
 
+        [Route("details")]
+        [Authorize(Roles = Roles.UsersList)]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -41,8 +48,9 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
             return View(user);
         }
 
-        [HttpPost]
+        [HttpPost("delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.UserDelete)]
         public async Task<IActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -71,6 +79,8 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost("search")]
+        [Authorize(Roles = Roles.UsersList)]
         public IEnumerable<ApplicationUser> Search(string q)
         {
             return _userManager

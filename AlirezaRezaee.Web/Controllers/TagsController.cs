@@ -6,12 +6,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Markdig.Parsers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using Rezaee.Alireza.Web.Data;
 using Rezaee.Alireza.Web.Extensions;
+using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
 using Rezaee.Alireza.Web.Models.ViewModels.Tags;
 
@@ -55,8 +57,9 @@ namespace Rezaee.Alireza.Web.Controllers
 
         private static bool IsEnglishChar(char character) => englishChars.IndexOf(Char.ToUpper(character)) != -1;
 
-        [ValidateAntiForgeryToken]
         [Route("add-tags")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.TagCreate)]
         public async Task<IActionResult> Create(string newTags)
         {
             try
@@ -88,8 +91,9 @@ namespace Rezaee.Alireza.Web.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
         [Route("{id}/delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.TagDelete)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -107,8 +111,9 @@ namespace Rezaee.Alireza.Web.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
         [Route("{id}/edit")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.TagEdit)]
         public async Task<IActionResult> Edit(int id, string newName)
         {
             try

@@ -135,6 +135,16 @@
     <Compile Remove="Data\Migrations\20200612182126_AlterTags01.Designer.cs" />
     <Compile Remove="Data\Migrations\20200623094543_AlterTags05.cs" />
     <Compile Remove="Data\Migrations\20200623094543_AlterTags05.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818083919_SeedAdminUser.cs" />
+    <Compile Remove="Data\Migrations\20200818083919_SeedAdminUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818084559_SeedAdminUser.cs" />
+    <Compile Remove="Data\Migrations\20200818084559_SeedAdminUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818093444_SeedAdminUser.cs" />
+    <Compile Remove="Data\Migrations\20200818093444_SeedAdminUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818093849_SeedAdminUser.cs" />
+    <Compile Remove="Data\Migrations\20200818093849_SeedAdminUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.cs" />
+    <Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

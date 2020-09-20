@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 using Rezaee.Alireza.Web.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Rezaee.Alireza.Web
 {
@@ -79,6 +80,13 @@ namespace Rezaee.Alireza.Web
             );
 
             services.AddRazorPages();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
 
             services.AddTransient<IFileManager, FileManager>();
             services.AddTransient<ISiteEmailSender, SiteEmailSender>();

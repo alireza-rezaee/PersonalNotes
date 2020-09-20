@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
 
 namespace Rezaee.Alireza.Web.Controllers
@@ -26,6 +28,7 @@ namespace Rezaee.Alireza.Web.Controllers
         /// <param name="id">شناسه مطلب</param>
         /// <returns></returns>
         [Route("pin/{id}")]
+        [Authorize(Roles = Roles.PosterPin)]
         public async Task<IActionResult> Pin(int id)
         {
             var post = await _context.Posts.Where(post => post.Id == id).Include(post => post.Posterpins).FirstOrDefaultAsync();
@@ -54,6 +57,7 @@ namespace Rezaee.Alireza.Web.Controllers
         /// </summary>
         /// <param name="id">شناسه مطلب</param>
         [Route("un-pin/{id}")]
+        [Authorize(Roles = Roles.PosterPin)]
         public async Task<IActionResult> UnPin(int id)
         {
             var post = await _context.Posts.Where(post => post.Id == id).Include(post => post.Posterpins).FirstOrDefaultAsync();

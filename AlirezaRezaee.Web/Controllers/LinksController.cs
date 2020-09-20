@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
 using Rezaee.Alireza.Web.Models.ViewModels.Links;
 
@@ -57,6 +59,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         // GET: Links/Create
+        [Authorize(Roles = Roles.LinkCreate)]
         public IActionResult Create()
         {
             return View();
@@ -67,6 +70,7 @@ namespace Rezaee.Alireza.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.LinkCreate)]
         public async Task<IActionResult> Create([Bind("Rank,Title,Url,ImagePath")] Link linksModel)
         {
             if (ModelState.IsValid)
@@ -79,6 +83,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         // GET: Links/Edit/5
+        [Authorize(Roles = Roles.LinkEdit)]
         public async Task<IActionResult> Edit(short? id)
         {
             if (id == null)
@@ -99,6 +104,7 @@ namespace Rezaee.Alireza.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.LinkEdit)]
         public async Task<IActionResult> Edit(short id, [Bind("Rank,Title,Url,ImagePath")] Link linksModel)
         {
             if (id != linksModel.Rank)
@@ -130,6 +136,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         // GET: Links/Delete/5
+        [Authorize(Roles = Roles.LinkDelete)]
         public async Task<IActionResult> Delete(short? id)
         {
             if (id == null)
@@ -150,6 +157,7 @@ namespace Rezaee.Alireza.Web.Controllers
         // POST: Links/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.LinkDelete)]
         public async Task<IActionResult> DeleteConfirmed(short id)
         {
             var linksModel = await _context.Links.FindAsync(id);

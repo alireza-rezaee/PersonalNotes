@@ -75,11 +75,12 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(ApplicationUser user)
         {
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Input = new InputModel
             {
                 Username = await _userManager.GetUserNameAsync(user),
-                PhoneNumber = (await _userManager.GetPhoneNumberAsync(user)).EnglishNumberToPersian(),
+                PhoneNumber = (phoneNumber != null) ? phoneNumber.EnglishNumberToPersian() : "" ,
                 Email = await _userManager.GetEmailAsync(user),
                 DisplayName = user.DisplayName,
                 FirstName = user.FirstName,

@@ -9,9 +9,16 @@
     var user = await UserManager.GetUserAsync(User);
 }
 
+@section Head {
+<style>
+    .control-user .btn {
+        font-size: 0.9rem;
+    }
+</style>
+}
 
 <br class="my-3" />
-<h2 class="text-right">@ViewData["Title"] </h2>
+<h2 class="text-right text-size-6">@ViewData["Title"] </h2>
 <hr />
 <div class="search-bar">
     <input type="text" id="search" placeholder="جستجوی کاربران (قسمتی از نام، نام خانوادگی یا نام کاربری را وارد نمایید)" class="form-control" /><div id="suggest"></div>
@@ -24,18 +31,12 @@
 }
 else
 {
-    <table class="table table-hover table-responsive text-center table-sm">
-        <thead style="font-size:large">
+    <table class="table table-hover table-bordered table-responsive text-center table-sm">
+        <thead>
             <tr>
                 <td>ردیف</td>
-                <td>تصویر نمایه</td>
-                <td>نام کاربری</td>
-                <td>نوع کاربری</td>
-                <td>رایانامه</td>
-                <td>نام</td>
-                <td>نام خانوادگی</td>
-                <td>جزییات</td>
-                <td>حذف</td>
+                <td>کاربر</td>
+                <td>نظارت و مدیریت کاربر</td>
             </tr>
         </thead>
         <tbody>
@@ -44,42 +45,51 @@ else
             {
                 <tr>
                     <td class="align-middle">@i.EnglishToPersian()</td>
-                    <td class="align-middle">
-                        @if (string.IsNullOrEmpty(item.ProfileImagePath))
-                        {
-                            <img-gravatar gravatar-size="50"
-                                          gravatar-email="@await UserManager.GetEmailAsync(user)"
-                                          alt="تصویر @item.FirstName @item.LastName"
-                                          title="تصویر @item.FirstName @item.LastName"
-                                          class="rounded-circle img-fluid"></img-gravatar>
-                        }
-                        else
-                        {
-                            <img src="@item.ProfileImagePath"
-                                 alt="تصویر @item.FirstName @item.LastName"
-                                 title="تصویر @item.FirstName @item.LastName"
-                                 class="rounded-circle img-fluid"
-                                 style="height: 50px !important; width: 50px !important;">
-                        }
+                    <td class="align-middle d-flex">
+                        <div class="p-1" style="min-width: 50px;">
+                            @if (string.IsNullOrEmpty(item.ProfileImagePath))
+                            {
+                                <img-gravatar gravatar-size="35"
+                                              gravatar-email="@await UserManager.GetEmailAsync(user)"
+                                              alt="تصویر @item.FirstName @item.LastName"
+                                              title="تصویر @item.FirstName @item.LastName"
+                                              class="rounded-circle img-fluid"></img-gravatar>
+                            }
+                            else
+                            {
+                                <img src="@item.ProfileImagePath"
+                                     alt="تصویر @item.FirstName @item.LastName"
+                                     title="تصویر @item.FirstName @item.LastName"
+                                     class="rounded-circle img-fluid"
+                                     style="height: 35px !important; width: 35px !important;">
+                            }
+                        </div>
+                        <div class="text-right" style="font-size: 0.9rem">
+                            <span class="d-block font-weight-bold">@item.DisplayName</span>
+                            <span class="d-block font-weight-light text-muted">@item.UserName</span>
+                        </div>
                     </td>
-                    <td class="align-middle">@item.UserName</td>
-                    <td class="align-middle">@(item.PasswordHash != null ? "محلی" : "خارجی")</td>
-                    <td class="align-middle"><a href="mailto://@item.Email">@item.Email</a></td>
-                    <td class="align-middle">@item.FirstName</td>
-                    <td class="align-middle">@item.LastName</td>
-                    <td class="align-middle">
-                        <a asp-area="admin" asp-controller="users" asp-action="details" asp-route-id="@item.Id" class="btn btn-light text-primary">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-binoculars" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M3 2.5A1.5 1.5 0 0 1 4.5 1h1A1.5 1.5 0 0 1 7 2.5V5h2V2.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5v2.382a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V14.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 14.5v-3a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5v3A1.5 1.5 0 0 1 5.5 16h-3A1.5 1.5 0 0 1 1 14.5V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V2.5zM4.5 2a.5.5 0 0 0-.5.5V3h2v-.5a.5.5 0 0 0-.5-.5h-1zM6 4H4v.882a1.5 1.5 0 0 1-.83 1.342l-.894.447A.5.5 0 0 0 2 7.118V13h4v-1.293l-.854-.853A.5.5 0 0 1 5 10.5v-1A1.5 1.5 0 0 1 6.5 8h3A1.5 1.5 0 0 1 11 9.5v1a.5.5 0 0 1-.146.354l-.854.853V13h4V7.118a.5.5 0 0 0-.276-.447l-.895-.447A1.5 1.5 0 0 1 12 4.882V4h-2v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V4zm4-1h2v-.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V3zm4 11h-4v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14zm-8 0H2v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14z" />
+                    <td class="align-middle control-user text-nowrap">
+                        <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id" class="btn btn-light text-primary" title="مشاهده جزئیات نمایه @item.UserName">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
+                                <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                             </svg>
+                            نمایه
                         </a>
-                    </td>
-                    <td class="align-middle">
-                        <button class="btn btn-light text-danger" data-toggle="modal" data-target="#delete" data-id="@item.Id" data-fullname="@item.FirstName @item.LastName [@item.UserName]">
+                        <a asp-controller="UserRoles" asp-action="Index" asp-route-username="@item.UserName" class="btn btn-light" title="مدیریت نقش های @item.UserName">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-key" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            نقش ها
+                        </a>
+                        <button class="btn btn-light text-danger" data-toggle="modal" data-target="#delete" data-id="@item.Id" data-fullname="@item.FirstName @item.LastName [@item.UserName]" title="حذف حساب @item.UserName">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                             </svg>
+                            حذف
                         </button>
                     </td>
                 </tr>
@@ -122,7 +132,7 @@ else
                     //check for minimum required length for search goes here
                     $.ajax({
                         method: 'get',
-                        url: '@Url.Action("search", "users", new { area = "admin" })',
+                        url: '@Url.Action("Search", "Users")',
                         data: { q: $(this).val() },
                         success: function (d) {
                             $('.search-bar #suggest').css('display', 'block').empty();

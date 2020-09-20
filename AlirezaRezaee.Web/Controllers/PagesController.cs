@@ -12,6 +12,7 @@ using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models.ViewModels.Pages;
 using Rezaee.Alireza.Web.Extensions;
 using System.Runtime.InteropServices.ComTypes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -60,15 +61,16 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(page);
         }
 
-        [Route("new-page")]
+        [Route("create")]
+        [Authorize(Roles = Roles.PageCreate)]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        [Route("new-page")]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.PageCreate)]
         public async Task<IActionResult> Creating(CreateEditViewModel createVM)
         {
             if (ModelState.IsValid)
@@ -110,6 +112,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("{id}/{path}/edit")]
+        [Authorize(Roles = Roles.PageEdit)]
         public async Task<IActionResult> Edit(int id, string path)
         {
             var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Url == path);
@@ -119,9 +122,9 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(page);
         }
 
-        [HttpPost]
+        [HttpPost("{id}/edit")]
         [ValidateAntiForgeryToken]
-        [Route("{id}/edit")]
+        [Authorize(Roles = Roles.PageEdit)]
         public async Task<IActionResult> Editing(CreateEditViewModel editVM, int id)
         {
             var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id);
@@ -166,9 +169,9 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(nameof(Edit), "Pages");
         }
 
-        [HttpPost]
+        [HttpPost("{id}/{path}/delete")]
         [ValidateAntiForgeryToken]
-        [Route("{id}/{path}/delete")]
+        [Authorize(Roles = Roles.PageDelete)]
         public async Task<IActionResult> Deleting(int id, string path)
         {
             try

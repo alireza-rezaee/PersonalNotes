@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Markdig.Syntax;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.CodeAnalysis.Differencing;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Rezaee.Alireza.Web.Data;
 using Rezaee.Alireza.Web.Extensions;
+using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
 using Rezaee.Alireza.Web.Models.ViewModels.Blocks;
 using Block = Rezaee.Alireza.Web.Models.Block;
@@ -31,8 +33,8 @@ namespace Rezaee.Alireza.Web.Controllers
         /// صفحه افزودن بلاک
         /// </summary>
         /// <returns></returns>
-        [Route("create")]
-        [HttpGet]
+        [HttpGet("create")]
+        [Authorize(Roles = Roles.BlockCreate)]
         public IActionResult Create() => View();
 
         /// <summary>
@@ -41,8 +43,8 @@ namespace Rezaee.Alireza.Web.Controllers
         /// <param name="createVM">مدلی از یک بلاک</param>
         /// <param name="returnUrl">نشانی بازگشت</param>
         /// <returns></returns>
-        [Route("create")]
-        [HttpPost]
+        [HttpPost("create")]
+        [Authorize(Roles = Roles.BlockCreate)]
         public async Task<IActionResult> Create(CreateEditViewModel createVM, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -80,8 +82,8 @@ namespace Rezaee.Alireza.Web.Controllers
         /// اصلاح بلاک
         /// </summary>
         /// <returns></returns>
-        [Route("edit/{id}")]
-        [HttpGet]
+        [HttpGet("edit/{id}")]
+        [Authorize(Roles = Roles.BlockEdit)]
         public async Task<IActionResult> Edit(int id)
         {
             var block = await _context.Blocks.FindAsync(id);
@@ -106,8 +108,8 @@ namespace Rezaee.Alireza.Web.Controllers
         /// <param name="id">شناسه بلاک</param>
         /// <param name="editVM">مدلی از بلاک اصلاح شده</param>
         /// <param name="returnUrl">نشانی بازگشت</param>
-        [Route("edit/{id}")]
-        [HttpPost]
+        [HttpPost("edit/{id}")]
+        [Authorize(Roles = Roles.BlockEdit)]
         public async Task<IActionResult> Edit(int id, CreateEditViewModel editVM, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -149,6 +151,7 @@ namespace Rezaee.Alireza.Web.Controllers
         /// </summary>
         /// <param name="id">شناسه بلاک</param>
         [Route("remove/{id}")]
+        [Authorize(Roles = Roles.BlockDelete)]
         public async Task<IActionResult> Delete(int id, string returnUrl)
         {
             try
@@ -176,6 +179,7 @@ namespace Rezaee.Alireza.Web.Controllers
         /// <param name="id">شناسه بلاک</param>
         /// <returns></returns>
         [Route("enable/{id}")]
+        [Authorize(Roles = Roles.BlockVisibility)]
         public async Task<IActionResult> Enable(int id)
         {
             try
@@ -208,6 +212,7 @@ namespace Rezaee.Alireza.Web.Controllers
         /// <param name="id">شناسه بلاک</param>
         /// <returns></returns>
         [Route("disable/{id}")]
+        [Authorize(Roles = Roles.BlockVisibility)]
         public async Task<IActionResult> Disable(int id)
         {
             try

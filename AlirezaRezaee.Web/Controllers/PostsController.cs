@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -37,7 +38,6 @@ namespace Rezaee.Alireza.Web.Controllers
         [Route("")]
         public async Task<IActionResult> Index() => View(await RetrieveLatestPostsSummary(count: 10));
 
-        [NonAction]
         public async Task<List<PostSummaryViewModel>> LoadPosts(int count, int skip) => await RetrieveLatestPostsSummary(count: count, skip: skip);
 
         [Route("/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
@@ -133,32 +133,36 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpGet]
         [Route("create")]
+        [Authorize(Roles = Roles.PostCreateArticle + "," + Roles.PostCreateShare + "," + Roles.PostCreateMarkdown)]
         public IActionResult Create()
         {
             return View();
         }
 
         [Route("create/article")]
+        [Authorize(Roles = Roles.PostCreateArticle)]
         public IActionResult CreateArticle()
         {
             return View();
         }
 
         [Route("create/share")]
+        [Authorize(Roles = Roles.PostCreateShare)]
         public IActionResult CreateShare()
         {
             return View();
         }
 
         [Route("create/markdown")]
+        [Authorize(Roles = Roles.PostCreateMarkdown)]
         public IActionResult CreateMarkdown()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("create/article")]
         [ValidateAntiForgeryToken]
-        [Route("create/article")]
+        [Authorize(Roles = Roles.PostCreateArticle)]
         public async Task<IActionResult> CreatingArticle(CreateEditArticlePostViewModel createPostVM)
         {
             if (ModelState.IsValid)
@@ -223,9 +227,9 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(nameof(CreateArticle), createPostVM);
         }
 
-        [HttpPost]
+        [HttpPost("create/share")]
         [ValidateAntiForgeryToken]
-        [Route("create/share")]
+        [Authorize(Roles = Roles.PostCreateShare)]
         public async Task<IActionResult> CreatingShare(CreateEditSharePostViewModel createPostVM)
         {
             if (ModelState.IsValid)
@@ -282,9 +286,9 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(nameof(CreateShare), createPostVM);
         }
 
-        [HttpPost]
+        [HttpPost("create/markdown")]
         [ValidateAntiForgeryToken]
-        [Route("create/markdown")]
+        [Authorize(Roles = Roles.PostCreateMarkdown)]
         public async Task<IActionResult> CreatingMarkdown(CreateEditMarkdownPostViewModel createPostVM)
         {
             if (ModelState.IsValid)
@@ -345,8 +349,8 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(nameof(CreateShare), createPostVM);
         }
 
-        [HttpGet]
-        [Route("/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [HttpGet("/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Authorize(Roles = Roles.PostEditArticle + "," + Roles.PostEditShare + "," + Roles.PostEditMarkdown)]
         public async Task<IActionResult> Edit(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -367,8 +371,8 @@ namespace Rezaee.Alireza.Web.Controllers
                 return NotFound();
         }
 
-        [HttpGet]
-        [Route("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditArticle")]
+        [HttpGet("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditArticle")]
+        [Authorize(Roles = Roles.PostEditArticle + "," + Roles.PostEditShare + "," + Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditArticle(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -397,9 +401,9 @@ namespace Rezaee.Alireza.Web.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         [ValidateAntiForgeryToken]
-        [Route("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Authorize(Roles = Roles.PostEditArticle)]
         public async Task<IActionResult> EditArticle(CreateEditArticlePostViewModel editPostVM, int year, int month, int day, int postId, string UrlTitle)
         {
             var publishDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -505,8 +509,8 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(editPostVM);
         }
 
-        [HttpGet]
-        [Route("/edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}", Name = "EditShare")]
+        [HttpGet("/edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}", Name = "EditShare")]
+        [Authorize(Roles = Roles.PostEditShare)]
         public async Task<IActionResult> EditShare(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -532,9 +536,9 @@ namespace Rezaee.Alireza.Web.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("/edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
         [ValidateAntiForgeryToken]
-        [Route("/edit/share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Authorize(Roles = Roles.PostEditShare)]
         public async Task<IActionResult> EditShare(CreateEditSharePostViewModel editPostVM, int year, int month, int day, int postId)
         {
             var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
@@ -617,8 +621,8 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(editPostVM);
         }
 
-        [HttpGet]
-        [Route("/edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditMarkdown")]
+        [HttpGet("/edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditMarkdown")]
+        [Authorize(Roles = Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditMarkdown(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -644,9 +648,9 @@ namespace Rezaee.Alireza.Web.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("/edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         [ValidateAntiForgeryToken]
-        [Route("/edit/markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Authorize(Roles = Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditMarkdown(CreateEditMarkdownPostViewModel editPostVM, int year, int month, int day, int postId)
         {
             var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
@@ -730,9 +734,9 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(editPostVM);
         }
 
-        [HttpPost]
+        [HttpPost("/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         [ValidateAntiForgeryToken]
-        [Route("/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Authorize(Roles = Roles.PostDeleteArticle + "," + Roles.PostDeleteShare + "," + Roles.PostDeleteMarkdown)]
         public async Task<IActionResult> Delete(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -796,6 +800,8 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("/edit/type/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
+        [Authorize(Roles = Roles.PostCreateArticle + "," + Roles.PostCreateShare + "," + Roles.PostCreateMarkdown)]
+        [Authorize(Roles = Roles.PostEditArticle + "," + Roles.PostEditShare + "," + Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditType(int year, int month, int day, int postId, string UrlTitle)
         {
             var switchAbleTypes = new List<SwitchPostTypeViewModel>();
@@ -803,9 +809,12 @@ namespace Rezaee.Alireza.Web.Controllers
             {
                 var postType = await DetectPostType(postId);
 
-                if (postType != PostType.Article) switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Article, PostTypeName = "تغییر به مقاله", SwitchUrl = $"/edit/switch/to-article/{year}/{month}/{day}/{postId}" });
-                if (postType != PostType.Share) switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Share, PostTypeName = "تغییر به بازنشر", SwitchUrl = $"/edit/switch/to-share/{year}/{month}/{day}/{postId}" });
-                if (postType != PostType.Markdown) switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Markdown, PostTypeName = "تغییر به مطلب نشانه دار", SwitchUrl = $"/edit/switch/to-markdown/{year}/{month}/{day}/{postId}" });
+                if (postType != PostType.Article && User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle))
+                    switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Article, PostTypeName = "تغییر به مقاله", SwitchUrl = $"/edit/switch/to-article/{year}/{month}/{day}/{postId}" });
+                if (postType != PostType.Share && User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare))
+                    switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Share, PostTypeName = "تغییر به بازنشر", SwitchUrl = $"/edit/switch/to-share/{year}/{month}/{day}/{postId}" });
+                if (postType != PostType.Markdown && User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown))
+                    switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Markdown, PostTypeName = "تغییر به مطلب نشانه دار", SwitchUrl = $"/edit/switch/to-markdown/{year}/{month}/{day}/{postId}" });
             }
             catch (Exception)
             {
@@ -816,6 +825,8 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("/edit/switch/to-article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Authorize(Roles = Roles.PostCreateArticle)]
+        [Authorize(Roles = Roles.PostEditArticle)]
         public async Task<IActionResult> SwitchToArticle(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -828,6 +839,8 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("/edit/switch/to-share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Authorize(Roles = Roles.PostCreateShare)]
+        [Authorize(Roles = Roles.PostEditShare)]
         public async Task<IActionResult> SwitchToShare(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -840,6 +853,8 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("/edit/switch/to-markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
+        [Authorize(Roles = Roles.PostCreateMarkdown)]
+        [Authorize(Roles = Roles.PostEditMarkdown)]
         public async Task<IActionResult> SwitchToMarkdown(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -853,6 +868,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         private async Task<List<PostSummaryViewModel>> RetrieveLatestPostsSummary(int count, int skip = 0) => await RetrieveLatestPostsSummary(count: count, skip: skip, context: _context);
 
+        [NonAction]
         public static async Task<List<PostSummaryViewModel>> RetrieveLatestPostsSummary(int count, ApplicationDbContext context, int skip = 0)
         {
             var posts = new List<PostSummaryViewModel>();
@@ -1055,9 +1071,11 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         //Detect PostType
-        private async Task<PostType> DetectPostType(int postId)
+        [NonAction]
+        public async Task<PostType> DetectPostType(int postId)
                 => DetectPostType(await _context.Posts.Where(p => p.Id == postId).Select(post => new Post { Article = post.Article, Share = post.Share, Markdown = post.Markdown }).FirstOrDefaultAsync());
 
+        [NonAction]
         public static PostType DetectPostType(Post post)
         {
             if (post == null)

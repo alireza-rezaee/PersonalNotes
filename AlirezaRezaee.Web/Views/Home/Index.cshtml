@@ -1,5 +1,7 @@
-﻿@using System.Web;
-@using Rezaee.Alireza.Web.Extensions;
+﻿@using System.Web
+@using Rezaee.Alireza.Web.Extensions
+@using Rezaee.Alireza.Web.Helpers
+@inject Microsoft.AspNetCore.Identity.UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
 @model Rezaee.Alireza.Web.Models.ViewModels.Home.IndexViewModel
 @{
     var Posterpins = Model.Posts.Where(post => post.Posterpins != null).ToList();
@@ -105,15 +107,20 @@
     }
 }
 
-<div class="container text-right mt-5">
-    <a asp-controller="Blocks" asp-action="Create" class="btn btn-light">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
-            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
-        </svg>
-        افزودن بلاک جدید
-    </a>
-</div>
+<div class="mt-5"></div>
+
+@if (User.IsInRole(Roles.BlockCreate))
+{
+    <div class="container text-right">
+        <a asp-controller="Blocks" asp-action="Create" class="btn btn-light border">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+            </svg>
+            افزودن بلاک جدید
+        </a>
+    </div>
+}
 
 @if (Model.Blocks.Any(block => block.Position == BlockPosition.First_BetweenHomeAndPosts))
 {
@@ -121,18 +128,22 @@
         @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.First_BetweenHomeAndPosts).OrderBy(block => block.Rank).ThenBy(block => block.Id))
         {
             <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2">
-                <div>
-                    <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
-                       asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
-                       asp-route-id="@block.Id" class="btn btn-light rounded-0">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
-                            <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
-                            <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
-                        </svg>
-                        ویرایش | حذف
-                    </a>
-                </div>
+                @if (User.IsInRole(Roles.BlockDelete) || User.IsInRole(Roles.BlockEdit))
+                {
+                    <div>
+                        <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
+                           asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
+                           asp-route-id="@block.Id"
+                           class="btn btn-light border rounded-0">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+                                <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+                                <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+                            </svg>
+                            ویرایش | حذف
+                        </a>
+                    </div>
+                }
                 @Html.Raw(block.Html)
             </div>
         }
@@ -178,74 +189,87 @@
         <div class="card-columns">
             @foreach (var post in Model.Posts)
             {
-                <div class="post card shadow-sm" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
-                    @if (post.PublishDateTime.Date > DateTime.Now)
-                    {
-                        <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
-                                style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
-                                data-toggle="tooltip"
-                                title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
-                        </button>
-                    }
-                    <div class="post-summary">
-                        <img src="@post.ThumbnailUrl" class="card-img-top rounded-top" alt="@post.Title">
-                        <div class="card-body">
-                            <h2 class="card-title">@Html.Raw(post.Title)</h2>
-                            <p class="card-text">@Html.Raw(post.Summary)</p>
-                            <div class="text-left">
-                                <div class="pin-button position-absolute">
-                                    <button class="position-relative btn shadow border rounded-oval js-pin-post @if (post.Pin != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11 4a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                            <path d="M7.5 4h1v9a.5.5 0 0 1-1 0V4z" />
-                                            <path fill-rule="evenodd" d="M6.489 12.095a.5.5 0 0 1-.383.594c-.565.123-1.003.292-1.286.472-.302.192-.32.321-.32.339 0 .013.005.085.146.21.14.124.372.26.701.382.655.246 1.593.408 2.653.408s1.998-.162 2.653-.408c.329-.123.56-.258.701-.382.14-.125.146-.197.146-.21 0-.018-.018-.147-.32-.339-.283-.18-.721-.35-1.286-.472a.5.5 0 1 1 .212-.977c.63.137 1.193.34 1.61.606.4.253.784.645.784 1.182 0 .402-.219.724-.483.958-.264.235-.618.423-1.013.57-.793.298-1.855.472-3.004.472s-2.21-.174-3.004-.471c-.395-.148-.749-.336-1.013-.571-.264-.234-.483-.556-.483-.958 0-.537.384-.929.783-1.182.418-.266.98-.47 1.611-.606a.5.5 0 0 1 .595.383z" />
+                if (post.PublishDateTime.Date <= DateTime.Now || (
+                    User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
+                    User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
+                    User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown)))
+                {
+                    <div class="post card shadow-sm" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
+
+                        @if (post.PublishDateTime.Date > DateTime.Now)
+                        {
+                            <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
+                                    style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
+                                    data-toggle="tooltip"
+                                    title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
+                            </button>
+                        }
+                        <div class="post-summary">
+                            <img src="@post.ThumbnailUrl" class="card-img-top rounded-top" alt="@post.Title">
+                            <div class="card-body">
+                                <h2 class="card-title">@Html.Raw(post.Title)</h2>
+                                <p class="card-text">@Html.Raw(post.Summary)</p>
+                                <div class="text-left">
+                                    <div class="pin-button position-absolute">
+                                        @if (User.IsInRole(Roles.Pin))
+                                        {
+                                            <button class="position-relative btn shadow border rounded-oval js-pin-post @if (post.Pin != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11 4a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                                    <path d="M7.5 4h1v9a.5.5 0 0 1-1 0V4z" />
+                                                    <path fill-rule="evenodd" d="M6.489 12.095a.5.5 0 0 1-.383.594c-.565.123-1.003.292-1.286.472-.302.192-.32.321-.32.339 0 .013.005.085.146.21.14.124.372.26.701.382.655.246 1.593.408 2.653.408s1.998-.162 2.653-.408c.329-.123.56-.258.701-.382.14-.125.146-.197.146-.21 0-.018-.018-.147-.32-.339-.283-.18-.721-.35-1.286-.472a.5.5 0 1 1 .212-.977c.63.137 1.193.34 1.61.606.4.253.784.645.784 1.182 0 .402-.219.724-.483.958-.264.235-.618.423-1.013.57-.793.298-1.855.472-3.004.472s-2.21-.174-3.004-.471c-.395-.148-.749-.336-1.013-.571-.264-.234-.483-.556-.483-.958 0-.537.384-.929.783-1.182.418-.266.98-.47 1.611-.606a.5.5 0 0 1 .595.383z" />
+                                                </svg>
+                                            </button>
+                                        }
+                                        @if (User.IsInRole(Roles.PosterPin))
+                                        {
+                                            <button class="position-relative btn shadow border rounded-oval js-poster-pin-post @if (post.Posterpins != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-aspect-ratio" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
+                                                    <path fill-rule="evenodd" d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0v-3zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0v3z" />
+                                                </svg>
+                                            </button>
+                                        }
+                                    </div>
+                                    <button class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
+                                            <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
                                         </svg>
                                     </button>
-                                    <button class="position-relative btn shadow border rounded-oval js-poster-pin-post @if (post.Posterpins != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-aspect-ratio" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
-                                            <path fill-rule="evenodd" d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0v-3zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0v3z" />
+                                    <a href="@post.PostUrl" class="stretched-link btn btn-light border rounded-oval">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
+                                            <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
                                         </svg>
-                                    </button>
+                                        بخوانید
+                                    </a>
                                 </div>
-                                <button class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
-                                        <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
-                                    </svg>
-                                </button>
-                                <a href="@post.PostUrl" class="stretched-link btn btn-light border rounded-oval">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
-                                        <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
-                                    </svg>
-                                    بخوانید
-                                </a>
                             </div>
                         </div>
-                    </div>
-                    @if (post.RelatedPosts.Any())
-                    {
-                        <div class="js-related-posts">
-                            @foreach (var relatedPost in post.RelatedPosts)
+                        @if (post.RelatedPosts.Any())
+                        {
+                            <div class="js-related-posts">
+                                @foreach (var relatedPost in post.RelatedPosts)
+                                {
+                                    <div class="card-footer">
+                                        <a href="@relatedPost.PostUrl" class="stretched-link"><small class="text-muted small">@relatedPost.Title</small></a>
+                                    </div>
+                                }
+                            </div>
+                            @if (post.RelatedPosts.Count == 2)
                             {
-                                <div class="card-footer">
-                                    <a href="@relatedPost.PostUrl" class="stretched-link"><small class="text-muted small">@relatedPost.Title</small></a>
+                                <div class="card-footer text-center more-related-posts">
+                                    <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
+                                        <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                        </svg>
+                                    </button>
                                 </div>
                             }
-                        </div>
-                        @if (post.RelatedPosts.Count == 2)
-                        {
-                            <div class="card-footer text-center more-related-posts">
-                                <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
-                                    <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                                    </svg>
-                                </button>
-                            </div>
                         }
-                    }
-                </div>
+                    </div>
+                }
             }
         </div>
     }
@@ -269,18 +293,22 @@
         @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Second_betweenPostsAndLinks).OrderBy(block => block.Rank).ThenBy(block => block.Id))
         {
             <div class="block @if (!block.IsEnable) { <text>disabled</text> } shadow-sm my-2">
-                <div>
-                    <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
-                       asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
-                       asp-route-id="@block.Id" class="btn btn-light rounded-0">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
-                            <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
-                            <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
-                        </svg>
-                        ویرایش | حذف
-                    </a>
-                </div>
+                @if (User.IsInRole(Roles.BlockDelete) || User.IsInRole(Roles.BlockEdit))
+                {
+                    <div>
+                        <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
+                           asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
+                           asp-route-id="@block.Id"
+                           class="btn btn-light border rounded-0">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+                                <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+                                <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+                            </svg>
+                            ویرایش | حذف
+                        </a>
+                    </div>
+                }
                 @Html.Raw(block.Html)
             </div>
         }
@@ -337,18 +365,22 @@
         @foreach (var block in Model.Blocks.Where(block => block.Position == BlockPosition.Third_BetweenLinksAndFooter).OrderBy(block => block.Rank).ThenBy(block => block.Id))
         {
             <div class="block @if (!block.IsEnable) { <text>disabled</text> } my-2 shadow-sm">
-                <div>
-                    <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
-                       asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
-                       asp-route-id="@block.Id" class="btn btn-light rounded-0">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
-                            <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
-                            <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
-                        </svg>
-                        ویرایش | حذف
-                    </a>
-                </div>
+                @if (User.IsInRole(Roles.BlockDelete) || User.IsInRole(Roles.BlockEdit))
+                {
+                    <div>
+                        <a asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()"
+                           asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)"
+                           asp-route-id="@block.Id"
+                           class="btn btn-light border rounded-0">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+                                <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+                                <path d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+                            </svg>
+                            ویرایش | حذف
+                        </a>
+                    </div>
+                }
                 @Html.Raw(block.Html)
             </div>
         }
@@ -424,22 +456,6 @@
             });
         });
 
-        $('.js-pin-post, .js-poster-pin-post').click(function (e) {
-            var target = $(e.target);
-            var button = target.is('button') ? target : target.parents('button');
-            var wasPinned = button.hasClass('pinned');
-
-            $.ajax({
-                url: (button.hasClass('js-poster-pin-post') ? '/posters/' : '/pins/') + (wasPinned ? 'un-pin' : 'pin') + "/" + button.parents('.post').data('post-id'),
-                dataType: "text",
-                type: "GET",
-                success: function (content) {
-                    if (wasPinned) button.removeClass('btn-light pinned').addClass('btn-outline-light');
-                    else button.removeClass('btn-outline-light').addClass('btn-light pinned');
-                }
-            });
-        });
-
         $(document).ready(function () {
             jQuery("time.timeago").timeago();
         });
@@ -448,30 +464,51 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-                    //function sendNewBlock(e) {
-                    //    const xhr = new XMLHttpRequest();
-                    //    var a = false;
-                    //    xhr.onload = () => {
-                    //        if (xhr.status >= 200 && xhr.status < 300) {
-                    //            d(5);
-                    //        }
-                    //    };
+        //function sendNewBlock(e) {
+        //    const xhr = new XMLHttpRequest();
+        //    var a = false;
+        //    xhr.onload = () => {
+        //        if (xhr.status >= 200 && xhr.status < 300) {
+        //            d(5);
+        //        }
+        //    };
 
-                    //    xhr.open('POST', '/blocks/add');
-                    //    xhr.setRequestHeader('Content-Type', 'application/json');
-                    //    xhr.send(JSON.stringify(
-                    //        {
-                    //            Html: window.parent.tinyMCE.get('js-block-textarea').getContent(),
-                    //            PositionNo: elemNewBlock.find('#block-new-position').val(),
-                    //            Rank: elemNewBlock.find('#block-new-rank').val(),
-                    //            IsEnable: elemNewBlock.find('#block-new-isEnable').is(":checked"),
-                    //            Styles: cm1.getValue(),
-                    //            Scripts: cm2.getValue()
-                    //        }));
-                    //    return a;
-                    //}
+        //    xhr.open('POST', '/blocks/add');
+        //    xhr.setRequestHeader('Content-Type', 'application/json');
+        //    xhr.send(JSON.stringify(
+        //        {
+        //            Html: window.parent.tinyMCE.get('js-block-textarea').getContent(),
+        //            PositionNo: elemNewBlock.find('#block-new-position').val(),
+        //            Rank: elemNewBlock.find('#block-new-rank').val(),
+        //            IsEnable: elemNewBlock.find('#block-new-isEnable').is(":checked"),
+        //            Styles: cm1.getValue(),
+        //            Scripts: cm2.getValue()
+        //        }));
+        //    return a;
+        //}
 
     </script>
+
+    @if (User.IsInRole(Roles.Pin) || User.IsInRole(Roles.PosterPin))
+    {
+        <script>
+            $('.js-pin-post, .js-poster-pin-post').click(function (e) {
+                var target = $(e.target);
+                var button = target.is('button') ? target : target.parents('button');
+                var wasPinned = button.hasClass('pinned');
+
+                $.ajax({
+                    url: (button.hasClass('js-poster-pin-post') ? '/posters/' : '/pins/') + (wasPinned ? 'un-pin' : 'pin') + "/" + button.parents('.post').data('post-id'),
+                    dataType: "text",
+                    type: "GET",
+                    success: function (content) {
+                        if (wasPinned) button.removeClass('btn-light pinned').addClass('btn-outline-light');
+                        else button.removeClass('btn-outline-light').addClass('btn-light pinned');
+                    }
+                });
+            });
+        </script>
+    }
 
     @foreach (var block in Model.Blocks)
     {
