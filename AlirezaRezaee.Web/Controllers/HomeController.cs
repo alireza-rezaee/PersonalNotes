@@ -27,6 +27,7 @@ namespace Rezaee.Alireza.Web.Controllers
             _logger = logger;
         }
 
+        [Route("", Name = "SiteIndex")]
         public async Task<IActionResult> Index()
         {
             ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
