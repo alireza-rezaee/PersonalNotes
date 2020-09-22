@@ -27,7 +27,11 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
         [Authorize(Roles = Roles.UserRolesList)]
         public async Task<IActionResult> Index(string username, string rolename)
         {
-            if (!string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(rolename))
+                return NotFound();
+            else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(rolename))
+                throw new ArgumentException(message: "Only one \"username\" or \"rolename\" is acceptable at the same time.");
+            else if (!string.IsNullOrEmpty(username))
             {
                 //Came from UsersController
                 ViewData["username"] = username;
@@ -41,8 +45,7 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
                     Roles = await _userManager.GetRolesAsync(user)
                 });
             }
-
-            if (!string.IsNullOrEmpty(rolename))
+            else //if (!string.IsNullOrEmpty(rolename))
             {
                 //Came from RolesController
                 ViewData["rolename"] = rolename;
@@ -52,7 +55,6 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
                     Users = await _userManager.GetUsersInRoleAsync(rolename)
                 });
             }
-            return View();
         }
 
         [HttpPost("remove-user-from-role")]

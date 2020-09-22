@@ -28,20 +28,20 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
         }
 
         [Route("")]
-        [Authorize(Roles = Roles.UsersList)]
+        [Authorize(Roles = Roles.UsersList + "," + Roles.UserRolesList + "," + Roles.UserRoleAssign + "," + Roles.UserRoleUnassign)]
         public async Task<IActionResult> Index()
         {
             return View(await _userManager.Users.ToListAsync());
         }
 
         [Route("details")]
-        [Authorize(Roles = Roles.UsersList)]
-        public async Task<IActionResult> Details(string id)
+        [Authorize(Roles = Roles.UserDetails)]
+        public async Task<IActionResult> Details(string username)
         {
-            if (id == null)
+            if (username == null)
                 return NotFound();
 
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByNameAsync(username);
             if (user == null)
                 return NotFound();
 
@@ -80,7 +80,7 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
         }
 
         [HttpPost("search")]
-        [Authorize(Roles = Roles.UsersList)]
+        [Authorize(Roles = Roles.UsersList + "," + Roles.UserRolesList + "," + Roles.UserRoleAssign + "," + Roles.UserRoleUnassign)]
         public IEnumerable<ApplicationUser> Search(string q)
         {
             return _userManager

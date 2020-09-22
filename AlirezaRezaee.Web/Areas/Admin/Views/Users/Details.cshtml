@@ -1,5 +1,6 @@
 ﻿@using Rezaee.Alireza.Web.Extensions
 @using Microsoft.AspNetCore.Identity
+@using Rezaee.Alireza.Web.Helpers
 @addTagHelper *, Rezaee.Alireza.Web
 @model Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser
 @inject SignInManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> SignInManager
@@ -97,15 +98,26 @@
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
         </div>
-        <div class="text-center my-4">
+    </div>
+</div>
+
+@if (User.IsInRole(Roles.UserDelete) || User.IsInRole(Roles.UsersList))
+{
+    <hr />
+    <div class="text-center my-4">
+        @if (User.IsInRole(Roles.UserDelete))
+        {
             <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger rounded-oval px-4">
                 <i class="fas fa-trash align-middle"></i>
                 حذف این کاربر
             </a>
-            <a asp-action="Index" class="btn btn-warning rounded-oval px-4">
+        }
+        @if (User.IsInRole(Roles.UsersList))
+        {
+            <a asp-action="Index" class="btn btn-light border rounded-oval px-4">
                 <i class="fas fa-share align-middle"></i>
-                بازگشت به فهرست کاربران
+                فهرست کاربران
             </a>
-        </div>
+        }
     </div>
-</div>
+}

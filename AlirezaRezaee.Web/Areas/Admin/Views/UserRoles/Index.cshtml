@@ -1,120 +1,167 @@
-﻿@model Rezaee.Alireza.Web.Areas.Admin.Models.ViewModels.UserRoles.IndexVM
+﻿@using Rezaee.Alireza.Web.Helpers
+@using Microsoft.AspNetCore.Identity
+@addTagHelper *, Rezaee.Alireza.Web
+@model Rezaee.Alireza.Web.Areas.Admin.Models.ViewModels.UserRoles.IndexVM
 @inject Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> RoleManager
+@inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "مدیریت انتساب کاربران و نقش ها";
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <br class="my-3" />
 <h2 class="text-right text-size-6">@ViewData["Title"] </h2>
 <hr />
 <div class="row">
-    @if (ViewData["username"] != null)
-    {
     <div class="col-md text-right">
-        <div class="card-group" dir="ltr">
-            <div class="card border" dir="rtl">
-                <div class="card-header bg-light">
-                    <h4 class="text-right text-size-4">انتساب نقش به کاربر <span class="badge badge-secondary">@ViewData["username"]</span></h4>
-                </div>
-                <div class="card-body">
-                    <label for="roles" class="form-label">یک یا چند نقش را انتخاب نمایید :</label>
-                    <form asp-action="AddUserToRole">
-                        <div class="form-group">
-                            <select name="roles" asp-items="RoleManager.Roles.Select(r=>new SelectListItem { Text=r.Name , Value=r.Name })" class="form-control" multiple>
-                            </select>
+
+        @if (ViewData["username"] != null)
+        {
+            <div class="card-group" dir="ltr">
+                @if (User.IsInRole(Roles.RoleCreate))
+                {
+                    <div class="card border" dir="rtl">
+                        <div class="card-header bg-light">
+                            <h4 class="text-right text-size-4">انتساب نقش به کاربر <span class="badge badge-secondary">@ViewData["username"]</span></h4>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-light border">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
-                                    <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
-                                </svg>
-                                افزودن
-                            </button>
+                        <div class="card-body">
+                            <label for="roles" class="form-label">یک یا چند نقش را انتخاب نمایید :</label>
+                            <form asp-action="AddUserToRole">
+                                <div class="form-group">
+                                    <select name="roles" asp-items="RoleManager.Roles.Select(r => new SelectListItem { Text = r.Name, Value = r.Name })" class="form-control" multiple>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-light border">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+                                            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+                                        </svg>
+                                        افزودن
+                                    </button>
+                                </div>
+                                <input type="hidden" name="username" value="@ViewData["username"]" />
+                            </form>
                         </div>
-                        <input type="hidden" name="username" value="@ViewData["username"]" />
-                    </form>
+                    </div>
+                }
+
+                <div class="card border" dir="rtl">
+                    <div class="card-header bg-light">
+                        <h4 class="text-right text-size-4">نقش های منتسب شده به کاربر <span class="badge badge-secondary">@ViewData["username"]</span></h4>
+                    </div>
+                    <div class="card-body">
+                        @if (!Model.Roles.Any())
+                        {
+                            <div class="alert alert-warning text-center">هیچ نقشی برای این کاربر ثبت نشده است.</div>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.Roles)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    @item
+                                    @if (User.IsInRole(Roles.UserRoleUnassign))
+                                    {
+                                        <button type="button" class="close" style="opacity:1" title="حذف انتساب" data-dismiss="alert" data-username="@ViewData["username"]" data-rolename="@item">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg>
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
             </div>
-
-            <div class="card border" dir="rtl">
+        }
+        else if (ViewData["rolename"] != null)
+        {
+            <div class="card border">
                 <div class="card-header bg-light">
-                    <h4 class="text-right text-size-4">نقش های منتسب شده به کاربر <span class="badge badge-secondary">@ViewData["username"]</span></h4>
+                    <h4 class="text-right text-size-4">کاربران دارای نقش <span class="badge badge-secondary">@ViewData["rolename"]</span></h4>
                 </div>
                 <div class="card-body">
-                    @if (!Model.Roles.Any())
+                    @if (!Model.Users.Any())
                     {
-                        <div class="alert alert-warning text-center">هیچ نقشی برای این کاربر ثبت نشده است.</div>
+                        <div class="alert alert-success text-center">هیچ کاربری دارای این نقش ثبت نشده است.</div>
                     }
                     else
                     {
-                        foreach (var item in Model.Roles)
+                        foreach (var item in Model.Users)
                         {
                             <div class="alert alert-success alert-dismissible fade show">
-                                @item
-                                <button type="button" class="close" style="opacity:1" title="حذف انتساب" data-dismiss="alert" data-username="@ViewData["username"]" data-rolename="@item">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                    </svg>
-                                </button>
+                                <div class="d-flex">
+                                    <div class="p-1" style="min-width: 50px;">
+                                        @if (string.IsNullOrEmpty(item.ProfileImagePath))
+                                        {
+                                            <img-gravatar gravatar-size="35"
+                                                          gravatar-email="@await UserManager.GetEmailAsync(user)"
+                                                          alt="تصویر @item.FirstName @item.LastName"
+                                                          title="تصویر @item.FirstName @item.LastName"
+                                                          class="rounded-circle img-fluid"></img-gravatar>
+                                        }
+                                        else
+                                        {
+                                            <img src="@item.ProfileImagePath"
+                                                 alt="تصویر @item.FirstName @item.LastName"
+                                                 title="تصویر @item.FirstName @item.LastName"
+                                                 class="rounded-circle img-fluid"
+                                                 style="height: 35px !important; width: 35px !important;">
+                                        }
+                                    </div>
+
+                                    <div class="text-right" style="font-size: 0.9rem">
+                                        <span class="d-block font-weight-bold">@item.DisplayName</span>
+                                        <span class="d-block font-weight-light text-muted">@item.UserName</span>
+                                    </div>
+                                </div>
+
+                                @if (User.IsInRole(Roles.UserRoleUnassign))
+                                {
+                                    <button type="button" class="close h-100" style="opacity:1" title="حذف انتساب" data-dismiss="alert" data-username="@item.UserName" data-rolename="@ViewData["rolename"]">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg>
+                                    </button>
+                                }
                             </div>
                         }
                     }
                 </div>
             </div>
-        </div>
+        }
         <br />
-        <div class="text-left">
-            <a asp-controller="Roles" asp-action="Index" class="btn btn-light border rounded-oval px-4">
-                مدیریت نقش ها
-            </a>
-            <a asp-controller="Users" asp-action="Index" class="btn btn-warning rounded-oval px-4">
-                بازگشت به فهرست کاربران
-            </a>
-        </div>
-    </div>
-    }
-
-    @if (ViewData["rolename"] != null)
-    {
-<div class="col-md text-right">
-    <div class="card border-warning">
-        <div class="card-header bg-warning">
-            <h4 class="text-right">کاربران دارای نقش <span class="badge badge-primary">@ViewData["rolename"]</span></h4>
-        </div>
-        <div class="card-body">
-            @if (!Model.Users.Any())
-            {
-                <div class="alert alert-warning text-center">هیچ کاربری دارای این نقش ثبت نشده است.</div>
-            }
-            else
-            {
-                foreach (var item in Model.Users)
+        @if (User.IsInRole(Roles.RolesList) || User.IsInRole(Roles.UsersList))
+        {
+            <div class="text-left">
+                @if (User.IsInRole(Roles.RolesList))
                 {
-                    <div class="alert alert-success alert-dismissible fade show">
-                        @item.FirstName @item.LastName [@item.UserName]
-                        <button type="button" class="close bg-danger text-white" style="opacity:1" title="حذف انتساب" data-dismiss="alert" data-username="@item.UserName" data-rolename="@ViewData["rolename"]">
-                            <i class="fas fa-trash" style="font-size:small"></i>
-                        </button>
-                    </div>
+                    <a asp-controller="Roles" asp-action="Index" class="btn btn-light border rounded-oval px-4">
+                        فهرست نقش ها
+                    </a>
                 }
-            }
-        </div>
+                @if (User.IsInRole(Roles.UsersList))
+                {
+                    <a asp-controller="Users" asp-action="Index" class="btn btn-light border rounded-oval px-4">
+                        فهرست کاربران
+                    </a>
+                }
+            </div>
+        }
     </div>
-    <br />
-    <a asp-controller="Roles" asp-action="Index" class="btn btn-outline-dark">
-        <i class="fas fa-share align-middle"></i>
-        بازگشت به لیست نقش ها
-    </a>
-</div>
-    }
 </div>
 
 @section Scripts
 {
-    <script>
+    @if (User.IsInRole(Roles.UserRoleUnassign))
+    {
+        <script>
         $('body').on('click', 'button.close', function () {
             $.ajax({
                 method: 'post',
@@ -128,5 +175,6 @@
                 }
             });
         })
-    </script>
+        </script>
+    }
 }

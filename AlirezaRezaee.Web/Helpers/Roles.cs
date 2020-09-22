@@ -71,6 +71,7 @@ namespace Rezaee.Alireza.Web.Helpers
 
         #region UsersController
         public const string UsersList = "مشاهده کاربران";
+        public const string UserDetails = "مشاهده مشخصات کاربران";
         public const string UserCreate = "افزودن کاربر";
         public const string UserEdit = "ویرایش کاربر";
         public const string UserDelete = "حذف کاربر";
