@@ -43,44 +43,11 @@ namespace Rezaee.Alireza.Web.Controllers
                 });
         }
 
-        [Route("/about")]
-        public IActionResult About()
-        {
-            ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
-            ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
-
-            return View(
-                new Models.ViewModels.Home.AboutViewModel()
-                {
-                    AboutContent = _context.Options.First(i => i.OptionName == "AboutAuthor").OptionValue
-                });
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        private PostType? DetectPostType(Post post)
-        {
-            if (post == null)
-                return null;
-
-            if ((post.Article == null && post.Share == null && post.Markdown == null) || (post.Article != null && post.Share != null && post.Markdown != null))
-                return null;
-
-            if (post.Article != null)
-                return PostType.Article;
-            else if (post.Share != null)
-                return PostType.Share;
-            else //if (post.Markdown != null)
-                return PostType.Markdown;
         }
     }
 }
