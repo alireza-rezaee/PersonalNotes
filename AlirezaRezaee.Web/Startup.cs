@@ -20,7 +20,7 @@ using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 using Rezaee.Alireza.Web.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
-using Rezaee.Alireza.Web.Constraints;
+using Rezaee.Alireza.Web.RouteConstraint;
 
 namespace Rezaee.Alireza.Web
 {

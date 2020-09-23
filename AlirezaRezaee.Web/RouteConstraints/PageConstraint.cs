@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Constraints
+namespace Rezaee.Alireza.Web.RouteConstraint
 {
     public class PageConstraint : IRouteConstraint
     {
