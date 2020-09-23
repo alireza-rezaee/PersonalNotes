@@ -20,6 +20,7 @@ using Rezaee.Alireza.Web.Areas.Identity.Helpers;
 using Rezaee.Alireza.Web.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
+using Rezaee.Alireza.Web.Constraints;
 
 namespace Rezaee.Alireza.Web
 {
@@ -78,6 +79,11 @@ namespace Rezaee.Alireza.Web
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddRouting(options =>
+            {
+                options.ConstraintMap.Add("pagePath", typeof(PageConstraint));
+            });
 
             services.AddRazorPages();
 

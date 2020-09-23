@@ -44,17 +44,13 @@ namespace Rezaee.Alireza.Web.Controllers
             }).ToListAsync());
         }
 
-        [Route("{id}")]
-        public async Task<IActionResult> Detail(int id)
+        [Route("/{path:pagePath}")]
+        public async Task<IActionResult> Detail(string path)
         {
-            var page = await _context.Pages.Select(page => new DetailsViewModel
-            { 
-                Id = page.Id,
-                Title = page.Title,
-                Url = "",
-                ImageCoverPath = page.ImageCoverPath,
-                Html = page.Html
-            }).FirstOrDefaultAsync(page => page.Id == id);
+            if (string.IsNullOrEmpty(path))
+                return NotFound();
+
+            var page = await _context.Pages.Where(page => page.Url == path).FirstOrDefaultAsync();
             if (page == null) return NotFound();
 
             ViewData["Title"] = page.Title;
@@ -194,7 +190,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         private async Task CheckTitleExistence(string title)
         {
-            if (!await _context.Pages.AsNoTracking().AnyAsync(page => page.Title == title.Trim()))
+            if (await _context.Pages.AsNoTracking().AnyAsync(page => page.Title == title.Trim()))
                 throw new Exception("لطفاً نشانی دیگری برای این صفحه انتخاب کنید؛ این نشانی تکراری است.");
         }
 
