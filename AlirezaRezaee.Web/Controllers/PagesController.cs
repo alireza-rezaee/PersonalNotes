@@ -36,7 +36,7 @@ namespace Rezaee.Alireza.Web.Controllers
             {
                 Id = page.Id,
                 Title = page.Title,
-                Url = page.Url,
+                Path = page.Path,
                 Summary = page.Html.Length >= 500 ? page.Html.Substring(0, 500) : page.Html.Substring(0, page.Html.Length),
                 ImageCoverPath = page.ImageCoverPath,
                 CreateDateTime = page.CreateDateTime,
@@ -50,7 +50,7 @@ namespace Rezaee.Alireza.Web.Controllers
             if (string.IsNullOrEmpty(path))
                 return NotFound();
 
-            var page = await _context.Pages.Where(page => page.Url == path).FirstOrDefaultAsync();
+            var page = await _context.Pages.Where(page => page.Path == path).FirstOrDefaultAsync();
             if (page == null) return NotFound();
 
             ViewData["Title"] = page.Title;
@@ -77,7 +77,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 var newImage = createVM.CoverImage;
                 try
                 {
-                    newPage.Url = Helpers.File.ValidateName(newPage.Url);
+                    newPage.Path = Helpers.File.ValidateName(newPage.Path);
 
                     if (newPage.HasLayout == true && newImage != null)
                         throw new Exception("در صورت انتخاب «مستقل از پوسته سایت» نباید از این طریق تصویری انتخاب شود.");
@@ -111,7 +111,7 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PageEdit)]
         public async Task<IActionResult> Edit(int id, string path)
         {
-            var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Url == path);
+            var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Path == path);
             if (page == null) return NotFound();
 
             ViewData["Title"] = $"اصلاح صفحه «{page.Title}»";
@@ -135,7 +135,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
                 try
                 {
-                    newPage.Url = Helpers.File.ValidateName(newPage.Url);
+                    newPage.Path = Helpers.File.ValidateName(newPage.Path);
 
                     if (newPage.HasLayout == true && newImage != null)
                         throw new Exception("در صورت انتخاب «مستقل از پوسته سایت» نباید از این طریق تصویری انتخاب شود.");
@@ -172,7 +172,7 @@ namespace Rezaee.Alireza.Web.Controllers
         {
             try
             {
-                var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Url == path);
+                var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Path == path);
                 if (page == null) return NotFound();
 
                 _ifileManager.DeleteFile(page.ImageCoverPath);

@@ -10,11 +10,11 @@
         <div class="text-left">
             @if (User.IsInRole(Roles.PageEdit))
             {
-            <a asp-action="Edit" asp-controller="Pages" asp-route-path="@Model.Url" class="btn rounded-oval btn-outline-success border" data-dismiss="modal">اصلاح برگه</a>
+            <a asp-action="Edit" asp-controller="Pages" asp-route-path="@Model.Path" class="btn rounded-oval btn-outline-success border" data-dismiss="modal">اصلاح برگه</a>
             }
             @if (User.IsInRole(Roles.PageDelete))
             {
-            <a asp-action="Delete" asp-controller="Pages" asp-route-path="@Model.Url" class="btn rounded-oval btn-outline-danger border" data-dismiss="modal">حذف برگه</a>
+            <a asp-action="Delete" asp-controller="Pages" asp-route-path="@Model.Path" class="btn rounded-oval btn-outline-danger border" data-dismiss="modal">حذف برگه</a>
             }
             @if (User.IsInRole(Roles.PageEdit))
             {

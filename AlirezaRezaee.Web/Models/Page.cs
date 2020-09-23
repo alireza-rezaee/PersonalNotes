@@ -38,6 +38,6 @@ namespace Rezaee.Alireza.Web.Models
         [MaxLength(200, ErrorMessage = "سقف مجاز طول «{0}» «{1}» کاراکتر، باید رعایت شود.")]
         [Required(ErrorMessage = "«{0}» صفحه انتخاب نشده است؟")]
         [Display(Name = "نشانی")]
-        public string Url { get; set; }
+        public string Path { get; set; }
     }
 }

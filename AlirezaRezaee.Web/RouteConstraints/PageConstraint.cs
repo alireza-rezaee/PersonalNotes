@@ -28,7 +28,7 @@ namespace Rezaee.Alireza.Web.RouteConstraint
                 try
                 {
                     var context = (ApplicationDbContext)httpContext.RequestServices.GetService(typeof(ApplicationDbContext));
-                    return context.Pages.Any(page => page.Url == parameterValueString);
+                    return context.Pages.Any(page => page.Path == parameterValueString);
                 }
                 catch (Exception e)
                 {
