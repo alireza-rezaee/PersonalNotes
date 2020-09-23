@@ -1,44 +1,159 @@
-﻿@model Rezaee.Alireza.Web.Models.Link
+﻿@using Rezaee.Alireza.Web.Helpers
+@model Rezaee.Alireza.Web.Models.Link
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "اصلاح پیوند";
 }
+<div class="container mt-5">
+    <h1 class="text-size-6">@ViewData["Title"]</h1>
 
-<h1>Edit</h1>
+    <hr />
+    <form asp-controller="Links" asp-action="Edit" asp-route-id="@Model.Id" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <p class="text-center text-secondary">پیش نمایش</p>
+                <div class="my-2 position-relative">
+                    <div class="rounded-top links-cover border js-image-preview @if (Model.IsExpanded) { <text>d-flex justify-content-center align-items-center</text> } else { <text>d-none</text> } "
+                         style="@if (!string.IsNullOrEmpty(Model.ImagePath)) { <text> background-image: url(@Model.ImagePath); </text> }
+                            else { <text> background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px); </text> }">
+                        <span class="badge badge-secondary">
+                            محل نمایش تصویر
+                        </span>
+                    </div>
+                    <div class="d-flex links-content links-item">
+                        <a href="@Model.Url" target="_blank" class="links-site-link links-link p-2 rounded-0 mb-0 cursor-pointer js-url-preview" style="z-index: 2;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                            </svg>
+                        </a>
+                        <a href="@Model.Url" target="_self" class="links-link d-block p-2 w-100 stretched-link overflow-hidden mb-0 cursor-pointer js-url-preview">
+                            <i class="caption js-title">
+                                @Model.Title
+                            </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-8">
+                <div class="mb-3">
+                    <label asp-for="Title" class="mb-0">عنوان پیوند:</label>
+                    <small class="form-text text-muted small mb-1">پیوند با این نام نمایش داده می‌شود.</small>
+                    <input asp-for="Title" class="form-control js-new-title" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Url" class="mb-0">نشانی:</label>
+                    <small class="form-text text-muted small mb-1">نشانی پیوند با http یا https شروع می‌شود؛ بهتر است اینگونه شروع شود.</small>
+                    <input asp-for="Url" class="form-control dir-ltr text-left js-new-url" />
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="mb-0">تصویر:</label>
+                    <small class="form-text text-muted small mb-1">بارگذاری یا تغییر تصویر نمایشی پیوند.</small>
+                    <label for="image" class="btn btn-light border">بارگذاری تصویر ...</label>
+                    <input type="file" id="image" name="image" class="d-none" />
+                </div>
+                <div class="mb-3">
+                    <div class="custom-control custom-checkbox my-3">
+                        <input asp-for="IsExpanded" class="custom-control-input js-new-isexpanded">
+                        <label asp-for="IsExpanded" class="custom-control-label">آیا پیوند در طرح بزرگ (همراه با تصویر) به نمایش درآید؟</label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<h4>Link</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Rank" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="text-left">
+            <a asp-action="Index" asp-controller="Links" class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست پیوند ها</a>
+            @if (User.IsInRole(Roles.LinkDelete))
+            {
+                <button type="button" class="btn rounded-oval btn-outline-danger" data-target="#modal-delete-link" data-toggle="modal">
+                    حذف
+                </button>
+            }
+            <button type="submit" class="btn rounded-oval btn-success">
+                اصلاح پیوند
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-delete-link" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="Links" asp-action="Delete" asp-route-id="@Model.Id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">حذف پیوند <span class="badge badge-secondary">@Model.Title</span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <small class="text-danger">
+                        در حذف نهایی مطمئن عمل کنید. پس از حذف امکان بازگردانی وجود ندارد.
+                    </small>
+                    <div class="my-2 position-relative">
+                        <div class="rounded-top links-cover border js-image-preview @if (Model.IsExpanded) { <text>d-flex justify-content-center align-items-center</text> } else { <text>d-none</text> } "
+                             style="@if (!string.IsNullOrEmpty(Model.ImagePath)) { <text> background-image: url(@Model.ImagePath); </text> }
+                            else { <text> background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px); </text> }">
+                        </div>
+                        <div class="d-flex links-content links-item">
+                            <a href="@Model.Url" target="_blank" class="links-site-link links-link p-2 rounded-0 mb-0 cursor-pointer js-url-preview" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a href="@Model.Url" target="_self" class="links-link d-block p-2 w-100 stretched-link overflow-hidden mb-0 cursor-pointer js-url-preview">
+                                <i class="caption js-title">
+                                    @Model.Title
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index" asp-controller="Links" class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست پیوند ها</a>
+                    <button type="submit" class="btn rounded-oval btn-outline-danger">حذف نهایی</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $('.js-new-title').keyup(function () {
+            $('.js-title').text($('.js-new-title').val());
+        });
+
+        $('.js-new-url').keyup(function () {
+            $('.js-url-preview').attr("href", $('.js-new-url').val());
+        });
+
+        $(".js-new-isexpanded").change(function () {
+            if ($(".js-new-isexpanded").prop("checked"))
+                $(".js-image-preview").removeClass("d-none").addClass("d-flex justify-content-center align-items-center");
+            else
+                $(".js-image-preview").removeClass("d-flex justify-content-center align-items-center").addClass("d-none");
+        });
+
+        $('#image').change(function (e) {
+            var previews = $('.js-image-preview');
+
+            var imageSource = URL.createObjectURL(event.target.files[0]);
+
+            for (var preview of previews) {
+                preview.src = imageSource;
+                $(preview).css('background-image', 'url(' + imageSource + ')');
+            }
+
+            $('.js-image-preview').onload = function () {
+                URL.revokeObjectURL(imageSource);
+            }
+        });
+    </script>
 }

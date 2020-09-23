@@ -3,86 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Extensions;
 using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
-using Rezaee.Alireza.Web.Models.ViewModels.Links;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
+    [Route("links")]
     public class LinksController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IFileManager _ifileManager;
 
-        public LinksController(ApplicationDbContext context)
+        public LinksController(ApplicationDbContext context, IFileManager ifileManager)
         {
             _context = context;
+            _ifileManager = ifileManager;
         }
 
-        // GET: Links
-        public IActionResult Index()
-        {
-            var wholeLinks = _context.Links.OrderBy(link => link.Rank)
-                .Select(list => new IllustratedLinkViewModel { Title = list.Title, ImagePath = list.ImagePath, Url = list.Url })
-                .ToList();
+        [HttpGet("")]
+        public async Task<IActionResult> Index() => View(await _context.Links.OrderBy(link => link.IsExpanded).ThenBy(link => link.Id).ToListAsync());
 
-            var numberOfPrimaryLinks = int.Parse(_context.Options.First(i => i.OptionName == "NumberOfPrimaryLinks").OptionValue);
-            var illustratedLinks = wholeLinks.Where(link => !string.IsNullOrEmpty(link.ImagePath)).Take(numberOfPrimaryLinks).ToList();
-            var plainLinks = wholeLinks.Where(link => !illustratedLinks.Contains(link)).Select(link => new PlainLinkViewModel { Title = link.Title, Url = link.Url }).ToList();
-
-            return View(new IndexViewModel
-            {
-                IllustratedLinks = illustratedLinks,
-                PlainLinks = plainLinks
-            });
-        }
-
-        // GET: Links/Details/5
-        public async Task<IActionResult> Details(short? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var linksModel = await _context.Links
-                .FirstOrDefaultAsync(m => m.Rank == id);
-            if (linksModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(linksModel);
-        }
-
-        // GET: Links/Create
+        [HttpGet("create")]
         [Authorize(Roles = Roles.LinkCreate)]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         // POST: Links/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.LinkCreate)]
-        public async Task<IActionResult> Create([Bind("Rank,Title,Url,ImagePath")] Link linksModel)
+        public async Task<IActionResult> Create(Link link, IFormFile image)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(linksModel);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    if (image != null)
+                    {
+                        image.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
+                        var imagePath = $"uploads/links/{PersianDateTime.Now.ToString("yyyy/MM/dd/yyyyMMddhhmmss")}{DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}_{Helpers.File.ValidateName(image.FileName)}";
+                        await _ifileManager.SaveFile(image, imagePath);
+                        link.ImagePath = $"/{imagePath}";
+                    }
+
+                    _context.Add(link);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    TempData["LinkCreateStatus"] = e.Message;
+                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(linksModel);
+            return View(link);
         }
 
-        // GET: Links/Edit/5
+        [HttpGet("edit/{id}")]
         [Authorize(Roles = Roles.LinkEdit)]
         public async Task<IActionResult> Edit(short? id)
         {
@@ -91,84 +74,90 @@ namespace Rezaee.Alireza.Web.Controllers
                 return NotFound();
             }
 
-            var linksModel = await _context.Links.FindAsync(id);
-            if (linksModel == null)
+            var link = await _context.Links.FindAsync(id);
+            if (link == null)
             {
                 return NotFound();
             }
-            return View(linksModel);
+            return View(link);
         }
 
         // POST: Links/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.LinkEdit)]
-        public async Task<IActionResult> Edit(short id, [Bind("Rank,Title,Url,ImagePath")] Link linksModel)
+        public async Task<IActionResult> Edit(short id, IFormFile image, Link linksModel)
         {
-            if (id != linksModel.Rank)
-            {
+            if (id != linksModel.Id)
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(linksModel);
+                    var link = await _context.Links.FindAsync(id);
+                    if (link == null)
+                        return NotFound();
+
+                    if (image != null)
+                    {
+                        image.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
+                        var imagePath = $"uploads/links/{PersianDateTime.Now.ToString("yyyy/MM/dd/yyyyMMddhhmmss")}{DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999)}-{Helpers.File.ValidateName(image.FileName)}";
+
+                        //Upload new image
+                        await _ifileManager.SaveFile(image, imagePath);
+                        //Remove old image
+                        _ifileManager.DeleteFile(link.ImagePath);
+                        //Set new image
+                        link.ImagePath = $"/{imagePath}";
+                    }
+
+                    link.IsExpanded = linksModel.IsExpanded;
+                    link.Title = linksModel.Title;
+                    link.Url = linksModel.Url;
+
+                    _context.Update(link);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception e)
                 {
-                    if (!LinksModelExists(linksModel.Rank))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    TempData["LinkEditStatus"] = e.Message;
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(linksModel);
         }
 
-        // GET: Links/Delete/5
-        [Authorize(Roles = Roles.LinkDelete)]
-        public async Task<IActionResult> Delete(short? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var linksModel = await _context.Links
-                .FirstOrDefaultAsync(m => m.Rank == id);
-            if (linksModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(linksModel);
-        }
-
         // POST: Links/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.LinkDelete)]
-        public async Task<IActionResult> DeleteConfirmed(short id)
+        public async Task<IActionResult> Delete(short id)
         {
-            var linksModel = await _context.Links.FindAsync(id);
-            _context.Links.Remove(linksModel);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var link = await _context.Links.FindAsync(id);
+                if (link == null)
+                    return NotFound();
+
+                _ifileManager.DeleteFile(link.ImagePath);
+                _context.Links.Remove(link);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                TempData["LinkDeleteStatus"] = e.Message;
+                throw;
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool LinksModelExists(short id)
         {
-            return _context.Links.Any(e => e.Rank == id);
+            return _context.Links.Any(e => e.Id == id);
         }
     }
 }

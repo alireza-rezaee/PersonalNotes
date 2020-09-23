@@ -9,11 +9,7 @@ namespace Rezaee.Alireza.Web.Models
 {
     public class Link
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Required(ErrorMessage = "انتخاب {0} الزامی است.")]
-        [Display(Name = "رتبه")]
-        public short Rank { get; set; }
+        public short Id { get; set; }
 
         [Required(ErrorMessage = "انتخاب {0} الزامی است.")]
         [MaxLength(100, ErrorMessage = "طول {0} نباید بیش از {1} کاراکتر باشد.")]
@@ -27,5 +23,7 @@ namespace Rezaee.Alireza.Web.Models
 
         [MaxLength(200, ErrorMessage = "")]
         public string ImagePath { get; set; }
+
+        public bool IsExpanded { get; set; }
     }
 }

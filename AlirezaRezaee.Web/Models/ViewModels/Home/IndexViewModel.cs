@@ -1,5 +1,4 @@
-﻿using Rezaee.Alireza.Web.Models.ViewModels.Links;
-using Rezaee.Alireza.Web.Models.ViewModels.Posts;
+﻿using Rezaee.Alireza.Web.Models.ViewModels.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.Home
 
         public IEnumerable<PostSummaryViewModel> Posts { get; set; }
 
-        public List<IllustratedLinkViewModel> IllustratedLinks { get; set; }
+        public List<Link> Links { get; set; }
 
         public List<Block> Blocks { get; set; }
     }

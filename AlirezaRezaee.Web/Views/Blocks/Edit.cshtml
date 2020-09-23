@@ -206,10 +206,13 @@
 
                 <div class="text-left">
                     <input type="hidden" value="/" name="returnUrl" />
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-block" @if (!User.IsInRole(Roles.BlockDelete)) {<text>disabled title="مجوز حذف بلاک ندارید"</text>}>
-                        حذف بلاک
-                    </button>
-                    <button type="submit" class="btn btn-success" @if (!User.IsInRole(Roles.BlockEdit)) {<text>disabled title="مجوز ویرایش بلاک ندارید"</text>}>
+                    @if (!User.IsInRole(Roles.BlockDelete))
+                    {
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-block">
+                            حذف بلاک
+                        </button>
+                    }
+                    <button type="submit" class="btn btn-success" @if (!User.IsInRole(Roles.BlockEdit)) { <text> disabled title="مجوز ویرایش بلاک ندارید" </text> }>
                         ویرایش و ذخیره
                     </button>
                 </div>
@@ -218,35 +221,38 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modal-delete-block" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Delete)" asp-route-id="@Model.Id">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        هشدار حذف بلاک
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    هشدار: پس از تایید،
-                    این بلاک
-                    <span class="text-danger">حذف</span>
-                    میشود و آنگاه قابل بازگشت نخواهد بود.
-                    آیا از این اقدام اطمینان دارید؟
-
-                    <div class="text-left mt-4">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
-                        <button type="submit" class="btn btn-danger">تایید</button>
+@if (!User.IsInRole(Roles.BlockDelete))
+{
+    <!-- Modal -->
+    <div class="modal fade" id="modal-delete-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Delete)" asp-route-id="@Model.Id">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            هشدار حذف بلاک
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-            </form>
+                    <div class="modal-body">
+                        هشدار: پس از تایید،
+                        این بلاک
+                        <span class="text-danger">حذف</span>
+                        میشود و آنگاه قابل بازگشت نخواهد بود.
+                        آیا از این اقدام اطمینان دارید؟
+
+                        <div class="text-left mt-4">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                            <button type="submit" class="btn btn-danger">تایید</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+}
 
 @section Scripts {
     <script>

@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Rezaee.Alireza.Web.Data;
 using Rezaee.Alireza.Web.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Models.ViewModels.Links;
 using Rezaee.Alireza.Web.Models.ViewModels.Posts;
 using Rezaee.Alireza.Web.Helpers.Enums;
 
@@ -33,22 +32,13 @@ namespace Rezaee.Alireza.Web.Controllers
             ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
-            //<Links>
-            var wholeLinks = _context.Links.OrderBy(link => link.Rank)
-                .Select(list => new IllustratedLinkViewModel { Title = list.Title, ImagePath = list.ImagePath, Url = list.Url })
-                .ToList();
-
-            var numberOfPrimaryLinks = int.Parse(_context.Options.First(i => i.OptionName == "NumberOfPrimaryLinks").OptionValue);
-            var illustratedLinks = wholeLinks.Where(link => !string.IsNullOrEmpty(link.ImagePath)).Take(numberOfPrimaryLinks).ToList();
-            //</Links>
-
             return View(
                 new Models.ViewModels.Home.IndexViewModel()
                 {
                     QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
                     AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue,
                     Posts = await PostsController.RetrieveLatestPostsSummary(count: 8, context: _context),
-                    IllustratedLinks = illustratedLinks,
+                    Links = await _context.Links.OrderBy(link => link.IsExpanded).ThenBy(link => link.Id).ToListAsync(),
                     Blocks = await BlocksController.GetBlocks(context: _context)
                 });
         }

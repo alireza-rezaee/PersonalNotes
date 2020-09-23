@@ -60,7 +60,6 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string BlockDelete = "حذف بلاک";
         #endregion
 
-
         // ~/Areas/Admin/Controllers
         #region RolesController
         public const string RolesList = "مشاهده نقش ها";

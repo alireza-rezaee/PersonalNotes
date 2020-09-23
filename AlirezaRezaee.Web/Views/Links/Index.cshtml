@@ -1,8 +1,10 @@
-﻿@model Rezaee.Alireza.Web.Models.ViewModels.Links.IndexViewModel
-
+﻿@using Rezaee.Alireza.Web.Helpers
+@model IEnumerable<Rezaee.Alireza.Web.Models.Link>
 @{
 
     ViewData["Title"] = "پیوند ها";
+    var expandedLinks = Model.Where(link => link.IsExpanded).ToList();
+    var contractedLinks = Model.Where(link => !link.IsExpanded).ToList();
 }
 
 
@@ -16,48 +18,144 @@
             </div>
         </div>
     </div>
+
+    @if (User.IsInRole(Roles.LinkCreate))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2 position-relative">
+                    <div class="d-flex links-content links-item">
+                        <a asp-controller="Links" asp-action="Create" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                            </svg>
+                        </a>
+                        <a asp-controller="Links" asp-action="Create" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                            <i class="caption">افزودن پیوند</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    }
+
     <div class="row justify-content-center">
         <div class="col-11">
-            @if (Model.IllustratedLinks.Any() || Model.PlainLinks.Any())
+            @if (Model.Any())
             {
-                if (Model.IllustratedLinks.Any())
+                if (expandedLinks.Any())
                 {
                     <div class="row links rounded justify-content-center">
-                        @foreach (var illustratedLink in Model.IllustratedLinks)
+                        @foreach (var link in expandedLinks)
                         {
-                            <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="col-12 col-sm-6 col-lg-4 @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete)) { <text>js-link</text> }"
+                                 @if (User.IsInRole(Roles.LinkDelete)) { <text>
+                                 data-title="@link.Title"
+                                 data-url="@link.Url"
+                                 data-imagesrc="@link.ImagePath"
+                                 data-isexpanded="@link.IsExpanded"
+                                 data-delete-url="@Url.Action(action:"Delete", controller:"Links", values: new { id = link.Id })"
+                                 </text>  }>
                                 <div class="my-2 position-relative">
-                                    <div class="bg-danger rounded-top links-cover" style="background-image: url(@illustratedLink.ImagePath);">
+                                    <div class="bg-danger rounded-top links-cover" style="background-image: url(@link.ImagePath);">
                                     </div>
-                                    <div class="d-flex links-content links-item">
-                                        <a href="@illustratedLink.Url" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                            <i class="material-icons align-middle">language</i>
+                                    <div class="d-flex links-content links-item @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete)) { <text>rounded-0</text> }">
+                                        <a href="@link.Url" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                            </svg>
                                         </a>
-                                        <a href="@illustratedLink.Url" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                            <i class="caption">@illustratedLink.Title</i>
+                                        <a href="@link.Url" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                            <i class="caption">@link.Title</i>
                                         </a>
                                     </div>
+                                    @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete))
+                                    {
+                                        <div class="d-flex links-content links-item">
+                                            @if (User.IsInRole(Roles.LinkEdit))
+                                            {
+                                                <a asp-action="Edit" asp-controller="Links" asp-route-id="@link.Id" class="links-site-link links-link p-2 rounded-0 text-center @if (User.IsInRole(Roles.LinkDelete)) { <text>w-50</text> }" style="z-index: 2;">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                                                    </svg>
+                                                    اصلاح
+                                                </a>
+                                            }
+                                            @if (User.IsInRole(Roles.LinkDelete))
+                                            {
+                                                <button data-toggle="modal" data-target="#modal-delete-link" class="btn links-site-link links-link p-2 rounded-0 text-center @if (User.IsInRole(Roles.LinkEdit)) { <text>w-50</text> }" style="z-index: 2;">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                    </svg>
+                                                    حذف
+                                                </button>
+                                            }
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         }
                     </div>
                 }
 
-                if (Model.PlainLinks.Any())
+                if (expandedLinks.Any() && contractedLinks.Any())
+                {
+                    <hr />
+                }
+
+                if (contractedLinks.Any())
                 {
                     <div class="row links rounded justify-content-center mb-3" style="margin-top: 5rem;">
-                        @foreach (var plainLink in Model.PlainLinks)
+                        @foreach (var link in contractedLinks)
                         {
-                            <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="col-12 col-sm-6 col-lg-4 @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete)) { <text>js-link</text> }"
+                                 @if (User.IsInRole(Roles.LinkDelete)) { <text>
+                                 data-title="@link.Title"
+                                 data-url="@link.Url"
+                                 data-imagesrc="@link.ImagePath"
+                                 data-isexpanded="@link.IsExpanded"
+                                 data-delete-url="@Url.Action(action:"Delete", controller:"Links", values: new { id = link.Id })"
+                                 </text>  }>
                                 <div class="my-2 position-relative">
-                                    <div class="d-flex links-content links-item">
-                                        <a href="@plainLink.Url" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                            <i class="material-icons align-middle">language</i>
+                                    <div class="d-flex links-content links-item @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete)) { <text>rounded-0</text> }">
+                                        <a href="@link.Url" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                            </svg>
                                         </a>
-                                        <a href="@plainLink.Url" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                            <i class="caption">@plainLink.Title</i>
+                                        <a href="@link.Url" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                            <i class="caption">@link.Title</i>
                                         </a>
                                     </div>
+                                    @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete))
+                                    {
+                                        <div class="d-flex links-content links-item">
+                                            @if (User.IsInRole(Roles.LinkEdit))
+                                            {
+                                                <a asp-action="Edit" asp-controller="Links" asp-route-id="@link.Id" class="links-site-link links-link p-2 rounded-0 text-center @if (User.IsInRole(Roles.LinkDelete)) { <text>w-50</text> }" style="z-index: 2;">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                                                    </svg>
+                                                    اصلاح
+                                                </a>
+                                            }
+                                            @if (User.IsInRole(Roles.LinkDelete))
+                                            {
+                                                <button data-toggle="modal" data-target="#modal-delete-link" class="btn links-site-link links-link p-2 rounded-0 text-center @if (User.IsInRole(Roles.LinkEdit)) { <text>w-50</text> }" style="z-index: 2;">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                    </svg>
+                                                    حذف
+                                                </button>
+                                            }
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         }
@@ -71,4 +169,87 @@
                 </div>
             }
         </div>
+    </div>
 </div>
+
+@if (User.IsInRole(Roles.LinkDelete))
+{
+    <!-- Modal -->
+    <div class="modal fade" id="modal-delete-link" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">حذف پیوند <span class="badge badge-secondary js-modal-title"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <small class="text-danger">
+                            در حذف نهایی مطمئن عمل کنید. پس از حذف امکان بازگردانی وجود ندارد.
+                        </small>
+                        <div class="my-2 position-relative">
+                            <div class="rounded-top links-cover border js-image-preview d-none">
+                            </div>
+                            <div class="d-flex links-content links-item">
+                                <a href="javascript:void(0)" target="_blank" class="links-site-link links-link p-2 rounded-0 mb-0 cursor-pointer js-url-preview" style="z-index: 2;">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                        <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                    </svg>
+                                </a>
+                                <a href="javascript:void(0)" target="_self" class="links-link d-block p-2 w-100 stretched-link overflow-hidden mb-0 cursor-pointer js-url-preview">
+                                    <i class="caption js-modal-title"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست پیوند ها</button>
+                        <button type="submit" class="btn rounded-oval btn-outline-danger">حذف نهایی</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('modal-delete-link');
+        $(deleteModal).on('show.bs.modal', function (e) {
+            // Button that triggered the modal
+            var button = e.relatedTarget;
+            // Extract info from data-* attributes
+            var parent = $(button).parents('.js-link');
+            console.log(parent);
+
+            var title = parent.data('title'),
+                url = parent.data('url'),
+                imagesrc = parent.data('imagesrc'),
+                isexpanded = parent.data('isexpanded'),
+                deleteUrl = parent.data('delete-url');
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            $('.js-modal-title').text(title);
+
+            var modalImage = $('.js-image-preview');
+            if (isexpanded == 'True') {
+                console.log(1);
+                modalImage.removeClass("d-none").addClass("d-flex justify-content-center align-items-center");
+                modalImage.css('background-image', 'url("' + imagesrc + '")');
+            }
+            else {
+                modalImage.removeClass("d-flex justify-content-center align-items-center").addClass("d-none");
+                modalImage.css('background-image', 'none');
+            }
+
+            $('.js-url-preview').attr('href', url);
+            $(deleteModal).find('form').attr('action', deleteUrl);
+        });
+    </script>
+}

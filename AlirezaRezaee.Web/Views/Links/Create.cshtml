@@ -1,48 +1,101 @@
-﻿@model Rezaee.Alireza.Web.Models.Link
+﻿@using Rezaee.Alireza.Web.Helpers
+@model Rezaee.Alireza.Web.Models.Link
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "افزودن پیوند";
 }
+<div class="container mt-5">
+    <h1 class="text-size-6">@ViewData["Title"]</h1>
 
-<h1>Create</h1>
+    <hr />
+    <form asp-controller="Links" asp-action="Create" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <p class="text-center text-secondary">پیش نمایش</p>
+                <div class="my-2 position-relative">
+                    <div id="image-preview" class="rounded-top links-cover border d-flex justify-content-center align-items-center"
+                         style="background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px);">
+                        <span class="badge badge-secondary">
+                            محل نمایش تصویر
+                        </span>
+                    </div>
+                    <div class="d-flex links-content links-item">
+                        <a href="javascript:void(0)" target="_blank" class="links-site-link links-link p-2 rounded-0 mb-0 cursor-pointer js-url-preview" style="z-index: 2;">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" target="_self" class="links-link d-block p-2 w-100 stretched-link overflow-hidden mb-0 cursor-pointer js-url-preview">
+                            <i class="caption js-title">
+                                عنوان پیوند
+                            </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-8">
+                <div class="mb-3">
+                    <label asp-for="Title" class="mb-0">عنوان پیوند:</label>
+                    <small class="form-text text-muted small mb-1">پیوند با این نام نمایش داده می‌شود.</small>
+                    <input asp-for="Title" class="form-control js-new-title" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Url" class="mb-0">نشانی:</label>
+                    <small class="form-text text-muted small mb-1">نشانی پیوند با http یا https شروع می‌شود؛ بهتر است اینگونه شروع شود.</small>
+                    <input asp-for="Url" class="form-control dir-ltr text-left js-new-url" />
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="mb-0">تصویر:</label>
+                    <small class="form-text text-muted small mb-1">بارگذاری یا تغییر تصویر نمایشی پیوند.</small>
+                    <label for="image" class="btn btn-light border">بارگذاری تصویر ...</label>
+                    <input type="file" id="image" name="image" class="d-none" />
+                </div>
+                <div class="mb-3">
+                    <div class="custom-control custom-checkbox my-3">
+                        <input asp-for="IsExpanded" class="custom-control-input js-new-isexpanded" checked="checked">
+                        <label asp-for="IsExpanded" class="custom-control-label">آیا پیوند در طرح بزرگ (همراه با تصویر) به نمایش درآید؟</label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<h4>Link</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Rank" class="control-label"></label>
-                <input asp-for="Rank" class="form-control" />
-                <span asp-validation-for="Rank" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+        <div class="text-left">
+            <button type="submit" class="btn rounded-oval btn-success">
+                افزودن پیوند
+            </button>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $('.js-new-title').keyup(function () {
+            $('.js-title').text($('.js-new-title').val());
+        });
+
+        $('.js-new-url').keyup(function () {
+            $('.js-url-preview').attr("href", $('.js-new-url').val());
+        });
+
+        $(".js-new-isexpanded").change(function () {
+            if ($(".js-new-isexpanded").prop("checked"))
+                $("#image-preview").removeClass("d-none").addClass("d-flex justify-content-center align-items-center");
+            else
+                $("#image-preview").removeClass("d-flex justify-content-center align-items-center").addClass("d-none");
+        });
+
+        $('#image').change(function (e) {
+            var preview = $('#image-preview');
+
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            preview.css('background-image', 'url(' + preview.src + ')');
+            preview.onload = function () {
+                URL.revokeObjectURL(preview.src);
+            }
+        });
+    </script>
 }
