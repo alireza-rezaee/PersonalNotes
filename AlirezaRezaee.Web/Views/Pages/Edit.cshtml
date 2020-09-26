@@ -54,7 +54,7 @@
     </script>
 }
 
-<form asp-controller="Pages" asp-action="Editing" enctype="multipart/form-data">
+<form asp-action="Editing" asp-controller="Pages" asp-route-path="@Model.Page.Path" enctype="multipart/form-data">
     <div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px); height: 45vh">
         <div id="hnav-besm" class="mx-auto py-2"></div>
         <div class="container h-100 text-right">
@@ -111,7 +111,7 @@
         <div class="row">
             <div class="col">
                 <label asp-for="Page.Path" class="my-2">نشانی صفحه:</label>
-                <input asp-for="Page.Path" class="form-control text-left mb-3 dir-ltr" placeholder="https://alireza.rezaee.org/pages/example" style="color: #006293;">
+                <input asp-for="Page.Path" class="form-control text-left mb-3 dir-ltr" placeholder="e.g. AboutMe, Biography, Resume, etc." style="color: #006293;">
             </div>
         </div>
 
@@ -143,6 +143,7 @@
         </div>
     </div>
 </form>
+
 
 @section Scripts {
     <script src="~/lib/PersianDateTimePicker/jquery.md.bootstrap.datetimepicker.js"></script>

@@ -1,0 +1,54 @@
+﻿@model Rezaee.Alireza.Web.Models.Page
+
+<div class="container my-5">
+    @Html.Raw(Model.Html)
+
+    @if (User.IsInRole(Roles.PageEdit) || User.IsInRole(Roles.PageDelete))
+    {
+        <hr />
+
+        <div class="text-left">
+            @if (User.IsInRole(Roles.PageEdit))
+            {
+                <a asp-action="Edit" asp-controller="Pages" asp-route-path="@Model.Path" class="btn rounded-oval btn-outline-success border" data-dismiss="modal">اصلاح برگه</a>
+            }
+            @if (User.IsInRole(Roles.PageDelete))
+            {
+                <button class="btn rounded-oval btn-outline-danger border" data-dismiss="modal" data-toggle="modal" data-target="#modal-delete-page">حذف برگه</button>
+            }
+            @if (User.IsInRole(Roles.PageEdit))
+            {
+                <a asp-action="Index" asp-controller="Pages" class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست برگه ها</a>
+            }
+        </div>
+    }
+</div>
+
+@if (User.IsInRole(Roles.PageDelete))
+{
+    <div class="modal fade" id="modal-delete-page" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form asp-action="Delete" asp-controller="Pages" asp-route-path="@Model.Path">
+                    <div class="modal-header">
+                        <h5 class="modal-title">حذف برگه</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">
+                            در حذف نهایی برگه
+                            <span class="badge badge-danger">@Model.Title</span>
+                            مطمئن عمل کنید. پس از حذف امکان بازگردانی وجود ندارد.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست  برگه‌ها</button>
+                        <button type="submit" class="btn rounded-oval btn-outline-danger">حذف نهایی</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

@@ -57,7 +57,7 @@
                                  data-imagesrc="@link.ImagePath"
                                  data-isexpanded="@link.IsExpanded"
                                  data-delete-url="@Url.Action(action:"Delete", controller:"Links", values: new { id = link.Id })"
-                                 </text>  }>
+                                 </text> }>
                                 <div class="my-2 position-relative">
                                     <div class="bg-danger rounded-top links-cover" style="background-image: url(@link.ImagePath);">
                                     </div>
@@ -119,7 +119,7 @@
                                  data-imagesrc="@link.ImagePath"
                                  data-isexpanded="@link.IsExpanded"
                                  data-delete-url="@Url.Action(action:"Delete", controller:"Links", values: new { id = link.Id })"
-                                 </text>  }>
+                                 </text> }>
                                 <div class="my-2 position-relative">
                                     <div class="d-flex links-content links-item @if (User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete)) { <text>rounded-0</text> }">
                                         <a href="@link.Url" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
@@ -214,42 +214,43 @@
             </div>
         </div>
     </div>
-}
 
-@section Scripts {
-    <script>
-        var deleteModal = document.getElementById('modal-delete-link');
-        $(deleteModal).on('show.bs.modal', function (e) {
-            // Button that triggered the modal
-            var button = e.relatedTarget;
-            // Extract info from data-* attributes
-            var parent = $(button).parents('.js-link');
-            console.log(parent);
 
-            var title = parent.data('title'),
-                url = parent.data('url'),
-                imagesrc = parent.data('imagesrc'),
-                isexpanded = parent.data('isexpanded'),
-                deleteUrl = parent.data('delete-url');
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in a callback.
-            //
-            // Update the modal's content.
-            $('.js-modal-title').text(title);
+    @section Scripts {
+        <script>
+            var deleteModal = document.getElementById('modal-delete-link');
+            $(deleteModal).on('show.bs.modal', function (e) {
+                // Button that triggered the modal
+                var button = e.relatedTarget;
+                // Extract info from data-* attributes
+                var parent = $(button).parents('.js-link');
+                console.log(parent);
 
-            var modalImage = $('.js-image-preview');
-            if (isexpanded == 'True') {
-                console.log(1);
-                modalImage.removeClass("d-none").addClass("d-flex justify-content-center align-items-center");
-                modalImage.css('background-image', 'url("' + imagesrc + '")');
-            }
-            else {
-                modalImage.removeClass("d-flex justify-content-center align-items-center").addClass("d-none");
-                modalImage.css('background-image', 'none');
-            }
+                var title = parent.data('title'),
+                    url = parent.data('url'),
+                    imagesrc = parent.data('imagesrc'),
+                    isexpanded = parent.data('isexpanded'),
+                    deleteUrl = parent.data('delete-url');
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                $('.js-modal-title').text(title);
 
-            $('.js-url-preview').attr('href', url);
-            $(deleteModal).find('form').attr('action', deleteUrl);
-        });
-    </script>
+                var modalImage = $('.js-image-preview');
+                if (isexpanded == 'True') {
+                    console.log(1);
+                    modalImage.removeClass("d-none").addClass("d-flex justify-content-center align-items-center");
+                    modalImage.css('background-image', 'url("' + imagesrc + '")');
+                }
+                else {
+                    modalImage.removeClass("d-flex justify-content-center align-items-center").addClass("d-none");
+                    modalImage.css('background-image', 'none');
+                }
+
+                $('.js-url-preview').attr('href', url);
+                $(deleteModal).find('form').attr('action', deleteUrl);
+            });
+        </script>
+    }
 }

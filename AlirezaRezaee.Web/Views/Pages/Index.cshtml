@@ -1,71 +1,140 @@
-﻿@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Pages.IndexViewModel>
+﻿@using Rezaee.Alireza.Web.Extensions
+@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Pages.IndexViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "برگه ها";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Summary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageCoverPath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Path)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Summary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageCoverPath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Path)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+<div class="container my-5">
+    <h1 class="text-size-6">@ViewData["Title"]</h1>
+    <hr />
+
+    <p>
+        @if (User.IsInRole(Roles.PageCreate))
+        {
+            <a class="btn rounded-oval border btn-light" asp-action="Create" asp-controller="Pages">افزودن برگه</a>
+            <hr />
+        }
+    </p>
+    <table class="table table-hover table-bordered table-responsive text-center table-sm">
+        <thead>
+            <tr>
+                <td>
+                    ردیف
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Title)
+                </td>
+                <td>
+                    مسیر
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.UpdateDateTime)
+                </td>
+                <td>
+                    مدیریت برگه
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count(); i++)
+            {
+                var item = Model.ElementAt(i);
+            <tr class="js-page" data-title="@item.Title" data-delete-action="@Url.Action(action: "Delete", controller: "Pages", values: new { path = item.Path })">
+                <td class="align-middle">
+                    @((i + 1).EnglishToPersian())
+                </td>
+                <td class="align-middle font-weight-bold">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Path)
+                </td>
+                <td class="align-middle">
+                    @(((DateTime)item.UpdateDateTime).ToPersianDigitalDateTimeString().EnglishNumberToPersian())
+                </td>
+                <td class="align-middle">
+                    <a class="btn btn-light" asp-action="Details" asp-controller="Pages" asp-route-path="@item.Path">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
+                            <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                        </svg>
+                        مشاهده
+                    </a>
+                    @if (User.IsInRole(Roles.PageEdit))
+                    {
+                        <a class="btn btn-light text-primary" asp-action="Edit" asp-controller="Pages" asp-route-path="@item.Path">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                            </svg>
+                            ویرایش
+                        </a>
+                    }
+                    @if (User.IsInRole(Roles.PageDelete))
+                    {
+                        <button type="button" class="btn btn-light text-danger" data-toggle="modal" data-target="#modal-delete-page">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                            حذف
+                        </button>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (User.IsInRole(Roles.PageDelete))
+{
+    <div class="modal fade" id="modal-delete-page" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">حذف برگه</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">
+                            در حذف نهایی برگه
+                            <span class="badge badge-danger js-modal-title"></span>
+                            مطمئن عمل کنید. پس از حذف امکان بازگردانی وجود ندارد.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست  برگه‌ها</button>
+                        <button type="submit" class="btn rounded-oval btn-outline-danger">حذف نهایی</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            var deleteModal = document.getElementById('modal-delete-page');
+            $(deleteModal).on('show.bs.modal', function (e) {
+                // Button that triggered the modal
+                var button = e.relatedTarget;
+                // Extract info from data-* attributes
+                var parent = $(button).parents('.js-page');
+                console.log(parent);
+
+                var title = parent.data('title'),
+                    deleteAction = parent.data('delete-action');
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                $('.js-modal-title').text(title);
+                $(deleteModal).find('form').attr('action', deleteAction);
+            });
+        </script>
+    }
 }
-    </tbody>
-</table>

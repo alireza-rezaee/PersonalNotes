@@ -30,6 +30,7 @@ namespace Rezaee.Alireza.Web.Controllers
             _env = env;
         }
 
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Pages.Select(page => new IndexViewModel
@@ -37,15 +38,12 @@ namespace Rezaee.Alireza.Web.Controllers
                 Id = page.Id,
                 Title = page.Title,
                 Path = page.Path,
-                Summary = page.Html.Length >= 500 ? page.Html.Substring(0, 500) : page.Html.Substring(0, page.Html.Length),
-                ImageCoverPath = page.ImageCoverPath,
-                CreateDateTime = page.CreateDateTime,
-                UpdateDateTime = page.UpdateDateTime
+                UpdateDateTime = page.UpdateDateTime ?? page.CreateDateTime
             }).ToListAsync());
         }
 
         [Route("/{path:pagePath}")]
-        public async Task<IActionResult> Detail(string path)
+        public async Task<IActionResult> Details(string path)
         {
             if (string.IsNullOrEmpty(path))
                 return NotFound();
@@ -107,23 +105,26 @@ namespace Rezaee.Alireza.Web.Controllers
             return View(nameof(Create), createVM);
         }
 
-        [Route("{id}/{path}/edit")]
+        [HttpGet("/{path:pagePath}/edit")]
         [Authorize(Roles = Roles.PageEdit)]
-        public async Task<IActionResult> Edit(int id, string path)
+        public async Task<IActionResult> Edit(string path)
         {
-            var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Path == path);
+            var page = await _context.Pages.FirstOrDefaultAsync(page => page.Path == path);
             if (page == null) return NotFound();
 
             ViewData["Title"] = $"اصلاح صفحه «{page.Title}»";
-            return View(page);
+            return View(new CreateEditViewModel
+            {
+                Page = page
+            });
         }
 
-        [HttpPost("{id}/edit")]
+        [HttpPost("/{path:pagePath}/edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.PageEdit)]
-        public async Task<IActionResult> Editing(CreateEditViewModel editVM, int id)
+        public async Task<IActionResult> Editing(CreateEditViewModel editVM, string path)
         {
-            var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id);
+            var page = await _context.Pages.FirstOrDefaultAsync(page => page.Path == path);
             if (page == null) return NotFound();
 
             if (ModelState.IsValid)
@@ -135,26 +136,36 @@ namespace Rezaee.Alireza.Web.Controllers
 
                 try
                 {
-                    newPage.Path = Helpers.File.ValidateName(newPage.Path);
+                    page.Path = Helpers.File.ValidateName(editVM.Page.Path);
 
-                    if (newPage.HasLayout == true && newImage != null)
+                    //TODO: <remove> set path as PK instead of this
+                    if (page.HasLayout == true && newImage != null)
                         throw new Exception("در صورت انتخاب «مستقل از پوسته سایت» نباید از این طریق تصویری انتخاب شود.");
-                    await CheckTitleExistence(newPage.Title, id);
+                    await CheckTitleExistence(page.Path, page.Id);
+                    //TODO: </remove>
 
                     if (newImage != null)
                     {
                         newImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
-                        var newImagePath = "uploads/images/"
+                        var newImagePath = "uploads/pages/"
                             + persianDateTime.ToString("yyyy/MM/dd/yyyyMMddhhmmss")
                             + DateTime.Now.ToString("ffff") + new Random().Next(1000000, 9999999) + "_" + Helpers.File.ValidateName(newImage.FileName);
                         await _ifileManager.SaveFile(newImage, newImagePath);
-                        newPage.ImageCoverPath = "/" + newImagePath;
+                        _ifileManager.DeleteFile(page.ImageCoverPath);
+                        page.ImageCoverPath = "/" + newImagePath;
                     }
 
-                    newPage.CreateDateTime = dateTime;
+                    page.CreateDateTime = editVM.Page.CreateDateTime;
+                    page.HasLayout = editVM.Page.HasLayout;
+                    page.Html = editVM.Page.Html;
+                    page.IsVisible = editVM.Page.IsVisible;
+                    page.Title = editVM.Page.Title;
+                    page.UpdateDateTime = dateTime;
 
-                    _context.Update(newPage);
+                    _context.Update(page);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Details), nameof(PagesController).ControllerName(), new { path = page.Path });
                 }
                 catch (Exception e)
                 {
@@ -162,17 +173,20 @@ namespace Rezaee.Alireza.Web.Controllers
                 }
             }
 
-            return View(nameof(Edit), "Pages");
+            return RedirectToAction(nameof(Edit), nameof(PagesController).ControllerName(), new { path = path });
         }
 
-        [HttpPost("{id}/{path}/delete")]
+        [HttpPost("/{path:pagePath}/delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.PageDelete)]
-        public async Task<IActionResult> Deleting(int id, string path)
+        public async Task<IActionResult> Delete(string path)
         {
+            if (string.IsNullOrEmpty(path))
+                return NotFound();
+
             try
             {
-                var page = await _context.Pages.FirstOrDefaultAsync(page => page.Id == id && page.Path == path);
+                var page = await _context.Pages.FirstOrDefaultAsync(page => page.Path == path);
                 if (page == null) return NotFound();
 
                 _ifileManager.DeleteFile(page.ImageCoverPath);
@@ -180,7 +194,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 _context.Remove(page);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index), "Pages");
+                return RedirectToAction(nameof(Index), nameof(PagesController).ControllerName());
             }
             catch (Exception e)
             {
@@ -188,15 +202,15 @@ namespace Rezaee.Alireza.Web.Controllers
             }
         }
 
-        private async Task CheckTitleExistence(string title)
+        private async Task CheckTitleExistence(string path)
         {
-            if (await _context.Pages.AsNoTracking().AnyAsync(page => page.Title == title.Trim()))
+            if (await _context.Pages.AsNoTracking().AnyAsync(page => page.Path == path))
                 throw new Exception("لطفاً نشانی دیگری برای این صفحه انتخاب کنید؛ این نشانی تکراری است.");
         }
 
-        private async Task CheckTitleExistence(string title, int skipPageId)
+        private async Task CheckTitleExistence(string path, int skipPageId)
         {
-            if (!await _context.Pages.AsNoTracking().Where(page => page.Id != skipPageId).AnyAsync(page => page.Title == title.Trim()))
+            if (await _context.Pages.AsNoTracking().Where(page => page.Id != skipPageId && page.Path == path).AnyAsync())
                 throw new Exception("لطفاً نشانی دیگری برای این صفحه انتخاب کنید؛ این نشانی تکراری است.");
         }
     }
