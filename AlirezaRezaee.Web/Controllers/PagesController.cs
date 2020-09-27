@@ -138,11 +138,7 @@ namespace Rezaee.Alireza.Web.Controllers
                 {
                     page.Path = Helpers.File.ValidateName(editVM.Page.Path);
 
-                    //TODO: <remove> set path as PK instead of this
-                    if (page.HasLayout == true && newImage != null)
-                        throw new Exception("در صورت انتخاب «مستقل از پوسته سایت» نباید از این طریق تصویری انتخاب شود.");
                     await CheckTitleExistence(page.Path, page.Id);
-                    //TODO: </remove>
 
                     if (newImage != null)
                     {

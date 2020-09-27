@@ -21,6 +21,8 @@ using Rezaee.Alireza.Web.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using Rezaee.Alireza.Web.RouteConstraint;
+using Rezaee.Alireza.Web.Middleware;
+using Microsoft.Extensions.Logging;
 
 namespace Rezaee.Alireza.Web
 {
@@ -101,8 +103,13 @@ namespace Rezaee.Alireza.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
             if (_env.IsDevelopment())
             {
+                //app.UseExceptionHandler("/Home/Error");
+                //// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //app.UseHsts();
+
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
