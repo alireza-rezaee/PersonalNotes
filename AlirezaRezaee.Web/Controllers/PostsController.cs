@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using Microsoft.AspNetCore.Authorization;
+using Rezaee.Alireza.Web.Attributes;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -140,7 +141,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpGet]
         [Route("create")]
-        [Authorize(Roles = Roles.PostCreateArticle + "," + Roles.PostCreateShare + "," + Roles.PostCreateMarkdown)]
+        [AuthorizeRoles(Roles.PostCreateArticle, Roles.PostCreateShare, Roles.PostCreateMarkdown)]
         public IActionResult Create()
         {
             return View();
@@ -357,7 +358,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet("/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
-        [Authorize(Roles = Roles.PostEditArticle + "," + Roles.PostEditShare + "," + Roles.PostEditMarkdown)]
+        [AuthorizeRoles(Roles.PostEditArticle, Roles.PostEditShare, Roles.PostEditMarkdown)]
         public async Task<IActionResult> Edit(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -379,7 +380,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditArticle")]
-        [Authorize(Roles = Roles.PostEditArticle + "," + Roles.PostEditShare + "," + Roles.PostEditMarkdown)]
+        [AuthorizeRoles(Roles.PostEditArticle, Roles.PostEditShare, Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditArticle(int year, int month, int day, int postId, string UrlTitle)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -743,7 +744,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
         [HttpPost("/delete/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = Roles.PostDeleteArticle + "," + Roles.PostDeleteShare + "," + Roles.PostDeleteMarkdown)]
+        [AuthorizeRoles(Roles.PostDeleteArticle, Roles.PostDeleteShare, Roles.PostDeleteMarkdown)]
         public async Task<IActionResult> Delete(int year, int month, int day, int postId)
         {
             var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
@@ -807,8 +808,8 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("/edit/type/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
-        [Authorize(Roles = Roles.PostCreateArticle + "," + Roles.PostCreateShare + "," + Roles.PostCreateMarkdown)]
-        [Authorize(Roles = Roles.PostEditArticle + "," + Roles.PostEditShare + "," + Roles.PostEditMarkdown)]
+        [AuthorizeRoles(Roles.PostCreateArticle, Roles.PostCreateShare, Roles.PostCreateMarkdown)]
+        [AuthorizeRoles(Roles.PostEditArticle, Roles.PostEditShare, Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditType(int year, int month, int day, int postId, string UrlTitle)
         {
             var switchAbleTypes = new List<SwitchPostTypeViewModel>();

@@ -77,6 +77,5 @@ namespace Rezaee.Alireza.Web.Controllers
 
             return Ok();
         }
-
     }
 }

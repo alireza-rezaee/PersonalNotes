@@ -108,6 +108,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpPost("{id}/read/{mode:length(3,5)}")]
+        [Authorize(Roles = Roles.MessagesSetReadOrNot)]
         public async Task<IActionResult> HaveRead(int id, string mode)
         {
             bool setAsRead;
