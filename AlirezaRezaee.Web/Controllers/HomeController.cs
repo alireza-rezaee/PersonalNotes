@@ -43,15 +43,10 @@ namespace Rezaee.Alireza.Web.Controllers
                 });
         }
 
-        [Route("/add-new")]
-        public IActionResult New()
+        [Route("/management")]
+        public IActionResult Management()
         {
             return View();
-        }
-
-        public IActionResult Test()
-        {
-            throw new Exception();
         }
 
 

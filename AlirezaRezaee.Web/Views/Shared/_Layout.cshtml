@@ -33,6 +33,7 @@
     <div class="wrapper position-relative mnh-100vh">
         @await Component.InvokeAsync("HeaderFooter", new { page = "HeadCover" })
         @RenderBody()
+        <div></div>
         @await Component.InvokeAsync("HeaderFooter", new { page = "FootCover" })
     </div>
     <environment include="Development">
