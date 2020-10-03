@@ -12,6 +12,9 @@ using Rezaee.Alireza.Web.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Rezaee.Alireza.Web.Models.ViewModels.Posts;
 using Rezaee.Alireza.Web.Helpers.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Rezaee.Alireza.Web.Attributes;
+using Rezaee.Alireza.Web.Helpers;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -44,6 +47,47 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("/management")]
+        [AuthorizeRoles(
+            //Posts Controller
+            Roles.PostCreateArticle,
+            Roles.PostEditArticle,
+            Roles.PostDeleteArticle,
+            Roles.PostCreateShare,
+            Roles.PostEditShare,
+            Roles.PostDeleteShare,
+            Roles.PostCreateMarkdown,
+            Roles.PostEditMarkdown,
+            Roles.PostDeleteMarkdown,
+            //Tags Controller
+            Roles.TagCreate,
+            Roles.TagDelete,
+            Roles.TagEdit,
+            //Messages Controller
+            Roles.MessagesList,
+            Roles.MessageDelete,
+            Roles.MessagesSetReadOrNot,
+            //Pages Controller
+            Roles.PageCreate,
+            Roles.PageEdit,
+            Roles.PageDelete,
+            //Links Controller
+            Roles.LinkCreate,
+            Roles.LinkEdit,
+            Roles.LinkDelete,
+            //Blocks Controller
+            Roles.BlockCreate,
+            //Users Controller
+            Roles.UserCreate,
+            Roles.UserEdit,
+            Roles.UsersList,
+            Roles.UserDetails,
+            Roles.UserDelete,
+            //Roles Controller
+            Roles.RoleCreate,
+            Roles.RoleEdit,
+            Roles.RolesList,
+            Roles.RoleDelete
+            )]
         public IActionResult Management()
         {
             return View();

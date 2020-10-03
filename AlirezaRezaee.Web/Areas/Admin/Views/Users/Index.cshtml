@@ -49,28 +49,30 @@ else
             {
                 <tr>
                     <td class="align-middle">@i.EnglishToPersian()</td>
-                    <td class="align-middle d-flex">
-                        <div class="p-1" style="min-width: 50px;">
-                            @if (string.IsNullOrEmpty(item.ProfileImagePath))
-                            {
-                                <img-gravatar gravatar-size="35"
-                                              gravatar-email="@await UserManager.GetEmailAsync(user)"
-                                              alt="تصویر @item.FirstName @item.LastName"
-                                              title="تصویر @item.FirstName @item.LastName"
-                                              class="rounded-circle img-fluid"></img-gravatar>
-                            }
-                            else
-                            {
-                                <img src="@item.ProfileImagePath"
-                                     alt="تصویر @item.FirstName @item.LastName"
-                                     title="تصویر @item.FirstName @item.LastName"
-                                     class="rounded-circle img-fluid"
-                                     style="height: 35px !important; width: 35px !important;">
-                            }
-                        </div>
-                        <div class="text-right" style="font-size: 0.9rem">
-                            <span class="d-block font-weight-bold">@item.DisplayName</span>
-                            <span class="d-block font-weight-light text-muted">@item.UserName</span>
+                    <td class="align-middle">
+                        <div class="d-flex">
+                            <div class="p-1" style="min-width: 50px;">
+                                @if (string.IsNullOrEmpty(item.ProfileImagePath))
+                                {
+                                    <img-gravatar gravatar-size="35"
+                                                  gravatar-email="@await UserManager.GetEmailAsync(user)"
+                                                  alt="تصویر @item.FirstName @item.LastName"
+                                                  title="تصویر @item.FirstName @item.LastName"
+                                                  class="rounded-circle img-fluid"></img-gravatar>
+                                }
+                                else
+                                {
+                                    <img src="@item.ProfileImagePath"
+                                         alt="تصویر @item.FirstName @item.LastName"
+                                         title="تصویر @item.FirstName @item.LastName"
+                                         class="rounded-circle img-fluid"
+                                         style="height: 35px !important; width: 35px !important;">
+                                }
+                            </div>
+                            <div class="text-right" style="font-size: 0.9rem">
+                                <span class="d-block font-weight-bold">@item.DisplayName</span>
+                                <span class="d-block font-weight-light text-muted">@item.UserName</span>
+                            </div>
                         </div>
                     </td>
                     @if (User.IsInRole(Roles.UserDetails) || User.IsInRole(Roles.UserRolesList) || User.IsInRole(Roles.UserDelete))

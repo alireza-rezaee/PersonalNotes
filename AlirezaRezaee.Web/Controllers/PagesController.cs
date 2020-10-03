@@ -13,6 +13,7 @@ using Rezaee.Alireza.Web.Models.ViewModels.Pages;
 using Rezaee.Alireza.Web.Extensions;
 using System.Runtime.InteropServices.ComTypes;
 using Microsoft.AspNetCore.Authorization;
+using Rezaee.Alireza.Web.Attributes;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -31,6 +32,7 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [Route("")]
+        [AuthorizeRoles(Roles.PageCreate, Roles.PageEdit, Roles.PageDelete)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Pages.Select(page => new IndexViewModel

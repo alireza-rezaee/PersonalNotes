@@ -82,7 +82,7 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string UserRoleUnassign = "سلب نقش از کاربر";
         #endregion
 
-        #region MessageController (Counts: 2)
+        #region MessagesController (Counts: 2)
         public const string MessageDelete = "حذف پیام";
         public const string MessagesList = "فهرست پیام ها";
         public const string MessagesSetReadOrNot = "فهرست پیام ها";

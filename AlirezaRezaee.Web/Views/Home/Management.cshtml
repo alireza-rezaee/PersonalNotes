@@ -7,15 +7,24 @@
         <div class="col-12 col-sm-6 col-lg-4">
             <div class="my-2">
                 <div style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-                    <a asp-action="CreateArticle" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                        افزودن مقاله
-                    </a>
-                    <a asp-action="CreateShare" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                        افزودن بازنشر رسانه
-                    </a>
-                    <a asp-action="CreateMarkdown" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                        افزودن مطلب نشانه‌دار
-                    </a>
+                    @if (User.IsInRole(Roles.PostCreateArticle))
+                    {
+                        <a asp-action="CreateArticle" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                            افزودن مقاله
+                        </a>
+                    }
+                    @if (User.IsInRole(Roles.PostCreateShare))
+                    {
+                        <a asp-action="CreateShare" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                            افزودن بازنشر رسانه
+                        </a>
+                    }
+                    @if (User.IsInRole(Roles.PostCreateMarkdown))
+                    {
+                        <a asp-action="CreateMarkdown" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                            افزودن مطلب نشانه‌دار
+                        </a>
+                    }
                     <a asp-action="Index" asp-controller="Tags" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
                         برچسب ها
                     </a>
@@ -38,115 +47,161 @@
         </div>
     </div>
 
-    <div class="row links rounded justify-content-center mb-3">
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="my-2">
-                <a asp-action="ContactUs" asp-controller="Messages" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                    ارسال پیام
-                </a>
-                <div class="position-relative">
-                    <div class="d-flex links-content links-item">
-                        <a asp-action="Index" asp-controller="Messages" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
-                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
-                            </svg>
-                        </a>
-                        <a asp-action="Index" asp-controller="Messages" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                            <i class="caption">صندوق پیام</i>
-                        </a>
+    @if (User.IsInRole(Roles.MessagesList) || User.IsInRole(Roles.MessagesSetReadOrNot) || User.IsInRole(Roles.MessageDelete))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2">
+                    <a asp-action="ContactUs" asp-controller="Messages" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        ارسال پیام
+                    </a>
+                    <div class="position-relative">
+                        <div class="d-flex links-content links-item">
+                            <a asp-action="Index" asp-controller="Messages" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a asp-action="Index" asp-controller="Messages" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">صندوق پیام</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
-    <div class="row links rounded justify-content-center mb-3">
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="my-2">
-                <a asp-action="Create" asp-controller="Pages" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                    افزودن برگه
-                </a>
-                <div class="position-relative">
-                    <div class="d-flex links-content links-item">
-                        <a asp-action="Index" asp-controller="Pages" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
-                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
-                            </svg>
+    @if (User.IsInRole(Roles.PageCreate) || User.IsInRole(Roles.PageEdit) || User.IsInRole(Roles.PageDelete))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2">
+                    @if (User.IsInRole(Roles.PageCreate))
+                    {
+                        <a asp-action="Create" asp-controller="Pages" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                            افزودن برگه
                         </a>
-                        <a asp-action="Index" asp-controller="Pages" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                            <i class="caption">برگه ها</i>
-                        </a>
+                    }
+                    <div class="position-relative">
+                        <div class="d-flex links-content links-item">
+                            <a asp-action="Index" asp-controller="Pages" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a asp-action="Index" asp-controller="Pages" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">برگه ها</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
-    <div class="row links rounded justify-content-center mb-3">
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="my-2">
-                <a asp-action="Create" asp-controller="Links" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                    افزودن پیوند
-                </a>
-                <div class="position-relative">
-                    <div class="d-flex links-content links-item">
-                        <a asp-action="Index" asp-controller="Links" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
-                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
-                            </svg>
+    @if (User.IsInRole(Roles.LinkCreate) || User.IsInRole(Roles.LinkEdit) || User.IsInRole(Roles.LinkDelete))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2">
+                    @if (User.IsInRole(Roles.LinkCreate))
+                    {
+                        <a asp-action="Create" asp-controller="Links" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                            افزودن پیوند
                         </a>
-                        <a asp-action="Index" asp-controller="Links" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                            <i class="caption">پیوند ها</i>
-                        </a>
+                    }
+                    <div class="position-relative">
+                        <div class="d-flex links-content links-item">
+                            <a asp-action="Index" asp-controller="Links" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a asp-action="Index" asp-controller="Links" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">پیوند ها</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
-    <div class="row links rounded justify-content-center mb-3">
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="my-2">
-                <div class="position-relative">
-                    <div class="d-flex links-content links-item">
-                        <a asp-action="Create" asp-controller="Blocks" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
-                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
-                            </svg>
-                        </a>
-                        <a asp-action="Create" asp-controller="Blocks" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                            <i class="caption">افزودن بلاک صفحه‌اصلی</i>
-                        </a>
+    @if (User.IsInRole(Roles.BlockCreate))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2">
+                    <div class="position-relative">
+                        <div class="d-flex links-content links-item">
+                            <a asp-action="Create" asp-controller="Blocks" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a asp-action="Create" asp-controller="Blocks" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">افزودن بلاک صفحه‌اصلی</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
-    <div class="row links rounded justify-content-center mb-3">
-        <div class="col-12 col-sm-6 col-lg-4">
-            <div class="my-2">
-                <a asp-action="Index" asp-controller="Roles" asp-area="Admin" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
-                    مدیریت نقش ها
-                </a>
-                <div class="position-relative">
-                    <div class="d-flex links-content links-item">
-                        <a asp-action="Index" asp-controller="Users" asp-area="Admin" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
-                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
-                            </svg>
+    @if (User.IsInRole(Roles.UserCreate) || User.IsInRole(Roles.UsersList) || User.IsInRole(Roles.UserDetails) || User.IsInRole(Roles.UserEdit) || User.IsInRole(Roles.UserDelete))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2">
+                    @if (User.IsInRole(Roles.RoleCreate) || User.IsInRole(Roles.RoleEdit) || User.IsInRole(Roles.RolesList) || User.IsInRole(Roles.RoleDelete))
+                    {
+                        <a asp-action="Index" asp-controller="Roles" asp-area="Admin" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                            مدیریت نقش ها
                         </a>
-                        <a asp-action="Index" asp-controller="Users" asp-area="Admin" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                            <i class="caption">مدیریت کاربران</i>
-                        </a>
+                    }
+                    <div class="position-relative">
+                        <div class="d-flex links-content links-item">
+                            <a asp-action="Index" asp-controller="Users" asp-area="Admin" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a asp-action="Index" asp-controller="Users" asp-area="Admin" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">مدیریت کاربران</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+    else if (User.IsInRole(Roles.RoleCreate) || User.IsInRole(Roles.RoleEdit) || User.IsInRole(Roles.RolesList) || User.IsInRole(Roles.RoleDelete))
+    {
+        <div class="row links rounded justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="my-2">
+                    <div class="position-relative">
+                        <div class="d-flex links-content links-item">
+                            <a asp-action="Index" asp-controller="Users" asp-area="Admin" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                </svg>
+                            </a>
+                            <a asp-action="Index" asp-controller="Users" asp-area="Admin" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                <i class="caption">مدیریت نقش ها</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
