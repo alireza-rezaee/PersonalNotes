@@ -1,0 +1,80 @@
+﻿@model Rezaee.Alireza.Web.Models.Message
+@{
+    ViewData["Title"] = "ارسال پیام به علیرضا رضائی";
+}
+
+<div class="container">
+    <br class="my-3" />
+    <h2 class="text-right text-size-6">@ViewData["Title"]</h2>
+    <hr />
+
+    @if (User.IsInRole(Roles.MessagesList))
+    {
+        <div class="text-right">
+            <a asp-action="Index" asp-controller="Messages" class="btn btn-light border">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-ol" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
+                    <path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z" />
+                </svg>
+                فهرست پیام ها
+            </a>
+        </div>
+        <hr />
+    }
+
+    <form asp-action="ContactUs" asp-controller="Messages">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-group mb-4">
+                    <label asp-for="Title" class="d-block">عنوان پیام:</label>
+                    <label asp-for="Title" class="d-block form-text text-muted small">عنوانی برای پیام یا درخواست خود بنویسید.</label>
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                    <input asp-for="Title" class="form-control mt-2">
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="SenderName" class="d-block">نام فرستنده:</label>
+                    <label asp-for="SenderName" class="d-block form-text text-muted small">
+                        در صورت تمایل نام خود را بنویسید؛ گیرنده شما را با این نام می‌شناسد.
+                        (بعداٌ احراز هویت می‌شود)
+                    </label>
+                    <span asp-validation-for="SenderName" class="text-danger small"></span>
+                    <input asp-for="SenderName" class="form-control mt-2">
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="SenderEmail" class="d-block">نشانی رایانامه:</label>
+                    <label asp-for="SenderEmail" class="d-block form-text text-muted small">
+                        در صورت تمایل به دریافت پاسخ نشانی رایانامه‌ای وارد کنید. رایانامه با https یا www شروع نمیشود. و در میان رایانامه کاراکتر @@ قرار دارد.
+                        (بعداٌ احراز هویت می‌شود)
+                    </label>
+                    <span asp-validation-for="SenderEmail" class="text-danger small"></span>
+                    <input asp-for="SenderEmail" class="form-control dir-ltr text-left mt-2">
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Content" class="d-block">پیام:</label>
+                    <label asp-for="Content" class="d-block form-text text-muted small mb-2">
+                        متن پیام یا درخواست خود را به صورت کامل همان با مشخصات -در صورت لزوم- وارد کنید.
+                        برای پیوست فایل از خدمات اشتراک فایل آنلاین یا فضای ابری استفاده کنید و نشانی نهایی فایل یا پوشه را همراه با گذرواژه یا سطح دسترسی -در صورت تنظیم- در پیام قرار دهید.
+                        (سقف طول مجاز پیام ۱۰۰۰ کاراکتر است.)
+                    </label>
+                    <span asp-validation-for="Content" class="text-danger small"></span>
+                    <textarea asp-for="Content" class="form-control mt-2" rows="9"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="text-center my-4">
+            <button type="submit" class="btn btn-light border">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                </svg>
+                ارسال پیام
+            </button>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

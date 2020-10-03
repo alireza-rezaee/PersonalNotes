@@ -8,7 +8,7 @@ namespace Rezaee.Alireza.Web.Helpers
     public static class Roles
     {
         // ~/Controllers
-        #region PostController
+        #region PostController (Counts: 9)
         //Posts Controller
 
         //[Create]
@@ -27,33 +27,33 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string PostDeleteMarkdown = "حذف مطلب از نوع نشانه‌دار";
         #endregion
 
-        #region TagsController
+        #region TagsController (Counts: 3)
         public const string TagCreate = "افزودن برچسب";
         public const string TagEdit = "ویرایش برچسب";
         public const string TagDelete = "حذف برچسب";
         #endregion
 
-        #region PinsController
+        #region PinsController (Counts: 1)
         public const string Pin = "سنجاق مطلب (عادی)";
         #endregion
 
-        #region PosterPinsController
+        #region PosterPinsController (Counts: 1)
         public const string PosterPin = "سنجاق مطلب (پوستر)";
         #endregion
 
-        #region PagesController
+        #region PagesController (Counts: 3)
         public const string PageCreate = "افزودن برگه";
         public const string PageEdit = "ویرایش برگه";
         public const string PageDelete = "حذف برگه";
         #endregion
 
-        #region LinksController
+        #region LinksController (Counts: 3)
         public const string LinkCreate = "افزودن پیوند";
         public const string LinkEdit = "ویرایش پیوند";
         public const string LinkDelete = "حذف پیوند";
         #endregion
 
-        #region BlocksController
+        #region BlocksController (Counts: 4)
         public const string BlockCreate = "افزودن بلاک";
         public const string BlockEdit = "ویرایش بلاک";
         public const string BlockVisibility = "نمایش یا عدم نمایش بلاک";
@@ -61,14 +61,14 @@ namespace Rezaee.Alireza.Web.Helpers
         #endregion
 
         // ~/Areas/Admin/Controllers
-        #region RolesController
+        #region RolesController (Counts: 4)
         public const string RolesList = "مشاهده نقش ها";
         public const string RoleCreate = "افزودن نقش";
         public const string RoleEdit = "ویرایش نقش";
         public const string RoleDelete = "حذف نقش";
         #endregion
 
-        #region UsersController
+        #region UsersController (Counts: 4)
         public const string UsersList = "مشاهده کاربران";
         public const string UserDetails = "مشاهده مشخصات کاربران";
         public const string UserCreate = "افزودن کاربر";
@@ -76,10 +76,16 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string UserDelete = "حذف کاربر";
         #endregion
 
-        #region UserRolesController
+        #region UserRolesController (Counts: 3)
         public const string UserRolesList = "مشاهده انتسابات";
         public const string UserRoleAssign = "انتساب نقش به کاربر";
         public const string UserRoleUnassign = "سلب نقش از کاربر";
+        #endregion
+
+        #region MessageController (Counts: 2)
+        public const string MessageDelete = "حذف پیام";
+        public const string MessagesList = "فهرست پیام ها";
+        public const string MessagesSetReadOrNot = "فهرست پیام ها";
         #endregion
     }
 }

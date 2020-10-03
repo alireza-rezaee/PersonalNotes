@@ -46,6 +46,8 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Block> Blocks { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

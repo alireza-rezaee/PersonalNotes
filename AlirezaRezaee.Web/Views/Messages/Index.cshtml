@@ -1,0 +1,203 @@
+﻿@model IEnumerable<Rezaee.Alireza.Web.Models.Message>
+@using Rezaee.Alireza.Web.Extensions
+@addTagHelper *, Rezaee.Alireza.Web
+@{
+    ViewData["Title"] = "صندوق پیام ها";
+}
+
+<div class="container">
+    <br class="my-3" />
+    <h2 class="text-right text-size-6">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="text-right">
+        <a asp-action="ContactUs" asp-controller="Messages" class="btn btn-light border">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+            </svg>
+            ارسال پیام جدید
+        </a>
+    </div>
+    <hr />
+
+    <div class="row justify-content-center">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning text-center">صندوق خالی از پیام است.</div>
+        }
+        else
+        {
+            if (!Model.Any(message => !message.HaveRead))
+            {
+                <div class="alert alert-success text-center">تبریک! همه پیام ها خوانده شده اند.</div>
+            }
+
+            <table class="table table-hover table-bordered table-responsive text-center table-sm">
+                <thead>
+                    <tr>
+                        <td>ردیف</td>
+                        <td>فرستنده</td>
+                        <td>عنوان</td>
+                        <td>تاریخ و زمان</td>
+                        @if (User.IsInRole(Roles.MessageDelete))
+                        {
+                            <td>قابلیت ها</td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        var senderName = item.SenderName ?? "گمنام";
+                        var sendDateTime = ((DateTime)item.CreateDateTime).ToPersianDateTimeString().EnglishNumberToPersian();
+                        <tr class="js-message @if (!item.HaveRead) { <text>table-secondary</text> }" data-delete-action="@Url.ActionLink(action: "Delete", controller: "Messages", values: new { id = item.Id })" data-title="@item.Title" data-haveRead="@item.HaveRead">
+                            <td class="align-middle">@i.EnglishToPersian()</td>
+                            <td class="align-middle">
+                                <div class="d-flex">
+                                    <div class="p-1" style="min-width: 50px;">
+                                        <img-gravatar gravatar-size="35"
+                                                      gravatar-email="item.SenderEmail"
+                                                      gravatar-mode="mp"
+                                                      alt="تصویر @item.SenderEmail"
+                                                      title="تصویر @item.SenderEmail"
+                                                      class="rounded-circle img-fluid"></img-gravatar>
+                                    </div>
+                                    <div class="text-right" style="font-size: 0.9rem">
+                                        <span class="d-block font-weight-bold">@senderName</span>
+                                        @if (!string.IsNullOrEmpty(item.SenderEmail))
+                                        {
+                                            <a href="mailto:@item.SenderEmail" class="d-block font-weight-light text-muted">@item.SenderEmail</a>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">@item.Title</td>
+                            <td class="align-middle">@sendDateTime</td>
+                            @if (User.IsInRole(Roles.MessageDelete) || User.IsInRole(Roles.MessagesSetReadOrNot))
+                            {
+                                <td class="align-middle control-user text-nowrap">
+                                    @if (User.IsInRole(Roles.MessagesSetReadOrNot))
+                                    {
+                                        <div class="btn-group dropdown">
+                                            <a asp-controller="Messages" asp-action="Details" asp-route-id="@item.Id" class="btn btn-light border text-primary" title="مشاهده پیام «@item.Title»">
+                                                @if (!item.HaveRead)
+                                                {
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                                    </svg>
+                                                }
+                                                else
+                                                {
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.818l5.724 3.465L8 8.917l1.276.766L15 6.218V5.4a1 1 0 0 0-.53-.882l-6-3.2zM15 7.388l-4.754 2.877L15 13.117v-5.73zm-.035 6.874L8 10.083l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738zM1 13.117l4.754-2.852L1 7.387v5.73zM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765l6-3.2z" />
+                                                    </svg>
+                                                }
+                                                مشاهده
+                                            </a>
+                                            <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split border" data-toggle="dropdown" aria-expanded="false"></button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <form asp-action="HaveRead" asp-controller="Messages" asp-route-id="@item.Id" asp-route-mode="@(item.HaveRead ? "unset" : "set")">
+                                                        <button type="submit" class="dropdown-item js-set-readmode" title="تغییر وضعیت خوانده شدن «@item.Title»">
+                                                            @if (!item.HaveRead)
+                                                            {
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.818l5.724 3.465L8 8.917l1.276.766L15 6.218V5.4a1 1 0 0 0-.53-.882l-6-3.2zM15 7.388l-4.754 2.877L15 13.117v-5.73zm-.035 6.874L8 10.083l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738zM1 13.117l4.754-2.852L1 7.387v5.73zM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765l6-3.2z" />
+                                                                </svg>
+                                                                <text>تنظیم به عنوان خوانده شده</text>
+                                                            }
+                                                            else
+                                                            {
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                                                </svg>
+                                                                <text>تنظیم به عنوان خوانده نشده</text>
+                                                            }
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    @if (User.IsInRole(Roles.MessageDelete))
+                                    {
+                                        <button type="button" data-target="#delete-message-modal" data-toggle="modal" class="btn btn-light border text-danger" title="حذف پیام «@item.Title»">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg>
+                                            حذف
+                                        </button>
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.SenderEmail))
+                                    {
+                                        <a href="mailto://@item.SenderEmail" class="btn btn-light border text-success" title="ارسال پاسخ مستقیم با رایانامه به پیام «@item.Title»">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M9.502 5.013a.144.144 0 0 0-.202.134V6.3a.5.5 0 0 1-.5.5c-.667 0-2.013.005-3.3.822-.984.624-1.99 1.76-2.595 3.876C3.925 10.515 5.09 9.982 6.11 9.7a8.741 8.741 0 0 1 1.921-.306 7.403 7.403 0 0 1 .798.008h.013l.005.001h.001L8.8 9.9l.05-.498a.5.5 0 0 1 .45.498v1.153c0 .108.11.176.202.134l3.984-2.933a.494.494 0 0 1 .042-.028.147.147 0 0 0 0-.252.494.494 0 0 1-.042-.028L9.502 5.013zM8.3 10.386a7.745 7.745 0 0 0-1.923.277c-1.326.368-2.896 1.201-3.94 3.08a.5.5 0 0 1-.933-.305c.464-3.71 1.886-5.662 3.46-6.66 1.245-.79 2.527-.942 3.336-.971v-.66a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.667z" />
+                                            </svg>
+                                            پاسخ
+                                        </a>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@if (User.IsInRole(Roles.MessageDelete))
+{
+    <div class="modal fade text-right" id="delete-message-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form asp-action="Delete" asp-controller="Messages">
+                    <div class="modal-header">
+                        <h5 class="modal-title">هشدار حذف پیام</h5>
+                        <button type="button" class="close ml-0 text-danger" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        آیا از حذف دائمی -غیرقابل بازگشت- پیام زیر اطمینان دارید؟
+                        <div class="text-center">
+                            <div class="badge badge-pill badge-danger js-target-title"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-danger">حذف نهایی</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            var deleteModal = document.getElementById('delete-message-modal');
+            $(deleteModal).on('show.bs.modal', function (e) {
+                // Button that triggered the modal
+                var button = e.relatedTarget;
+                // Extract info from data-* attributes
+                var parent = $(button).parents('.js-message');
+
+                var title = parent.data('title'),
+                    deleteAction = parent.data('delete-action');
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                $('.js-target-title').text(title);
+                $(deleteModal).find('form').attr('action', deleteAction);
+            });
+        </script>
+    }
+}
