@@ -5,25 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/4.5.0/css/bootstrap.css" />
-        @*<link rel="stylesheet" href="~/fonts/Material-Icons/material-icons.css" />*@
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
+        <link rel="stylesheet" href="~/lib/bootstrap/5.0.0-alpha2/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css"
-              asp-fallback-href="~/lib/bootstrap/4.4.1/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/5.0.0-alpha2/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only"
               asp-fallback-test-property="position"
               asp-fallback-test-value="absolute"
-              asp-suppress-fallback-integrity="true"
-              integrity="sha256-1hm7xPFY4HL/GPfWz595kcNLVmuMC43nPagoQhWTb58=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined"
-              asp-fallback-href="~/fonts/Material-Icons/material-icons.min.css"
-              asp-fallback-test-class="material-icons"
-              asp-fallback-test-property="white-space"
-              asp-fallback-test-value="nowrap" />
-        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+              integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous" />
+        <link rel="stylesheet" href="~/css/main.css" />
     </environment>
     @RenderSection("Head", required: false)
     <style>
@@ -32,27 +24,36 @@
 <body>
     <div class="wrapper position-relative mnh-100vh">
         @await Component.InvokeAsync("HeaderFooter", new { page = "HeadCover" })
+        <div></div>
         @RenderBody()
         <div></div>
         @await Component.InvokeAsync("HeaderFooter", new { page = "FootCover" })
     </div>
     <environment include="Development">
-        <script src="~/lib/jquery/3.5.1/jquery.js"></script>
-        <script src="~/lib/bootstrap/4.5.0/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/jquery/3.5.1/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/5.0.0-alpha2/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/timeago/1.6.7/jquery.timeago.js"></script>
+        <script src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/3.5.1/jquery.min.js"
+        <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/3.5.1/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-Xt8pc4G0CdcRvI0nZ2lRpZ4VHng0EoUDMlGcBSQ9HiQ=" crossorigin="anonymous"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+                integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/bootstrap@5.0.0-alpha2/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/5.0.0-alpha2/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="bootstrap"
+                integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/timeago@1.6.7/jquery.timeago.js"
+                asp-fallback-src="~/lib/timeago/1.6.7/jquery.timeago.js"
+                asp-fallback-test="window.jQuery & jQuery.timeago"
+                integrity="sha384-GsksDHaN27nM9MG1NsV9IPECsWOIts+Wpq92hznPS4KNEQeyOa5ChwoOJSfCbG+2" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/timeago@1.6.7/locales/jquery.timeago.fa.js"
+                asp-fallback-src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"
+                asp-fallback-test="jQuery.timeago"
+                integrity="sha384-KoRLLuB9R0fWSnmmIjid3KBcgtNESylDiSD14GIgfTEmkMvswToDuuHpFGu19aCr" crossorigin="anonymous"></script>
+        <script src="~/js/site.min.js"></script>
     </environment>
     @RenderSection("Scripts", required: false)
 </body>

@@ -7,44 +7,6 @@
     var Posterpins = Model.Posts.Where(post => post.Posterpins != null).ToList();
 }
 @section Head {
-    <environment include="Development">
-        @*<link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
-            <link rel="stylesheet" href="~/lib/lightgallery/1.6.12/css/lightgallery.css" />*@
-        @*<link rel="stylesheet" href="~/lib/highlight.js/10.1.1/styles/vs2015.min.css" />*@
-        @*<link rel="stylesheet" href="~/lib/fontawesome/5.11.2/css/all.css" />*@
-    </environment>
-    <environment exclude="Development">
-        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
-                      asp-fallback-href="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"
-                      asp-fallback-test-class="mCustomScrollBox"
-                      asp-fallback-test-property="position"
-                      asp-fallback-test-value="relative"
-                      asp-suppress-fallback-integrity="true"
-                      integrity="sha256-JHGEmB629pipTkMag9aMaw32I8zle24p3FpsEeI6oZU=" crossorigin="anonymous" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"
-                    asp-fallback-href="~/lib/lightgallery/1.6.12/css/lightgallery.min.css"
-                    asp-fallback-test-class="lg-icon"
-                    asp-fallback-test-property="font-family"
-                    asp-fallback-test-value="lg"
-                    asp-suppress-fallback-integrity="true"
-                    integrity="sha256-8rfHbJr+ju3Oc099jFJMR1xAPu8CTPHU8uP5J3X/VAY=" crossorigin="anonymous" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
-                    asp-fallback-href="~/lib/fontawesome/5.11.2/css/all.min.css"
-                    asp-fallback-test-class="fa"
-                    asp-fallback-test-property="font-weight"
-                    asp-fallback-test-value="900"
-                    asp-suppress-fallback-integrity="true"
-                    integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />*@
-        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs2015.min.css"
-            asp-fallback-href="~/lib/highlight.js/10.1.1/styles/vs2015.min.css"
-            asp-fallback-test-class="hljs"
-            asp-fallback-test-property="padding"
-            asp-fallback-test-value=".5em"
-            asp-suppress-fallback-integrity="true"
-            integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ==" crossorigin="anonymous" />*@
-        <link rel="stylesheet" href="~/lib/fontawesome/5.11.2/css/all.css" />
-    </environment>
-
     <style>
         .post-help-flag::before {
             content: "help_outline";
@@ -390,55 +352,19 @@
     </div>
 }
 
+<div class="toast dir-ltr" role="alert" id="error-notification" data-delay="10000" style="position: fixed; bottom: 0; right: 0;">
+    <div class="toast-header">
+        <img src="..." class="rounded mr-2" alt="...">
+        <strong class="mr-auto">Bootstrap</strong>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="btn-close" data-dismiss="toast"></button>
+    </div>
+    <div class="toast-body">
+        Hello, world! This is a toast message.
+    </div>
+</div>
+
 @section Scripts {
-    <environment include="Development">
-        @*<script src="~/lib/picturefill/3.0.3/picturefill.js"></script>
-            <script src="~/lib/lightgallery/1.6.12/js/lightgallery-all.js"></script>
-            <script src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.js"></script>
-            <script src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>*@
-        <script src="~/lib/timeago/1.6.7/jquery.timeago.js"></script>
-        <script src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"></script>
-        @*<script src="~/lib/highlight.js/10.1.1/highlight.min.js"></script>*@
-        <script src="~/js/site.js"></script>
-    </environment>
-    <environment exclude="Development">
-        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js"
-                    asp-fallback-src="~/lib/picturefill/3.0.3/picturefill.min.js"
-                    asp-fallback-test="picturefill"
-                    asp-suppress-fallback-integrity="true"
-                    integrity="sha256-iT+n/otuaeKCgxnASny7bxKeqCDbaV1M7VdX1ZRQtqg=" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js"
-                    asp-fallback-src="~/lib/lightgallery/1.6.12/js/lightgallery-all.min.js"
-                    asp-fallback-test="$(document).lightGallery"
-                    asp-suppress-fallback-integrity="true"
-                    integrity="sha256-w14QFJrxOYkUnF0hb8pVFCSgYcsF0hMIKrqGb8A7J8A=" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
-                    asp-fallback-src="~/lib/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
-                    asp-fallback-test="$(document).mousewheel"
-                    asp-suppress-fallback-integrity="true"
-                    integrity="sha256-jnOjDTXIPqall8M0MyTSt98JetJuZ7Yu+1Jm7hLTF7U=" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
-                    asp-fallback-src="~/lib/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"
-                    asp-fallback-test="jQuery.mCustomScrollbar"
-                    asp-suppress-fallback-integrity="true"
-                    integrity="sha256-/YAntTqXy9V4LoXFkI5WPDl3ZwP/knn1BljmMJJ7QWc=" crossorigin="anonymous"></script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js"
-                asp-fallback-src="~/lib/timeago/1.6.7/jquery.timeago.min.js"
-                asp-fallback-test="window.jQuery & jQuery.timeago"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-0+5OfvOxkLHqpLPPwy9pDjug8N3cwaqcmleaxnR5VS8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/locales/jquery.timeago.fa.min.js"
-                asp-fallback-src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.min.js"
-                asp-fallback-test="jQuery.timeago"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha256-sFVsGcmCR6b20l9bCjpuTslNmrPlE0+k7o1nv+eC7og=" crossorigin="anonymous"></script>
-        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"
-            asp-fallback-src="~/lib/highlight.js/10.1.1/highlight.min.js"
-            asp-fallback-test="hljs"
-            asp-suppress-fallback-integrity="true"
-            integrity="sha512-lnOllyZZlRk/gQIyjS3+h+LUy54uyM4aGq2zbGc82KTvBlp/fodSpdh/pywPztpU9zUqHcJr+jP+a1zLa9oCJw==" crossorigin="anonymous"></script>*@
-        <script src="~/js/site.min.js"></script>
-    </environment>
     <script>
         $('.js-more-related-posts').click(function (e) {
             var buttonContainer = $(e.target).parent('.more-related-posts');
@@ -466,30 +392,6 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
-
-        //function sendNewBlock(e) {
-        //    const xhr = new XMLHttpRequest();
-        //    var a = false;
-        //    xhr.onload = () => {
-        //        if (xhr.status >= 200 && xhr.status < 300) {
-        //            d(5);
-        //        }
-        //    };
-
-        //    xhr.open('POST', '/blocks/add');
-        //    xhr.setRequestHeader('Content-Type', 'application/json');
-        //    xhr.send(JSON.stringify(
-        //        {
-        //            Html: window.parent.tinyMCE.get('js-block-textarea').getContent(),
-        //            PositionNo: elemNewBlock.find('#block-new-position').val(),
-        //            Rank: elemNewBlock.find('#block-new-rank').val(),
-        //            IsEnable: elemNewBlock.find('#block-new-isEnable').is(":checked"),
-        //            Styles: cm1.getValue(),
-        //            Scripts: cm2.getValue()
-        //        }));
-        //    return a;
-        //}
-
     </script>
 
     @if (User.IsInRole(Roles.Pin) || User.IsInRole(Roles.PosterPin))

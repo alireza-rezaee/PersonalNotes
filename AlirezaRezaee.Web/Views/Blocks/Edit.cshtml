@@ -7,114 +7,99 @@
 
 @section Head {
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/codemirror/5.55.0/codemirror.css" />
-        <link rel="stylesheet" href="~/lib/codemirror/5.55.0/addon/hint/show-hint.css" />
+        <link rel="stylesheet" href="~/lib/codemirror/5.58.1/lib/codemirror.css" />
+        <link rel="stylesheet" href="~/lib/codemirror/5.58.1/addon/hint/show-hint.css" />
 
-        <script src="~/lib/codemirror/5.55.0/codemirror.js"></script>
-        <script src="~/lib/codemirror/5.55.0/mode/xml/xml.js"></script>
-        <script src="~/lib/codemirror/5.55.0/mode/javascript/javascript.js"></script>
-        <script src="~/lib/codemirror/5.55.0/mode/css/css.min.js"></script>
-        <script src="~/lib/codemirror/5.55.0/mode/htmlmixed/htmlmixed.js"></script>
-        <script src="~/lib/codemirror/5.55.0/addon/selection/active-line.js"></script>
-        <script src="~/lib/codemirror/5.55.0/addon/edit/matchbrackets.js"></script>
-        <script src="~/lib/codemirror/5.55.0/addon/hint/show-hint.js"></script>
-        <script src="~/lib/codemirror/5.55.0/addon/hint/css-hint.js"></script>
-
-        <script src="~/lib/tinymce/5.4.1/tinymce.min.js"></script>
-        <script src="~/lib/tinymce/5.4.1/langs/fa.js"></script>
+        <script src="~/lib/codemirror/5.58.1/lib/codemirror.js"></script>
+        <script src="~/lib/codemirror/5.58.1/mode/xml/xml.js"></script>
+        <script src="~/lib/codemirror/5.58.1/mode/javascript/javascript.js"></script>
+        <script src="~/lib/codemirror/5.58.1/mode/css/css.js"></script>
+        <script src="~/lib/codemirror/5.58.1/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="~/lib/codemirror/5.58.1/addon/selection/active-line.js"></script>
+        <script src="~/lib/codemirror/5.58.1/addon/edit/matchbrackets.js"></script>
+        <script src="~/lib/codemirror/5.58.1/addon/hint/show-hint.js"></script>
+        <script src="~/lib/codemirror/5.58.1/addon/hint/css-hint.js"></script>
+        <script src="~/lib/tinymce/5.5.1/tinymce.min.js"></script>
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/codemirror.min.css"
-              asp-fallback-href="~/lib/codemirror/5.55.0/codemirror.min.css"
+        <link rel="stylesheet" href="https://unpkg.com/codemirror@5.58.1/lib/codemirror.css"
+              asp-fallback-href="~/lib/codemirror/5.58.1/lib/codemirror.css"
               asp-fallback-test-class="CodeMirror-gutters"
               asp-fallback-test-property="white-space"
               asp-fallback-test-value="nowrap"
-              asp-suppress-fallback-integrity="true"
-              integrity="sha512-/BlxZbYLtYGExexketXsTi47eHp+r2kTeq2OHecQPZlfbc7WFXVrwbVW9HOYjI6c9Ti+P60ASmVLxittZ0EBGw=="
+              integrity="sha384-KsbK45E17r4hdzdJB8hf/poBTYi0oDktKdCAyP67Uc9lE9Amf83NF+Vf6VJZ6mRK"
               crossorigin="anonymous" />
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/show-hint.min.css"
-              asp-fallback-href="~/lib/codemirror/5.55.0/addon/hint/show-hint.min.css"
+        <link rel="stylesheet" href="https://unpkg.com/codemirror@5.58.1/addon/hint/show-hint.css"
+              asp-fallback-href="~/lib/codemirror/5.58.1/addon/hint/show-hint.css"
               asp-fallback-test-class="CodeMirror-hints"
               asp-fallback-test-property="position"
               asp-fallback-test-value="absolute"
-              asp-suppress-fallback-integrity="true"
-              integrity="sha512-OmcLQEy8iGiD7PSm85s06dnR7G7C9C0VqahIPAj/KHk5RpOCmnC6R2ob1oK4/uwYhWa9BF1GC6tzxsC8TIx7Jg=="
+              integrity="sha384-ZZbLvEvLoXKrHo3Tkh7W8amMgoHFkDzWe8IAm1ZgxsG5y35H+fJCVMWwr0YBAEGA"
               crossorigin="anonymous" />
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/codemirror.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/codemirror.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/lib/codemirror.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/lib/codemirror.js"
                 asp-fallback-test="window.CodeMirror"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-ipquLAQ1BQSTjqPDqkXNGXfHBv6ivlhE5Di0mhI/YraFhJPEagKt1MKUY7eqCqfsDEGcinRhEMuCsk2eBlydrw=="
+                integrity="sha384-aGuzFsP0u0uDxhngInusVxeFBTEt4gYWOA723Y2wOFrw7VVGxRUfx7R7ySH5ICxc"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/xml/xml.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/mode/xml/xml.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/mode/xml/xml.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/mode/xml/xml.js"
                 asp-fallback-test="CodeMirror.modes.xml"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-k1HnoY9EXahEfPz7kq/lD9DltloKH9OrB9XNKYoUQrNz9epe5F4mQP5PfuIfeRfoXHkNrE0gF3Mx4LhC5BVl9Q=="
+                integrity="sha384-z8O1dAcb8dxGYbhmbzbJ41xAUlle9jfZpok46e8s9+Tyu9bKxx742hiNqVJ0D6cL"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/javascript/javascript.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/mode/javascript/javascript.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/mode/javascript/javascript.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/mode/javascript/javascript.js"
                 asp-fallback-test="CodeMirror.modes.javascript"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-9miXlEjnHTF+nVGdc2IGOLGTFW2wWkWbd1/7Ltlre+dM53ZSCUQ/PNN+jtsmYqr3ndiD5RW6XQJUm/Hz8JvyOQ=="
+                integrity="sha384-9BowMxIRNf7gbVLczrUIg0cGcovpADtOdn45yCZ5e9NCfSgePO6DvEzw0Yx0G8yt"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/css/css.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/mode/css/css.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/mode/css/css.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/mode/css/css.js"
                 asp-fallback-test="CodeMirror.modes.css"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-RCkQ1LsqQ/Ujpz8LDVh/KRxdrn/lnh/BRzMq1If22wlcnNC2xSNBLJdZzV0VPF+5SLrxRDgymgVvVw5LK1TMgA=="
+                integrity="sha384-KQnueJAsHUDvm95nlrdIDwvnB3ziHU858LJB2fsrs/r1/gDX84NAVyUIJ7MSyABv"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/mode/htmlmixed/htmlmixed.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/mode/htmlmixed/htmlmixed.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/mode/htmlmixed/htmlmixed.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/mode/htmlmixed/htmlmixed.js"
                 asp-fallback-test="CodeMirror.modes.htmlmixed"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-p15qsXPrhaUkH+/RPE6QzCmxUAPkCRw89ityx+tWC1lAYI6Et2L0UpN+iqifxUdt+ss1FQ+9CuzxpBeT9mR3/w=="
+                integrity="sha384-fxS517EbIB2hObIbibF9AuQAFnAlwZgIsy2zpeCqpw4yIkJRfNOLSe0JHu7H7ULE"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/selection/active-line.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/addon/selection/active-line.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/addon/selection/active-line.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/addon/selection/active-line.js"
                 asp-fallback-test="CodeMirror.optionHandlers.styleActiveLine"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-ysQeDEwbdvERZqZCqFd64rVjSx4ExrC/r581h40cMF4e6rFWS6VxvdVxmSf/cLr+oe9mVxxzWSMhPJYSFyiVew=="
+                integrity="sha384-kKz13r+qZMgTNgXROGNHQ0/0/J1FtvIvRZ9yjOHo1YLUCd+KF8r9R+su/B+f6C0U"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/edit/matchbrackets.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/addon/edit/matchbrackets.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/addon/edit/matchbrackets.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/addon/edit/matchbrackets.js"
                 asp-fallback-test="CodeMirror.optionHandlers.matchBrackets"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-zgTUY40c9HFb3Kr25lTW3gpnSt+xVc0yWPYwa6Yu7kChiaOHfNlyA4bM8Y3YLzjeQfrNFy40UcbOE/Cmmb29nQ=="
+                integrity="sha384-LTQ5mBHbnlfpno+sRl/fdtC5GxS6BvQqFK6pC05GlBXD8urGx86eJXEW8rRGGe43"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/show-hint.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/addon/hint/show-hint.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/addon/hint/show-hint.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/addon/hint/show-hint.js"
                 asp-fallback-test="CodeMirror.showHint"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-vKAkYoB3TzFRod9vTPImONmTAkZjBOHQJkomWlAI5/mjOgDTAjRQgIRJvFVFyGzdauNufQrq+ndje1zmP8jxpw=="
+                integrity="sha384-VIjTLfyf8TDATLORaNeFgbAzeAy9ZbmWEkjdQhJc5JyrdrnBbiTrixhYCizHe7vL"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/css-hint.min.js"
-                asp-fallback-src="~/lib/codemirror/5.55.0/addon/hint/css-hint.min.js"
+        <script src="https://unpkg.com/codemirror@5.58.1/addon/hint/css-hint.js"
+                asp-fallback-src="~/lib/codemirror/5.58.1/addon/hint/css-hint.js"
                 asp-fallback-test="CodeMirror.hint.css"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-iXuwWkAmdAUNuO5rUtzmJZ/LoeJoSG8ZeQVdcUBCkV0dxfe7bxfzQMKCwQ6uNNs0FZ9jmSrN/jzJX7G1bOs4Nw=="
+                integrity="sha384-fS3CqTzf3CyenpkFzLDjDJ0KrxEnK9rrmaG3gjmLNJ7Q4cG8u4JDzeldOXEA8SbC"
                 crossorigin="anonymous"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.1/tinymce.min.js"
-                asp-fallback-src="~/lib/tinymce/5.4.1/tinymce.min.js"
+        <script src="https://unpkg.com/tinymce@5.5.1/tinymce.min.js"
+                asp-fallback-src="~/lib/tinymce/5.5.1/tinymce.min.js"
                 asp-fallback-test="window.tinymce"
-                asp-suppress-fallback-integrity="true"
-                integrity="sha512-c46AnRoKXNp7Sux2K56XDjljfI5Om/v1DvPt7iRaOEPU5X+KZt8cxzN3fFzemYC6WCZRhmpSlZvPA1pttfO9DQ=="
+                integrity="sha384-zuETV1iPOoJdf/Z465ljv1XO9ejeYE6/PsfGd2lhoIq5xEyq4V2SwxHlSBiHJfuh"
                 crossorigin="anonymous"></script>
-
-        <script src="~/lib/tinymce/5.4.1/langs/fa.js"></script>
     </environment>
+    <script src="~/lib/tinymce-lang/langs/fa.js"></script>
 
     <script>
         tinymce.init({
