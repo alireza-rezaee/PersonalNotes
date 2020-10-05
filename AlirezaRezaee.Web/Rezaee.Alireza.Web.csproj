@@ -145,6 +145,8 @@
     <Compile Remove="Data\Migrations\20200818093849_SeedAdminUser.Designer.cs" />
     <Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.cs" />
     <Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.cs" />
+    <Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

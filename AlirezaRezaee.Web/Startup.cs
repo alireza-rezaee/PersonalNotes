@@ -53,6 +53,9 @@ namespace Rezaee.Alireza.Web
                 .AddRoles<IdentityRole>()
                 .AddErrorDescriber<PersianIdentityErrorDescriber>();
 
+            services.AddDbContext<LogsDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("LogsConnection")));
+
             var microsoftAuth = Configuration.GetSection("Authentication").GetSection("Microsoft");
             var gitHubAuth = Configuration.GetSection("Authentication").GetSection("GitHub");
             var stackExchangeAuth = Configuration.GetSection("Authentication").GetSection("StackExchange");
