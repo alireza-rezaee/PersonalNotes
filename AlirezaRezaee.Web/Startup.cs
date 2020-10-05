@@ -54,7 +54,8 @@ namespace Rezaee.Alireza.Web
                 .AddErrorDescriber<PersianIdentityErrorDescriber>();
 
             services.AddDbContext<LogsDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("LogsConnection")));
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("LogsConnection")));
 
             var microsoftAuth = Configuration.GetSection("Authentication").GetSection("Microsoft");
             var gitHubAuth = Configuration.GetSection("Authentication").GetSection("GitHub");

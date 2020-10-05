@@ -28,8 +28,6 @@ namespace Rezaee.Alireza.Web.Middleware
 
         public async Task Invoke(HttpContext httpContext, LogsDbContext dbContext)
         {
-            await _next(httpContext);
-
             //Save log to chosen datastore
             try
             {
@@ -55,16 +53,11 @@ namespace Rezaee.Alireza.Web.Middleware
                     Scheme = httpContext.Request.Scheme,
                     Host = httpContext.Request.Host.ToString(),
                     Path = httpContext.Request.Path,
-                    QueryString = httpContext.Request.QueryString.ToString(),
-                    //Response
-                    StatusCode = httpContext.Response.StatusCode,
-                    ResponseContentLength = httpContext.Response.ContentLength
-
-                    //RequestHeadersFilePathPostfix = string.Empty,
-                    //RequestBodyFilePathPostfix = string.Empty,
-                    //ResponseHeadersFilePath = string.Empty,
-                    //ResponseBodyFilePath = string.Empty
+                    QueryString = httpContext.Request.QueryString.ToString()
                 };
+
+                if (!saveResponseBodyFile)
+                    await _next(httpContext);
 
                 if (saveRequestHeadersFile || saveRequestBodyFile || saveResponseHeadersFile || saveResponseBodyFile)
                 {
@@ -72,13 +65,6 @@ namespace Rezaee.Alireza.Web.Middleware
                     var absolutePath = Path.GetFullPath($"..\\Logs\\RequestResponds\\{persianDate.ToString("yyyy-MM-dd")}\\log-{DateTime.Now:HHmmssfffffff}{Guid.NewGuid().ToString().Replace("-", string.Empty)}", _env.WebRootPath);
                     Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
                     log.FilesPath = absolutePath;
-
-                    if (saveRequestHeadersFile)
-                    {
-                        var filePathPostfix = "-request-headers.json";
-                        await SaveLogToFile(JsonSerializer.Serialize(RetrieveRequestHeaders(httpContext.Request)), absolutePath + filePathPostfix);
-                        log.RequestHeadersFilePathPostfix = filePathPostfix;
-                    }
 
                     if (saveRequestBodyFile)
                     {
@@ -96,20 +82,56 @@ namespace Rezaee.Alireza.Web.Middleware
                         }
                     }
 
+                    if (saveRequestHeadersFile)
+                    {
+                        var filePathPostfix = "-request-headers.json";
+                        await SaveLogToFile(JsonSerializer.Serialize(RetrieveRequestHeaders(httpContext.Request)), absolutePath + filePathPostfix);
+                        log.RequestHeadersFilePathPostfix = filePathPostfix;
+                    }
+
+                    if (saveResponseBodyFile)
+                    {
+                        var filePathPostfix = "-response-body.html";
+
+                        Stream originalBody = httpContext.Response.Body;
+                        try
+                        {
+                            using (var memStream = new MemoryStream())
+                            {
+                                httpContext.Response.Body = memStream;
+
+                                await _next(httpContext);
+
+                                memStream.Position = 0;
+                                string responseBody = new StreamReader(memStream).ReadToEnd();
+                                await SaveLogToFile(responseBody, absolutePath + filePathPostfix);
+
+                                memStream.Position = 0;
+                                await memStream.CopyToAsync(originalBody);
+                            }
+                        }
+                        finally
+                        {
+                            httpContext.Response.Body = originalBody;
+                        }
+
+
+                        //await SaveLogToFile(await RetrieveResponseBody(httpContext.Response), absolutePath + filePathPostfix);
+                        log.ResponseBodyFilePathPostfix = filePathPostfix;
+                    }
+
+                    //Important: Response properties must be set after _next(httpContext)
                     if (saveResponseHeadersFile)
                     {
                         var filePathPostfix = "-response-headers.json";
                         await SaveLogToFile(JsonSerializer.Serialize(RetrieveResponseHeaders(httpContext.Response)), absolutePath + filePathPostfix);
                         log.ResponseHeadersFilePathPostfix = filePathPostfix;
                     }
-
-                    if (saveResponseBodyFile)
-                    {
-                        var filePathPostfix = "-response-body.html";
-                        await SaveLogToFile(await RetrieveResponseBody(httpContext.Response), absolutePath + filePathPostfix);
-                        log.ResponseBodyFilePathPostfix = filePathPostfix;
-                    }
                 }
+
+                //Important: Response properties must be set after _next(httpContext)
+                log.StatusCode = httpContext.Response.StatusCode;
+                log.ResponseContentLength = httpContext.Response.ContentLength;
 
                 await dbContext.AddAsync(log);
                 await dbContext.SaveChangesAsync();
@@ -153,7 +175,6 @@ namespace Rezaee.Alireza.Web.Middleware
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
