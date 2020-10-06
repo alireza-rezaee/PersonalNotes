@@ -1,3 +1,7 @@
+using KissLog;
+using KissLog.AspNetCore;
+using KissLog.CloudListeners.Auth;
+using KissLog.CloudListeners.RequestLogsListener;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +26,9 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using Rezaee.Alireza.Web.RouteConstraint;
 using Rezaee.Alireza.Web.Middleware;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using System.Text;
+using System.Diagnostics;
 
 namespace Rezaee.Alireza.Web
 {
@@ -40,6 +46,12 @@ namespace Rezaee.Alireza.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ILogger>((context) =>
+            {
+                return Logger.Factory.Get();
+            });
+
             var connectionString = !_env.IsDevelopment() ? "MyPersonalSiteDb" : "LocalDb";
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -131,6 +143,11 @@ namespace Rezaee.Alireza.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // app.UseKissLogMiddleware() must to be referenced after app.UseAuthentication(), app.UseSession()
+            app.UseKissLogMiddleware(options => {
+                ConfigureKissLog(options);
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -146,6 +163,46 @@ namespace Rezaee.Alireza.Web
                 //    pattern: "edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}");
 
                 endpoints.MapRazorPages();
+            });
+        }
+
+        private void ConfigureKissLog(IOptionsBuilder options)
+        {
+            // optional KissLog configuration
+            options.Options
+                .AppendExceptionDetails((Exception ex) =>
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    if (ex is System.NullReferenceException nullRefException)
+                    {
+                        sb.AppendLine("Important: check for null references");
+                    }
+
+                    return sb.ToString();
+                });
+
+            // KissLog internal logs
+            options.InternalLog = (message) =>
+            {
+                Debug.WriteLine(message);
+            };
+
+            // register logs output
+            RegisterKissLogListeners(options);
+        }
+
+        private void RegisterKissLogListeners(IOptionsBuilder options)
+        {
+            // multiple listeners can be registered using options.Listeners.Add() method
+
+            // register KissLog.net cloud listener
+            options.Listeners.Add(new RequestLogsApiListener(new Application(
+                Configuration["KissLog.OrganizationId"],    //  "f2bba92a-4946-4162-acd8-753a3745e6ed"
+                Configuration["KissLog.ApplicationId"])     //  "f6381dd1-9862-446d-ac54-fe3114ab3ad7"
+            )
+            {
+                ApiUrl = Configuration["KissLog.ApiUrl"]    //  "https://api.kisslog.net"
             });
         }
     }

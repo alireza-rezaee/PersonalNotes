@@ -1,10 +1,10 @@
-﻿using System;
+﻿using KissLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Rezaee.Alireza.Web.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Rezaee.Alireza.Web.Data;
@@ -20,10 +20,10 @@ namespace Rezaee.Alireza.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
-        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, ILogger logger)
         {
             _context = context;
             _logger = logger;
@@ -32,6 +32,7 @@ namespace Rezaee.Alireza.Web.Controllers
         [Route("", Name = "SiteIndex")]
         public async Task<IActionResult> Index()
         {
+            _logger.Debug("Hello world from .NET Core 3.x!");
             ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
             ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
 
@@ -93,16 +94,14 @@ namespace Rezaee.Alireza.Web.Controllers
             return View();
         }
 
+        public IActionResult Test ()
+        {
+            throw new Exception();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            _logger.LogTrace("Hello Trace (0)");
-            _logger.LogDebug("hello Debug (1)");
-            _logger.LogInformation("Hello Information (2)");
-            _logger.LogWarning("Hello Warning (3)");
-            _logger.LogError("Hello Error (4)");
-            _logger.LogCritical("Hello Critical (5)");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

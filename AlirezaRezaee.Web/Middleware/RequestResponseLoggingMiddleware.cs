@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Rezaee.Alireza.Web.Data;
 using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
@@ -19,11 +20,13 @@ namespace Rezaee.Alireza.Web.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger _logger;
 
-        public RequestResponseLoggingMiddleware(RequestDelegate next, IWebHostEnvironment env)
+        public RequestResponseLoggingMiddleware(RequestDelegate next, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             _next = next;
             _env = env;
+            _logger = loggerFactory.CreateLogger<RequestResponseLoggingMiddleware>();
         }
 
         public async Task Invoke(HttpContext httpContext, LogsDbContext dbContext)
@@ -132,6 +135,12 @@ namespace Rezaee.Alireza.Web.Middleware
                 //Important: Response properties must be set after _next(httpContext)
                 log.StatusCode = httpContext.Response.StatusCode;
                 log.ResponseContentLength = httpContext.Response.ContentLength;
+
+                _logger.LogInformation(
+                    "Request {method} {url} => {statusCode}",
+                    httpContext.Request?.Method,
+                    httpContext.Request?.Path.Value,
+                    httpContext.Response?.StatusCode);
 
                 await dbContext.AddAsync(log);
                 await dbContext.SaveChangesAsync();
