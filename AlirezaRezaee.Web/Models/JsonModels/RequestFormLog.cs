@@ -7,9 +7,9 @@ namespace Rezaee.Alireza.Web.Models.JsonModels
 {
     public class RequestFormLog
     {
-        public List<StringCouple> FormField { get; set; }
+        public List<StringCouple> FormFields { get; set; }
 
-        public List<FileDetails> FormFile { get; set; }
+        public List<FileDetails> FormFiles { get; set; }
     }
 
     public class FileDetails

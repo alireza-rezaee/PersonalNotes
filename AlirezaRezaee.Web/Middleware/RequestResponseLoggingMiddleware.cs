@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.Extensions.Logging;
+using MoreLinq;
 using Rezaee.Alireza.Web.Data;
 using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
@@ -31,117 +34,119 @@ namespace Rezaee.Alireza.Web.Middleware
 
         public async Task Invoke(HttpContext httpContext, LogsDbContext dbContext)
         {
-            //Save log to chosen datastore
+            //<Config>
+            var saveLog = true;
+            if (!saveLog) return;
+
+            var saveRequestBodyFile = true;
+            var saveResponseBodyFile = true;
+            //</Config>
+
+            var sw = new Stopwatch();
+
             try
             {
-                //<Config>
-                var saveLog = true;
-                if (!saveLog) return;
-
-                var saveRequestBodyFile = true;
-                var saveRequestHeadersFile = true;
-                var saveResponseBodyFile = true;
-                var saveResponseHeadersFile = true;
-                //</Config>
-
-                var log = new Requestlogs
+                var log = new RequestResponse
                 {
-                    //Request
                     RequestId = Activity.Current?.Id ?? httpContext.TraceIdentifier,
                     IP = httpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Referrer = httpContext.Request.Headers["Referer"],
                     Time = DateTime.Now,
                     Method = httpContext.Request.Method,
-                    Protocol = httpContext.Request.Protocol,
-                    Scheme = httpContext.Request.Scheme,
-                    Host = httpContext.Request.Host.ToString(),
+                    HasHttps = (httpContext.Request.Scheme.ToLower()) switch
+                    {
+                        "https" => true,
+                        "http" => false,
+                        _ => null,
+                    },
                     Path = httpContext.Request.Path,
-                    QueryString = httpContext.Request.QueryString.ToString()
+                    QueryString = httpContext.Request.QueryString.ToString(),
+                    Details = new RequestResponseDetails
+                    {
+                        Protocol = httpContext.Request.Protocol,
+                        Host = httpContext.Request.Host.ToString(),
+                        Referrer = httpContext.Request.Headers["Referer"]
+                    }
                 };
 
-                if (!saveResponseBodyFile)
-                    await _next(httpContext);
-
-                if (saveRequestHeadersFile || saveRequestBodyFile || saveResponseHeadersFile || saveResponseBodyFile)
+                if (saveResponseBodyFile)
                 {
-                    var persianDate = PersianDateTime.Now;
-                    var absolutePath = Path.GetFullPath($"..\\Logs\\RequestResponds\\{persianDate.ToString("yyyy-MM-dd")}\\log-{DateTime.Now:HHmmssfffffff}{Guid.NewGuid().ToString().Replace("-", string.Empty)}", _env.WebRootPath);
-                    Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
-                    log.FilesPath = absolutePath;
-
-                    if (saveRequestBodyFile)
+                    Stream originalBody = httpContext.Response.Body;
+                    try
                     {
-                        if (!httpContext.Request.HasFormContentType)
-                        {
-                            var filePathPostfix = "-request-body.html";
-                            await SaveLogToFile(await RetrieveRequestBody(httpContext.Request), absolutePath + filePathPostfix);
-                            log.RequestBodyFilePathPostfix = filePathPostfix;
-                        }
-                        else
-                        {
-                            var filePathPostfix = "-request-formdata.txt";
-                            await SaveLogToFile(JsonSerializer.Serialize(RetrieveRequestFormData(httpContext.Request)), absolutePath + filePathPostfix);
-                            log.RequestBodyFilePathPostfix = filePathPostfix;
-                        }
-                    }
+                        using var memStream = new MemoryStream();
+                        httpContext.Response.Body = memStream;
 
-                    if (saveRequestHeadersFile)
-                    {
-                        var filePathPostfix = "-request-headers.json";
-                        await SaveLogToFile(JsonSerializer.Serialize(RetrieveRequestHeaders(httpContext.Request)), absolutePath + filePathPostfix);
-                        log.RequestHeadersFilePathPostfix = filePathPostfix;
-                    }
-
-                    if (saveResponseBodyFile)
-                    {
-                        var filePathPostfix = "-response-body.html";
-
-                        Stream originalBody = httpContext.Response.Body;
                         try
                         {
-                            using (var memStream = new MemoryStream())
-                            {
-                                httpContext.Response.Body = memStream;
-
-                                await _next(httpContext);
-
-                                memStream.Position = 0;
-                                string responseBody = new StreamReader(memStream).ReadToEnd();
-                                await SaveLogToFile(responseBody, absolutePath + filePathPostfix);
-
-                                memStream.Position = 0;
-                                await memStream.CopyToAsync(originalBody);
-                            }
+                            sw.Start();
+                            await _next(httpContext);
+                            sw.Stop();
                         }
-                        finally
+                        catch (Exception e)
                         {
-                            httpContext.Response.Body = originalBody;
+                            log.Details.Exception = e.ToString();
                         }
 
+                        memStream.Position = 0;
+                        string responseBody = new StreamReader(memStream).ReadToEnd();
+                        log.Details.ResponseBody = responseBody;
 
-                        //await SaveLogToFile(await RetrieveResponseBody(httpContext.Response), absolutePath + filePathPostfix);
-                        log.ResponseBodyFilePathPostfix = filePathPostfix;
+                        memStream.Position = 0;
+                        await memStream.CopyToAsync(originalBody);
                     }
-
-                    //Important: Response properties must be set after _next(httpContext)
-                    if (saveResponseHeadersFile)
+                    finally
                     {
-                        var filePathPostfix = "-response-headers.json";
-                        await SaveLogToFile(JsonSerializer.Serialize(RetrieveResponseHeaders(httpContext.Response)), absolutePath + filePathPostfix);
-                        log.ResponseHeadersFilePathPostfix = filePathPostfix;
+                        httpContext.Response.Body = originalBody;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        sw.Start();
+                        await _next(httpContext);
+                        sw.Stop();
+                    }
+                    catch (Exception e)
+                    {
+                        log.Details.Exception = e.ToString();
                     }
                 }
 
+                if (saveRequestBodyFile)
+                {
+                    if (!httpContext.Request.HasFormContentType)
+                    {
+                        log.Details.RequestBody = await RetrieveRequestBody(httpContext.Request);
+                    }
+                    else
+                    {
+                        var formData = RetrieveRequestFormData(httpContext.Request);
+                        StringBuilder requestFormDataBuilder = new StringBuilder(string.Concat("=".Repeat(10)));
+                        requestFormDataBuilder.AppendLine("=== Form Data: ===");
+                        foreach (var item in formData.FormFields)
+                            requestFormDataBuilder.AppendLine($"{item.Key}: {item.Value}");
+                        requestFormDataBuilder.AppendLine("=== Form Files: ===");
+                        foreach (var item in formData.FormFiles)
+                            requestFormDataBuilder.AppendLine($"File name: {item.Name}\nFile content-type: {item.ContentType}\nFile size: {item.Length} bytes\n");
+                        log.Details.RequestBody = requestFormDataBuilder.ToString();
+                    }
+                }
+
+                StringBuilder requestHeadersBuilder = new StringBuilder();
+                foreach (var item in RetrieveRequestHeaders(httpContext.Request))
+                    requestHeadersBuilder.AppendLine($"{item.Key}: {item.Value}");
+                log.Details.RequestHeaders = requestHeadersBuilder.ToString();
+
                 //Important: Response properties must be set after _next(httpContext)
+                StringBuilder responseHeadersBuilder = new StringBuilder();
+                foreach (var item in RetrieveResponseHeaders(httpContext.Response))
+                    responseHeadersBuilder.AppendLine($"{item.Key}: {item.Value}");
+                log.Details.ResponseHeaders = responseHeadersBuilder.ToString();
+
+                //Important: Response properties must be set after _next(httpContext)
+                log.ResponseTime = sw.ElapsedMilliseconds;
                 log.StatusCode = httpContext.Response.StatusCode;
-                log.ResponseContentLength = httpContext.Response.ContentLength;
-
-                _logger.LogInformation(
-                    "Request {method} {url} => {statusCode}",
-                    httpContext.Request?.Method,
-                    httpContext.Request?.Path.Value,
-                    httpContext.Response?.StatusCode);
-
                 await dbContext.AddAsync(log);
                 await dbContext.SaveChangesAsync();
             }
@@ -149,11 +154,15 @@ namespace Rezaee.Alireza.Web.Middleware
             {
                 throw e;
             }
-
-            //Copy the contents of the new memory stream (which contains the response) to the original stream, which is then returned to the client.
-            //await responseBody.CopyToAsync(originalBodyStream);
+            finally
+            {
+                _logger.LogInformation(
+                    "Request {method} {url} => {statusCode}",
+                    httpContext.Request?.Method,
+                    httpContext.Request?.Path.Value,
+                    httpContext.Response?.StatusCode);
+            }
         }
-
 
         private List<StringCouple> RetrieveRequestHeaders(HttpRequest request) => request.Headers.Select(header => new StringCouple { Key = header.Key.ToString(), Value = header.Value.ToString() }).ToList();
 
@@ -196,15 +205,15 @@ namespace Rezaee.Alireza.Web.Middleware
 
                 if (request.Form.Any())
                 {
-                    formModel = new RequestFormLog { FormField = new List<StringCouple>() };
+                    formModel = new RequestFormLog { FormFields = new List<StringCouple>() };
                     foreach (var formField in request.Form)
-                        formModel.FormField.Add(new StringCouple { Key = formField.Key, Value = formField.Value });
+                        formModel.FormFields.Add(new StringCouple { Key = formField.Key, Value = formField.Value });
 
                     if (request.Form.Files.Any())
                     {
-                        formModel.FormFile = new List<FileDetails>();
+                        formModel.FormFiles = new List<FileDetails>();
                         foreach (var file in request.Form.Files)
-                            formModel.FormFile.Add(new FileDetails
+                            formModel.FormFiles.Add(new FileDetails
                             {
                                 Name = file.FileName,
                                 ContentType = file.ContentType,
@@ -238,22 +247,6 @@ namespace Rezaee.Alireza.Web.Middleware
                 await stream.CopyToAsync(original);
 
                 return body;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        private async Task SaveLogToFile(string content, string path)
-        {
-            try
-            {
-                UnicodeEncoding uniencoding = new UnicodeEncoding();
-                byte[] contentBytes = uniencoding.GetBytes(content);
-                using FileStream fileStream = System.IO.File.Open(path, FileMode.OpenOrCreate);
-                fileStream.Seek(0, SeekOrigin.End);
-                await fileStream.WriteAsync(contentBytes, 0, contentBytes.Length);
             }
             catch (Exception e)
             {

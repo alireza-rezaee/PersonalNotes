@@ -15,6 +15,6 @@ namespace Rezaee.Alireza.Web.Data
 
         }
 
-        public DbSet<Requestlogs> Requestlogs { get; set; }
+        public DbSet<RequestResponse> RequestResponse { get; set; }
     }
 }
