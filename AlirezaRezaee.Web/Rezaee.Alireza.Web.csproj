@@ -147,12 +147,6 @@
     <Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.Designer.cs" />
     <Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.cs" />
     <Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.Designer.cs" />
-    <Compile Remove="Data\Migrations\LogsDbContextMigrations\20201005174638_AddRequestLogs.cs" />
-    <Compile Remove="Data\Migrations\LogsDbContextMigrations\20201005174638_AddRequestLogs.Designer.cs" />
-    <Compile Remove="Data\Migrations\LogsDbContextMigrations\20201009135532_AddRequestResponse.cs" />
-    <Compile Remove="Data\Migrations\LogsDbContextMigrations\20201009135532_AddRequestResponse.Designer.cs" />
-    <Compile Remove="Data\Migrations\LogsDbContextMigrations\20201009160830_AlterRequestResponse01.cs" />
-    <Compile Remove="Data\Migrations\LogsDbContextMigrations\20201009160830_AlterRequestResponse01.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -194,7 +188,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\LogsDbContextMigrations\" />
     <Folder Include="Data\SqlQueries\InsertDefaultBlocks\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\uploads\images\" />

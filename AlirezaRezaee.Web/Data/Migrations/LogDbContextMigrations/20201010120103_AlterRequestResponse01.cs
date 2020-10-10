@@ -1,22 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Rezaee.Alireza.Web.Migrations
+namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
 {
     public partial class AlterRequestResponse01 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "ResponseTime",
+            migrationBuilder.AddColumn<string>(
+                name: "UserId",
                 table: "RequestResponse",
-                nullable: false,
-                defaultValue: 0);
+                maxLength: 450,
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ResponseTime",
+                name: "UserId",
                 table: "RequestResponse");
         }
     }

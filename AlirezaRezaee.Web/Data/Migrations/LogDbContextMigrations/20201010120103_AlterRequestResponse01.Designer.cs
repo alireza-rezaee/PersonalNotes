@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rezaee.Alireza.Web.Data;
 
-namespace Rezaee.Alireza.Web.Migrations
+namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
 {
     [DbContext(typeof(LogsDbContext))]
-    [Migration("20201009161443_AddRequestResponse")]
-    partial class AddRequestResponse
+    [Migration("20201010120103_AlterRequestResponse01")]
+    partial class AlterRequestResponse01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,11 +46,18 @@ namespace Rezaee.Alireza.Web.Migrations
                         .HasColumnType("nvarchar(2048)")
                         .HasMaxLength(2048);
 
+                    b.Property<long>("ResponseTime")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("StatusCode")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.HasKey("RequestId");
 

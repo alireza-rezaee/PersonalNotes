@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rezaee.Alireza.Web.Data;
 
-namespace Rezaee.Alireza.Web.Migrations
+namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
 {
     [DbContext(typeof(LogsDbContext))]
     partial class LogsDbContextModelSnapshot : ModelSnapshot
@@ -44,14 +44,18 @@ namespace Rezaee.Alireza.Web.Migrations
                         .HasColumnType("nvarchar(2048)")
                         .HasMaxLength(2048);
 
-                    b.Property<int>("ResponseTime")
-                        .HasColumnType("int");
+                    b.Property<long>("ResponseTime")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("StatusCode")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.HasKey("RequestId");
 
@@ -88,6 +92,9 @@ namespace Rezaee.Alireza.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResponseHeaders")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRoles")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestId");

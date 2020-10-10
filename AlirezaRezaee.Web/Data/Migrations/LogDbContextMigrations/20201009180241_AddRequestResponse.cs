@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Rezaee.Alireza.Web.Migrations
+namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
 {
     public partial class AddRequestResponse : Migration
     {
@@ -18,6 +18,7 @@ namespace Rezaee.Alireza.Web.Migrations
                     QueryString = table.Column<string>(maxLength: 2048, nullable: true),
                     StatusCode = table.Column<int>(nullable: false),
                     IP = table.Column<string>(maxLength: 15, nullable: true),
+                    ResponseTime = table.Column<long>(nullable: false),
                     Time = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

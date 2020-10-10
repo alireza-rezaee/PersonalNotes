@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -137,6 +138,10 @@ namespace Rezaee.Alireza.Web.Middleware
                 foreach (var item in RetrieveRequestHeaders(httpContext.Request))
                     requestHeadersBuilder.AppendLine($"{item.Key}: {item.Value}");
                 log.Details.RequestHeaders = requestHeadersBuilder.ToString();
+
+                //Assign this request to user and active user roles
+                log.UserId = httpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
+                log.Details.UserRoles = string.Join(separator: ',', values: httpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(claim => claim.Value));
 
                 //Important: Response properties must be set after _next(httpContext)
                 StringBuilder responseHeadersBuilder = new StringBuilder();

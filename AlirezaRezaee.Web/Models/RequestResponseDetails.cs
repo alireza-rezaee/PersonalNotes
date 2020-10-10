@@ -29,6 +29,8 @@ namespace Rezaee.Alireza.Web.Models
 
         public string Exception { get; set; }
 
+        public string UserRoles { get; set; }
+
         #region Relations
         [Key]
         [ForeignKey("RequestResponse")]

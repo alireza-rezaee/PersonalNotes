@@ -33,6 +33,9 @@ namespace Rezaee.Alireza.Web.Models
 
         public DateTime Time { get; set; }
 
+        [MaxLength(450)]
+        public string UserId { get; set; }
+
         #region Relations
         public RequestResponseDetails Details { get; set; }
         #endregion
