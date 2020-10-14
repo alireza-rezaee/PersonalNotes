@@ -148,7 +148,7 @@
 <div class="container my-5">
     @if (Model.Posts.Any())
     {
-        <div class="card-columns">
+        <div class="row masonry">
             @foreach (var post in Model.Posts)
             {
                 if (post.PublishDateTime.Date <= DateTime.Now || (
@@ -156,80 +156,82 @@
                     User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
                     User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown)))
                 {
-                    <div class="post card shadow-sm" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
+                    <div class="col-sm-6 col-lg-4 mb-4">
+                        <div class="post card shadow-sm" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
 
-                        @if (post.PublishDateTime.Date > DateTime.Now)
-                        {
-                            <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
-                                    style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
-                                    data-toggle="tooltip"
-                                    title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
-                            </button>
-                        }
-                        <div class="post-summary">
-                            <img src="@post.ThumbnailUrl" class="card-img-top rounded-top" alt="@post.Title">
-                            <div class="card-body">
-                                <h2 class="card-title">@Html.Raw(post.Title)</h2>
-                                <p class="card-text">@Html.Raw(post.Summary)</p>
-                                <div class="text-left">
-                                    <div class="pin-button position-absolute">
-                                        @if (User.IsInRole(Roles.Pin))
-                                        {
-                                            <button class="position-relative btn shadow border rounded-oval js-pin-post @if (post.Pin != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11 4a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                                    <path d="M7.5 4h1v9a.5.5 0 0 1-1 0V4z" />
-                                                    <path fill-rule="evenodd" d="M6.489 12.095a.5.5 0 0 1-.383.594c-.565.123-1.003.292-1.286.472-.302.192-.32.321-.32.339 0 .013.005.085.146.21.14.124.372.26.701.382.655.246 1.593.408 2.653.408s1.998-.162 2.653-.408c.329-.123.56-.258.701-.382.14-.125.146-.197.146-.21 0-.018-.018-.147-.32-.339-.283-.18-.721-.35-1.286-.472a.5.5 0 1 1 .212-.977c.63.137 1.193.34 1.61.606.4.253.784.645.784 1.182 0 .402-.219.724-.483.958-.264.235-.618.423-1.013.57-.793.298-1.855.472-3.004.472s-2.21-.174-3.004-.471c-.395-.148-.749-.336-1.013-.571-.264-.234-.483-.556-.483-.958 0-.537.384-.929.783-1.182.418-.266.98-.47 1.611-.606a.5.5 0 0 1 .595.383z" />
-                                                </svg>
-                                            </button>
-                                        }
-                                        @if (User.IsInRole(Roles.PosterPin))
-                                        {
-                                            <button class="position-relative btn shadow border rounded-oval js-poster-pin-post @if (post.Posterpins != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-aspect-ratio" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
-                                                    <path fill-rule="evenodd" d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0v-3zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0v3z" />
-                                                </svg>
-                                            </button>
-                                        }
+                            @if (post.PublishDateTime.Date > DateTime.Now)
+                            {
+                                <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
+                                        style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
+                                        data-toggle="tooltip"
+                                        title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
+                                </button>
+                            }
+                            <div class="post-summary">
+                                <img src="@post.ThumbnailUrl" class="card-img-top rounded-top" alt="@post.Title">
+                                <div class="card-body">
+                                    <h2 class="card-title">@Html.Raw(post.Title)</h2>
+                                    <p class="card-text">@Html.Raw(post.Summary)</p>
+                                    <div class="text-left">
+                                        <div class="pin-button position-absolute">
+                                            @if (User.IsInRole(Roles.Pin))
+                                            {
+                                                <button class="position-relative btn shadow border rounded-oval js-pin-post @if (post.Pin != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11 4a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                                        <path d="M7.5 4h1v9a.5.5 0 0 1-1 0V4z" />
+                                                        <path fill-rule="evenodd" d="M6.489 12.095a.5.5 0 0 1-.383.594c-.565.123-1.003.292-1.286.472-.302.192-.32.321-.32.339 0 .013.005.085.146.21.14.124.372.26.701.382.655.246 1.593.408 2.653.408s1.998-.162 2.653-.408c.329-.123.56-.258.701-.382.14-.125.146-.197.146-.21 0-.018-.018-.147-.32-.339-.283-.18-.721-.35-1.286-.472a.5.5 0 1 1 .212-.977c.63.137 1.193.34 1.61.606.4.253.784.645.784 1.182 0 .402-.219.724-.483.958-.264.235-.618.423-1.013.57-.793.298-1.855.472-3.004.472s-2.21-.174-3.004-.471c-.395-.148-.749-.336-1.013-.571-.264-.234-.483-.556-.483-.958 0-.537.384-.929.783-1.182.418-.266.98-.47 1.611-.606a.5.5 0 0 1 .595.383z" />
+                                                    </svg>
+                                                </button>
+                                            }
+                                            @if (User.IsInRole(Roles.PosterPin))
+                                            {
+                                                <button class="position-relative btn shadow border rounded-oval js-poster-pin-post @if (post.Posterpins != null) {<text>pinned btn-light</text>} else {<text>btn-outline-light</text>}">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-aspect-ratio" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
+                                                        <path fill-rule="evenodd" d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0v-3zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0v3z" />
+                                                    </svg>
+                                                </button>
+                                            }
+                                        </div>
+                                        <a asp-action="Index" asp-controller="Bookmarks" class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
+                                                <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
+                                            </svg>
+                                        </a>
+                                        <a href="@post.PostUrl" class="stretched-link btn btn-light border rounded-oval">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
+                                                <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
+                                            </svg>
+                                            بخوانید
+                                        </a>
                                     </div>
-                                    <a asp-action="Index" asp-controller="Bookmarks" class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
-                                            <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
-                                        </svg>
-                                    </a>
-                                    <a href="@post.PostUrl" class="stretched-link btn btn-light border rounded-oval">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
-                                            <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
-                                        </svg>
-                                        بخوانید
-                                    </a>
                                 </div>
                             </div>
-                        </div>
-                        @if (post.RelatedPosts.Any())
-                        {
-                            <div class="js-related-posts">
-                                @foreach (var relatedPost in post.RelatedPosts)
+                            @if (post.RelatedPosts.Any())
+                            {
+                                <div class="js-related-posts">
+                                    @foreach (var relatedPost in post.RelatedPosts)
+                                    {
+                                        <div class="card-footer">
+                                            <a href="@relatedPost.PostUrl" class="stretched-link text-decoration-none"><small class="text-muted small">@relatedPost.Title</small></a>
+                                        </div>
+                                    }
+                                </div>
+                                @if (post.RelatedPosts.Count == 2)
                                 {
-                                    <div class="card-footer">
-                                        <a href="@relatedPost.PostUrl" class="stretched-link"><small class="text-muted small">@relatedPost.Title</small></a>
+                                    <div class="card-footer text-center more-related-posts">
+                                        <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
+                                            <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 }
-                            </div>
-                            @if (post.RelatedPosts.Count == 2)
-                            {
-                                <div class="card-footer text-center more-related-posts">
-                                    <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
-                                        <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                                        </svg>
-                                    </button>
-                                </div>
                             }
-                        }
+                        </div>
                     </div>
                 }
             }
@@ -237,12 +239,12 @@
     }
 
     <div class="text-center">
-        <a asp-controller="posts" asp-action="index" class="btn btn-light border rounded-oval mt-4 px-5 shadow">
+        <a asp-controller="posts" asp-action="index" class="btn btn-light border shadow p-3" style="border-radius: 2rem;">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h8a1.5 1.5 0 0 0 1.5-1.5V9a.5.5 0 0 0-1 0v4a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 5v8zm7-11a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.5H9a.5.5 0 0 1-.5-.5z" />
                 <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z" />
             </svg>
-            ادامه
+            مشاهده همه مطالب
         </a>
     </div>
 
@@ -314,8 +316,12 @@
                 }
 
                 <div class="col-12 text-center mt-3">
-                    <a asp-controller="links" asp-action="index" class="small">
-                        <i class="fas fa-external-link-square-alt"></i> مشاهده دیگر پیوند ها
+                    <a asp-controller="links" asp-action="index" class="btn btn-light border shadow p-3" style="border-radius: 2rem;">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h8a1.5 1.5 0 0 0 1.5-1.5V9a.5.5 0 0 0-1 0v4a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 5v8zm7-11a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.5H9a.5.5 0 0 1-.5-.5z"></path>
+                            <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z"></path>
+                        </svg>
+                        مشاهده دیگر پیوند ها
                     </a>
                 </div>
             </div>
@@ -352,19 +358,21 @@
     </div>
 }
 
-<div class="toast dir-ltr" role="alert" id="error-notification" data-delay="10000" style="position: fixed; bottom: 0; right: 0;">
-    <div class="toast-header">
-        <img src="..." class="rounded mr-2" alt="...">
-        <strong class="mr-auto">Bootstrap</strong>
-        <small class="text-muted">11 mins ago</small>
-        <button type="button" class="btn-close" data-dismiss="toast"></button>
-    </div>
-    <div class="toast-body">
-        Hello, world! This is a toast message.
-    </div>
-</div>
-
 @section Scripts {
+    <environment include="Development">
+        <script src="/lib/masonry-layout/4.2.2/dist/masonry.pkgd.js"></script>
+        <script src="/lib/imagesloaded/4.1.4/imagesloaded.pkgd.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+                asp-fallback-src="/lib/masonry-layout/4.2.2/dist/masonry.pkgd.min.js"
+                asp-fallback-test="Masonry"
+                integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js"
+                asp-fallback-src="/lib/imagesloaded/4.1.4/imagesloaded.pkgd.min.js"
+                asp-fallback-test="imagesLoaded"
+                integrity="sha384-YnGSHPPWEUDKMHFPOVmNP7Xyfwx5G0CHet6IoNgiX6CbFZS8gCeIfEgB1MgPwjdI" crossorigin="anonymous"></script>
+    </environment>
     <script>
         $('.js-more-related-posts').click(function (e) {
             var buttonContainer = $(e.target).parent('.more-related-posts');
@@ -414,6 +422,21 @@
             });
         </script>
     }
+
+    <script>
+        //See docs: https://masonry.desandro.com/layout.html#imagesloaded
+        var grid = document.querySelector('.masonry');
+        var msnry;
+
+        imagesLoaded(grid, function () {
+            // init Isotope after all images have loaded
+            msnry = new Masonry(grid, {
+                // options
+                percentPosition: true,
+                originLeft: false
+            });
+        });
+    </script>
 
     @foreach (var block in Model.Blocks)
     {

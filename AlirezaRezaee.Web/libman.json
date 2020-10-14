@@ -37,6 +37,19 @@
       ]
     },
     {
+      "library": "masonry-layout@4.2.2",
+      "destination": "wwwroot/lib/masonry-layout/4.2.2/",
+      "files": [
+        "dist/masonry.pkgd.js",
+        "dist/masonry.pkgd.min.js",
+        "masonry.js"
+      ]
+    },
+    {
+      "library": "imagesloaded@4.1.4",
+      "destination": "wwwroot/lib/imagesloaded/4.1.4/"
+    },
+    {
       "library": "jquery@3.5.1",
       "destination": "wwwroot/lib/jquery/3.5.1/",
       "files": [
