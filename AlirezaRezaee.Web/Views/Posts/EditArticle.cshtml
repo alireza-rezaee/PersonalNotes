@@ -188,7 +188,7 @@
                     <div class="input-group-prepend">
                         <button type="button" class="btn btn-light border" id="add-new-tag" @if (User.IsInRole(Roles.TagCreate)) { <text> disabled title="مجوز افزودن برچسب ندارید." </text> }>افزودن</button>
                     </div>
-                    <input list="tag-suggestions" class="custom-select" id="new-tag-input" style="direction: rtl;" autocomplete="off">
+                    <input list="tag-suggestions" class="form-select" id="new-tag-input" style="direction: rtl;" autocomplete="off">
                     <datalist id="tag-suggestions">
                     </datalist>
                 </div>

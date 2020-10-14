@@ -178,26 +178,7 @@
                     <div class="input-group-prepend">
                         <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
                     </div>
-                    <input list="encodings" class="custom-select custom-select" id="new-tag-input" style="direction: rtl;">
-                    <datalist id="encodings">
-                        <option value="برچسب یک">برچسب یک</option>
-                        <option value="برچسب دو">برچسب دو</option>
-                        <option value="برچسب سه">برچسب سه</option>
-                    </datalist>
-                </div>
-                <input type="hidden" asp-for="PostTags" id="postTags" />
-                <div class="mx-2" id="selected-tags"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 my-3">
-                <label for="test">برچسب ها:</label>
-                <small class="form-text text-muted small mb-2">واژه های پر اهمیت متن را انتخاب کنید؛ برچسب ها برای بهینه سازی موتور جستوجو، پیشنهاد مطالب و ... به کار می روند.</small>
-                <div class="input-group mb-2 mr-sm-2 dir-ltr">
-                    <div class="input-group-prepend">
-                        <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
-                    </div>
-                    <input list="tag-suggestions" class="custom-select" id="new-tag-input" style="direction: rtl;" autocomplete="off">
+                    <input list="tag-suggestions" class="form-select" id="new-tag-input" style="direction: rtl;" autocomplete="off">
                     <datalist id="tag-suggestions">
                     </datalist>
                 </div>
