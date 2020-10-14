@@ -45,22 +45,6 @@
             padding: 0.25rem;
             border-radius: 1rem;
         }
-
-        @@media (min-width: 768px) {
-            .card-columns {
-                -webkit-column-count: 2;
-                -moz-column-count: 2;
-                column-count: 2;
-            }
-        }
-
-        @@media (max-width: 767px) {
-            .card-columns {
-                -webkit-column-count: 1;
-                -moz-column-count: 1;
-                column-count: 1;
-            }
-        }
     </style>
 
     @foreach (var block in Model.Blocks)
@@ -383,7 +367,7 @@
                 success: function (posts) {
                     var relatedPosts = '';
                     for (var post in posts)
-                        relatedPosts += '<div class="card-footer"><a href="' + posts[post].postUrl + '" class="stretched-link"><small class="text-muted small">' + posts[post].title + '</small></a></div>';;
+                        relatedPosts += '<div class="card-footer"><a href="' + posts[post].postUrl + '" class="stretched-link text-decoration-none"><small class="text-muted small">' + posts[post].title + '</small></a></div>';;
                     $(e.target).parents('.post').find('.js-related-posts').html(relatedPosts);
 
                     var elemLoadMoreRelatedPosts = document.createElement('a');

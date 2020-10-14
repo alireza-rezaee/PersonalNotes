@@ -99,8 +99,8 @@
                             @if (post.Type != null)
                             {
                                 @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
-              User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
-              User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
+                                    User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
+                                    User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
                                 {
                                     <div class="dropleft position-absolute" style="right:0; top:0; z-index: 99;">
                                         <button class="p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
@@ -174,8 +174,7 @@
                                                     <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مطلب</a>
                                                 }
 
-                                                @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) ||
-                            (User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)))
+                                                @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) || (User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)))
                                                 {
                                                     <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
                                                 }
@@ -418,7 +417,7 @@
                 success: function (posts) {
                     var relatedPosts = '';
                     for (var post in posts)
-                        relatedPosts += '<div class="card-footer"><a href="' + posts[post].postUrl + '" class="stretched-link"><small class="text-muted small">' + posts[post].title + '</small></a></div>';;
+                        relatedPosts += '<div class="card-footer"><a href="' + posts[post].postUrl + '" class="stretched-link text-decoration-none"><small class="text-muted small">' + posts[post].title + '</small></a></div>';;
                     $(e.target).parents('.post').find('.js-related-posts').html(relatedPosts);
 
                     var elemLoadMoreRelatedPosts = document.createElement('a');
