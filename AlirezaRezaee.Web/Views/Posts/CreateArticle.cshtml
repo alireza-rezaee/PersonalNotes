@@ -133,18 +133,18 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <input asp-for="Post.Title" class="form-control text-center mb-3" placeholder="عنوانی وارد کنید" style="line-height: 3; color: #006293; font-size: 1.5rem;">
+                <input asp-for="Post.Title" class="form-control text-center mb-3 font-weight-bold" placeholder="عنوانی وارد کنید" style="line-height: 3; color: #006293; font-size: 1.5rem;">
             </div>
         </div>
 
         <div class="row my-3 justify-content-center align-items-center">
-            <img src="@Avatar.x64" alt="@fullName" class="rounded-circle my-1 my-md-0" style="width: 25px; height:25px;" />
+            <img src="@Avatar.x64" alt="@fullName" class="rounded-circle my-1 my-md-0 p-0" style="width: 35px; height:35px;" />
             <div class="col-12 col-md-4 text-center my-1 my-md-0" id="datepicker">
                 <input type="text" id="post-publish-datepicker" class="form-control text-center" placeholder="@persianPostDate.ToString("dd MMMM yyyy").EnglishNumberToPersian()" readonly>
                 <input type="hidden" asp-for="Post.PublishDateTime" id="post-publish-date" class="form-control text-center" value="@DateTime.Now">
             </div>
             <div class="col-12 col-md-4 text-center my-1 my-md-0">
-                <input type="number" class="form-control text-center" placeholder="زمان مطالعه (دقیقه)" min="1">
+                <input type="number" class="form-control text-center" placeholder="زمان مطالعه (دقیقه)" min="1" readonly>
             </div>
         </div>
 
