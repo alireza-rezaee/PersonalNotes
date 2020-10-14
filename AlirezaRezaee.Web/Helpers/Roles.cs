@@ -60,7 +60,7 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string BlockDelete = "حذف بلاک";
         #endregion
 
-        // ~/Areas/Admin/Controllers
+        // ~/Areas/Admin
         #region RolesController (Counts: 4)
         public const string RolesList = "مشاهده نقش ها";
         public const string RoleCreate = "افزودن نقش";
@@ -68,6 +68,7 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string RoleDelete = "حذف نقش";
         #endregion
 
+        // ~/Areas/Admin
         #region UsersController (Counts: 4)
         public const string UsersList = "مشاهده کاربران";
         public const string UserDetails = "مشاهده مشخصات کاربران";
@@ -76,6 +77,7 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string UserDelete = "حذف کاربر";
         #endregion
 
+        // ~/Areas/Admin
         #region UserRolesController (Counts: 3)
         public const string UserRolesList = "مشاهده انتسابات";
         public const string UserRoleAssign = "انتساب نقش به کاربر";
@@ -86,6 +88,11 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string MessageDelete = "حذف پیام";
         public const string MessagesList = "فهرست پیام ها";
         public const string MessagesSetReadOrNot = "فهرست پیام ها";
+        #endregion
+
+        // ~/Areas/Admin
+        #region LogsController (Counts: 2)
+        public const string LogsList = "مشاهده تاریخچه لاگ";
         #endregion
     }
 }

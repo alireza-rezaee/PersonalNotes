@@ -124,12 +124,18 @@ namespace Rezaee.Alireza.Web.Middleware
                     {
                         var formData = RetrieveRequestFormData(httpContext.Request);
                         StringBuilder requestFormDataBuilder = new StringBuilder(string.Concat("=".Repeat(10)));
-                        requestFormDataBuilder.AppendLine("=== Form Data: ===");
-                        foreach (var item in formData.FormFields)
-                            requestFormDataBuilder.AppendLine($"{item.Key}: {item.Value}");
-                        requestFormDataBuilder.AppendLine("=== Form Files: ===");
-                        foreach (var item in formData.FormFiles)
-                            requestFormDataBuilder.AppendLine($"File name: {item.Name}\nFile content-type: {item.ContentType}\nFile size: {item.Length} bytes\n");
+                        if (formData.FormFields is object)
+                        {
+                            requestFormDataBuilder.AppendLine("=== Form Data: ===");
+                            foreach (var item in formData.FormFields)
+                                requestFormDataBuilder.AppendLine($"{item.Key}: {item.Value}");
+                        }
+                        if (formData.FormFiles is object)
+                        {
+                            requestFormDataBuilder.AppendLine("=== Form Files: ===");
+                            foreach (var item in formData.FormFiles)
+                                requestFormDataBuilder.AppendLine($"File name: {item.Name}\nFile content-type: {item.ContentType}\nFile size: {item.Length} bytes\n");
+                        }
                         log.Details.RequestBody = requestFormDataBuilder.ToString();
                     }
                 }

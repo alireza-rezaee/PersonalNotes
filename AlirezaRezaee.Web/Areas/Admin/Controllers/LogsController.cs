@@ -10,13 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using MoreLinq.Extensions;
 using Rezaee.Alireza.Web.Data;
+using Rezaee.Alireza.Web.Helpers;
 using Rezaee.Alireza.Web.Models;
 
 namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/logs")]
-    [Authorize]
+    [Authorize(Roles = Roles.LogsList)]
     public class LogsController : Controller
     {
         private readonly LogsDbContext _context;
@@ -28,6 +29,9 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
 
         [Route("latest")]
         public async Task<List<RequestResponse>> Latest(int take = 100) => await _context.RequestResponse.OrderByDescending(req => req.Time).Take(take).ToListAsync();
+
+        [Route("")]
+        public async Task<IActionResult> Index() => View(await Latest());
 
         [Route("search")]
         public async Task<List<RequestResponse>> Search(int? statusCode, string method, bool? hasHttps, string path, string ip, DateTime? date, int? hour, int? minute, int? seconds, string queryString, long? reponseTimeMoreThan, long? reponseTimeLessThan, bool? orderByDescending, int take = 100)

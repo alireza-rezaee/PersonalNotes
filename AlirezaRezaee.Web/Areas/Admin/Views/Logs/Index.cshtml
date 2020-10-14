@@ -1,0 +1,302 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Rezaee.Alireza.Web.Extensions
+@addTagHelper *, Rezaee.Alireza.Web
+@model IEnumerable<Rezaee.Alireza.Web.Models.RequestResponse>
+@inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "تاریخچه";
+}
+@section Head {
+    <style>
+        .js-modal-table th::after {
+            content: ":";
+        }
+    </style>
+}
+<div class="container my-5">
+    <div class="row">
+        <div class="col mb-3">
+            <div class="d-inline-block py-1 px-3 section">
+                <div class="d-inline-block align-middle section-bg">
+                </div>
+                @ViewData["Title"]
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr class="text-nowrap">
+                    <th scope="col">زمان ثبت</th>
+                    <th scope="col">وضعیت</th>
+                    <th scope="col">متد</th>
+                    <th scope="col">زمان پاسخ (ms)</th>
+                    <th scope="col">مسیر</th>
+                    <th scope="col">شناسه اینترنتی (IP)</th>
+                    <th scope="col">کاربر</th>
+                </tr>
+            </thead>
+            @if (Model.Any())
+            {
+                var colors = new string[] { "info", "success", "secondary", "warning", "danger" };
+                <tbody id="log-table">
+                    @foreach (var log in Model)
+                    {
+                        var statusColor = string.Empty;
+                        var rowColor = string.Empty;
+                        var statusCodeLevel = int.Parse(log.StatusCode.ToString().ElementAt(0).ToString());
+                        if (statusCodeLevel >= 1 && statusCodeLevel <= 5) statusColor = $"bg-{colors.ElementAt(statusCodeLevel - 1)}";
+                        if (statusCodeLevel == 4 || statusCodeLevel == 5) rowColor = $"table-{colors.ElementAt(statusCodeLevel - 1)}";
+                        ApplicationUser user = null;
+                        if (!string.IsNullOrEmpty(log.UserId)) user = await UserManager.FindByIdAsync(log.UserId);
+                        <tr class="text-nowrap @rowColor cursor-pointer" data-request-id="@log.RequestId">
+                            <td>@log.Time.ToPersianDateTime().ToString().EnglishNumberToPersian()</td>
+                            <td class="text-center"><span class="badge @statusColor">@log.StatusCode.ToString().EnglishNumberToPersian()</span></td>
+                            <td class="text-center text-capitalize">@log.Method</td>
+                            <td class="text-center">@log.ResponseTime.ToString().EnglishNumberToPersian()</td>
+                            <td class="dir-ltr text-left" style="max-width:300px; overflow-x: hidden; text-overflow: ellipsis;">@log.Path<span style="color: #bbb">@log.QueryString</span></td>
+                            <td class="text-center">@log.IP.ToString().EnglishNumberToPersian()</td>
+                            <td>
+                                @if (user == null)
+                                {
+                                    <div class="d-inline-block rounded-circle border bg-light" style="width: 35px; height: 35px;"></div>
+                                }
+                                else
+                                {
+                                    <img-gravatar gravatar-size="35" gravatar-email="@await UserManager.GetEmailAsync(user)" alt="@user.DisplayName" title="@user.DisplayName" class="rounded-circle img-fluid"></img-gravatar>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            }
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-log-details" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">جزئیات تاریخچه » درخواست <span class="badge bg-secondary js-modal-request-id dir-ltr"></span></h5>
+                <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-12 col-md-6">
+                        <table class="table js-modal-table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">شناسه درخواست</th>
+                                    <td class="dir-ltr"><span class="js-modal-request-id"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">زمان درخواست</th>
+                                    <td><span class="js-modal-time"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">وضعیت</th>
+                                    <td><span class="js-modal-status-code"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">مدت پاسخ‌دهی</th>
+                                    <td><span class="js-modal-response-time"></span> میلی‌ثانیه</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <table class="table js-modal-table mb-0">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">شناسه اینترنتی</th>
+                                    <td class="dir-ltr text-center"><span class="js-modal-ip"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">کاربر</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">پروتکل</th>
+                                    <td class="dir-ltr text-left"><span class="js-modal-protocol"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">میزبان</th>
+                                    <td class="dir-ltr text-left"><span class="js-modal-host"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <table class="table js-modal-table mb-0">
+                    <tbody>
+                        <tr>
+                            <th scope="row">مسیر (URL)</th>
+                            <td class="dir-ltr text-left"><span class="js-modal-path"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">کوئری</th>
+                            <td class="dir-ltr text-left"><span class="js-modal-query"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ارجاع دهنده</th>
+                            <td class="dir-ltr text-left"><span class="js-modal-referrer"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">نقش‌های کاربر</th>
+                            <td class="dir-ltr text-left"><span class="js-modal-user-roles"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mb-4">
+                    <p><b>سرصفحه درخواست:</b></p>
+                    <pre><code class="form-control dir-ltr js-modal-request-header dir-ltr text-left overflow-auto"></code></pre>
+                </div>
+                <div class="mb-4">
+                    <p><b>بدنه درخواست:</b></p>
+                    <pre><code class="form-control dir-ltr js-modal-request-body dir-ltr text-left overflow-auto"></code></pre>
+                </div>
+                <div class="mb-4">
+                    <p><b>سرصفحه پاسخ:</b></p>
+                    <pre><code class="form-control dir-ltr js-modal-response-header dir-ltr text-left overflow-auto"></code></pre>
+                </div>
+                <div class="mb-4">
+                    <div><b>بدنه پاسخ:</b></div>
+                    <div>
+                        <a href="javascript:void()" class="btn btn-light border rounded-oval js-modal-response-body-virtualization-anchor m-2">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                            </svg>
+                            مشاهده شبیه‌ساز پاسخ
+                        </a>
+                    </div>
+                    <pre><code class="form-control dir-ltr js-modal-response-body dir-ltr text-left overflow-auto" style="max-height: 500px;"></code></pre>
+                </div>
+                @*<div class="mb-4">
+                    <p><b>محتوای خطا:</b></p>
+                    <pre><code class="form-control dir-ltr js-modal-exception dir-ltr text-left overflow-auto" readonly></code></pre>
+                </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">تایید</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        //Create virtual button
+        //[why] -> [Reason] To call the modal through this button so that we can pass the parameter to modal
+        let logButton = document.createElement("button");
+        logButton.id = "log-button";
+        logButton.classList.add("d-none");
+        document.body.appendChild(logButton);
+        logButton.dataset.toggle = "modal";
+        logButton.dataset.target = "#modal-log-details";
+        let modal = document.getElementById('modal-log-details');
+
+        //AddEventListener to all rows
+        document.querySelectorAll('#log-table tr').forEach(row => {
+            row.addEventListener('click', e => {
+                logButton.dataset.requestId = e.target.closest('tr').dataset.requestId;
+                logButton.click();
+            })
+        });
+
+        function setDefaultValueInModalUi(value) {
+            modal.querySelectorAll('.js-modal-request-id').forEach(elem => elem.innerHTML = value);
+            modal.querySelectorAll('.js-modal-time').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-status-code').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-path').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-query').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-response-time').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-ip').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-user-roles').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-referrer').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-protocol').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-host').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-request-header').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-request-body').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-response-header').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-response-body').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+            modal.querySelectorAll('.js-modal-response-body-virtualization-anchor').forEach(elem => { elem.setAttribute('href', 'javascript:void(0)'); elem.classList.remove('d-none') });
+            //modal.querySelectorAll('.js-modal-exception').forEach(elem => { elem.innerHTML = value; elem.classList.remove('d-none') });
+        }
+
+        function updateModalUi(response) {
+            let log = JSON.parse(response);
+            modal.querySelectorAll('.js-modal-request-id').forEach(elem => elem.innerText = log.requestId);
+            modal.querySelectorAll('.js-modal-time').forEach(elem => elem.innerText = `${englishNumbersToPersian(log.time.split('T')[1])} - ${new Date(log.time).toLocaleDateString('fa-IR')}`);
+            modal.querySelectorAll('.js-modal-status-code').forEach(elem => {
+                let colors = ["info", "success", "secondary", "warning", "danger"];
+                let statusCodeLevel = String(log.statusCode)[0];
+                if (statusCodeLevel >= 1 && statusCodeLevel <= 5)
+                    elem.innerHTML = `<span class="badge bg-${colors[statusCodeLevel - 1]}">${englishNumbersToPersian(log.statusCode)}</span>`;
+            });
+            modal.querySelectorAll('.js-modal-path').forEach(elem => elem.innerText = log.path);
+            modal.querySelectorAll('.js-modal-query').forEach(elem => elem.innerText = log.queryString);
+            modal.querySelectorAll('.js-modal-response-time').forEach(elem => elem.innerText = englishNumbersToPersian(log.responseTime));
+            modal.querySelectorAll('.js-modal-ip').forEach(elem => elem.innerText = englishNumbersToPersian(log.ip));
+            modal.querySelectorAll('.js-modal-user-roles').forEach(elem => {
+                if (log.details.userRoles.trim() == '')
+                    elem.innerHTML = `(${englishNumbersToPersian(0)} نقش)`;
+                else {
+                    let userRoles = log.details.userRoles.split(',');
+                    let content = '';
+                    userRoles.forEach(role => content += `<span class="badge bg-secondary m-1">${role}</span>`);
+                    elem.innerHTML = `${content} (${englishNumbersToPersian(userRoles.length)} نقش)`;
+                }
+            });
+            modal.querySelectorAll('.js-modal-referrer').forEach(elem => elem.innerText = log.details.referrer);
+            modal.querySelectorAll('.js-modal-protocol').forEach(elem => elem.innerText = log.details.protocol);
+            modal.querySelectorAll('.js-modal-host').forEach(elem => elem.innerText = log.details.host);
+            if (log.details.requestHeaders != '')
+                modal.querySelectorAll('.js-modal-request-header').forEach(elem => elem.innerText = log.details.requestHeaders);
+            else
+                modal.querySelectorAll('.js-modal-request-header').forEach(elem => elem.classList.add('d-none'));
+            if (log.details.requestBody != '')
+                modal.querySelectorAll('.js-modal-request-body').forEach(elem => elem.innerText = log.details.requestBody);
+            else
+                modal.querySelectorAll('.js-modal-request-body').forEach(elem => elem.classList.add('d-none'));
+            if (log.details.responseHeaders != '')
+                modal.querySelectorAll('.js-modal-response-header').forEach(elem => elem.innerText = log.details.responseHeaders);
+            else
+                modal.querySelectorAll('.js-modal-response-header').forEach(elem => elem.classList.add('d-none'));
+            if (log.details.responseHeaders.includes('Content-Type: text')) {
+                modal.querySelectorAll('.js-modal-response-body').forEach(elem => elem.innerText = log.details.responseBody);
+                modal.querySelectorAll('.js-modal-response-body-virtualization-anchor').forEach(elem => elem.setAttribute('href', `@Url.ActionLink(action: "ResponseBodyPreview", controller:"Logs")?requestId=${log.requestId}`));
+            }
+            else {
+                modal.querySelectorAll('.js-modal-response-body').forEach(elem => elem.classList.add('d-none'));
+                modal.querySelectorAll('.js-modal-response-body-virtualization-anchor').forEach(elem => elem.classList.add('d-none'));
+            }
+            //if (log.details.exception != '')
+            //    modal.querySelectorAll('.js-modal-exception').forEach(elem => elem.innerText = log.details.exception);
+            //else
+            //    modal.querySelectorAll('.js-modal-exception').forEach(elem => elem.classList.add('d-none'));
+        }
+
+        function fetchData(requestId) {
+            setDefaultValueInModalUi(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>`);
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `@Url.ActionLink(action:"Details", controller:"Logs")?requestId=${requestId}`, true);
+            xhr.onload = function () {
+                setDefaultValueInModalUi('');
+                updateModalUi(xhr.response);
+            }
+            xhr.send();
+        }
+
+        //Vary the contents of the modal depending on which row was clicked.
+        modal.addEventListener('show.bs.modal', function (e) {
+            let requestId = e.relatedTarget.dataset.requestId;
+
+            //Ajax
+            fetchData(requestId);
+        });
+    </script>
+}
