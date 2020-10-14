@@ -16,7 +16,7 @@
                     <div class="rounded-top links-cover border js-image-preview @if (Model.IsExpanded) { <text>d-flex justify-content-center align-items-center</text> } else { <text>d-none</text> } "
                          style="@if (!string.IsNullOrEmpty(Model.ImagePath)) { <text> background-image: url(@Model.ImagePath); </text> }
                             else { <text> background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px); </text> }">
-                        <span class="badge badge-secondary">
+                        <span class="badge bg-secondary">
                             محل نمایش تصویر
                         </span>
                     </div>
@@ -82,7 +82,7 @@
         <div class="modal-content">
             <form asp-controller="Links" asp-action="Delete" asp-route-id="@Model.Id">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">حذف پیوند <span class="badge badge-secondary">@Model.Title</span></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">حذف پیوند <span class="badge bg-secondary">@Model.Title</span></h5>
                     <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

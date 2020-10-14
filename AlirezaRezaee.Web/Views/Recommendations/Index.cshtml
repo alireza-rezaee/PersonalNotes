@@ -170,7 +170,7 @@
             },
             getRowHtml: function (id = '', rank = '', title = '', url = '') {
                 return '<tr' + ((id == '') ? '' : ' data-id="' + id + '"') + ((rank == '') ? '' : ' data-rank="' + rank + '"') + '>'
-                + '<th class="align-middle"><div class="badge badge-success">' + rank.toLocaleString('fa') + '</div></th>'
+                + '<th class="align-middle"><div class="badge bg-success">' + rank.toLocaleString('fa') + '</div></th>'
                 + '<td class="align-middle">' + ((url == '') ? '' : '<a href="' + url + '">') + title + ((url == '') ? '' : '</a>') + '</td>'
                 + '<td class="p-0 align-middle text-center" style="width: 140px">'
                 + '<div class="btn-group py-3 text-center">'
