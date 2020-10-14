@@ -9,12 +9,30 @@
     var lastPageNumber = (int)ViewData["LastPageNumber"];
     var currentPageNumber = (int)ViewData["PageNumber"];
 }
+@section Head {
+    <style>
+        .js-pin-post.pinned::before, .js-poster-pin-post.pinned::before {
+            content: "حذف";
+        }
 
+        .js-pin-post:not(.pinned)::before, .js-poster-pin-post:not(.pinned)::before {
+            content: "نصب";
+        }
+
+        .js-pin-post::after {
+            content: " پین (عادی)";
+        }
+
+        .js-poster-pin-post::after {
+            content: " پین (پوستری)";
+        }
+    </style>
+}
 <!-- begin: مطالب سایت -->
 <div class="container my-5">
     @if (Model.Any())
     {
-        <div class="card-columns">
+        <div class="row masonry">
             @foreach (var post in Model)
             {
                 if (post.PublishDateTime.Date <= DateTime.Now || (
@@ -22,138 +40,164 @@
                     User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
                     User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown)))
                 {
-                    <div class="post card shadow-sm  position-relative" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
-                        @if (post.PublishDateTime.Date > DateTime.Now)
-                        {
-                            <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule material-icons"
-                                    style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
-                                    data-toggle="tooltip"
-                                    title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
-                            </button>
-                        }
-                        <div class="post-summary">
-                            <img src="@post.ThumbnailUrl" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h2 class="card-title">@Html.Raw(@post.Title)</h2>
-                                <p class="card-text">@Html.Raw(post.Summary)</p>
-                                <div class="text-left">
-                                    <a asp-action="Index" asp-controller="Bookmarks" class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
-                                            <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
-                                        </svg>
-                                    </a>
-                                    <a href="@post.PostUrl" class="stretched-link btn btn-light border rounded-oval">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
-                                            <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
-                                        </svg>
-                                        بخوانید
-                                    </a>
+                    <div class="col-sm-6 col-lg-4 mb-4">
+                        <div class="post card shadow-sm position-relative" @if (post.PublishDateTime.Date > DateTime.Now) { <text> style="border: 2px dotted #08f !important;" </text> } data-post-id="@post.Id">
+                            @if (post.PublishDateTime.Date > DateTime.Now)
+                            {
+                                <button class="btn d-inline-block position-absolute p-0 post-help-flag post-help-schedule"
+                                        style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
+                                        data-toggle="tooltip"
+                                        title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
+                                </button>
+                            }
+                            <div class="post-summary">
+                                <img src="@post.ThumbnailUrl" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h2 class="card-title">@Html.Raw(@post.Title)</h2>
+                                    <p class="card-text">@Html.Raw(post.Summary)</p>
+                                    <div class="text-left">
+                                        <a asp-action="Index" asp-controller="Bookmarks" class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
+                                                <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
+                                            </svg>
+                                        </a>
+                                        <a href="@post.PostUrl" class="stretched-link btn btn-light border rounded-oval">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
+                                                <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
+                                            </svg>
+                                            بخوانید
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @if (post.RelatedPosts.Any())
-                        {
-                            <div class="js-related-posts">
-                                @foreach (var relatedPost in post.RelatedPosts)
+                            @if (post.RelatedPosts.Any())
+                            {
+                                <div class="js-related-posts">
+                                    @foreach (var relatedPost in post.RelatedPosts)
+                                    {
+                                        <div class="card-footer">
+                                            <a href="@relatedPost.PostUrl" class="stretched-link text-decoration-none"><small class="text-muted small">@relatedPost.Title</small></a>
+                                        </div>
+                                    }
+                                </div>
+                                @if (post.RelatedPosts.Count == 2)
                                 {
-                                    <div class="card-footer">
-                                        <a href="@relatedPost.PostUrl" class="stretched-link"><small class="text-muted small">@relatedPost.Title</small></a>
+                                    <div class="card-footer text-center more-related-posts">
+                                        <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
+                                            <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 }
-                            </div>
-                            @if (post.RelatedPosts.Count == 2)
-                            {
-                                <div class="card-footer text-center more-related-posts">
-                                    <button type="button" class="btn stretched-link js-more-related-posts" data-post-id="@post.Id">
-                                        <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                                        </svg>
-                                    </button>
-                                </div>
                             }
-                        }
 
 
 
-                        @if (post.Type != null)
-                        {
-                            @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
-                   User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
-                   User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
+                            @if (post.Type != null)
                             {
-                                <div class="dropleft position-absolute" style="right:0; top:0; z-index: 99;">
-                                    <button class="material-icons-outlined p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
-                                        more_horiz
-                                    </button>
-                                    @if (post.Type == PostType.Article)
-                                    {
-                                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                                            <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
-                                            @if (User.IsInRole(Roles.PostEditArticle))
-                                            {
-                                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
-                                            }
+                                @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
+              User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
+              User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
+                                {
+                                    <div class="dropleft position-absolute" style="right:0; top:0; z-index: 99;">
+                                        <button class="p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                            </svg>
+                                        </button>
+                                        @if (post.Type == PostType.Article)
+                                        {
+                                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                                <a href="@post.PostUrl" class="dropdown-item">مشاهده مقاله</a>
+                                                @if (User.IsInRole(Roles.PostEditArticle))
+                                                {
+                                                    <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مقاله</a>
+                                                }
 
-                                            @if ((User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)) ||
-                                 (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
-                                            {
-                                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                                            }
+                                                @if ((User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)) || (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
+                                                {
+                                                    <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                                }
 
-                                            @if (User.IsInRole(Roles.PostDeleteArticle))
-                                            {
-                                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مقاله" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مقاله</button>
-                                            }
-                                        </div>
-                                    }
-                                    else if (post.Type == PostType.Share)
-                                    {
-                                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                                            <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
-                                            @if (User.IsInRole(Roles.PostEditShare))
-                                            {
-                                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
-                                            }
+                                                @if (User.IsInRole(Roles.PostDeleteArticle))
+                                                {
+                                                    <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مقاله" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مقاله</button>
+                                                }
+                                                @if (User.IsInRole(Roles.Pin))
+                                                {
+                                                    <button class="dropdown-item js-pin-post @if (post.Pin != null) {<text>pinned</text>}"></button>
+                                                }
+                                                @if (User.IsInRole(Roles.PosterPin))
+                                                {
+                                                    <button class="dropdown-item js-poster-pin-post @if (post.Posterpins != null) {<text>pinned</text>}"></button>
+                                                }
+                                            </div>
+                                        }
+                                        else if (post.Type == PostType.Share)
+                                        {
+                                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                                <a href="@post.PostUrl" class="dropdown-item">مشاهده پیوند</a>
+                                                @if (User.IsInRole(Roles.PostEditShare))
+                                                {
+                                                    <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح پیوند</a>
+                                                }
 
-                                            @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) ||
-                                 (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
-                                            {
-                                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                                            }
+                                                @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) || (User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown)))
+                                                {
+                                                    <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                                }
 
-                                            @if (User.IsInRole(Roles.PostDeleteShare))
-                                            {
-                                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
-                                            }
-                                        </div>
-                                    }
-                                    else if (post.Type == PostType.Markdown)
-                                    {
-                                        <div class="dropdown-menu text-right shadow" style="direction: rtl;">
-                                            <a href="@post.PostUrl" class="dropdown-item">مشاهده مطلب</a>
+                                                @if (User.IsInRole(Roles.PostDeleteShare))
+                                                {
+                                                    <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="پیوند" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف پیوند</button>
+                                                }
+                                                @if (User.IsInRole(Roles.Pin))
+                                                {
+                                                    <button class="dropdown-item js-pin-post @if (post.Pin != null) {<text>pinned</text>}"></button>
+                                                }
+                                                @if (User.IsInRole(Roles.PosterPin))
+                                                {
+                                                    <button class="dropdown-item js-poster-pin-post @if (post.Posterpins != null) {<text>pinned</text>}"></button>
+                                                }
+                                            </div>
+                                        }
+                                        else if (post.Type == PostType.Markdown)
+                                        {
+                                            <div class="dropdown-menu text-right shadow" style="direction: rtl;">
+                                                <a href="@post.PostUrl" class="dropdown-item">مشاهده مطلب</a>
 
-                                            @if (User.IsInRole(Roles.PostEditMarkdown))
-                                            {
-                                                <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مطلب</a>
-                                            }
+                                                @if (User.IsInRole(Roles.PostEditMarkdown))
+                                                {
+                                                    <a href="@post.PostEditUrl" class="dropdown-item">ویرایش و اصلاح مطلب</a>
+                                                }
 
-                                            @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) ||
-                                  (User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)))
-                                            {
-                                                <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
-                                            }
+                                                @if ((User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle)) ||
+                            (User.IsInRole(Roles.PostCreateShare) && User.IsInRole(Roles.PostEditShare)))
+                                                {
+                                                    <a href="@post.postEditTypeUrl" class="dropdown-item">تغییر نوع ارسالی</a>
+                                                }
 
-                                            @if (User.IsInRole(Roles.PostDeleteMarkdown))
-                                            {
-                                                <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مطلب نشانه دار" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مطلب نشانه دار</button>
-                                            }
-                                        </div>
-                                    }
-                                </div>
+                                                @if (User.IsInRole(Roles.PostDeleteMarkdown))
+                                                {
+                                                    <button data-toggle="modal" data-target="#modal-delete-post" class="dropdown-item" data-type="مطلب نشانه دار" data-title="@post.Title" data-summary="@post.Summary" data-thumbnail="@post.ThumbnailUrl" data-url="@post.PostUrl" data-datetime="@post.PublishDateTime" data-delete-action="@post.postDeleteUrl">حذف مطلب نشانه دار</button>
+                                                }
+                                                @if (User.IsInRole(Roles.Pin))
+                                                {
+                                                    <button class="dropdown-item js-pin-post @if (post.Pin != null) {<text>pinned</text>}"></button>
+                                                }
+                                                @if (User.IsInRole(Roles.PosterPin))
+                                                {
+                                                    <button class="dropdown-item js-poster-pin-post @if (post.Posterpins != null) {<text>pinned</text>}"></button>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                }
                             }
-                        }
+                        </div>
                     </div>
                 }
             }
@@ -324,7 +368,20 @@
 }
 
 @section Scripts {
-
+    <environment include="Development">
+        <script src="/lib/masonry-layout/4.2.2/dist/masonry.pkgd.js"></script>
+        <script src="/lib/imagesloaded/4.1.4/imagesloaded.pkgd.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+                asp-fallback-src="/lib/masonry-layout/4.2.2/dist/masonry.pkgd.min.js"
+                asp-fallback-test="Masonry"
+                integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js"
+                asp-fallback-src="/lib/imagesloaded/4.1.4/imagesloaded.pkgd.min.js"
+                asp-fallback-test="imagesLoaded"
+                integrity="sha384-YnGSHPPWEUDKMHFPOVmNP7Xyfwx5G0CHet6IoNgiX6CbFZS8gCeIfEgB1MgPwjdI" crossorigin="anonymous"></script>
+    </environment>
     @if (User.IsInRole(Roles.PostDeleteArticle) || User.IsInRole(Roles.PostDeleteShare) || User.IsInRole(Roles.PostDeleteMarkdown))
     {
         <script>
@@ -368,6 +425,42 @@
                     elemLoadMoreRelatedPosts.classList.add('btn', 'stretched-link', 'js-more-related-posts');
                     $(elemLoadMoreRelatedPosts).attr('href', '/posts/' + buttonContainer.find('.js-more-related-posts').data('post-id') + '/related-posts').css('font-size', 'small').html('<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.5 3A1.5 1.5 0 0 0 13 1.5H3A1.5 1.5 0 0 0 1.5 3v5a.5.5 0 0 0 1 0V3a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H9a.5.5 0 0 0 0 1h4a1.5 1.5 0 0 0 1.5-1.5V3z"/><path fill-rule="evenodd" d="M4.5 6a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V6.5H5a.5.5 0 0 1-.5-.5z"/><path fill-rule="evenodd" d="M10.354 5.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z"/></svg> مطالب بیشتر').appendTo(buttonContainer.text(''));
                 }
+            });
+        });
+    </script>
+
+    @if (User.IsInRole(Roles.Pin) || User.IsInRole(Roles.PosterPin))
+    {
+        <script>
+            $('.js-pin-post, .js-poster-pin-post').click(function (e) {
+                var target = $(e.target);
+                var button = target.is('button') ? target : target.parents('button');
+                var wasPinned = button.hasClass('pinned');
+
+                $.ajax({
+                    url: (button.hasClass('js-poster-pin-post') ? '/posters/' : '/pins/') + (wasPinned ? 'un-pin' : 'pin') + "/" + button.parents('.post').data('post-id'),
+                    dataType: "text",
+                    type: "GET",
+                    success: function (content) {
+                        if (wasPinned) button.removeClass('pinned');
+                        else button.addClass('pinned');
+                    }
+                });
+            });
+        </script>
+    }
+
+    <script>
+        //See docs: https://masonry.desandro.com/layout.html#imagesloaded
+        var grid = document.querySelector('.masonry');
+        var msnry;
+
+        imagesLoaded(grid, function () {
+            // init Isotope after all images have loaded
+            msnry = new Masonry(grid, {
+                // options
+                percentPosition: true,
+                originLeft: false
             });
         });
     </script>
