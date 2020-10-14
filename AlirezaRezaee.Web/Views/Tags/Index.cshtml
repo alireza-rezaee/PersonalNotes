@@ -84,7 +84,7 @@
                 <div>
                     @foreach (var tag in tags.Tags)
                     {
-                        <a asp-controller="tags" asp-action="RelatedPosts" asp-route-id="@tag.Id" class="tag">@tag.Title</a>
+                        <a asp-controller="tags" asp-action="RelatedPosts" asp-route-id="@tag.Id" class="tag text-decoration-none">@tag.Title</a>
                     }
                 </div>
             </div>
