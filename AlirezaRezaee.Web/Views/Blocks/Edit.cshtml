@@ -143,7 +143,7 @@
                     <div class="tab-pane fade show active" id="js-block-content">
                         <textarea asp-for="Html" class="js-html"></textarea>
                         <div class="row my-3">
-                            <div class="form-group col-12 col-md-6">
+                            <div class="mb-3 col-12 col-md-6">
                                 <label for="inputState">محل جایگیری:</label>
                                 <select asp-for="PositionNo" class="form-control">
                                     <option value="0" selected="@(Model.PositionNo == 0)">بالای مطالب</option>
@@ -151,7 +151,7 @@
                                     <option value="2" selected="@(Model.PositionNo == 2)">پایین پیوند ها</option>
                                 </select>
                             </div>
-                            <div class="form-group col-12 col-md-6">
+                            <div class="mb-3 col-12 col-md-6">
                                 <label for="inputPassword4">ترتیب جایگیری:</label>
                                 <input asp-for="Rank" min="1" max="255" class="form-control" id="block-new-rank" placeholder="شماره جایگاه" name="Rank">
                             </div>
