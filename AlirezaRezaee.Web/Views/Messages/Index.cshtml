@@ -54,7 +54,7 @@
                     {
                         var senderName = item.SenderName ?? "گمنام";
                         var sendDateTime = ((DateTime)item.CreateDateTime).ToPersianDateTimeString().EnglishNumberToPersian();
-                        <tr class="js-message @if (!item.HaveRead) { <text>table-secondary</text> }" data-delete-action="@Url.ActionLink(action: "Delete", controller: "Messages", values: new { id = item.Id })" data-title="@item.Title" data-haveRead="@item.HaveRead">
+                        <tr class="js-message @if (!item.HaveRead) { <text>table-secondary</text> }" @if (User.IsInRole(Roles.MessageDelete)) { <text>data-delete-action="@Url.ActionLink(action: "Delete", controller: "Messages", values: new { id = item.Id })"</text> } data-title="@item.Title" data-haveRead="@item.HaveRead">
                             <td class="align-middle">@i.EnglishToPersian()</td>
                             <td class="align-middle">
                                 <div class="d-flex">
