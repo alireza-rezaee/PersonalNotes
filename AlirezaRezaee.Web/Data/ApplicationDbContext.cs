@@ -6,6 +6,7 @@ using Rezaee.Alireza.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Rezaee.Alireza.Web.Models.ViewModels.Posts;
+using Rezaee.Alireza.Web.Areas.Admin.Models;
 
 namespace Rezaee.Alireza.Web.Data
 {
@@ -47,6 +48,8 @@ namespace Rezaee.Alireza.Web.Data
         public DbSet<Block> Blocks { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<File> Files { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

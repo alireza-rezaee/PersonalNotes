@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Rezaee.Alireza.Web.Areas.Admin.Models.File>
+@using Rezaee.Alireza.Web.Extensions
+@{
+    ViewData["Title"] = "فهرست فایل‌ها";
+}
+
+<div class="container mt-4">
+    <h1 class="text-size-6">@ViewData["Title"]</h1>
+    <hr />
+    @if (User.IsInRole(Roles.FileUpload))
+    {
+        <a asp-action="Upload" asp-controller="Files" asp-area="Admin" class="btn btn-light border">
+            افزودن فایل
+        </a>
+        <hr />
+    }
+
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            هنوز فایلی بارگذاری نشده است. اینجا در آینده محل نمایش فایل‌های بارگذاری شده خواهد بود.
+
+            @if (User.IsInRole(Roles.FileUpload))
+            {
+                <span>
+                    الآن مایل به
+                    <a asp-action="Upload" asp-controller="Files" asp-area="Admin" class="btn btn-light btn-sm border">
+                        افزودن فایل
+                    </a>
+                    هستید؟
+                </span>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="text-left">نام فایل</th>
+                        <th scope="col">تاریخ ایجاد/تغییر</th>
+                        <th scope="col">نوع</th>
+                        <th scope="col">حجم (بایت)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var file in Model)
+                    {
+                        <tr class="js-file" data-id="@file.FilePath" @if (User.IsInRole(Roles.FileRemove)) { <text>data-delete-action="@Url.ActionLink(action: "Delete", controller: "Files", values: new { id = file.FilePath })"</text> }>
+                            <td>
+                                <a href="@file.FilePath" class="btn btn-sm btn-light border">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-light border" data-toggle="modal" data-target="#delete-file-modal">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </button>
+                            </td>
+                            <td class="dir-ltr text-left">@file.Name</td>
+                            <td>@file.CreateDateTime.ToPersianDateTime().ToString().EnglishNumberToPersian()</td>
+                            <td>@file.ContentType</td>
+                            <td>@file.Length.ToString().EnglishNumberToPersian()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
+
+@if (User.IsInRole(Roles.FileRemove))
+{
+    <div class="modal fade text-right" id="delete-file-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form asp-action="Delete" asp-controller="File" asp-area="Admin">
+                    <div class="modal-header">
+                        <h5 class="modal-title">هشدار حذف فایل</h5>
+                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        آیا از حذف دائمی -غیرقابل بازگشت- فایل زیر اطمینان دارید؟
+                        <div class="text-center">
+                            <div class="bg-danger rounded small dir-ltr text-white p-1 js-target-title"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-danger">حذف نهایی</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            var deleteModal = document.getElementById('delete-file-modal');
+            $(deleteModal).on('show.bs.modal', function (e) {
+                // Button that triggered the modal
+                var button = e.relatedTarget;
+                // Extract info from data-* attributes
+                var parent = $(button).parents('.js-file');
+
+                var title = parent.data('id'),
+                    deleteAction = parent.data('delete-action');
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                $('.js-target-title').text(title);
+                $(deleteModal).find('form').attr('action', deleteAction);
+            });
+        </script>
+    }
+}

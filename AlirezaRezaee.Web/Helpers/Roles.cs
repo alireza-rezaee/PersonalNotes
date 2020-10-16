@@ -91,8 +91,16 @@ namespace Rezaee.Alireza.Web.Helpers
         #endregion
 
         // ~/Areas/Admin
-        #region LogsController (Counts: 2)
+        #region LogsController (Counts: 1)
         public const string LogsList = "مشاهده تاریخچه لاگ";
+        #endregion
+
+        // ~/Areas/Admin
+        #region FilesController (Counts: 4)
+        public const string FilesList = "فهرست فایل‌ها";
+        public const string FileUpload = "بارگذاری فایل";
+        public const string FileRemove = "حذف فایل";
+        public const string FileRename = "تغییر نام فایل";
         #endregion
     }
 }

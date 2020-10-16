@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
 {
-    public class FilesController : Controller
+    public class SettingsController : Controller
     {
         public IActionResult Index()
         {
