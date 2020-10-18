@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>@Html.Raw((string)ViewData["Title"])</title>
+    <meta name="title" content="@Html.Raw((string)ViewData["Title"])">
+    @RenderSection("Meta", required: false)
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/5.0.0-alpha2/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />

@@ -1,0 +1,168 @@
+﻿@model Rezaee.Alireza.Web.Areas.Admin.Models.ViewModels.Personalization.PersonalizingVM
+@{
+    ViewData["Title"] = "شخصی سازی";
+    var siteCoverSrc = ViewData["SiteCoverSrc"] is object ? (string)ViewData["SiteCoverSrc"] : string.Empty;
+    var siteLogoSrc = ViewData["siteLogoSrc"] is object ? (string)ViewData["siteLogoSrc"] : string.Empty;
+    var textLogoSrc = ViewData["textLogoSrc"] is object ? (string)ViewData["textLogoSrc"] : string.Empty;
+
+}
+@section Head {
+    <environment include="Development">
+        <link href="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+        <script src="~/lib/tinymce/5.5.1/tinymce.min.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://unpkg.com/md.bootstrappersiandatetimepicker@3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css"
+              asp-fallback-href="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css"
+              asp-fallback-test-class="mds-bootstrap-persian-datetime-picker-container"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="relative"
+              integrity="sha384-++CWOYXf99BrIoE2ttMqLQCFDyk2BvAT9PrDlb4HdF6gm2OqGx3pUVKQvIbgfnU/"
+              crossorigin="anonymous" />
+        <script src="https://unpkg.com/tinymce@5.5.1/tinymce.min.js"
+                asp-fallback-src="~/lib/tinymce/5.5.1/tinymce.min.js"
+                asp-fallback-test="window.tinymce"
+                integrity="sha384-zuETV1iPOoJdf/Z465ljv1XO9ejeYE6/PsfGd2lhoIq5xEyq4V2SwxHlSBiHJfuh"
+                crossorigin="anonymous"></script>
+    </environment>
+    <script src="~/lib/tinymce-lang/langs/fa.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            directionality: 'rtl',
+            language: 'fa',
+
+            plugins: "code image searchreplace wordcount link",
+
+            content_style: "body {font-family: IRANSans;}",
+
+            rel_list: [
+                { title: 'No Referrer', value: 'noreferrer' },
+                { title: 'External Link', value: 'external' }
+            ],
+
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
+        });
+    </script>
+}
+
+<div class="container mt-4">
+    <h1 class="text-size-6">@ViewData["Title"]</h1>
+    <hr />
+
+    <form asp-action="Personalizing" asp-controller="Personalization" asp-area="Admin" enctype="multipart/form-data">
+        <div class="mb-3 row">
+            <label asp-for="IndexTitle" class="col-sm-2 col-form-label font-weight-bold">عنوان صفحه نخست</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="IndexTitle">
+                <small class="text-muted mt-2">
+                    از انتخاب عنوان طولانی پرهیز کنید. سایت در آینده با این نام شناخته می‌شود.
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label asp-for="IndexDescription" class="col-sm-2 col-form-label font-weight-bold">توضیح صفحه نخست</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="IndexDescription">
+                <small class="text-muted mt-2">
+                    این توضیح در شبکه‌های اجتماعی و جست‌وجوگرها برای صفحه نخست سایت نمایش داده می‌شود. در یک یا دو جمله کوتاه بنویسید.
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label asp-for="AdditionalTitle" class="col-sm-2 col-form-label font-weight-bold">
+                عنوان افزوده
+                <span class="font-weight-light small text-nowrap">(غیر از صفحه اصلی)</span>
+            </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="AdditionalTitle">
+                <small class="text-muted mt-2">
+                    این عنوان به عناوین سایر صفحات افزوده می‌شود و ضروری نیست. برای تفکیک از عنوان اصلی صفحات، در آغاز از حروف جداکننده استفاده کنید.
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label asp-for="SiteFootnote" class="col-sm-2 col-form-label font-weight-bold">پانوشت</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" asp-for="SiteFootnote"></textarea>
+                <small class="text-muted mt-2">
+                    پانوشت در تمام صفحات سایت تکرار می‌شود.
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <input type="file" asp-for="SiteCover" class="d-none js-siteCover" accept="image/jpg, image/jpeg, image/png, image/gif" />
+            <label asp-for="SiteCover" class="col-sm-2 col-form-label font-weight-bold">
+                جلد
+                <span class="font-weight-light small text-nowrap">(کاور)</span>
+                <span class="btn btn-light border m-1">تغییر جلد</span>
+            </label>
+            <div class="col-sm-10">
+                <label asp-for="SiteCover" class="d-block w-100 rounded border border-secondary bg-light cursor-pointer js-siteCover-preview" style="height: 33vh; background-image: url(@siteCoverSrc); background-repeat: no-repeat; background-position: center; background-size: cover;"><span></span></label>
+                <small class="text-muted mt-2">
+                    کاور یا جلد تصویر پهن و بزرگی است که در بالای تمام صفحات سایت -به غیر از موارد استتثنا شده- نمایش داده می‌شود.
+                    <label asp-for="SiteCover" class="btn btn-sm btn-light border m-1">تغییر جلد</label>
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <input type="file" asp-for="SiteLogo" class="d-none js-siteLogo" accept="image/jpg, image/jpeg, image/png, image/gif" />
+            <label asp-for="SiteLogo" class="col-sm-2 col-form-label font-weight-bold">
+                لوگو
+                <span class="font-weight-light small text-nowrap">(چهرک)</span>
+                <span class="btn btn-light border m-1">تغییر لوگو</span>
+            </label>
+            <div class="col-sm-10">
+                <label asp-for="SiteLogo" class="d-block rounded-circle border border-secondary bg-light cursor-pointer js-siteLogo-preview" style="width: 150px; height: 150px; background-image: url(@siteLogoSrc); background-repeat: no-repeat; background-position: center; background-size: cover;"><span></span></label>
+                <small class="text-muted mt-2">
+                    لوگو یا چهرک تصویر گِرد کوچکی است که بالای سایت در کنار جلد نمایش داده می‌شود.
+                    <label asp-for="SiteLogo" class="btn btn-sm btn-light border m-1">تغییر لوگو</label>
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <input type="file" asp-for="TextLogo" class="d-none js-textLogo" accept="image/jpg, image/jpeg, image/png, image/gif" />
+            <label asp-for="TextLogo" class="col-sm-2 col-form-label font-weight-bold">
+                عنوان نوشتاری لوگو
+                <span class="font-weight-light small text-nowrap">(تصویر نوشتاری)</span>
+                <span class="btn btn-light border m-1">تغییر تصویر</span>
+            </label>
+            <div class="col-sm-10">
+                <label asp-for="TextLogo" class="d-block rounded border border-secondary bg-light cursor-pointer js-textLogo-preview" style="max-width: 150px; width: 150px; min-height: 50px; max-height: 70px; background-image: url(@textLogoSrc); background-repeat: no-repeat; background-position: center; background-size: cover;"><span></span></label>
+                <small class="text-muted mt-2">
+                    تصویر نوشتاری که کنار لوگو نمایش داده می‌شود.
+                    برای نمایش مناسب تا حداکثر عرض ۱۵۰پیکسل قابل استفاده و پهنای پیشنهادی میان ۵۰ تا ۷۰ پیکسل است.
+                    <label asp-for="TextLogo" class="btn btn-sm btn-light border m-1">تغییر تصویر</label>
+                </small>
+            </div>
+        </div>
+
+        <hr />
+        <div class="text-left">
+            <button type="submit" class="btn btn-light border">
+                ذخیره و اعمال تغییرات
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.js-siteCover, .js-siteLogo, .js-textLogo').forEach(e => e.addEventListener('change', function (e) {
+            preview = e.target.parentNode.querySelector("[class*='preview']");
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            preview.style['background-image'] = `url('${preview.src}')`;
+            preview.addEventListener('load', () => URL.revokeObjectURL(preview.src));
+        }));
+    </script>
+} 

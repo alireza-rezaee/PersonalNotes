@@ -15,6 +15,7 @@ using Rezaee.Alireza.Web.Helpers.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Rezaee.Alireza.Web.Attributes;
 using Rezaee.Alireza.Web.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -32,21 +33,23 @@ namespace Rezaee.Alireza.Web.Controllers
         [Route("", Name = "SiteIndex")]
         public async Task<IActionResult> Index()
         {
-            _logger.Debug("Hello world from .NET Core 3.x!");
-            ViewData["FullName"] = _context.Options.First(i => i.OptionName == "FullName").OptionValue;
-            ViewData["Title"] = _context.Options.First(i => i.OptionName == "IndexTitle").OptionValue;
+            var personalizations = await _context.Personalizations.Where(item => (new string[] { "IndexTitle", "IndexDescription", "SiteCoverSrc" }).Contains(item.Title)).ToListAsync();
+
+            ViewData["Title"] = personalizations.FirstOrDefault(i => i.Title == "IndexTitle").Value;
+            ViewData["Description"] = personalizations.FirstOrDefault(i => i.Title == "IndexDescription").Value;
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            ViewData["Image"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{personalizations.FirstOrDefault(i => i.Title == "SiteCoverSrc").Value}";
 
             return View(
                 new Models.ViewModels.Home.IndexViewModel()
                 {
-                    QuranAyah = _context.Options.First(i => i.OptionName == "QuranAyah").OptionValue,
-                    AboutAuthorSummary = _context.Options.First(i => i.OptionName == "AboutAuthorSummary").OptionValue,
                     Posts = await PostsController.RetrieveLatestPostsSummary(count: 8, context: _context),
                     Links = await _context.Links.OrderBy(link => link.IsExpanded).ThenBy(link => link.Id).ToListAsync(),
                     Blocks = await BlocksController.GetBlocks(context: _context)
                 });
         }
 
+        //TODO: Complete roles
         [Route("/management")]
         [AuthorizeRoles(
             //Posts Controller
@@ -89,14 +92,11 @@ namespace Rezaee.Alireza.Web.Controllers
             Roles.RolesList,
             Roles.RoleDelete
             )]
-        public IActionResult Management()
+        public async Task<IActionResult> Management()
         {
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            ViewData["Image"] = await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc");
             return View();
-        }
-
-        public IActionResult Test ()
-        {
-            throw new Exception();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

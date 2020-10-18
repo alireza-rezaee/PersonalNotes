@@ -20,24 +20,23 @@ namespace Rezaee.Alireza.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(string page = "HeadCover")
         {
-            var options = _context.Options;
+            var personalizations = await _context.Personalizations
+                .Where(item => (new string[] { "IndexTitle", "SiteFootnote", "SiteCoverSrc", "SiteLogoSrc", "TextLogoSrc" })
+                .Contains(item.Title)).ToListAsync();
+
             if (page == "HeadCover")
                 return View(page, new HeadCoverViewModel()
                 {
-                    //ToDo: What if null FirstOrDefaultAsync();
-                    FullName = (await options.FirstOrDefaultAsync(i => i.OptionName == "FullName")).OptionValue,
-                    AvatarPath_64px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_64px")).OptionValue,
-                    AvatarPath_100px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_100px")).OptionValue,
-                    AvatarPath_125px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_125px")).OptionValue,
-                    AvatarPath_150px = (await options.FirstOrDefaultAsync(i => i.OptionName == "AvatarPath_150px")).OptionValue,
-                    IllustratedNamePath = (await options.FirstOrDefaultAsync(i => i.OptionName == "IllustratedNamePath")).OptionValue,
-                    CoverPath = (await options.FirstOrDefaultAsync(i => i.OptionName == "CoverPath")).OptionValue
+                    SiteName = personalizations.FirstOrDefault(item => item.Title == "IndexTitle").Value,
+                    SiteCoverSrc = personalizations.FirstOrDefault(item => item.Title == "SiteCoverSrc").Value,
+                    SiteLogoSrc = personalizations.FirstOrDefault(item => item.Title == "SiteLogoSrc").Value,
+                    TextLogoSrc = personalizations.FirstOrDefault(item => item.Title == "TextLogoSrc").Value
                 });
             else if (page == "FootCover")
             {
-                ViewData["FootNote"] = (await options.FirstOrDefaultAsync(i => i.OptionName == "SiteFootnote")).OptionValue;
-                return View(page, new FootCoverViewModel() {
-                    SiteFootnote = (await options.FirstOrDefaultAsync(i => i.OptionName == "SiteFootnote")).OptionValue
+                return View(page, new FootCoverViewModel()
+                {
+                    SiteFootnote = personalizations.FirstOrDefault(item => item.Title == "SiteFootnote").Value
                 });
             }
 

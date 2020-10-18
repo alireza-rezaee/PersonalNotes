@@ -102,5 +102,10 @@ namespace Rezaee.Alireza.Web.Helpers
         public const string FileRemove = "حذف فایل";
         public const string FileRename = "تغییر نام فایل";
         #endregion
+
+        // ~/Areas/Admin
+        #region PersonalizationController (Counts: 1)
+        public const string Personalize = "شخصی‌سازی سایت";
+        #endregion
     }
 }

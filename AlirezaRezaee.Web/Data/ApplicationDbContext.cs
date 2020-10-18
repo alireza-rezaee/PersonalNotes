@@ -17,7 +17,7 @@ namespace Rezaee.Alireza.Web.Data
         {
         }
 
-        public DbSet<Option> Options { get; set; }
+        public DbSet<Personalization> Personalizations { get; set; }
 
         public DbSet<UserAbout> Abouts { get; set; }
 

@@ -25,5 +25,19 @@ namespace Rezaee.Alireza.Web.Extensions
             if (!allowedTypes.Contains(file.ContentType))
                 throw new Exception("فایل انتخاب شده برای محصول در قالب مجاز نمی باشد.");
         }
+
+        /// <summary>
+        /// Check uploaded file 
+        /// </summary>
+        /// <param name="file">uploaded file </param>
+        /// <param name="allowedTypes">Allowed MIME types to upload </param>
+        public static void Check(this IFormFile file, string[] allowedTypes)
+        {
+            if (file == null || file.Length == 0)
+                throw new Exception("فایلی انتخاب نشده است.");
+
+            if (!allowedTypes.Contains(file.ContentType))
+                throw new Exception("فایل انتخاب شده برای محصول در قالب مجاز نمی باشد.");
+        }
     }
 }

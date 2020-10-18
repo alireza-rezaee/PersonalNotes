@@ -7,18 +7,12 @@ namespace Rezaee.Alireza.Web.Models.ViewModels.HeaderFooter
 {
     public class HeadCoverViewModel
     {
-        public string FullName { get; set; }
+        public string SiteName { get; set; }
 
-        public string AvatarPath_64px { get; set; }
+        public string SiteCoverSrc { get; set; }
 
-        public string AvatarPath_100px { get; set; }
+        public string SiteLogoSrc { get; set; }
 
-        public string AvatarPath_125px { get; set; }
-
-        public string AvatarPath_150px { get; set; }
-
-        public string CoverPath { get; set; }
-
-        public string IllustratedNamePath { get; set; }
+        public string TextLogoSrc { get; set; }
     }
 }

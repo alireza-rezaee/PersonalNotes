@@ -16,7 +16,7 @@ using Rezaee.Alireza.Web.Helpers;
 namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("files")]
+    [Route("admin/files")]
     public class FilesController : Controller
     {
         private readonly ApplicationDbContext _context;
