@@ -23,13 +23,11 @@ namespace Rezaee.Alireza.Web.Middleware
     public class RequestResponseLoggingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IWebHostEnvironment _env;
         private readonly ILogger _logger;
 
-        public RequestResponseLoggingMiddleware(RequestDelegate next, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public RequestResponseLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
-            _env = env;
             _logger = loggerFactory.CreateLogger<RequestResponseLoggingMiddleware>();
         }
 
@@ -161,10 +159,10 @@ namespace Rezaee.Alireza.Web.Middleware
                 await dbContext.AddAsync(log);
                 await dbContext.SaveChangesAsync();
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
             finally
             {
                 _logger.LogInformation(
@@ -175,14 +173,14 @@ namespace Rezaee.Alireza.Web.Middleware
             }
         }
 
-        private List<StringCouple> RetrieveRequestHeaders(HttpRequest request) => request.Headers.Select(header => new StringCouple { Key = header.Key.ToString(), Value = header.Value.ToString() }).ToList();
+        private static List<StringCouple> RetrieveRequestHeaders(HttpRequest request) => request.Headers.Select(header => new StringCouple { Key = header.Key.ToString(), Value = header.Value.ToString() }).ToList();
 
-        private List<StringCouple> RetrieveResponseHeaders(HttpResponse response) => response.Headers.Select(header => new StringCouple { Key = header.Key.ToString(), Value = header.Value.ToString() }).ToList();
+        private static List<StringCouple> RetrieveResponseHeaders(HttpResponse response) => response.Headers.Select(header => new StringCouple { Key = header.Key.ToString(), Value = header.Value.ToString() }).ToList();
 
-        private async Task<string> RetrieveRequestBody(HttpRequest request)
+        private static async Task<string> RetrieveRequestBody(HttpRequest request)
         {
-            try
-            {
+            //try
+            //{
                 var body = request.Body;
 
                 //This line allows us to set the reader for the request back at the beginning of its stream.
@@ -201,17 +199,17 @@ namespace Rezaee.Alireza.Web.Middleware
                 request.Body = body;
 
                 return bodyAsText;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+                
+            //}
         }
 
-        private RequestFormLog RetrieveRequestFormData(HttpRequest request)
+        private static RequestFormLog RetrieveRequestFormData(HttpRequest request)
         {
-            try
-            {
+            //try
+            //{
                 RequestFormLog formModel = null;
 
                 if (request.Form.Any())
@@ -234,35 +232,12 @@ namespace Rezaee.Alireza.Web.Middleware
                 }
 
                 return formModel;
-            }
-            catch (Exception e)
-            {
+            //}
+            //catch (Exception e)
+            //{
 
-                throw e;
-            }
-        }
-
-        private async Task<string> RetrieveResponseBody(HttpResponse response)
-        {
-            try
-            {
-                var original = response.Body;
-                var stream = new MemoryStream();
-                response.Body = stream;
-
-                stream.Seek(0, SeekOrigin.Begin);
-                var body = new StreamReader(stream).ReadToEnd();
-                //var url = UriHelper.GetDisplayUrl(context.Request);
-                //log.Debug("Response Url '{url}' Response Body '{responsebody}'", url, body);
-                stream.Seek(0, SeekOrigin.Begin);
-                await stream.CopyToAsync(original);
-
-                return body;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //    throw e;
+            //}
         }
     }
 }

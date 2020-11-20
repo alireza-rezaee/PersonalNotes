@@ -166,6 +166,14 @@
     <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144514_DropRecommendeds.Designer.cs" />
     <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144911_SeedCleaning.cs" />
     <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144911_SeedCleaning.Designer.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201009180241_AddRequestResponse.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201009180241_AddRequestResponse.Designer.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201010120103_AlterRequestResponse01.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201010120103_AlterRequestResponse01.Designer.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201010160730_AlterRequestResponse02.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201010160730_AlterRequestResponse02.Designer.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201120225353_AddRequestResponse.cs" />
+    <Compile Remove="Data\Migrations\LogDbContextMigrations\20201120225353_AddRequestResponse.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

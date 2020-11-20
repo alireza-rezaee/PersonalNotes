@@ -22,8 +22,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.RequestResponse", b =>
                 {
                     b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool?>("HasHttps")
                         .HasColumnType("bit");
@@ -65,7 +64,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.RequestResponseDetails", b =>
                 {
                     b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Exception")
                         .HasColumnType("nvarchar(max)");

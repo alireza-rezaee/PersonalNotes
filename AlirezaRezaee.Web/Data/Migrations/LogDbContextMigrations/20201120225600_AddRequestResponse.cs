@@ -11,7 +11,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
                 name: "RequestResponse",
                 columns: table => new
                 {
-                    RequestId = table.Column<string>(maxLength: 50, nullable: false),
+                    RequestId = table.Column<string>(nullable: false),
                     Method = table.Column<string>(maxLength: 7, nullable: true),
                     HasHttps = table.Column<bool>(nullable: true),
                     Path = table.Column<string>(maxLength: 2048, nullable: true),
@@ -19,7 +19,8 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
                     StatusCode = table.Column<int>(nullable: false),
                     IP = table.Column<string>(maxLength: 15, nullable: true),
                     ResponseTime = table.Column<long>(nullable: false),
-                    Time = table.Column<DateTime>(nullable: false)
+                    Time = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,7 +39,8 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
                     ResponseHeaders = table.Column<string>(nullable: true),
                     RequestBody = table.Column<string>(nullable: true),
                     ResponseBody = table.Column<string>(nullable: true),
-                    Exception = table.Column<string>(nullable: true)
+                    Exception = table.Column<string>(nullable: true),
+                    UserRoles = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

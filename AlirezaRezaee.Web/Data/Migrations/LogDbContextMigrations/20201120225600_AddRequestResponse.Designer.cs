@@ -10,8 +10,8 @@ using Rezaee.Alireza.Web.Data;
 namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
 {
     [DbContext(typeof(LogsDbContext))]
-    [Migration("20201010120103_AlterRequestResponse01")]
-    partial class AlterRequestResponse01
+    [Migration("20201120225600_AddRequestResponse")]
+    partial class AddRequestResponse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,8 +24,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.RequestResponse", b =>
                 {
                     b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool?>("HasHttps")
                         .HasColumnType("bit");
@@ -67,7 +66,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.RequestResponseDetails", b =>
                 {
                     b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Exception")
                         .HasColumnType("nvarchar(max)");
@@ -94,6 +93,9 @@ namespace Rezaee.Alireza.Web.Data.Migrations.LogDbContextMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResponseHeaders")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRoles")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestId");

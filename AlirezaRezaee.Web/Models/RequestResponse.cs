@@ -9,7 +9,6 @@ namespace Rezaee.Alireza.Web.Models
     public class RequestResponse
     {
         [Key]
-        [MaxLength(50)]
         public string RequestId { get; set; }
 
         [MaxLength(7)]
