@@ -1,7 +1,3 @@
-using KissLog;
-using KissLog.AspNetCore;
-using KissLog.CloudListeners.Auth;
-using KissLog.CloudListeners.RequestLogsListener;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,15 +43,16 @@ namespace Rezaee.Alireza.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ILogger>((context) =>
-            {
-                return Logger.Factory.Get();
-            });
+            
+            //KissLog
+            //services.AddScoped<ILogger>((context) =>
+            //{
+            //    return Logger.Factory.Get();
+            //});
 
-            var connectionString = !_env.IsDevelopment() ? "MyPersonalSiteDb" : "LocalDb";
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString(connectionString)));
+                    Configuration.GetConnectionString("MyPersonalSiteDb")));
 
             //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();

@@ -1,5 +1,4 @@
-﻿using KissLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -23,12 +22,10 @@ namespace Rezaee.Alireza.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger _logger;
 
-        public HomeController(ApplicationDbContext context, ILogger logger)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         [Route("", Name = "SiteIndex")]
