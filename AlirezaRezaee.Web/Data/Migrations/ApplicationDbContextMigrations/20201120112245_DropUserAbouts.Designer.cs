@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rezaee.Alireza.Web.Data;
 
 namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201120112245_DropUserAbouts")]
+    partial class DropUserAbouts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,6 +319,22 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Blocks");
                 });
 
+            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PostId");
+
+                    b.ToTable("DestructivePosts");
+                });
+
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.Link", b =>
                 {
                     b.Property<short>("Id")
@@ -550,6 +568,19 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Posterpins");
                 });
 
+            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Recommendeds", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId");
+
+                    b.ToTable("Recommendeds");
+                });
+
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.Share", b =>
                 {
                     b.Property<int>("PostId")
@@ -639,6 +670,15 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
+                {
+                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                        .WithOne("DestructivePosts")
+                        .HasForeignKey("Rezaee.Alireza.Web.Models.DestructivePost", "PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Rezaee.Alireza.Web.Models.Markdown", b =>
                 {
                     b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
@@ -677,6 +717,15 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
                         .WithOne("Posterpins")
                         .HasForeignKey("Rezaee.Alireza.Web.Models.Posterpins", "PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Recommendeds", b =>
+                {
+                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                        .WithOne("RecommendedPost")
+                        .HasForeignKey("Rezaee.Alireza.Web.Models.Recommendeds", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

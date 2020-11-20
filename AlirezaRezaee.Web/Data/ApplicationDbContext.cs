@@ -19,8 +19,6 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Personalization> Personalizations { get; set; }
 
-        public DbSet<UserAbout> Abouts { get; set; }
-
         public DbSet<Link> Links { get; set; }
 
         public DbSet<Post> Posts { get; set; }
@@ -31,13 +29,9 @@ namespace Rezaee.Alireza.Web.Data
 
         public DbSet<Markdown> Markdowns { get; set; }
 
-        public DbSet<Recommendeds> Recommendeds { get; set; }
-
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<PostTag> PostTags { get; set; }
-
-        public DbSet<DestructivePost> DestructivePosts { get; set; }
 
         public DbSet<Page> Pages { get; set; }
 
@@ -75,15 +69,6 @@ namespace Rezaee.Alireza.Web.Data
                     .WithOne(s => s.Markdown)
                     .HasForeignKey<Markdown>(s => s.PostId);
             });
-
-            builder.Entity<Recommendeds>(entity => {
-                entity.HasKey(s => s.PostId);
-                entity.HasOne(s => s.Post)
-                    .WithOne(s => s.RecommendedPost)
-                    .HasForeignKey<Recommendeds>(s => s.PostId);
-            });
-
-
 
             //Posts -> (many to many) <- Tags
             builder.Entity<PostTag>()

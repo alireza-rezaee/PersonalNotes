@@ -36,10 +36,6 @@ namespace Rezaee.Alireza.Web.Models
 
         public Markdown Markdown { get; set; }
 
-        public Recommendeds RecommendedPost { get; set; }
-
-        public DestructivePost DestructivePosts { get; set; }
-
         public ICollection<PostTag> PostTags { get; set; }
 
         public Pin Pin { get; set; }

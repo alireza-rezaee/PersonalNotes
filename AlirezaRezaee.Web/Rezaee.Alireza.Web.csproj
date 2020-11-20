@@ -149,6 +149,22 @@
     <Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.Designer.cs" />
     <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201017190753_SeedPersonalizations01.cs" />
     <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201017190753_SeedPersonalizations01.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111648_SeedCleaning.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111648_SeedCleaning.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111843_SeedCleaning.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111843_SeedCleaning.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112309_SeedCleaning.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112309_SeedCleaning.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112409_SeedCleaning.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112409_SeedCleaning.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144153_DropRecommendeds.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144153_DropRecommendeds.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144340_DropDestructivePosts.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144340_DropDestructivePosts.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144514_DropRecommendeds.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144514_DropRecommendeds.Designer.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144911_SeedCleaning.cs" />
+    <Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144911_SeedCleaning.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -901,7 +901,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
-                .Include(p => p.DestructivePosts)
                 .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
                 .Skip(skip)
                 .Take(count)
@@ -910,7 +909,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
-                .Include(p => p.DestructivePosts)
                 .ToListAsync();
 
             //Todo: performance problem -> not use 2 include for all
@@ -1019,7 +1017,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
-                .Include(p => p.DestructivePosts)
                 .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
                 .FirstOrDefaultAsync(post => post.Id == postId);
             if (retrievePost == null)
@@ -1029,7 +1026,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
-                .Include(p => p.DestructivePosts)
                 .ToListAsync();
 
             return MostRelatedPostsToTagsSummary(post: retrievePost, count: count, skip: skip);
@@ -1042,7 +1038,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
-                .Include(p => p.DestructivePosts)
                 .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
                 .FirstOrDefaultAsync(post => post.Id == postId);
             if (retrievePost == null)
@@ -1055,7 +1050,6 @@ namespace Rezaee.Alireza.Web.Controllers
                 .Include(p => p.Article)
                 .Include(p => p.Share)
                 .Include(p => p.Markdown)
-                .Include(p => p.DestructivePosts)
                 .ToListAsync();
 
             return View(new RelatedPostsViewModel {
@@ -1124,8 +1118,6 @@ namespace Rezaee.Alireza.Web.Controllers
         private static bool IsMarkdown(Post post) => post.Markdown != null;
 
         private static bool IsShare(Post post) => post.Share != null;
-
-        private static bool IsDestructive(Post post) => post.DestructivePosts != null;
 
         //Get post Address(es)
         public static string GetPostUrl(Post post)
