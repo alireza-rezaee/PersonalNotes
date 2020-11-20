@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Rezaee.Alireza.Web.Attributes;
 using Rezaee.Alireza.Web.Helpers;
 using Microsoft.AspNetCore.Http;
+using Rezaee.Alireza.Web.Extensions;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -37,8 +38,10 @@ namespace Rezaee.Alireza.Web.Controllers
 
             ViewData["Title"] = personalizations.FirstOrDefault(i => i.Title == "IndexTitle").Value;
             ViewData["Description"] = personalizations.FirstOrDefault(i => i.Title == "IndexDescription").Value;
-            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            ViewData["Image"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{personalizations.FirstOrDefault(i => i.Title == "SiteCoverSrc").Value}";
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(Index), nameof(HomeController).ControllerName())}";
+            ViewData["Image"] = new Uri(
+                baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"),
+                relativeUri: personalizations.FirstOrDefault(i => i.Title == "SiteCoverSrc").Value).ToString();
 
             return View(
                 new Models.ViewModels.Home.IndexViewModel()
@@ -92,10 +95,8 @@ namespace Rezaee.Alireza.Web.Controllers
             Roles.RolesList,
             Roles.RoleDelete
             )]
-        public async Task<IActionResult> Management()
+        public IActionResult Management()
         {
-            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            ViewData["Image"] = await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc");
             return View();
         }
 

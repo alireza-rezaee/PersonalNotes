@@ -53,7 +53,9 @@ namespace Rezaee.Alireza.Web.Controllers
             var page = await _context.Pages.Where(page => page.Path == path).FirstOrDefaultAsync();
             if (page == null) return NotFound();
 
-            ViewData["Title"] = page.Title;
+            ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: page.ImageCoverPath).ToString();
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(Details), nameof(PagesController).ControllerName(), new { path })}";
+
             return View(page);
         }
 

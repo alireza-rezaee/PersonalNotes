@@ -27,7 +27,15 @@ namespace Rezaee.Alireza.Web.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Index() => View(await _context.Links.OrderBy(link => link.IsExpanded).ThenBy(link => link.Id).ToListAsync());
+        public async Task<IActionResult> Index()
+        {
+            ViewData["Image"] = new Uri(
+                baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"),
+                relativeUri: (await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc")).Value).ToString();
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(Index), nameof(LinksController).ControllerName())}";
+
+            return View(await _context.Links.OrderBy(link => link.IsExpanded).ThenBy(link => link.Id).ToListAsync());
+        }
 
         [HttpGet("create")]
         [Authorize(Roles = Roles.LinkCreate)]

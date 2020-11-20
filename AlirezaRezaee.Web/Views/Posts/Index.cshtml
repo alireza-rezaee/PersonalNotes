@@ -6,8 +6,24 @@
 
 @{
     ViewData["Title"] = "ارسالی ها";
+    ViewData["Description"] = "فهرست آخرین ارسالی‌ها را اینجا ببینید.";
+
     var lastPageNumber = (int)ViewData["LastPageNumber"];
     var currentPageNumber = (int)ViewData["PageNumber"];
+}
+@section Meta {
+    <meta name="description" content="@Html.Raw((string)ViewData["Description"])">
+    <link rel="canonical" href="@((string)ViewData["Url"])" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@((string)ViewData["Url"])">
+    <meta property="og:title" content="@Html.Raw((string)ViewData["Title"])">
+    <meta property="og:description" content="@Html.Raw((string)ViewData["Description"])">
+    <meta property="og:image" content="@((string)ViewData["Image"])">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="@((string)ViewData["Url"])">
+    <meta property="twitter:title" content="@Html.Raw((string)ViewData["Title"])">
+    <meta property="twitter:description" content="@Html.Raw((string)ViewData["Description"])">
+    <meta property="twitter:image" content="@((string)ViewData["Image"])">
 }
 @section Head {
     <style>
@@ -99,8 +115,8 @@
                             @if (post.Type != null)
                             {
                                 @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
-                                    User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
-                                    User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
+                                   User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
+                                   User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
                                 {
                                     <div class="dropleft position-absolute" style="right:0; top:0; z-index: 99;">
                                         <button class="p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-toggle="dropdown">

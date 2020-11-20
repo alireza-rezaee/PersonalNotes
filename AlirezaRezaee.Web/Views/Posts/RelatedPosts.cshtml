@@ -1,7 +1,22 @@
 ﻿@model Rezaee.Alireza.Web.Models.ViewModels.Posts.RelatedPostsViewModel
 
 @{
-    ViewData["Title"] = "مطالب مرتبط با «" + Model.TargetPost.Title + "»";
+    ViewData["Title"] = $"ارسالی‌های مرتبط با «{Model.TargetPost.Title}»";
+    ViewData["Description"] = $"فهرست ارسالی‌های مرتبط با «{Model.TargetPost.Title}» را اینجا ببینید.";
+}
+@section Meta {
+    <meta name="description" content="@Html.Raw((string)ViewData["Description"])">
+    <link rel="canonical" href="@((string)ViewData["Url"])" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@((string)ViewData["Url"])">
+    <meta property="og:title" content="@Html.Raw((string)ViewData["Title"])">
+    <meta property="og:description" content="@Html.Raw((string)ViewData["Description"])">
+    <meta property="og:image" content="@((string)ViewData["Image"])">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="@((string)ViewData["Url"])">
+    <meta property="twitter:title" content="@Html.Raw((string)ViewData["Title"])">
+    <meta property="twitter:description" content="@Html.Raw((string)ViewData["Description"])">
+    <meta property="twitter:image" content="@((string)ViewData["Image"])">
 }
 
 <!-- begin: مطالب سایت -->

@@ -40,6 +40,12 @@ namespace Rezaee.Alireza.Web.Controllers
         [Route("page/{page:int:min(1)}")]
         public async Task<IActionResult> Index(int page = 1)
         {
+            ViewData["Image"] = new Uri(
+                baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), 
+                relativeUri: (await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc")).Value).ToString();
+            ViewData["Image"] = (await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc")).Value;
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(Index), nameof(PostsController).ControllerName(), new { page })}";
+
             ViewData["PageNumber"] = page;
             ViewData["LastPageNumber"] = (int)Math.Ceiling(await _context.Posts.CountAsync() / 10d);
             return View(await RetrieveLatestPostsSummary(count: 10, skip: (page - 1) * 10));
@@ -57,6 +63,9 @@ namespace Rezaee.Alireza.Web.Controllers
                 var post = await _context.Posts.Include(p => p.Article).Include(p => p.Share).Include(p => p.Markdown).Where(p => dateTime.Date == p.PublishDateTime.Date && postId == p.Id).FirstOrDefaultAsync();
                 if (post == null)
                     return NotFound();
+
+                ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: post.ThumbnailUrl).ToString();
+                ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(Details), nameof(PostsController).ControllerName(), new { year, month, day, postId, UrlTitle = post.Title })}";
 
                 var postType = DetectPostType(post);
 
@@ -114,6 +123,9 @@ namespace Rezaee.Alireza.Web.Controllers
 
             if (post == null)
                 return NotFound();
+
+            ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: post.ThumbnailUrl).ToString();
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(DetailMarkdown), nameof(PostsController).ControllerName(), new { year, month, day, postId})}";
 
             var markdownContent = string.Empty;
 
@@ -1035,6 +1047,9 @@ namespace Rezaee.Alireza.Web.Controllers
                 .FirstOrDefaultAsync(post => post.Id == postId);
             if (retrievePost == null)
                 return null;
+
+            ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: retrievePost.ThumbnailUrl).ToString();
+            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(RelatedPosts), nameof(PostsController).ControllerName(), new { count, skip })}";
 
             await _context.Posts.Where(p => RetrievePostIdsForRelatedPosts(retrievePost).Contains(p.Id))
                 .Include(p => p.Article)
