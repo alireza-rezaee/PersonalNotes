@@ -119,6 +119,8 @@ namespace Rezaee.Alireza.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -131,6 +133,7 @@ namespace Rezaee.Alireza.Web
                 app.UseHsts();
             }
             //app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -138,7 +141,7 @@ namespace Rezaee.Alireza.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            //app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
