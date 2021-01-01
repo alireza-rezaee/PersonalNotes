@@ -77,8 +77,8 @@ namespace Rezaee.Alireza.Web.Controllers
                 var dateTime = persianDateTime.ToDateTime();
                 var newPage = createVM.Page;
                 var newImage = createVM.CoverImage;
-                try
-                {
+                //try
+                //{
                     newPage.Path = Helpers.File.ValidateName(newPage.Path);
 
                     if (newPage.HasLayout == true && newImage != null)
@@ -99,11 +99,11 @@ namespace Rezaee.Alireza.Web.Controllers
 
                     _context.Add(newPage);
                     await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    throw e;
+                //}
             }
 
             return View(nameof(Create), createVM);
@@ -138,8 +138,8 @@ namespace Rezaee.Alireza.Web.Controllers
                 var newPage = editVM.Page;
                 var newImage = editVM.CoverImage;
 
-                try
-                {
+                //try
+                //{
                     page.Path = Helpers.File.ValidateName(editVM.Page.Path);
 
                     await CheckTitleExistence(page.Path, page.Id);
@@ -166,11 +166,11 @@ namespace Rezaee.Alireza.Web.Controllers
                     await _context.SaveChangesAsync();
 
                     return RedirectToAction(nameof(Details), nameof(PagesController).ControllerName(), new { path = page.Path });
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    throw e;
+                //}
             }
 
             return RedirectToAction(nameof(Edit), nameof(PagesController).ControllerName(), new { path = path });
@@ -184,8 +184,8 @@ namespace Rezaee.Alireza.Web.Controllers
             if (string.IsNullOrEmpty(path))
                 return NotFound();
 
-            try
-            {
+            //try
+            //{
                 var page = await _context.Pages.FirstOrDefaultAsync(page => page.Path == path);
                 if (page == null) return NotFound();
 
@@ -195,11 +195,11 @@ namespace Rezaee.Alireza.Web.Controllers
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index), nameof(PagesController).ControllerName());
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
         }
 
         private async Task CheckTitleExistence(string path)

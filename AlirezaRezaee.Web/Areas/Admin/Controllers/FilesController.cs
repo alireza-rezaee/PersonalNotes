@@ -62,10 +62,10 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
                     filesRow.Add(new Models.File { FilePath = $"/{filePath}", CreateDateTime = dateTime, ContentType = file.ContentType, Length = file.Length });
                 }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
             finally
             {
                 await _context.AddRangeAsync(filesRow);
@@ -82,8 +82,8 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(id))
                 return NotFound();
-            try
-            {
+            //try
+            //{
                 var file = await _context.Files.FindAsync(id);
                 if (file is null)
                     return NotFound();
@@ -91,12 +91,12 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
                 _fileManager.DeleteFile(file.FilePath);
                 _context.Remove(file);
                 await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
+            //}
+            //catch (Exception e)
+            //{
 
-                throw;
-            }
+            //    throw;
+            //}
 
             return RedirectToAction(actionName: nameof(Index), controllerName: nameof(FilesController).ControllerName());
         }

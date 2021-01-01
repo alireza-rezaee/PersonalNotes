@@ -69,7 +69,7 @@ namespace Rezaee.Alireza.Web.Helpers
         #endregion
 
         // ~/Areas/Admin
-        #region UsersController (Counts: 4)
+        #region UsersController (Counts: 5)
         public const string UsersList = "مشاهده کاربران";
         public const string UserDetails = "مشاهده مشخصات کاربران";
         public const string UserCreate = "افزودن کاربر";

@@ -52,8 +52,8 @@ namespace Rezaee.Alireza.Web.Controllers
                 if (string.IsNullOrEmpty(createVM.Html) && string.IsNullOrEmpty(createVM.Styles) && string.IsNullOrEmpty(createVM.Scripts))
                     return BadRequest();
 
-                try
-                {
+                //try
+                //{
                     await _context.AddAsync(new Block
                     {
                         Html = createVM.Html,
@@ -68,11 +68,11 @@ namespace Rezaee.Alireza.Web.Controllers
                     if (!string.IsNullOrEmpty(returnUrl))
                         return Redirect(returnUrl);
                     return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ControllerName());
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    throw e;
+                //}
             }
 
             return RedirectToAction(nameof(Create), nameof(BlocksController).ControllerName(), createVM);
@@ -121,8 +121,8 @@ namespace Rezaee.Alireza.Web.Controllers
                 if (string.IsNullOrEmpty(editVM.Html) && string.IsNullOrEmpty(editVM.Styles) && string.IsNullOrEmpty(editVM.Scripts))
                     return BadRequest();
 
-                try
-                {
+                //try
+                //{
                     block.Html = editVM.Html;
                     block.Styles = editVM.Styles;
                     block.Scripts = editVM.Scripts;
@@ -136,11 +136,11 @@ namespace Rezaee.Alireza.Web.Controllers
                     if (!string.IsNullOrEmpty(returnUrl))
                         return Redirect(returnUrl);
                     return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ControllerName());
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    throw e;
+                //}
             }
 
             return RedirectToAction(nameof(Edit), nameof(BlocksController).ControllerName(), editVM);
@@ -154,8 +154,8 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.BlockDelete)]
         public async Task<IActionResult> Delete(int id, string returnUrl)
         {
-            try
-            {
+            //try
+            //{
                 var block = await _context.Blocks.FindAsync(id);
                 if (block == null) return NotFound();
 
@@ -165,11 +165,11 @@ namespace Rezaee.Alireza.Web.Controllers
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ControllerName());
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
 
         }
 
@@ -182,8 +182,8 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.BlockVisibility)]
         public async Task<IActionResult> Enable(int id)
         {
-            try
-            {
+            //try
+            //{
                 var block = await _context.Blocks.FindAsync(id);
                 if (block == null) return NotFound();
 
@@ -199,11 +199,11 @@ namespace Rezaee.Alireza.Web.Controllers
                 });
                 await _context.SaveChangesAsync();
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.BlockVisibility)]
         public async Task<IActionResult> Disable(int id)
         {
-            try
-            {
+            //try
+            //{
                 var block = await _context.Blocks.FindAsync(id);
                 if (block == null) return NotFound();
 
@@ -233,11 +233,11 @@ namespace Rezaee.Alireza.Web.Controllers
                 await _context.SaveChangesAsync();
                 return Ok();
 
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
         }
 
         /// <summary>

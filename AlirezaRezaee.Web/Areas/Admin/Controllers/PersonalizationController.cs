@@ -55,8 +55,8 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
+                //try
+                //{
                     var personalizationTitles = new string[]
                     {
                         "IndexTitle", "IndexDescription", "SiteFootnote", "AdditionalTitle",
@@ -109,11 +109,11 @@ namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
 
                     _context.UpdateRange(personalizations);
                     await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    throw e;
+                //}
             }
 
             return RedirectToAction(actionName: nameof(Personalize), controllerName: nameof(PersonalizationController).ControllerName());

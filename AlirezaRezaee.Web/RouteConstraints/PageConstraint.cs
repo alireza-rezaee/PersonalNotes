@@ -25,15 +25,15 @@ namespace Rezaee.Alireza.Web.RouteConstraint
                     return false;
                 }
 
-                try
-                {
+                //try
+                //{
                     var context = (ApplicationDbContext)httpContext.RequestServices.GetService(typeof(ApplicationDbContext));
                     return context.Pages.Any(page => page.Path == parameterValueString);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    throw e;
+                //}
             }
 
             return false;

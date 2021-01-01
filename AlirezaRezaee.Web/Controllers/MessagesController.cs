@@ -45,17 +45,17 @@ namespace Rezaee.Alireza.Web.Controllers
                 return View(nameof(ContactUs), model);
             }
 
-            try
-            {
+            //try
+            //{
                 model.CreateDateTime = DateTime.Now;
                 await _context.Messages.AddAsync(model);
                 await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                //TODO: Notify the user. Please send the reason!
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    //TODO: Notify the user. Please send the reason!
+            //    throw e;
+            //}
 
             //TODO: Let the user know that this process has been completed successfully
             //TODO: Notify the user (Receiver) that a new message is in the inbox!
@@ -67,20 +67,20 @@ namespace Rezaee.Alireza.Web.Controllers
         public async Task<IActionResult> Details(int id)
         {
             Message message;
-            try
-            {
+            //try
+            //{
                 message = await _context.Messages.FindAsync(id);
                 if (message == null) return NotFound();
 
                 message.HaveRead = true;
                 _context.Update(message);
                 await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                //TODO: Notify the user. Please send the reason!
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    //TODO: Notify the user. Please send the reason!
+            //    throw e;
+            //}
 
             return View(message);
         }
@@ -90,19 +90,19 @@ namespace Rezaee.Alireza.Web.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             Message message;
-            try
-            {
+            //try
+            //{
                 message = await _context.Messages.FindAsync(id);
                 if (message == null) return NotFound();
 
                 _context.Remove(message);
                 await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                //TODO: Notify the user. Please send the reason!
-                throw e;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    //TODO: Notify the user. Please send the reason!
+            //    throw e;
+            //}
 
             return RedirectToAction(nameof(Index), nameof(MessagesController).ControllerName());
         }
