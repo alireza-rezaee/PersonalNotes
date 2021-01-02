@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Important Note: This file is listed in gitignore and saved changes are ignored.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -31,38 +33,38 @@ namespace Rezaee.Alireza.Web.Helpers
             if (type == EmailTypes.Direct)
                 return new SmtpClient
                 {
-                    Host = "mail.rezaee.org",
+                    Host = "mail.example.com",
                     Port = 587,
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential() { UserName = "direct@rezaee.org", Password = "63K%GmRLf4yJBy+7" }
+                    Credentials = new NetworkCredential() { UserName = "direct@rezaee.org", Password = "xxxxxxxx" }
                 };
             else if (type == EmailTypes.Newsletter)
                 return new SmtpClient
                 {
-                    Host = "mail.rezaee.org",
+                    Host = "mail.example.com",
                     Port = 587,
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential() { UserName = "newsletter@rezaee.org", Password = "8^xu4!2yZ^WNHbFR" }
+                    Credentials = new NetworkCredential() { UserName = "newsletter@rezaee.org", Password = "xxxxxxxx" }
                 };
             else if (type == EmailTypes.Sales)
                 return new SmtpClient
                 {
-                    Host = "mail.rezaee.org",
+                    Host = "mail.example.com",
                     Port = 587,
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential() { UserName = "sales@rezaee.org", Password = "C3$AZJ&3sndfVTQJ" }
+                    Credentials = new NetworkCredential() { UserName = "sales@rezaee.org", Password = "xxxxxxxx" }
                 };
             else //if (type == EmailTypes.NoReply || ...) 
                 return new SmtpClient
                 {
-                    Host = "mail.rezaee.org",
+                    Host = "mail.example.com",
                     Port = 587,
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential() { UserName = "no-reply@rezaee.org", Password = "vb&9WNKJV@JyU-9e" }
+                    Credentials = new NetworkCredential() { UserName = "no-reply@rezaee.org", Password = "xxxxxxxx" }
                 };
         }
     }
