@@ -21,7 +21,6 @@ using Rezaee.Alireza.Web.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using Rezaee.Alireza.Web.RouteConstraint;
-using Rezaee.Alireza.Web.Middleware;
 using Microsoft.AspNetCore.Http;
 using System.Text;
 using System.Diagnostics;
@@ -61,10 +60,6 @@ namespace Rezaee.Alireza.Web
                 .AddDefaultTokenProviders()
                 .AddRoles<IdentityRole>()
                 .AddErrorDescriber<PersianIdentityErrorDescriber>();
-
-            services.AddDbContext<LogsDbContext>(options =>
-                    options.UseSqlServer(
-                        Configuration.GetConnectionString("LogsCS")));
 
             var microsoftAuth = Configuration.GetSection("Authentication").GetSection("Microsoft");
             var gitHubAuth = Configuration.GetSection("Authentication").GetSection("GitHub");
@@ -116,7 +111,6 @@ namespace Rezaee.Alireza.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
             if (_env.IsDevelopment())
             {
@@ -137,8 +131,6 @@ namespace Rezaee.Alireza.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            //app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
