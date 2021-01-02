@@ -52,7 +52,7 @@ namespace Rezaee.Alireza.Web
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("MyPersonalSiteDb")));
+                    Configuration.GetConnectionString("BlogCS")));
 
             //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -64,7 +64,7 @@ namespace Rezaee.Alireza.Web
 
             services.AddDbContext<LogsDbContext>(options =>
                     options.UseSqlServer(
-                        Configuration.GetConnectionString("LogsConnection")));
+                        Configuration.GetConnectionString("LogsCS")));
 
             var microsoftAuth = Configuration.GetSection("Authentication").GetSection("Microsoft");
             var gitHubAuth = Configuration.GetSection("Authentication").GetSection("GitHub");
