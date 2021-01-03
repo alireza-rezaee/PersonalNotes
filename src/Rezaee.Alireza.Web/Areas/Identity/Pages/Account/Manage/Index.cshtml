@@ -8,16 +8,16 @@
 
 @section Head {
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css" />
+        <link rel="stylesheet" href="~/lib/md.datetimepicker/3.9.2/dist/jquery.md.bootstrap.datetimepicker.style.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://unpkg.com/md.bootstrappersiandatetimepicker@3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css"
-              asp-fallback-href="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.style.css"
-              asp-fallback-test-class="select-year-inline-box"
-              asp-fallback-test-property="z-index"
-              asp-fallback-test-value="9999999"
-              integrity="sha384-++CWOYXf99BrIoE2ttMqLQCFDyk2BvAT9PrDlb4HdF6gm2OqGx3pUVKQvIbgfnU/"
-              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/md.bootstrappersiandatetimepicker@3.9.2/dist/jquery.md.bootstrap.datetimepicker.style.css"
+              asp-fallback-href="~/lib/md.datetimepicker/3.9.2/dist/jquery.md.bootstrap.datetimepicker.style.css"
+              asp-fallback-test-class="mds-bootstrap-persian-datetime-picker-container"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="relative"
+              integrity="sha384-BWw05/YIaujVL2cVot1Obhfj9QDUVHZAw2YgBvRBTJshXE+neKFhHXW1+wrLGr5q"
+              crossorigin="anonymous" />
     </environment>
 }
 
@@ -132,13 +132,13 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <environment include="Development">
-        <script src="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.js"></script>
+        <script src="~/lib/md.datetimepicker/3.9.2/dist/jquery.md.bootstrap.datetimepicker.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://unpkg.com/md.bootstrappersiandatetimepicker@3.8.0/dist/jquery.md.bootstrap.datetimepicker.js"
-                asp-fallback-src="~/lib/md.datetimepicker/3.8.0/dist/jquery.md.bootstrap.datetimepicker.js"
+        <script src="https://unpkg.com/md.bootstrappersiandatetimepicker@3.9.2/dist/jquery.md.bootstrap.datetimepicker.js"
+                asp-fallback-src="~/lib/md.datetimepicker/3.9.2/dist/jquery.md.bootstrap.datetimepicker.js"
                 asp-fallback-test="$().MdPersianDateTimePicker"
-                integrity="sha384-Eo1ycI7mZBp05oYXawjEKfVVkLrFi5ZlyKuvrD9CCYmMy4ivJ2c6MpwXJnYN2E1f"
+                integrity="sha384-rgpJ4t5Ua4uv3gHXNjXF4TeaNiaQJyIqcOk9+ODg1AQRi82FXFICBjqLlkacMpk0"
                 crossorigin="anonymous"></script>
     </environment>
     <script>

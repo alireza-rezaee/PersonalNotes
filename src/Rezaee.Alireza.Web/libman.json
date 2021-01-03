@@ -63,8 +63,8 @@
       ]
     },
     {
-      "library": "md.bootstrappersiandatetimepicker@3.8.0",
-      "destination": "wwwroot/lib/md.datetimepicker/3.8.0",
+      "library": "md.bootstrappersiandatetimepicker@3.9.2",
+      "destination": "wwwroot/lib/md.datetimepicker/3.9.2",
       "files": [
         "dist/jquery.md.bootstrap.datetimepicker.js",
         "dist/jquery.md.bootstrap.datetimepicker.js.map",
@@ -91,16 +91,16 @@
       ]
     },
     {
-      "library": "highlight.js@10.2.1",
-      "destination": "wwwroot/lib/highlight.js/10.2.1"
+      "library": "highlight.js@10.5.0",
+      "destination": "wwwroot/lib/highlight.js/10.5.0"
     },
     {
-      "library": "codemirror@5.58.1",
-      "destination": "wwwroot/lib/codemirror/5.58.1"
+      "library": "codemirror@5.59.1",
+      "destination": "wwwroot/lib/codemirror/5.59.1"
     },
     {
-      "library": "tinymce@5.5.1",
-      "destination": "wwwroot/lib/tinymce/5.5.1"
+      "library": "tinymce@5.6.2",
+      "destination": "wwwroot/lib/tinymce/5.6.2"
     }
   ],
   "version": "1.0"
