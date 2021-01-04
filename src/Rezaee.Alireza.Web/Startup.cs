@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
@@ -41,10 +41,6 @@ namespace Rezaee.Alireza.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if NET5_0
-            services.AddDatabaseDeveloperPageExceptionFilter();
-#endif
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             //KissLog
@@ -119,11 +115,7 @@ namespace Rezaee.Alireza.Web
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-#if NET5_0
-                app.UseMigrationsEndPoint();
-#elif NETCOREAPP3_1
                 app.UseDatabaseErrorPage();
-#endif
             }
             else
             {
