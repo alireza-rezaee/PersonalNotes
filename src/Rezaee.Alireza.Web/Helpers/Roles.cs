@@ -87,12 +87,7 @@ namespace Rezaee.Alireza.Web.Helpers
         #region MessagesController (Counts: 3)
         public const string MessageDelete = "حذف پیام";
         public const string MessagesList = "فهرست پیام ها";
-        public const string MessagesSetReadOrNot = "فهرست پیام ها";
-        #endregion
-
-        // ~/Areas/Admin
-        #region LogsController (Counts: 1)
-        public const string LogsList = "مشاهده تاریخچه لاگ";
+        public const string MessagesSetReadOrNot = "تنظیم پیام به عنوان خوانده شده یا نشده";
         #endregion
 
         // ~/Areas/Admin

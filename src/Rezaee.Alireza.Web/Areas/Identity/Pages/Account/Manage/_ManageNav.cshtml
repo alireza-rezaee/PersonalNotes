@@ -13,7 +13,7 @@
     }
     <li class="nav-item"><a class="nav-link font-weight-light @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">احراز هویت دو مرحله ای</a></li>
     <li class="nav-item"><a class="nav-link font-weight-light @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">داده های شخصی</a></li>
-    <li class="nav-item"><form asp-page="./../logout" method="post" class="d-block"><button type="submit" class="btn btn-block nav-link font-weight-light text-right">خروج</button></form></li>
+    <li class="nav-item"><form asp-page="./../logout" method="post" class="d-block"><button type="submit" class="btn w-100 nav-link font-weight-light text-right">خروج</button></form></li>
 </ul>
 
 @if (User.IsInRole(Roles.RoleCreate) || User.IsInRole(Roles.RoleDelete) || User.IsInRole(Roles.RoleEdit) || User.IsInRole(Roles.UserCreate) || User.IsInRole(Roles.UserDelete) || User.IsInRole(Roles.UserEdit))
