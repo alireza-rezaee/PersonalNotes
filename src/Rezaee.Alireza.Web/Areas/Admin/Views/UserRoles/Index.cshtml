@@ -11,7 +11,7 @@
 }
 
 <br class="my-3" />
-<h2 class="text-right text-size-6">@ViewData["Title"] </h2>
+<h2 class="text-right fs-4">@ViewData["Title"] </h2>
 <hr />
 <div class="row">
     <div class="col-md text-right">
@@ -23,7 +23,7 @@
                 {
                     <div class="card border" dir="rtl">
                         <div class="card-header bg-light">
-                            <h4 class="text-right text-size-4">انتساب نقش به کاربر <span class="badge bg-secondary">@ViewData["username"]</span></h4>
+                            <h4 class="text-right fs-6">انتساب نقش به کاربر <span class="badge bg-secondary">@ViewData["username"]</span></h4>
                         </div>
                         <div class="card-body">
                             <label for="roles" class="form-label">یک یا چند نقش را انتخاب نمایید :</label>
@@ -50,7 +50,7 @@
 
                 <div class="card border" dir="rtl">
                     <div class="card-header bg-light">
-                        <h4 class="text-right text-size-4">نقش های منتسب شده به کاربر <span class="badge bg-secondary">@ViewData["username"]</span></h4>
+                        <h4 class="text-right fs-6">نقش های منتسب شده به کاربر <span class="badge bg-secondary">@ViewData["username"]</span></h4>
                     </div>
                     <div class="card-body">
                         @if (!Model.Roles.Any())
@@ -83,7 +83,7 @@
         {
             <div class="card border">
                 <div class="card-header bg-light">
-                    <h4 class="text-right text-size-4">کاربران دارای نقش <span class="badge bg-secondary">@ViewData["rolename"]</span></h4>
+                    <h4 class="text-right fs-6">کاربران دارای نقش <span class="badge bg-secondary">@ViewData["rolename"]</span></h4>
                 </div>
                 <div class="card-body">
                     @if (!Model.Users.Any())

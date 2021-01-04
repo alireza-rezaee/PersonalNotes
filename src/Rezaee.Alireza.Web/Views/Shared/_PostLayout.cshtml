@@ -12,16 +12,17 @@
     <meta name="msapplication-TileColor" content="#ffc40d">
     <meta name="theme-color" content="#ffffff">
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/5.0.0-alpha2/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/5.0.0-alpha3/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/5.0.0-alpha2/dist/css/bootstrap.min.css"
+        <link rel="stylesheet"
+              href="https://unpkg.com/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/5.0.0-alpha3/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only"
               asp-fallback-test-property="position"
               asp-fallback-test-value="absolute"
-              integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous" />
+              integrity="sha384-CuOF+2SnTUfTwSZjCXf01h7uYhfOBuxIhGKPbfEJ3+FqH/s6cIFN9bGr1HmAg4fQ" crossorigin="anonymous" />
         <link rel="stylesheet" href="~/css/main.css" />
     </environment>
     @RenderSection("Head", required: false)
@@ -35,7 +36,7 @@
     </div>
     <environment include="Development">
         <script src="~/lib/jquery/3.5.1/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/5.0.0-alpha2/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/bootstrap/5.0.0-alpha3/dist/js/bootstrap.bundle.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -43,10 +44,10 @@
                 asp-fallback-src="~/lib/jquery/3.5.1/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/bootstrap@5.0.0-alpha2/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/5.0.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        <script src="https://unpkg.com/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 asp-fallback-test="bootstrap"
-                integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+                integrity="sha384-popRpmFF9JQgExhfw5tZT4I9/CI5e2QcuUZPOVXb1m7qUmeR2b50u+YFEYe1wgzy" crossorigin="anonymous"></script>
         <script src="~/js/site.min.js"></script>
     </environment>
     @RenderSection("Scripts", required: false)

@@ -3,46 +3,16 @@
 }
 
 <div class="container mt-4">
-    <h1 class="text-size-6">@ViewData["Title"]</h1>
+    <h1 class="fs-4">@ViewData["Title"]</h1>
     <hr />
 
     <form asp-action="Uploading" asp-controller="Files" asp-area="Admin" enctype="multipart/form-data">
         <div id="form-files">
-            <div class="form-file mb-3">
-                <input type="file" name="files" class="form-file-input">
-                <label class="form-file-label">
-                    <span class="form-file-button">فایل</span>
-                    <span class="form-file-text">انتخاب کنید ...</span>
-                </label>
-            </div>
-            <div class="form-file mb-3">
-                <input type="file" name="files" class="form-file-input">
-                <label class="form-file-label">
-                    <span class="form-file-button">فایل</span>
-                    <span class="form-file-text">انتخاب کنید ...</span>
-                </label>
-            </div>
-            <div class="form-file mb-3">
-                <input type="file" name="files" class="form-file-input">
-                <label class="form-file-label">
-                    <span class="form-file-button">فایل</span>
-                    <span class="form-file-text">انتخاب کنید ...</span>
-                </label>
-            </div>
-            <div class="form-file mb-3">
-                <input type="file" name="files" class="form-file-input">
-                <label class="form-file-label">
-                    <span class="form-file-button">فایل</span>
-                    <span class="form-file-text">انتخاب کنید ...</span>
-                </label>
-            </div>
-            <div class="form-file mb-3">
-                <input type="file" name="files" class="form-file-input">
-                <label class="form-file-label">
-                    <span class="form-file-button">فایل</span>
-                    <span class="form-file-text">انتخاب کنید ...</span>
-                </label>
-            </div>
+            <input type="file" name="files" class="form-control mb-3">
+            <input type="file" name="files" class="form-control mb-3">
+            <input type="file" name="files" class="form-control mb-3">
+            <input type="file" name="files" class="form-control mb-3">
+            <input type="file" name="files" class="form-control mb-3">
         </div>
 
         <div class="btn btn-light border js-more-files">
@@ -70,32 +40,13 @@
 
 @section Scripts {
     <script>
-        "use strict";
+        document.querySelector('.js-more-files').addEventListener('click', function () {
+            let newFileInput = document.createElement('input');
+            newFileInput.setAttribute('type', 'file');
+            newFileInput.setAttribute('name', 'files');
+            newFileInput.classList.add('form-control', 'mb-3');
 
-        (document.querySelector('.js-more-files').addEventListener('click', function () {
-            let newFormFile = document.createElement('div'),
-                newFormFileInput = document.createElement('input'),
-                newFormFileLabel = document.createElement('label'),
-                newFormFileButton = document.createElement('span'),
-                newFormFileText = document.createElement('span');
-
-            newFormFile.classList.add('form-file', 'mb-3');
-            newFormFileInput.setAttribute('type', 'file');
-            newFormFileInput.setAttribute('name', 'files');
-            newFormFileInput.classList.add('form-file-input');
-            newFormFileLabel.classList.add('form-file-label');
-            newFormFileButton.classList.add('form-file-button');
-            newFormFileText.classList.add('form-file-text');
-
-            newFormFileButton.appendChild(document.createTextNode('فایل'));
-            newFormFileText.appendChild(document.createTextNode('انتخاب کنید ...'));
-
-            newFormFileLabel.appendChild(newFormFileButton);
-            newFormFileLabel.appendChild(newFormFileText);
-            newFormFile.appendChild(newFormFileInput);
-            newFormFile.appendChild(newFormFileLabel);
-
-            document.querySelector('#form-files').appendChild(newFormFile);
-        }))();
+            document.querySelector('#form-files').appendChild(newFileInput);
+        });
     </script>
 }

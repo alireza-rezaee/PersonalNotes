@@ -7,7 +7,7 @@
 
 <div class="container">
     <br class="my-3" />
-    <h2 class="text-right text-size-6">@ViewData["Title"]</h2>
+    <h2 class="text-right fs-4">@ViewData["Title"]</h2>
     <hr />
 
     <div class="text-right">
@@ -67,10 +67,10 @@
                                                       class="rounded-circle img-fluid"></img-gravatar>
                                     </div>
                                     <div class="text-right" style="font-size: 0.9rem">
-                                        <span class="d-block font-weight-bold">@senderName</span>
+                                        <span class="d-block fw-bold">@senderName</span>
                                         @if (!string.IsNullOrEmpty(item.SenderEmail))
                                         {
-                                            <a href="mailto:@item.SenderEmail" class="d-block font-weight-light text-muted">@item.SenderEmail</a>
+                                            <a href="mailto:@item.SenderEmail" class="d-block fw-light text-muted">@item.SenderEmail</a>
                                         }
                                     </div>
                                 </div>

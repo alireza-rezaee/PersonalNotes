@@ -2,8 +2,8 @@
   "defaultProvider": "unpkg",
   "libraries": [
     {
-      "library": "bootstrap@5.0.0-alpha2",
-      "destination": "wwwroot/lib/bootstrap/5.0.0-alpha2",
+      "library": "bootstrap@5.0.0-alpha3",
+      "destination": "wwwroot/lib/bootstrap/5.0.0-alpha3/",
       "files": [
         "LICENSE",
         "dist/css/bootstrap-grid.css",

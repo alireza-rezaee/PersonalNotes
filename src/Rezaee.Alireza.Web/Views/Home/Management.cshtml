@@ -9,23 +9,23 @@
                 <div style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
                     @if (User.IsInRole(Roles.PostCreateArticle))
                     {
-                        <a asp-action="CreateArticle" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="CreateArticle" asp-controller="Posts" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             افزودن مقاله
                         </a>
                     }
                     @if (User.IsInRole(Roles.PostCreateShare))
                     {
-                        <a asp-action="CreateShare" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="CreateShare" asp-controller="Posts" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             افزودن بازنشر رسانه
                         </a>
                     }
                     @if (User.IsInRole(Roles.PostCreateMarkdown))
                     {
-                        <a asp-action="CreateMarkdown" asp-controller="Posts" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="CreateMarkdown" asp-controller="Posts" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             افزودن مطلب نشانه‌دار
                         </a>
                     }
-                    <a asp-action="Index" asp-controller="Tags" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                    <a asp-action="Index" asp-controller="Tags" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                         برچسب ها
                     </a>
                 </div>
@@ -52,7 +52,7 @@
         <div class="row links rounded justify-content-center mb-3">
             <div class="col-12 col-sm-6 col-lg-4">
                 <div class="my-2">
-                    <a asp-action="ContactUs" asp-controller="Messages" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                    <a asp-action="ContactUs" asp-controller="Messages" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                         ارسال پیام
                     </a>
                     <div class="position-relative">
@@ -80,7 +80,7 @@
                 <div class="my-2">
                     @if (User.IsInRole(Roles.RoleCreate) || User.IsInRole(Roles.RoleEdit) || User.IsInRole(Roles.RolesList) || User.IsInRole(Roles.RoleDelete))
                     {
-                        <a asp-action="Upload" asp-controller="Files" asp-area="Admin" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="Upload" asp-controller="Files" asp-area="Admin" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             بارگذاری فایل جدید
                         </a>
                     }
@@ -109,7 +109,7 @@
                 <div class="my-2">
                     @if (User.IsInRole(Roles.PageCreate))
                     {
-                        <a asp-action="Create" asp-controller="Pages" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="Create" asp-controller="Pages" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             افزودن برگه
                         </a>
                     }
@@ -138,7 +138,7 @@
                 <div class="my-2">
                     @if (User.IsInRole(Roles.LinkCreate))
                     {
-                        <a asp-action="Create" asp-controller="Links" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="Create" asp-controller="Links" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             افزودن پیوند
                         </a>
                     }
@@ -190,7 +190,7 @@
                 <div class="my-2">
                     @if (User.IsInRole(Roles.RoleCreate) || User.IsInRole(Roles.RoleEdit) || User.IsInRole(Roles.RolesList) || User.IsInRole(Roles.RoleDelete))
                     {
-                        <a asp-action="Index" asp-controller="Roles" asp-area="Admin" class="btn btn-block btn-light my-0 rounded-0 font-weight-light">
+                        <a asp-action="Index" asp-controller="Roles" asp-area="Admin" class="btn w-100 btn-light my-0 rounded-0 fw-light">
                             مدیریت نقش ها
                         </a>
                     }
@@ -235,27 +235,27 @@
     }
 
     @*@if (User.IsInRole(Roles.LogsList))
-    {
-        <div class="row links rounded justify-content-center mb-3">
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="my-2">
-                    <div class="position-relative">
-                        <div class="d-flex links-content links-item">
-                            <a asp-action="Index" asp-controller="Logs" asp-area="Admin" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
-                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
-                                </svg>
-                            </a>
-                            <a asp-action="Index" asp-controller="Logs" asp-area="Admin" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
-                                <i class="caption">تاریخچه لاگ</i>
-                            </a>
+        {
+            <div class="row links rounded justify-content-center mb-3">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="my-2">
+                        <div class="position-relative">
+                            <div class="d-flex links-content links-item">
+                                <a asp-action="Index" asp-controller="Logs" asp-area="Admin" target="_blank" rel="noreferrer noopener" class="links-site-link links-link p-2 rounded-0" style="z-index: 2;">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-up-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"></path>
+                                        <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"></path>
+                                    </svg>
+                                </a>
+                                <a asp-action="Index" asp-controller="Logs" asp-area="Admin" class="links-link d-block p-2 w-100 stretched-link overflow-hidden">
+                                    <i class="caption">تاریخچه لاگ</i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }*@
+        }*@
 
     @if (User.IsInRole(Roles.Personalize))
     {

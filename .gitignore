@@ -339,3 +339,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Location of images uploaded by the user
+**/wwwroot/uploads/images

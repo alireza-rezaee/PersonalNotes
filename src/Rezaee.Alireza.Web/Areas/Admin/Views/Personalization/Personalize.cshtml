@@ -51,12 +51,12 @@
 }
 
 <div class="container mt-4">
-    <h1 class="text-size-6">@ViewData["Title"]</h1>
+    <h1 class="fs-4">@ViewData["Title"]</h1>
     <hr />
 
     <form asp-action="Personalizing" asp-controller="Personalization" asp-area="Admin" enctype="multipart/form-data">
         <div class="mb-3 row">
-            <label asp-for="IndexTitle" class="col-sm-2 col-form-label font-weight-bold">عنوان صفحه نخست</label>
+            <label asp-for="IndexTitle" class="col-sm-2 col-form-label fw-bold">عنوان صفحه نخست</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" asp-for="IndexTitle">
                 <small class="text-muted mt-2">
@@ -66,7 +66,7 @@
         </div>
 
         <div class="mb-3 row">
-            <label asp-for="IndexDescription" class="col-sm-2 col-form-label font-weight-bold">توضیح صفحه نخست</label>
+            <label asp-for="IndexDescription" class="col-sm-2 col-form-label fw-bold">توضیح صفحه نخست</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" asp-for="IndexDescription">
                 <small class="text-muted mt-2">
@@ -76,9 +76,9 @@
         </div>
 
         <div class="mb-3 row">
-            <label asp-for="AdditionalTitle" class="col-sm-2 col-form-label font-weight-bold">
+            <label asp-for="AdditionalTitle" class="col-sm-2 col-form-label fw-bold">
                 عنوان افزوده
-                <span class="font-weight-light small text-nowrap">(غیر از صفحه اصلی)</span>
+                <span class="fw-light small text-nowrap">(غیر از صفحه اصلی)</span>
             </label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" asp-for="AdditionalTitle">
@@ -89,7 +89,7 @@
         </div>
 
         <div class="mb-3 row">
-            <label asp-for="SiteFootnote" class="col-sm-2 col-form-label font-weight-bold">پانوشت</label>
+            <label asp-for="SiteFootnote" class="col-sm-2 col-form-label fw-bold">پانوشت</label>
             <div class="col-sm-10">
                 <textarea class="form-control" asp-for="SiteFootnote"></textarea>
                 <small class="text-muted mt-2">
@@ -100,9 +100,9 @@
 
         <div class="mb-3 row">
             <input type="file" asp-for="SiteCover" class="d-none js-siteCover" accept="image/jpg, image/jpeg, image/png, image/gif" />
-            <label asp-for="SiteCover" class="col-sm-2 col-form-label font-weight-bold">
+            <label asp-for="SiteCover" class="col-sm-2 col-form-label fw-bold">
                 جلد
-                <span class="font-weight-light small text-nowrap">(کاور)</span>
+                <span class="fw-light small text-nowrap">(کاور)</span>
                 <span class="btn btn-light border m-1">تغییر جلد</span>
             </label>
             <div class="col-sm-10">
