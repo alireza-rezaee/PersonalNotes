@@ -9,7 +9,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 </div>
 <div class="row">
 <div class="col-12 col-sm-11 d-block d-sm-flex mx-auto px-0 text-center border rounded py-4">
-<div class="d-flex rounded-right justify-content-center align-items-center mx-auto mx-sm-0 mb-3 mb-sm-0" style="width: 100px;">
+<div class="d-flex rounded-end justify-content-center align-items-center mx-auto mx-sm-0 mb-3 mb-sm-0" style="width: 100px;">
 <div class="text-center" style="max-width: 100%;">
 <div class="quran-logo mx-auto">&nbsp;</div>
 <div class="badge badge-secondary">الصف - آیه ۱۳</div>
@@ -25,10 +25,10 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="col-12 col-md-6">
 <div class="my-3 p-3 bg-white rounded shadow-sm">
 <h6 class="border-bottom border-gray pb-2 mb-0">درباره نویسنده</h6>
-<div class="media text-muted pt-3"><img class="ml-2 rounded-circle" src="uploads/profile/avatar-32x.jpg" alt="" width="32" height="32" />
+<div class="media text-muted pt-3"><img class="ms-2 rounded-circle" src="uploads/profile/avatar-32x.jpg" alt="" width="32" height="32" />
 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">اثر پذیرفته از انقلاب اسلامی ایران <br />مشغول به طراحی و توسعه نرم افزار <br />سرگرم به مطالعه، دانش افزایی و تعلیم آموزه ها <br />علاقه مند به فرهنگ، سیاست و تمدّن اسلامی <br />بنده ای از بندگان خدا، در تکاپوی حق</p>
 </div>
-<div class="text-left mt-3"><a class="small">اطلاعات بیشتر</a></div>
+<div class="text-start mt-3"><a class="small">اطلاعات بیشتر</a></div>
 </div>
 </div>
 <div class="col-12 col-md-6">
@@ -40,15 +40,15 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="media text-muted pt-3">
 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"><span class="d-block text-gray-dark"><strong>کار مردم نیست؛ کار اشرار است</strong></span> بیانات رهبر انقلاب درباره مسائل پیش&zwnj;آمده پس از اجرای طرح مدیریت مصرف سوخت</p>
 </div>
-<div class="text-left mt-3"><a class="small" href="#">فهرست آخرین مطالب پیشنهادی</a></div>
+<div class="text-start mt-3"><a class="small" href="#">فهرست آخرین مطالب پیشنهادی</a></div>
 </div>
 </div>
 </div>
 <div class="row justify-content-center">
 <div class="col-12 col-md-6 my-2">
 <div class="row">
-<div class="col-6"><button class="d-block bg-glin-blue text-white small rounded border-0 w-100 p-2" data-toggle="modal" data-target="#model-contact"> ارسال پیام مستقیم </button></div>
-<div class="col-6"><button class="d-block bg-glin-magenta text-white small rounded border-0 w-100 p-2" data-toggle="modal" data-target="#model-order-request"> ثبت سفارش </button></div>
+<div class="col-6"><button class="d-block bg-glin-blue text-white small rounded border-0 w-100 p-2" data-bs-toggle="modal" data-bs-target="#model-contact"> ارسال پیام مستقیم </button></div>
+<div class="col-6"><button class="d-block bg-glin-magenta text-white small rounded border-0 w-100 p-2" data-bs-toggle="modal" data-bs-target="#model-order-request"> ثبت سفارش </button></div>
 </div>
 </div>
 </div>
@@ -58,7 +58,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="modal-content"><form>
 <div class="modal-header">
 <h5 id="exampleModalCenterTitle" class="modal-title">ارتباط مستقیم</h5>
-<button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">&times;</span> </button></div>
+<button class="close" type="button" data-bs-dismiss="modal"> <span aria-hidden="true">&times;</span> </button></div>
 <div class="modal-body">
 <div class="form-group"><label for="model-contact-email">رایانامه <small>(پست الکترونیکی)</small></label> <input id="model-contact-email" class="form-control" type="email" /> <small class="form-text text-muted"> در صورتی که نیاز به پاسخ دارید رایانامه خود را وارد کنید. </small></div>
 <div class="form-group"><label for="model-contact-content">متن پیام</label> <textarea id="model-contact-content" class="form-control" rows="3"></textarea></div>
@@ -66,7 +66,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="g-recaptcha d-inline-block" data-sitekey="6Le4keMUAAAAAEUadm6KKSDjYtH40WL1d3kj8gRo" data-size="compact">&nbsp;</div>
 <input id="model-contact-email" class="form-control" type="hidden" /></div>
 </div>
-<div class="modal-footer"><button class="btn btn-warning" type="button" data-dismiss="modal">انصراف</button> <button class="btn btn-primary" type="submit">ارسال پیام</button></div>
+<div class="modal-footer"><button class="btn btn-warning" type="button" data-bs-dismiss="modal">انصراف</button> <button class="btn btn-primary" type="submit">ارسال پیام</button></div>
 </form></div>
 </div>
 </div>
@@ -76,7 +76,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="modal-content"><form>
 <div class="modal-header">
 <h5 id="exampleModalCenterTitle" class="modal-title">ثبت سفارش جدید</h5>
-<button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">&times;</span> </button></div>
+<button class="close" type="button" data-bs-dismiss="modal"> <span aria-hidden="true">&times;</span> </button></div>
 <div class="modal-body"><small class="form-text text-muted mb-2"> پیش از تکمیل فرم رزومه علیرضا رضائی را مطالعه کنید. </small><hr />
 <div class="form-group"><label for="model-contact-email">نام و نام خانوادگی</label> <input id="model-contact-email" class="form-control" type="email" /></div>
 <div class="form-group"><label for="model-contact-email">شماره تماس</label> <input id="model-contact-email" class="form-control" type="email" /> <small class="form-text text-muted"> برای برقراری ارتباط با شما مورد استفاده قرار می گیرد. </small></div>
@@ -86,7 +86,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="g-recaptcha d-inline-block" data-sitekey="6Le4keMUAAAAAEUadm6KKSDjYtH40WL1d3kj8gRo" data-size="compact">&nbsp;</div>
 <input id="model-contact-email" class="form-control" type="hidden" /></div>
 </div>
-<div class="modal-footer"><button class="btn btn-warning" type="button" data-dismiss="modal">انصراف</button> <button class="btn btn-primary" type="submit">ثبت سفارش</button></div>
+<div class="modal-footer"><button class="btn btn-warning" type="button" data-bs-dismiss="modal">انصراف</button> <button class="btn btn-primary" type="submit">ثبت سفارش</button></div>
 </form></div>
 </div>
 </div>', 1, 0, 2, NULL, NULL),
@@ -104,27 +104,27 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="row text-center justify-content-center">
 <div class="col-12 col-md-6">
 <div class="row justify-content-center">
-<div class="col-12 col-sm-9 col-md-6 text-center small mb-2"><button class="d-block bg-white rounded-oval no-outline-events w-100 p-2" style="border: 1px dotted #269; color: #168;" data-toggle="modal" data-target="#model-prayer-location"> <span class="material-icons align-bottom small">place</span> <span id="prayer-location"></span> (تغییر) </button></div>
+<div class="col-12 col-sm-9 col-md-6 text-center small mb-2"><button class="d-block bg-white rounded-oval no-outline-events w-100 p-2" style="border: 1px dotted #269; color: #168;" data-bs-toggle="modal" data-bs-target="#model-prayer-location"> <span class="material-icons align-bottom small">place</span> <span id="prayer-location"></span> (تغییر) </button></div>
 </div>
 <div class="row text-muted justify-content-center">
 <div class="col-9 col-sm-6">
 <div class="row">
 <div class="col-12">
 <div class="row">
-<div class="col text-right small">اذان صبح:</div>
-<div id="prayer-imsaak" class="col text-left num-fa">--:--</div>
+<div class="col text-end small">اذان صبح:</div>
+<div id="prayer-imsaak" class="col text-start num-fa">--:--</div>
 </div>
 </div>
 <div class="col-12">
 <div class="row">
-<div class="col text-right small">طلوع آفتاب:</div>
-<div id="prayer-sunrise" class="col text-left num-fa">--:--</div>
+<div class="col text-end small">طلوع آفتاب:</div>
+<div id="prayer-sunrise" class="col text-start num-fa">--:--</div>
 </div>
 </div>
 <div class="col-12">
 <div class="row">
-<div class="col text-right small">اذان ظهر:</div>
-<div id="prayer-noon" class="col text-left num-fa">--:--</div>
+<div class="col text-end small">اذان ظهر:</div>
+<div id="prayer-noon" class="col text-start num-fa">--:--</div>
 </div>
 </div>
 </div>
@@ -133,20 +133,20 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="row">
 <div class="col-12">
 <div class="row">
-<div class="col text-right small">غروب خورشید:</div>
-<div id="prayer-sunset" class="col text-left num-fa">--:--</div>
+<div class="col text-end small">غروب خورشید:</div>
+<div id="prayer-sunset" class="col text-start num-fa">--:--</div>
 </div>
 </div>
 <div class="col-12">
 <div class="row">
-<div class="col text-right small">اذان مغرب:</div>
-<div id="prayer-maghreb" class="col text-left num-fa">--:--</div>
+<div class="col text-end small">اذان مغرب:</div>
+<div id="prayer-maghreb" class="col text-start num-fa">--:--</div>
 </div>
 </div>
 <div class="col-12">
 <div class="row">
-<div class="col text-right small">نیمه شب:</div>
-<div id="prayer-midnight" class="col text-left num-fa">--:--</div>
+<div class="col text-end small">نیمه شب:</div>
+<div id="prayer-midnight" class="col text-start num-fa">--:--</div>
 </div>
 </div>
 </div>
@@ -163,7 +163,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <div class="modal-content">
 <div class="modal-header">
 <h5 id="exampleModalCenterTitle" class="modal-title">اوقات شرعی</h5>
-<button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">&times;</span> </button></div>
+<button class="close" type="button" data-bs-dismiss="modal"> <span aria-hidden="true">&times;</span> </button></div>
 <div class="modal-body">
 <div class="form-group"><label for="model-contact-email">کشور:</label><select id="prayer-country" class="custom-select">
 <option class="d-none" selected="selected">انتخاب نشده</option>
@@ -175,7 +175,7 @@ INSERT INTO [Blocks] ([Id], [Html], [IsEnable], [Position], [Rank], [Scripts], [
 <option class="d-none" selected="selected">انتخاب نشده</option>
 </select></div>
 </div>
-<div class="modal-footer"><button class="btn btn-warning" type="button" data-dismiss="modal">انصراف</button> <button id="prayer-change-location" class="btn btn-primary" type="button">انتخاب</button></div>
+<div class="modal-footer"><button class="btn btn-warning" type="button" data-bs-dismiss="modal">انصراف</button> <button id="prayer-change-location" class="btn btn-primary" type="button">انتخاب</button></div>
 </div>
 </div>
 </div>

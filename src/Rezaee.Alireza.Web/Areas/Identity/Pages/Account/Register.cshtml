@@ -15,20 +15,20 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="mb-3">
                         <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control dir-ltr text-left" placeholder="رایانامه مانند: username@example.com" />
+                        <input asp-for="Input.Email" class="form-control dir-ltr text-start" placeholder="رایانامه مانند: username@example.com" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Input.Password"></label>
-                        <input asp-for="Input.Password" class="form-control dir-ltr text-left" placeholder="کلمه عبور مانند: wY6'rJ*;ds" />
+                        <input asp-for="Input.Password" class="form-control dir-ltr text-start" placeholder="کلمه عبور مانند: wY6'rJ*;ds" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Input.ConfirmPassword"></label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control dir-ltr text-left" placeholder="تکرار کلمه عبور: wY6'rJ*;ds" />
+                        <input asp-for="Input.ConfirmPassword" class="form-control dir-ltr text-start" placeholder="تکرار کلمه عبور: wY6'rJ*;ds" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 text-left">
+                    <div class="mb-3 text-start">
                         <button type="submit" class="btn btn-sm btn-primary rounded-oval">
                             عضویت
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="font-size: 1.3rem;">

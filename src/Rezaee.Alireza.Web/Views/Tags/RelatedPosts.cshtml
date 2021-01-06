@@ -61,8 +61,8 @@
             <div class="col-12">
                 <h1 class="font-weight-bold my-4 text-muted" style="font-size: 1.5rem;">مطالب مربوط به برچسب <a href="javascript:void(0)" class="tag text-decoration-none"><span class="remove"></span> @Model.Tag.Title</a></h1>
 
-                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#modal-edit-tag">اصلاح عنوان برچسب «@Model.Tag.Title»</button>
-                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modal-delete-tag">حذف برچسب «@Model.Tag.Title»</button>
+                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#modal-edit-tag">اصلاح عنوان برچسب «@Model.Tag.Title»</button>
+                <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#modal-delete-tag">حذف برچسب «@Model.Tag.Title»</button>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                             {
                                 <button class="btn d-inline-block position-absolute p-0"
                                         style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
-                                        data-toggle="tooltip"
+                                        data-bs-toggle="tooltip"
                                         title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
                                 </button>
                             }
@@ -89,7 +89,7 @@
                                 <div class="card-body">
                                     <h2 class="card-title">@Html.Raw(@post.Title)</h2>
                                     <p class="card-text">@Html.Raw(post.Summary)</p>
-                                    <div class="text-left">
+                                    <div class="text-start">
                                         <button class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
@@ -139,7 +139,7 @@
                         <h5 class="modal-title">
                             هشدار حذف برچسب
                         </h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         هشدار: پس از تایید،
@@ -148,8 +148,8 @@
                         میشود و آنگاه قابل بازگشت نخواهد بود.
                         آیا از این اقدام اطمینان دارید؟
 
-                        <div class="text-left mt-4">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <div class="text-start mt-4">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">انصراف</button>
                             <button type="submit" class="btn btn-danger">تایید</button>
                         </div>
                     </div>
@@ -167,14 +167,14 @@
                         <h5 class="modal-title">
                             اصلاح عنوان برچسب
                         </h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <label for="new-title" class="text-muted">عنوان جدید (جایگزین <span class="font-weight-bold">@Model.Tag.Title</span>):</label>
                         <input type="text" class="form-control" id="new-title" name="newName" placeholder="اینجا عنوانی جدید برای برچسب بنویسید" value="@Model.Tag.Title" style="direction: rtl;">
 
-                        <div class="text-left mt-4">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <div class="text-start mt-4">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">انصراف</button>
                             <button type="submit" class="btn btn-success">تایید</button>
                         </div>
                     </div>

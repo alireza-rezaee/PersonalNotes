@@ -111,7 +111,7 @@
 <form asp-controller="Posts" asp-action="EditArticle" enctype="multipart/form-data">
     <div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px); height: 45vh">
         <div id="hnav-besm" class="mx-auto py-2"></div>
-        <div class="container h-100 text-right">
+        <div class="container h-100 text-end">
             <label asp-for="CoverImage" id="CoverImage-preview" class="btn cover h-100 w-100 rounded-top border border-danger cursor-pointer mb-1 d-flex justify-content-center align-items-center bg-size-cover bg-no-repeat" style="@DefaultImage.CoverImage">
                 <span class="badge bg-secondary">
                     محل نمایش تصویر جلد
@@ -122,14 +122,14 @@
                 <div class="d-inline-block" style="background-color: #08c; color: white; line-height: 3; padding-left: 10px; padding-right: 10px; border-right: 5px solid #006293;">
                     یادداشت
                 </div>
-                <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
-                    <div class="mr-auto position-relative">
+                <div id="hnav-list" class="d-flex pe-0 mb-0 rounded-bottom position-relative">
+                    <div class="me-auto position-relative">
                         <button type="button" class="btn btn-default h-100 d-block d-sm-none nav-shortcuts-trigger" id="js-nav-shortcuts-trigger">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                             </svg>
                         </button>
-                        <ul class="d-none d-sm-flex align-items-center pr-0 nav-shortcuts" id="js-nav-shortcuts">
+                        <ul class="d-none d-sm-flex align-items-center pe-0 nav-shortcuts" id="js-nav-shortcuts">
                             <partial name="_HeadNavPartial" />
                         </ul>
                     </div>
@@ -185,7 +185,7 @@
             <div class="col-12 col-md-6 my-3">
                 <label for="test">برچسب ها:</label>
                 <small class="form-text text-muted small mb-2">واژه های پر اهمیت متن را انتخاب کنید؛ برچسب ها برای بهینه سازی موتور جستوجو، پیشنهاد مطالب و ... به کار می روند.</small>
-                <div class="input-group mb-2 mr-sm-2 dir-ltr">
+                <div class="input-group mb-2 me-sm-2 dir-ltr">
                     <div class="input-group-prepend">
                         <button type="button" class="btn btn-light border" id="add-new-tag" @if (User.IsInRole(Roles.TagCreate)) { <text> disabled title="مجوز افزودن برچسب ندارید." </text> }>افزودن</button>
                     </div>
@@ -197,7 +197,7 @@
                 <div class="mx-2" id="selected-tags"></div>
             </div>
         </div>
-        <div class="text-left">
+        <div class="text-start">
             <button class="btn btn-warning">
                 انصراف
             </button>

@@ -11,13 +11,13 @@
 }
 
 <br class="my-3" />
-<h2 class="text-right fs-4">@ViewData["Title"]</h2>
+<h2 class="text-end fs-4">@ViewData["Title"]</h2>
 <hr />
 
 @if (hasCreateRolePrivilege)
 {
-    <div class="text-right">
-        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#create">
+    <div class="text-end">
+        <button type="button" class="btn btn-light border" data-bs-toggle="modal" data-bs-target="#create">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
                 <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
@@ -58,7 +58,7 @@ else
                         <td class="align-middle" style="font-size:0.9rem;">
                             @if (hasEditRolePrivilege)
                             {
-                                <button class="btn btn-light text-primary" data-toggle="modal" data-target="#edit" data-name="@item.Name">
+                                <button class="btn btn-light text-primary" data-bs-toggle="modal" data-bs-target="#edit" data-name="@item.Name">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
                                         <path fill-rule="evenodd" d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
@@ -80,7 +80,7 @@ else
 
                             @if (hasRemoveRolePrivilege)
                             {
-                                <button class="btn btn-light text-danger" data-toggle="modal" data-target="#delete" data-name="@item.Name">
+                                <button class="btn btn-light text-danger" data-bs-toggle="modal" data-bs-target="#delete" data-name="@item.Name">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -99,20 +99,20 @@ else
 
 @if (User.IsInRole(Roles.UsersList))
 {
-    <div class="text-left">
+    <div class="text-start">
         <a asp-action="Index" asp-controller="Users" class="btn btn-light border">فهرست کاربران</a>
     </div>
 }
 
 @if (hasCreateRolePrivilege)
 {
-    <div class="modal fade text-right" id="create" tabindex="-1">
+    <div class="modal fade text-end" id="create" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form asp-action="Create">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">افزودن نقش جدید</h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -121,7 +121,7 @@ else
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
                         &nbsp;&nbsp;
                         <button type="submit" class="btn btn-success">افزودن</button>
                     </div>
@@ -133,19 +133,19 @@ else
 
 @if (hasRemoveRolePrivilege)
 {
-    <div class="modal fade text-right" id="delete" tabindex="-1">
+    <div class="modal fade text-end" id="delete" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form asp-action="Delete">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">حذف نقش</h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         آیا از حذف نقش <mark class="text-danger p-2"></mark> اطمینان دارید ؟
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
                         &nbsp;&nbsp;
                         <button type="submit" class="btn btn-danger">حذف</button>
                     </div>
@@ -158,13 +158,13 @@ else
 
 @if (hasEditRolePrivilege)
 {
-    <div class="modal fade text-right" id="edit" tabindex="-1">
+    <div class="modal fade text-end" id="edit" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form asp-action="Edit">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">ویرایش نقش <mark class="text-danger p-2"></mark></h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -173,7 +173,7 @@ else
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
                         &nbsp;&nbsp;
                         <button type="submit" class="btn btn-warning">ویرایش</button>
                     </div>

@@ -10,7 +10,7 @@
     var user = await UserManager.GetUserAsync(User);
 }
 <br class="my-3" />
-<h2 class="text-right fs-4">@ViewData["Title"] </h2>
+<h2 class="text-end fs-4">@ViewData["Title"] </h2>
 <hr />
 
 <div class="row">
@@ -65,7 +65,7 @@
                             </svg>
                         </div>
                     </div>
-                    <input asp-for="Email" class="form-control text-left" disabled />
+                    <input asp-for="Email" class="form-control text-start" disabled />
                 </div>
             </div>
             <div class="col-12 col-md-6">
@@ -74,7 +74,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 dir-ltr text-right">
+            <div class="col-12 col-md-6 dir-ltr text-end">
                 <label>@Html.DisplayNameFor(i => i.BirthDate)</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

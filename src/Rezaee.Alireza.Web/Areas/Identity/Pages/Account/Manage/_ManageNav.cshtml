@@ -3,7 +3,7 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column nav-pills-light pr-0">
+<ul class="nav nav-pills flex-column nav-pills-light pe-0">
     <li class="nav-item"><a class="nav-link fw-light @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">نمایه</a></li>
     <li class="nav-item"><a class="nav-link fw-light @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">رایانامه</a></li>
     <li class="nav-item"><a class="nav-link fw-light @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">گذرواژه</a></li>
@@ -13,14 +13,14 @@
     }
     <li class="nav-item"><a class="nav-link fw-light @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">احراز هویت دو مرحله ای</a></li>
     <li class="nav-item"><a class="nav-link fw-light @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">داده های شخصی</a></li>
-    <li class="nav-item"><form asp-page="./../logout" method="post" class="d-block"><button type="submit" class="btn w-100 nav-link fw-light text-right">خروج</button></form></li>
+    <li class="nav-item"><form asp-page="./../logout" method="post" class="d-block"><button type="submit" class="btn w-100 nav-link fw-light text-end">خروج</button></form></li>
 </ul>
 
 @if (User.IsInRole(Roles.RoleCreate) || User.IsInRole(Roles.RoleDelete) || User.IsInRole(Roles.RoleEdit) || User.IsInRole(Roles.UserCreate) || User.IsInRole(Roles.UserDelete) || User.IsInRole(Roles.UserEdit))
 {
     <hr />
 
-    <ul class="nav nav-pills flex-column nav-pills-light pr-0 ">
+    <ul class="nav nav-pills flex-column nav-pills-light pe-0 ">
         <li class="nav-item">
             <a class="nav-link fw-light" asp-action="Index" asp-controller="Home" asp-area="Admin">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

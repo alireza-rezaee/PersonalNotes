@@ -2,15 +2,15 @@
 @inject SignInManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> SignInManager
 @inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
 
-<div class="mr-auto position-relative">
-    <button type="button" class="btn btn-default h-100 d-block d-sm-none nav-shortcuts-trigger float-left float-sm-none" id="js-nav-shortcuts-trigger">
+<div class="me-auto position-relative">
+    <button type="button" class="btn btn-default h-100 d-block d-sm-none nav-shortcuts-trigger float-start float-sm-none" id="js-nav-shortcuts-trigger">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
         </svg>
     </button>
     @if (SignInManager.IsSignedIn(User))
     {
-        <a asp-area="Identity" asp-page="/account/manage/index" class="d-block d-sm-none p-2 float-left float-sm-none" style="line-height:0;">
+        <a asp-area="Identity" asp-page="/account/manage/index" class="d-block d-sm-none p-2 float-start float-sm-none" style="line-height:0;">
             <img alt="..." src="/uploads/profile/avatar-64x.jpg" class="img-fluid rounded-circle" style="height: 35px;">
         </a>
     }

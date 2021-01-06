@@ -7,10 +7,10 @@
 
 <div class="container">
     <br class="my-3" />
-    <h2 class="text-right fs-4">@ViewData["Title"]</h2>
+    <h2 class="text-end fs-4">@ViewData["Title"]</h2>
     <hr />
 
-    <div class="text-right">
+    <div class="text-end">
         <a asp-action="ContactUs" asp-controller="Messages" class="btn btn-light border">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
@@ -66,7 +66,7 @@
                                                       title="تصویر @item.SenderName"
                                                       class="rounded-circle img-fluid"></img-gravatar>
                                     </div>
-                                    <div class="text-right" style="font-size: 0.9rem">
+                                    <div class="text-end" style="font-size: 0.9rem">
                                         <span class="d-block fw-bold">@senderName</span>
                                         @if (!string.IsNullOrEmpty(item.SenderEmail))
                                         {
@@ -98,7 +98,7 @@
                                                 }
                                                 مشاهده
                                             </a>
-                                            <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split border" data-toggle="dropdown" aria-expanded="false"></button>
+                                            <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split border" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <form asp-action="HaveRead" asp-controller="Messages" asp-route-id="@item.Id" asp-route-mode="@(item.HaveRead ? "unset" : "set")">
@@ -125,7 +125,7 @@
                                     }
                                     @if (User.IsInRole(Roles.MessageDelete))
                                     {
-                                        <button type="button" data-target="#delete-message-modal" data-toggle="modal" class="btn btn-light border text-danger" title="حذف پیام «@item.Title»">
+                                        <button type="button" data-bs-target="#delete-message-modal" data-bs-toggle="modal" class="btn btn-light border text-danger" title="حذف پیام «@item.Title»">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -155,13 +155,13 @@
 
 @if (User.IsInRole(Roles.MessageDelete))
 {
-    <div class="modal fade text-right" id="delete-message-modal" tabindex="-1">
+    <div class="modal fade text-end" id="delete-message-modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form asp-action="Delete" asp-controller="Messages">
                     <div class="modal-header">
                         <h5 class="modal-title">هشدار حذف پیام</h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         آیا از حذف دائمی -غیرقابل بازگشت- پیام زیر اطمینان دارید؟
@@ -170,7 +170,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">انصراف</button>
                         <button type="submit" class="btn btn-danger">حذف نهایی</button>
                     </div>
                 </form>

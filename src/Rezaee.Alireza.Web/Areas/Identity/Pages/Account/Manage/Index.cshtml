@@ -87,7 +87,7 @@
                                 </svg>
                             </a>
                         </div>
-                        <input asp-for="Input.Email" class="form-control text-left" disabled />
+                        <input asp-for="Input.Email" class="form-control text-start" disabled />
                     </div>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-6 dir-ltr text-right">
+                <div class="col-12 col-md-6 dir-ltr text-end">
                     <label for="inputTextBirthDate">@Html.DisplayNameFor(i => i.Input.BirthDate)</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">

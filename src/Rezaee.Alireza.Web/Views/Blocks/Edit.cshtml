@@ -130,13 +130,13 @@
             <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)">
                 <ul class="nav nav-tabs" id="newBlockTab">
                     <li class="nav-item">
-                        <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#js-block-content">بدنه</button>
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#js-block-content">بدنه</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#js-block-styles">استایل</button>
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#js-block-styles">استایل</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#js-block-scripts">اسکریپت</button>
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#js-block-scripts">اسکریپت</button>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -164,7 +164,7 @@
                     <div class="tab-pane fade" id="js-block-styles">
                         <label asp-for="Styles" class="p-1">استایل ها:</label>
                         <span class="small text-secondary">در انتهای &#60;head&#62; سند افزوده می شود.</span>
-                        <div class="dir-ltr text-left">
+                        <div class="dir-ltr text-start">
                             <textarea asp-for="Styles" class="js-styles"></textarea>
                         </div>
                         <span class="small fw-light text-danger">
@@ -177,7 +177,7 @@
                     <div class="tab-pane fade" id="js-block-scripts">
                         <label for="block-scripts-textarea" class="p-1">اسکریپت ها:</label>
                         <span class="small text-secondary">در انتهای &#60;body&#62; سند افزوده می شود.</span>
-                        <div class="text-left dir-ltr">
+                        <div class="text-start dir-ltr">
                             <textarea asp-for="Scripts" class="js-scripts"></textarea>
                         </div>
                         <span class="small fw-light text-danger">
@@ -189,11 +189,11 @@
                     </div>
                 </div>
 
-                <div class="text-left">
+                <div class="text-start">
                     <input type="hidden" value="/" name="returnUrl" />
                     @if (!User.IsInRole(Roles.BlockDelete))
                     {
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-block">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-block">
                             حذف بلاک
                         </button>
                     }
@@ -217,7 +217,7 @@
                         <h5 class="modal-title">
                             هشدار حذف بلاک
                         </h5>
-                        <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         هشدار: پس از تایید،
@@ -226,8 +226,8 @@
                         میشود و آنگاه قابل بازگشت نخواهد بود.
                         آیا از این اقدام اطمینان دارید؟
 
-                        <div class="text-left mt-4">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                        <div class="text-start mt-4">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">انصراف</button>
                             <button type="submit" class="btn btn-danger">تایید</button>
                         </div>
                     </div>

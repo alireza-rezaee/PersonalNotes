@@ -5,12 +5,12 @@
 
 <div class="container">
     <br class="my-3" />
-    <h2 class="text-right fs-4">@ViewData["Title"]</h2>
+    <h2 class="text-end fs-4">@ViewData["Title"]</h2>
     <hr />
 
     @if (User.IsInRole(Roles.MessagesList))
     {
-        <div class="text-right">
+        <div class="text-end">
             <a asp-action="Index" asp-controller="Messages" class="btn btn-light border">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-ol" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
@@ -47,7 +47,7 @@
                         (بعداٌ احراز هویت می‌شود)
                     </label>
                     <span asp-validation-for="SenderEmail" class="text-danger small"></span>
-                    <input asp-for="SenderEmail" class="form-control dir-ltr text-left mt-2">
+                    <input asp-for="SenderEmail" class="form-control dir-ltr text-start mt-2">
                 </div>
             </div>
             <div class="col-12 col-md-6">

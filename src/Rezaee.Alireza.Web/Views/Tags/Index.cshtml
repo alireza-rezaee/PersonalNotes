@@ -70,7 +70,7 @@
     <h1 class="font-weight-bold my-4 text-muted" style="font-size: 2.25rem;"><span class="border-bottom">@ViewData["Title"]</span></h1>
     <div class="row mb-4">
         <div class="col">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#model-new-tags">افزودن برچسب جدید</button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#model-new-tags">افزودن برچسب جدید</button>
         </div>
     </div>
 
@@ -101,11 +101,11 @@
                     <h5 class="modal-title" id="exampleModalCenterTitle">
                         افزودن برچسب های جدید
                     </h5>
-                    <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
-                    <div class="input-group mb-2 mr-sm-2 dir-ltr">
+                    <div class="input-group mb-2 me-sm-2 dir-ltr">
                         <div class="input-group-prepend">
                             <button type="button" class="btn btn-light border" id="add-new-tag">افزودن</button>
                         </div>
@@ -114,8 +114,8 @@
                     <input type="text" name="newTags" class="d-none" id="postTags" />
                     <div class="mx-2" id="selected-tags"></div>
 
-                    <div class="text-left mt-4">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal">انصراف</button>
+                    <div class="text-start mt-4">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">انصراف</button>
                         <button type="submit" class="btn btn-success">ذخیره برچسب های جدید</button>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 ﻿@model Rezaee.Alireza.Web.Models.ViewModels.HeaderFooter.HeadCoverViewModel
 <div id="header" class="text-center" style="margin-bottom: calc(5rem + 26px);">
     <div id="hnav-besm" class="mx-auto py-2"></div>
-    <div class="container h-100 text-right">
+    <div class="container h-100 text-end">
         <div class="cover h-100 rounded" style="background-image: url(@Model.SiteCoverSrc);"></div>
         <nav id="hnav">
             <div class="cover-avatar d-inline-block">
@@ -12,7 +12,7 @@
                     <img src="@Model.SiteLogoSrc" alt="@Html.Raw(Model.SiteName)" class="rounded-circle h-100 img-fluid">
                 </picture>
             </div>
-            <div id="hnav-list" class="d-flex pr-0 mb-0 rounded-bottom position-relative">
+            <div id="hnav-list" class="d-flex pe-0 mb-0 rounded-bottom position-relative">
                 <a href="/"><img src="@Model.TextLogoSrc" alt="@Html.Raw(Model.SiteName)"></a>
                 <partial name="_HeadNavPartial" />
             </div>

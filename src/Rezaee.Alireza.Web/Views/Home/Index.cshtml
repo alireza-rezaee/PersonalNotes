@@ -44,7 +44,7 @@
 
 @if (User.IsInRole(Roles.BlockCreate))
 {
-    <div class="container text-right">
+    <div class="container text-end">
         <a asp-controller="Blocks" asp-action="Create" class="btn btn-light border">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
@@ -94,7 +94,7 @@
 
                 <div class="p-2 p-sm-3 p-md-5 w-100 align-self-end">
                     <h1 class="display-4 text-white" style="font-size: 2rem;">@posterpin.Title</h1>
-                    <div class="text-left">
+                    <div class="text-start">
                         <a asp-action="Index" asp-controller="Bookmarks" class="position-relative btn btn-light border rounded-oval" style="z-index: 5;">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
@@ -134,7 +134,7 @@
                             {
                                 <button class="btn d-inline-block position-absolute p-0 post-help-schedule"
                                         style="top: 0; left: 0; border-top: 50px solid #08f; border-right: 50px solid transparent; z-index: 99; box-shadow: none;"
-                                        data-toggle="tooltip"
+                                        data-bs-toggle="tooltip"
                                         title="این مطلب «ارسال به آینده» است و هنور در دسترس عمومی قرار ندارد.">
                                 </button>
                             }
@@ -143,7 +143,7 @@
                                 <div class="card-body">
                                     <h2 class="card-title">@Html.Raw(post.Title)</h2>
                                     <p class="card-text">@Html.Raw(post.Summary)</p>
-                                    <div class="text-left">
+                                    <div class="text-start">
                                         <div class="pin-button position-absolute">
                                             @if (User.IsInRole(Roles.Pin))
                                             {
@@ -369,7 +369,7 @@
         });
 
         $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-bs-toggle="tooltip"]').tooltip()
         })
     </script>
 

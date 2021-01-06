@@ -44,7 +44,7 @@
                 <div class="mb-3">
                     <label asp-for="Url" class="mb-0">نشانی:</label>
                     <small class="form-text text-muted small mb-1">نشانی پیوند با http یا https شروع می‌شود؛ بهتر است اینگونه شروع شود.</small>
-                    <input asp-for="Url" class="form-control dir-ltr text-left js-new-url" />
+                    <input asp-for="Url" class="form-control dir-ltr text-start js-new-url" />
                 </div>
                 <div class="mb-3">
                     <label for="image" class="mb-0">تصویر:</label>
@@ -61,11 +61,11 @@
             </div>
         </div>
 
-        <div class="text-left">
-            <a asp-action="Index" asp-controller="Links" class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست پیوند ها</a>
+        <div class="text-start">
+            <a asp-action="Index" asp-controller="Links" class="btn rounded-oval btn-light border" data-bs-dismiss="modal">فهرست پیوند ها</a>
             @if (User.IsInRole(Roles.LinkDelete))
             {
-                <button type="button" class="btn rounded-oval btn-outline-danger" data-target="#modal-delete-link" data-toggle="modal">
+                <button type="button" class="btn rounded-oval btn-outline-danger" data-bs-target="#modal-delete-link" data-bs-toggle="modal">
                     حذف
                 </button>
             }
@@ -83,7 +83,7 @@
             <form asp-controller="Links" asp-action="Delete" asp-route-id="@Model.Id">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">حذف پیوند <span class="badge bg-secondary">@Model.Title</span></h5>
-                    <button type="button" class="btn-close mr-auto ml-0" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <small class="text-danger">
@@ -111,7 +111,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <a asp-action="Index" asp-controller="Links" class="btn rounded-oval btn-light border" data-dismiss="modal">فهرست پیوند ها</a>
+                    <a asp-action="Index" asp-controller="Links" class="btn rounded-oval btn-light border" data-bs-dismiss="modal">فهرست پیوند ها</a>
                     <button type="submit" class="btn rounded-oval btn-outline-danger">حذف نهایی</button>
                 </div>
             </form>

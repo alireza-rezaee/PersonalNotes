@@ -7,7 +7,7 @@
 }
 
 <div class="container mt-4">
-    <div class="text-right">
+    <div class="text-end">
         <a asp-action="Index" asp-controller="Messages" class="btn btn-light border">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-ol" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
@@ -37,7 +37,7 @@
                           title="تصویر @senderName"
                           class="rounded-circle img-fluid"></img-gravatar>
         </div>
-        <div class="text-right" style="font-size: 0.9rem">
+        <div class="text-end" style="font-size: 0.9rem">
             <span class="d-block fw-bold">@senderName</span>
             @if (!string.IsNullOrEmpty(Model.SenderEmail))
             {
@@ -57,7 +57,7 @@
     @if (User.IsInRole(Roles.MessageDelete) || !string.IsNullOrEmpty(Model.SenderEmail))
     {
         <hr />
-        <div class="text-left">
+        <div class="text-start">
             @if (User.IsInRole(Roles.MessageDelete))
             {
                 <form asp-action="Delete" asp-controller="Messages" asp-route-id="@Model.Id" class="d-inline-block">
