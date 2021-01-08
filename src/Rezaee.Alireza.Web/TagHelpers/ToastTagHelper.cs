@@ -45,15 +45,15 @@ namespace Rezaee.Alireza.Web.TagHelpers
                 output.Content.SetHtmlContent("<div class=\"toast-header\">\n"
                     + PrintIcon(Type)
                     + $"<strong class=\"ms-auto\">{Title}</strong>"
-                    + ((DateTime is not null) ? $"<time class=\"text-muted small timeago\" datetime=\"{DateTime:s}\"></time>" : string.Empty)
+                    + ((DateTime is not null) ? $"<time class=\"text-muted small timeago fa-num\" datetime=\"{DateTime:s}\"></time>" : string.Empty)
                     + "<button type=\"button\" class=\"btn-close ms-0 me-2\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>"
                     + $"</div>\n<div class=\"toast-body\">\n{Message}\n</div>");
             }
             else
             {
-                output.Attributes.SetAttribute("class", $"toast d-flex align-items-center {PrintColor(Type)}");
+                output.Attributes.SetAttribute("class", $"toast d-flex align-items-center text-white {PrintColor(Type)}");
                 output.Content.SetHtmlContent($"<div class=\"toast-body\">\n{Message}\n</div>"
-                    + "<button type=\"button\" class=\"btn-close ms-0 me-2\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>");
+                    + "<button type=\"button\" class=\"btn-close btn-close-white ms-2 me-auto\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>");
             }
         }
 

@@ -440,6 +440,9 @@ html {
 .text-size-12 {
   font-size: 3rem !important; }
 
+.fa-num {
+  font-family: IRANSansFaNum; }
+
 /**
  * Basic typography style for copy text
  */

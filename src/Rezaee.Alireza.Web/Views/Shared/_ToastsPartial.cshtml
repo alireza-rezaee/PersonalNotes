@@ -1,6 +1,6 @@
 ﻿@using static Rezaee.Alireza.Web.Extensions.SessionExtensions
 @using Microsoft.AspNetCore.Http
-@using Rezaee.Alireza.Web.TagHelpers 
+@using Rezaee.Alireza.Web.TagHelpers
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var toasts = HttpContextAccessor.HttpContext.Session.GetToasts();
@@ -18,18 +18,14 @@
             <toast message="@item.Message"
                    type="@(ToastType)item.Type"
                    title="@item.Title"
-                   date-time="DateTime.Now"
+                   date-time="@item.Time"
                    animation="@(bool)item.Animation"
                    autohide="@(bool)item.Autohide"
                    delay="@(int)item.Delay"></toast>
         }
 
         <script>
-            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-            var toastList = toastElList.map(function (toastEl) {
-                return new bootstrap.Toast(toastEl)
-            });
-            toastList.forEach(toast => toast.show());
+            [].slice.call(document.querySelectorAll('.toast')).forEach(toastEl => new bootstrap.Toast(toastEl).show());
         </script>
     </div>
 }

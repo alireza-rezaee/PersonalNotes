@@ -480,7 +480,8 @@ namespace Rezaee.Alireza.Web.Controllers
             var postTags = string.Empty;
             foreach (var postTag in post.PostTags)
                 postTags += postTag.Tag.Title + ',';
-            postTags = postTags?.Substring(0, postTags.Length - 1);
+            if (!string.IsNullOrEmpty(postTags))
+                postTags = postTags[0..^1];
 
             return View(new CreateEditArticlePostViewModel
             {

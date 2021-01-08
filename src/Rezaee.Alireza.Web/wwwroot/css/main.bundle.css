@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0-modified | 20110126
    License: none (public domain)
@@ -430,6 +430,9 @@ html {
 
 .text-size-12 {
   font-size: 3rem !important; }
+
+.fa-num {
+  font-family: IRANSansFaNum; }
 
 /**
  * Basic typography style for copy text

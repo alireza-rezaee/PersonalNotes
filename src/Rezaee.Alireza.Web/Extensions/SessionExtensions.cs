@@ -22,22 +22,18 @@ namespace Rezaee.Alireza.Web.Extensions
         public static IList<ToastViewModel> GetToasts(this ISession session)
         {
             var toasts = new List<ToastViewModel>();
-
-            for (var i = 0; i < session.Keys.Count(); i++)
+            foreach (var toastkey in ToastKeys(session.Keys))
             {
-                var key = session.Keys.ElementAt(i);
-                if (HasToatsSigniture(key))
-                {
-                    toasts.Add(session.GetObjectFromJson<ToastViewModel>(key));
-                    session.Remove(key);
-                }
+                toasts.Add(session.GetObjectFromJson<ToastViewModel>(toastkey));
+                session.Remove(toastkey);
             }
-
             return toasts;
         }
 
-        public static void SetToast(this ISession session, ToastViewModel toast) => session.SetObjectAsJson($"toast-{DateTime.Now.Ticks}", toast);
+        public static void SetToast(this ISession session, ToastViewModel toast) => session.SetObjectAsJson($"toast-{Guid.NewGuid()}", toast);
 
-        private static bool HasToatsSigniture(string key) => key.StartsWith("toast-");
+        private static bool HasToastSigniture(string key) => key.StartsWith("toast-");
+
+        private static string[] ToastKeys(IEnumerable<string> keys) => keys.Where(key => HasToastSigniture(key)).ToArray();
     }
 }
