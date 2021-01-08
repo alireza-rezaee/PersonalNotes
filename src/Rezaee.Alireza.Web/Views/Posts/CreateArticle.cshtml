@@ -198,6 +198,8 @@
     </div>
 </form>
 
+
+
 @section Scripts {
     <environment include="Development">
         <script src="~/lib/md.datetimepicker/3.9.2/dist/jquery.md.bootstrap.datetimepicker.js"></script>
@@ -211,11 +213,11 @@
     </environment>
 
     <script>
-        $('#datepicker').MdPersianDateTimePicker({
-            targetTextSelector: '#post-publish-datepicker',
-            targetDateSelector: '#post-publish-date',
-            textFormat: 'dd MMMM yyyy'
-        });
+        //$('#datepicker').MdPersianDateTimePicker({
+        //    targetTextSelector: '#post-publish-datepicker',
+        //    targetDateSelector: '#post-publish-date',
+        //    textFormat: 'dd MMMM yyyy'
+        //});
 
         $('#CoverImage, #ThumbnailImage').change(function (e) {
             var preview = $('#' + $(e.target).attr('id') + '-preview');

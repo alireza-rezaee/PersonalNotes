@@ -115,8 +115,8 @@
                             @if (post.Type != null)
                             {
                                 @if (User.IsInRole(Roles.PostCreateArticle) || User.IsInRole(Roles.PostEditArticle) || User.IsInRole(Roles.PostDeleteArticle) ||
-                                   User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
-                                   User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
+                                  User.IsInRole(Roles.PostCreateShare) || User.IsInRole(Roles.PostEditShare) || User.IsInRole(Roles.PostDeleteShare) ||
+                                  User.IsInRole(Roles.PostCreateMarkdown) || User.IsInRole(Roles.PostEditMarkdown) || User.IsInRole(Roles.PostDeleteMarkdown))
                                 {
                                     <div class="dropstart position-absolute" style="right:0; top:0; z-index: 99;">
                                         <button class="p-0 border-0" style="height:40px; width: 40px; background-color: #c8c8c8; color: #777; font-size: 30px; text-align: center; line-height: 1.35; border-radius: 1rem; border-top-right-radius: 0;" data-bs-toggle="dropdown">

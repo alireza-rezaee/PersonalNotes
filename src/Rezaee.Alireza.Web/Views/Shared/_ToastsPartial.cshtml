@@ -1,0 +1,23 @@
+﻿@using static Rezaee.Alireza.Web.Extensions.SessionExtensions
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var toasts = HttpContextAccessor.HttpContext.Session.GetToasts();
+}
+@if (toasts.Any())
+{
+    <div class="toast-container position-fixed start-0 bottom-0 p-3" style="z-index: 99;">
+        @foreach (var item in toasts)
+        {
+            <toast type="@item.Type" title="@item.Title" message="@item.Message"></toast>
+        }
+
+        <script>
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function (toastEl) {
+                return new bootstrap.Toast(toastEl)
+            });
+            toastList.forEach(toast => toast.show());
+        </script>
+    </div>
+}

@@ -41,6 +41,13 @@ namespace Rezaee.Alireza.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AlirezaRezaee.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             //KissLog
@@ -131,6 +138,8 @@ namespace Rezaee.Alireza.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

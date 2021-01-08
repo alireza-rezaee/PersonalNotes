@@ -19,6 +19,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using Microsoft.AspNetCore.Authorization;
 using Rezaee.Alireza.Web.Attributes;
+using Rezaee.Alireza.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace Rezaee.Alireza.Web.Controllers
 {
@@ -41,7 +43,7 @@ namespace Rezaee.Alireza.Web.Controllers
         public async Task<IActionResult> Index(int page = 1)
         {
             ViewData["Image"] = new Uri(
-                baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), 
+                baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"),
                 relativeUri: (await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc")).Value).ToString();
             ViewData["Image"] = (await _context.Personalizations.FirstOrDefaultAsync(item => item.Title == "SiteCoverSrc")).Value;
             ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(Index), nameof(PostsController).ControllerName(), new { page })}";
@@ -88,11 +90,9 @@ namespace Rezaee.Alireza.Web.Controllers
                         // HTTP POST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
                         var response = client.GetAsync(new Uri(post.Markdown.FileUrl)).Result;
-                        using (HttpContent content = response.Content)
-                        {
-                            Task<string> result = content.ReadAsStringAsync();
-                            markdownContent = result.Result;
-                        }
+                        using HttpContent content = response.Content;
+                        Task<string> result = content.ReadAsStringAsync();
+                        markdownContent = result.Result;
                     };
 
                     return View(nameof(DetailMarkdown), new DetailMarkdownPostViewModel
@@ -107,9 +107,15 @@ namespace Rezaee.Alireza.Web.Controllers
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw; //نمایش صفحه خطا
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در نمایش نوشتار",
+                    Message = e.Message
+                });
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -117,68 +123,67 @@ namespace Rezaee.Alireza.Web.Controllers
         [Route("/md/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
         public async Task<IActionResult> DetailMarkdown(int year, int month, int day, int postId)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-
-            var post = await _context.Posts.Include(p => p.Markdown).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
-
-            if (post == null)
-                return NotFound();
-
-            ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: post.ThumbnailUrl).ToString();
-            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(DetailMarkdown), nameof(PostsController).ControllerName(), new { year, month, day, postId})}";
-
-            var markdownContent = string.Empty;
-
-            using (var client = new HttpClient())
+            try
             {
-                // HTTP POST
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
-                var response = client.GetAsync(new Uri(post.Markdown.FileUrl)).Result;
-                using (HttpContent content = response.Content)
+                var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+
+                var post = await _context.Posts.Include(p => p.Markdown).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+
+                if (post == null)
+                    return NotFound();
+
+                ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: post.ThumbnailUrl).ToString();
+                ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(DetailMarkdown), nameof(PostsController).ControllerName(), new { year, month, day, postId })}";
+
+                var markdownContent = string.Empty;
+
+                using (var client = new HttpClient())
                 {
+                    // HTTP POST
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
+                    var response = client.GetAsync(new Uri(post.Markdown.FileUrl)).Result;
+                    using HttpContent content = response.Content;
                     Task<string> result = content.ReadAsStringAsync();
                     markdownContent = result.Result;
-                }
-            };
+                };
 
-            return View(new DetailMarkdownPostViewModel
+                return View(new DetailMarkdownPostViewModel
+                {
+                    Markdown = post.Markdown,
+                    HtmlContent = Markdig.Markdown.ToHtml(markdownContent),
+                    PostDeleteUrl = "/delete/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
+                    PostEditTypeUrl = "/edit/type/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
+                    PostEditProperties = "/edit/markdown/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
+                });
+            }
+            catch (Exception e)
             {
-                Markdown = post.Markdown,
-                HtmlContent = Markdig.Markdown.ToHtml(markdownContent),
-                PostDeleteUrl = "/delete/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
-                PostEditTypeUrl = "/edit/type/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
-                PostEditProperties = "/edit/markdown/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
-            });
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در نمایش نوشتار",
+                    Message = e.Message
+                });
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpGet]
         [Route("create")]
         [AuthorizeRoles(Roles.PostCreateArticle, Roles.PostCreateShare, Roles.PostCreateMarkdown)]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [Route("create/article")]
         [Authorize(Roles = Roles.PostCreateArticle)]
-        public IActionResult CreateArticle()
-        {
-            return View();
-        }
+        public IActionResult CreateArticle() => View();
 
         [Route("create/share")]
         [Authorize(Roles = Roles.PostCreateShare)]
-        public IActionResult CreateShare()
-        {
-            return View();
-        }
+        public IActionResult CreateShare() => View();
 
         [Route("create/markdown")]
         [Authorize(Roles = Roles.PostCreateMarkdown)]
-        public IActionResult CreateMarkdown()
-        {
-            return View();
-        }
+        public IActionResult CreateMarkdown() => View();
 
         [HttpPost("create/article")]
         [ValidateAntiForgeryToken]
@@ -213,7 +218,7 @@ namespace Rezaee.Alireza.Web.Controllers
                     createPostVM.Post.PublishDateTime = dateTime;
 
                     //< برچسب ها
-                    string[] tagsArray = { };
+                    string[] tagsArray = Array.Empty<string>();
                     if (!string.IsNullOrEmpty(createPostVM.PostTags)) tagsArray = createPostVM.PostTags.Split(",");
 
                     //get new tags from database
@@ -235,13 +240,33 @@ namespace Rezaee.Alireza.Web.Controllers
                     createPostVM.Article.Post = createPostVM.Post;
                     _context.Add(createPostVM.Article);
                     await _context.SaveChangesAsync();
+
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Success,
+                        Title = "ارسال موفق مقاله",
+                        Message = $"مقاله «{createPostVM.Article.Post.Title}» با موفقیت ثبت شد."
+                    });
                 }
                 catch (Exception e)
                 {
-                    TempData["PostCreateStatus"] = e.Message;
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Error,
+                        Title = "خطا در ارسال مقاله",
+                        Message = e.Message
+                    });
                 }
-
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ارسال مقاله",
+                    Message = "در پی نقص اطلاعات ورودی، ثبت مقاله با خطا مواجه شد. پس از تصحیح و تکمیل، دوباره تلاش کنید."
+                });
             }
 
             return View(nameof(CreateArticle), createPostVM);
@@ -294,13 +319,33 @@ namespace Rezaee.Alireza.Web.Controllers
                     createPostVM.Share.Post = createPostVM.Post;
                     _context.Add(createPostVM.Share);
                     await _context.SaveChangesAsync();
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Success,
+                        Title = "ارسال موفق بازنشر",
+                        Message = $"بازنشر «{createPostVM.Share.Post.Title}» با موفقیت ثبت شد."
+                    });
                 }
                 catch (Exception e)
                 {
-                    TempData["PostCreateStatus"] = e.Message;
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Error,
+                        Title = "خطا در ارسال بازنشر",
+                        Message = e.Message
+                    });
                 }
 
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "بروز خطا در ارسال بازنشر",
+                    Message = "در پی نقص اطلاعات ورودی، ثبت بازنشر با خطا مواجه شد. پس از تصحیح و تکمیل، دوباره تلاش کنید."
+                });
             }
 
             return View(nameof(CreateShare), createPostVM);
@@ -357,13 +402,33 @@ namespace Rezaee.Alireza.Web.Controllers
                     createPostVM.Markdown.Post = createPostVM.Post;
                     _context.Add(createPostVM.Markdown);
                     await _context.SaveChangesAsync();
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Success,
+                        Title = "ارسال موفق مطلب",
+                        Message = $"مطلب «{createPostVM.Markdown.Post.Title}» با موفقیت ثبت شد."
+                    });
                 }
                 catch (Exception e)
                 {
-                    TempData["PostCreateStatus"] = e.Message;
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Error,
+                        Title = "خطا در ارسال مطلب",
+                        Message = e.Message
+                    });
                 }
 
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ارسال مطلب",
+                    Message = "در پی نقص اطلاعات ورودی، ثبت مطلب نشانه‌دار با خطا مواجه شد. پس از تصحیح و تکمیل، دوباره تلاش کنید."
+                });
             }
 
             return View(nameof(CreateShare), createPostVM);
@@ -373,45 +438,49 @@ namespace Rezaee.Alireza.Web.Controllers
         [AuthorizeRoles(Roles.PostEditArticle, Roles.PostEditShare, Roles.PostEditMarkdown)]
         public async Task<IActionResult> Edit(int year, int month, int day, int postId, string UrlTitle)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-
-            var postType = await DetectPostType(postId);
-
-            if (postType == PostType.Article)
+            var requestDate = new PersianDateTime(year: year, month: month, day: day).ToDateTime();
+            return DetectPostType(await _context.Posts.Where(p => p.Id == postId && p.PublishDateTime.Date == requestDate)
+                .Include(p => p.Article).Include(p => p.Share).Include(p => p.Markdown)
+                .FirstOrDefaultAsync()) switch
             {
-                var post = await _context.Posts.Where(p => p.Id == postId).Include(p => p.Article).FirstOrDefaultAsync();
-                return RedirectToRoute("EditArticle", new { year = year, month = month, day = day, postId = postId });
-            }
-            else if (postType == PostType.Share)
-            {
-                var post = await _context.Posts.Where(p => p.Id == postId).Include(p => p.Share).FirstOrDefaultAsync();
-                return RedirectToRoute("EditShare", new { year = year, month = month, day = day, postId = postId });
-            }
-            else
-                return NotFound();
+                PostType.Article => RedirectToRoute("EditArticle", new { year, month, day, postId }),
+                PostType.Share => RedirectToRoute("EditShare", new { year, month, day, postId }),
+                PostType.Markdown => RedirectToRoute("EditMarkdown", new { year, month, day, postId }),
+                _ => NotFound()
+            };
         }
 
         [HttpGet("/edit/article/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}", Name = "EditArticle")]
         [AuthorizeRoles(Roles.PostEditArticle, Roles.PostEditShare, Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditArticle(int year, int month, int day, int postId, string UrlTitle)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-
-            var post = await _context.Posts.Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            var requestDate = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            var post = await _context.Posts
+                .Where(p => p.PublishDateTime.Date == requestDate && p.Id == postId)
+                .Include(p => p.Article)
+                .Include(p => p.PostTags)
+                .ThenInclude(p => p.Tag)
+                .FirstOrDefaultAsync();
 
             if (post == null)
                 return NotFound();
 
             if (post.Article == null)
+            {
                 post.Article = new Article();
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Warning,
+                    Title = "هشدار: تغییر نوع نوشتار",
+                    Message = "شما در حال تغییر نوشتار به مقاله هستید."
+                });
+            }
 
-            //< برچسب ها
+            // prepair postTags
             var postTags = string.Empty;
             foreach (var postTag in post.PostTags)
                 postTags += postTag.Tag.Title + ',';
-            if (!string.IsNullOrEmpty(postTags))
-                postTags.Substring(0, postTags.Length - 1);
-            //> برچسب ها
+            postTags = postTags?.Substring(0, postTags.Length - 1);
 
             return View(new CreateEditArticlePostViewModel
             {
@@ -426,18 +495,19 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditArticle)]
         public async Task<IActionResult> EditArticle(CreateEditArticlePostViewModel editPostVM, int year, int month, int day, int postId, string UrlTitle)
         {
-            var publishDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-            var previousPost = await _context.Posts.Where(p => p.PublishDateTime.Date == publishDateTime && p.Id == postId).Include(p => p.Article).Include(p => p.Share).Include(p => p.Markdown).Include(p => p.PostTags).ThenInclude(p => p.Tag).AsNoTracking().FirstOrDefaultAsync();
-            if (previousPost == null)
-                return NotFound();
-            var previousType = DetectPostType(previousPost);
-
-            if (ModelState.IsValid)
+            try
             {
-                var persianDateTime = PersianDateTime.Now;
-                var dateTime = persianDateTime.ToDateTime();
-                try
+                var publishDateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                var previousPost = await _context.Posts.Where(p => p.PublishDateTime.Date == publishDateTime && p.Id == postId).Include(p => p.Article).Include(p => p.Share).Include(p => p.Markdown).Include(p => p.PostTags).ThenInclude(p => p.Tag).AsNoTracking().FirstOrDefaultAsync();
+                if (previousPost == null)
+                    return NotFound();
+                var previousType = DetectPostType(previousPost);
+
+                if (ModelState.IsValid)
                 {
+                    var persianDateTime = PersianDateTime.Now;
+                    var dateTime = persianDateTime.ToDateTime();
+
                     if (editPostVM.Article.UrlTitle == null)
                         editPostVM.Article.UrlTitle = editPostVM.Post.Title;
                     editPostVM.Article.UrlTitle = Helpers.File.ValidateName(editPostVM.Article.UrlTitle);
@@ -472,7 +542,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
 
                     //< برچسب ها
-                    string[] tagsArray = { };
+                    string[] tagsArray = Array.Empty<string>();
                     if (!string.IsNullOrEmpty(editPostVM.PostTags)) tagsArray = editPostVM.PostTags.Split(",");
 
                     //get new tags from database
@@ -517,13 +587,44 @@ namespace Rezaee.Alireza.Web.Controllers
 
                     _context.Update(editPostVM.Article);
                     await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    TempData["PostCreateStatus"] = e.Message;
-                }
 
-                return RedirectToAction(nameof(Index));
+                    if (previousType != PostType.Article)
+                    {
+                        HttpContext.Session.SetToast(new ToastViewModel
+                        {
+                            Type = TagHelpers.ToastType.Information,
+                            Title = "تغییر نوع نوشتار",
+                            Message = $"نوشتار «{editPostVM.Post.Title}» به مقاله تغییر یافت."
+                        });
+                    }
+
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Success,
+                        Title = "ویرایش موفقیت‌آمیز مقاله",
+                        Message = $"مقاله «{editPostVM.Post.Title}» با موفقیت ویرایش شد."
+                    });
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Error,
+                        Title = "خطا در ویرایش مقاله",
+                        Message = "در پی نقص اطلاعات ورودی، ویرایش مقاله با خطا مواجه شد. پس از تصحیح و تکمیل، دوباره تلاش کنید."
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ویرایش مقاله",
+                    Message = e.Message
+                });
             }
 
             return View(editPostVM);
@@ -533,9 +634,26 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditShare)]
         public async Task<IActionResult> EditShare(int year, int month, int day, int postId)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            Post post = default;
+            DateTime dateTime = default;
 
-            var post = await _context.Posts.Include(p => p.Share).Include(p => p.PostTags).ThenInclude(p => p.Tag).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            try
+            {
+                dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                post = await _context.Posts
+                    .Include(p => p.Share)
+                    .Include(p => p.PostTags).ThenInclude(p => p.Tag)
+                    .Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ویرایش نوشتار",
+                    Message = e.Message
+                });
+            }
 
             if (post == null)
                 return NotFound();
@@ -545,7 +663,7 @@ namespace Rezaee.Alireza.Web.Controllers
             foreach (var postTag in post.PostTags)
                 postTags += postTag.Tag.Title + ',';
             if (!string.IsNullOrEmpty(postTags))
-                postTags.Substring(0, postTags.Length - 1);
+                postTags = postTags.Substring(0, postTags.Length - 1);
             //> برچسب ها
 
             return View(new CreateEditSharePostViewModel
@@ -561,16 +679,23 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditShare)]
         public async Task<IActionResult> EditShare(CreateEditSharePostViewModel editPostVM, int year, int month, int day, int postId)
         {
-            var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
-            if (previousPost == null)
-                return NotFound();
-
-            if (ModelState.IsValid)
+            try
             {
-                var persianDateTime = PersianDateTime.Now;
-                var dateTime = persianDateTime.ToDateTime();
-                try
+                var previousPost = await _context.Posts
+                    .AsNoTracking()
+                    .Where(p => p.Id == postId)
+                    .Include(p => p.Article)
+                    .Include(p => p.PostTags).ThenInclude(p => p.Tag)
+                    .Include(p => p.Share)
+                    .Include(p => p.Markdown)
+                    .FirstOrDefaultAsync();
+                if (previousPost == null)
+                    return NotFound();
+
+                if (ModelState.IsValid)
                 {
+                    var persianDateTime = PersianDateTime.Now;
+                    var dateTime = persianDateTime.ToDateTime();
 
                     if (editPostVM.ThumbnailImage != null)
                     {
@@ -583,7 +708,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
 
                     //< برچسب ها
-                    string[] tagsArray = { };
+                    string[] tagsArray = Array.Empty<string>();
                     if (!string.IsNullOrEmpty(editPostVM.PostTags)) tagsArray = editPostVM.PostTags.Split(",");
 
                     //get new tags from database
@@ -629,13 +754,44 @@ namespace Rezaee.Alireza.Web.Controllers
 
                     _context.Update(editPostVM.Share);
                     await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    TempData["PostCreateStatus"] = e.Message;
-                }
 
-                return RedirectToAction(nameof(Index));
+                    if (previousType != PostType.Share)
+                    {
+                        HttpContext.Session.SetToast(new ToastViewModel
+                        {
+                            Type = TagHelpers.ToastType.Information,
+                            Title = "تغییر نوع نوشتار",
+                            Message = $"نوشتار «{editPostVM.Post.Title}» به بازنشر تغییر یافت."
+                        });
+                    }
+
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Success,
+                        Title = "ویرایش موفقیت‌آمیز بازنشر",
+                        Message = $"نوشتار «{editPostVM.Post.Title}» با موفقیت ویرایش شد."
+                    });
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Error,
+                        Title = "خطا در ویرایش بازنشر",
+                        Message = "در پی نقص اطلاعات ورودی، ویرایش بازنشر با خطا مواجه شد. پس از تصحیح و تکمیل، دوباره تلاش کنید."
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ویرایش بازنشر",
+                    Message = e.Message
+                });
             }
 
             return View(editPostVM);
@@ -645,9 +801,23 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditMarkdown(int year, int month, int day, int postId)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            DateTime dateTime = default;
+            Post post = default;
 
-            var post = await _context.Posts.Include(p => p.Markdown).Include(p => p.PostTags).ThenInclude(p => p.Tag).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            try
+            {
+                dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                post = await _context.Posts.Include(p => p.Markdown).Include(p => p.PostTags).ThenInclude(p => p.Tag).Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ویرایش نوشتار",
+                    Message = e.Message
+                });
+            }
 
             if (post == null)
                 return NotFound();
@@ -657,7 +827,7 @@ namespace Rezaee.Alireza.Web.Controllers
             foreach (var postTag in post.PostTags)
                 postTags += postTag.Tag.Title + ',';
             if (!string.IsNullOrEmpty(postTags))
-                postTags.Substring(0, postTags.Length - 1);
+                postTags = postTags.Substring(0, postTags.Length - 1);
             //> برچسب ها
 
             return View(new CreateEditMarkdownPostViewModel
@@ -673,17 +843,17 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditMarkdown)]
         public async Task<IActionResult> EditMarkdown(CreateEditMarkdownPostViewModel editPostVM, int year, int month, int day, int postId)
         {
-            var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
-            if (previousPost == null)
-                return NotFound();
-
-            if (ModelState.IsValid)
+            try
             {
+                var previousPost = await _context.Posts.AsNoTracking().Where(p => p.Id == postId).Include(p => p.Article).Include(p => p.PostTags).ThenInclude(p => p.Tag).Include(p => p.Share).Include(p => p.Markdown).FirstOrDefaultAsync();
+                if (previousPost == null)
+                    return NotFound();
+
                 var persianDateTime = PersianDateTime.Now;
                 var dateTime = persianDateTime.ToDateTime();
-                try
-                {
 
+                if (ModelState.IsValid)
+                {
                     if (editPostVM.ThumbnailImage != null)
                     {
                         editPostVM.ThumbnailImage.Check(1048576, new string[] { "image/jpg", "image/jpeg", "image/png", "image/gif" });
@@ -695,7 +865,7 @@ namespace Rezaee.Alireza.Web.Controllers
 
 
                     //< برچسب ها
-                    string[] tagsArray = { };
+                    string[] tagsArray = Array.Empty<string>();
                     if (!string.IsNullOrEmpty(editPostVM.PostTags)) tagsArray = editPostVM.PostTags.Split(",");
 
                     //get new tags from database
@@ -742,13 +912,44 @@ namespace Rezaee.Alireza.Web.Controllers
 
                     _context.Update(editPostVM.Markdown);
                     await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    TempData["PostCreateStatus"] = e.Message;
-                }
 
-                return RedirectToAction(nameof(Index));
+                    if (previousType != PostType.Markdown)
+                    {
+                        HttpContext.Session.SetToast(new ToastViewModel
+                        {
+                            Type = TagHelpers.ToastType.Information,
+                            Title = "تغییر نوع نوشتار",
+                            Message = $"نوشتار «{editPostVM.Post.Title}» به نوشتار نشانه‌دار تغییر یافت."
+                        });
+                    }
+
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Success,
+                        Title = "ویرایش موفقیت‌آمیز نوشتار نشانه‌دار",
+                        Message = $"نوشتار «{editPostVM.Post.Title}» با موفقیت ویرایش شد."
+                    });
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    HttpContext.Session.SetToast(new ToastViewModel
+                    {
+                        Type = TagHelpers.ToastType.Error,
+                        Title = "خطا در ویرایش نوشتار",
+                        Message = "در پی نقص اطلاعات ورودی، ویرایش نوشتار نشانه‌دار با خطا مواجه شد. پس از تصحیح و تکمیل، دوباره تلاش کنید."
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در ویرایش نوشتار نشانه‌دار",
+                    Message = e.Message
+                });
             }
 
             return View(editPostVM);
@@ -759,30 +960,40 @@ namespace Rezaee.Alireza.Web.Controllers
         [AuthorizeRoles(Roles.PostDeleteArticle, Roles.PostDeleteShare, Roles.PostDeleteMarkdown)]
         public async Task<IActionResult> Delete(int year, int month, int day, int postId)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
-
-            var post = await _context.Posts
-                .Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId)
-                .Include(p => p.Article)
-                .Include(p => p.Share)
-                .Include(p => p.Markdown)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
-            if (post == null)
-                return NotFound();
-
-            var postType = DetectPostType(post);
-
             try
             {
+                var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+
+                var post = await _context.Posts
+                    .Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId)
+                    .Include(p => p.Article)
+                    .Include(p => p.Share)
+                    .Include(p => p.Markdown)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
+                if (post == null)
+                    return NotFound();
+
+                var postType = DetectPostType(post);
                 await DeletePost(post);
+
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Success,
+                    Title = "حذف موفق نوشتار",
+                    Message = $"مقاله «{post.Title}» با موفقیت حذف شد."
+                });
             }
             catch (Exception e)
             {
-                TempData["PostDeleteStatus"] = e.Message;
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا حین حذف نوشتار",
+                    Message = e.Message
+                });
             }
 
-            TempData["PostDeleteStatus"] = "OK";
             return RedirectToAction(nameof(Index));
         }
 
@@ -827,7 +1038,15 @@ namespace Rezaee.Alireza.Web.Controllers
             var switchAbleTypes = new List<SwitchPostTypeViewModel>();
             try
             {
-                var postType = await DetectPostType(postId);
+                var requestDate = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                var post = await _context.Posts
+                    .Where(p => p.PublishDateTime.Date == requestDate && p.Id == postId)
+                    .Include(p => p.Article)
+                    .Include(p => p.Share)
+                    .Include(p => p.Markdown)
+                    .Include(p => p.PostTags).ThenInclude(p => p.Tag)
+                    .AsNoTracking().FirstOrDefaultAsync();
+                var postType = DetectPostType(post);
 
                 if (postType != PostType.Article && User.IsInRole(Roles.PostCreateArticle) && User.IsInRole(Roles.PostEditArticle))
                     switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Article, PostTypeName = "تغییر به مقاله", SwitchUrl = $"/edit/switch/to-article/{year}/{month}/{day}/{postId}" });
@@ -836,9 +1055,14 @@ namespace Rezaee.Alireza.Web.Controllers
                 if (postType != PostType.Markdown && User.IsInRole(Roles.PostCreateMarkdown) && User.IsInRole(Roles.PostEditMarkdown))
                     switchAbleTypes.Add(new SwitchPostTypeViewModel { PostType = PostType.Markdown, PostTypeName = "تغییر به مطلب نشانه دار", SwitchUrl = $"/edit/switch/to-markdown/{year}/{month}/{day}/{postId}" });
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw; // نمایش صفحهی مخصوص خطا
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در تغییر نوع نوشتار",
+                    Message = e.Message
+                });
             }
 
             return View(switchAbleTypes);
@@ -849,13 +1073,35 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditArticle)]
         public async Task<IActionResult> SwitchToArticle(int year, int month, int day, int postId, string UrlTitle)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            DateTime requestDate = default;
+            Post post = default;
 
-            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
-            if (post == null)
-                return NotFound();
+            try
+            {
+                requestDate = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                post = await _context.Posts.Where(p => p.PublishDateTime.Date == requestDate && p.Id == postId).FirstOrDefaultAsync();
 
-            return RedirectToAction(nameof(EditArticle), new { year = year, month = month, day = day, postId = postId });
+                if (post == null)
+                    return NotFound();
+
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Warning,
+                    Title = "هشدار: تغییر نوع نوشتار",
+                    Message = "شما در حال تغییر نوع نوشتار می‌باشید. آیا از این کار اطمینان دارید؟"
+                });
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در تبدیل نوشتار به مقاله",
+                    Message = e.Message
+                });
+            }
+
+            return RedirectToAction(nameof(EditArticle), new { year, month, day, postId });
         }
 
         [Route("/edit/switch/to-share/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
@@ -863,13 +1109,35 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditShare)]
         public async Task<IActionResult> SwitchToShare(int year, int month, int day, int postId)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            DateTime requestDate = default;
+            Post post = default;
 
-            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
-            if (post == null)
-                return NotFound();
+            try
+            {
+                requestDate = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                post = await _context.Posts.Where(p => p.PublishDateTime.Date == requestDate && p.Id == postId).FirstOrDefaultAsync();
 
-            return RedirectToAction(nameof(EditShare), new { year = year, month = month, day = day, postId = postId });
+                if (post == null)
+                    return NotFound();
+
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Warning,
+                    Title = "هشدار: تغییر نوع نوشتار",
+                    Message = "شما در حال تغییر نوع نوشتار می‌باشید. آیا از این کار اطمینان دارید؟"
+                });
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در تبدیل نوشتار به بازنشر",
+                    Message = e.Message
+                });
+            }
+
+            return RedirectToAction(nameof(EditShare), new { year, month, day, postId });
         }
 
         [Route("/edit/switch/to-markdown/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}")]
@@ -877,13 +1145,35 @@ namespace Rezaee.Alireza.Web.Controllers
         [Authorize(Roles = Roles.PostEditMarkdown)]
         public async Task<IActionResult> SwitchToMarkdown(int year, int month, int day, int postId)
         {
-            var dateTime = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+            DateTime requestDate = default;
+            Post post = default;
 
-            var post = await _context.Posts.Where(p => p.PublishDateTime.Date == dateTime && p.Id == postId).FirstOrDefaultAsync();
-            if (post == null)
-                return NotFound();
+            try
+            {
+                requestDate = PersianDateTime.Parse($"{year:D4}/{month:D2}/{day:D2}").ToDateTime();
+                post = await _context.Posts.Where(p => p.PublishDateTime.Date == requestDate && p.Id == postId).FirstOrDefaultAsync();
 
-            return RedirectToAction(nameof(EditMarkdown), new { year = year, month = month, day = day, postId = postId });
+                if (post == null)
+                    return NotFound();
+
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Warning,
+                    Title = "هشدار: تغییر نوع نوشتار",
+                    Message = "شما در حال تغییر نوع نوشتار می‌باشید. آیا از این کار اطمینان دارید؟"
+                });
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
+                {
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در تبدیل نوشتار به نشانه‌دار",
+                    Message = e.Message
+                });
+            }
+
+            return RedirectToAction(nameof(EditMarkdown), new { year, month, day, postId });
         }
 
         private async Task<List<PostSummaryViewModel>> RetrieveLatestPostsSummary(int count, int skip = 0) => await RetrieveLatestPostsSummary(count: count, skip: skip, context: _context);
@@ -892,6 +1182,7 @@ namespace Rezaee.Alireza.Web.Controllers
         public static async Task<List<PostSummaryViewModel>> RetrieveLatestPostsSummary(int count, ApplicationDbContext context, int skip = 0)
         {
             var posts = new List<PostSummaryViewModel>();
+
             var retrievePosts = await context.Posts
                 .OrderByDescending(p => p.Posterpins.Id)
                 .ThenByDescending(p => p.Pin.Id)
@@ -932,6 +1223,7 @@ namespace Rezaee.Alireza.Web.Controllers
                     Posterpins = post.Posterpins
                 });
             }
+
             return posts;
         }
 
@@ -1034,57 +1326,71 @@ namespace Rezaee.Alireza.Web.Controllers
         [Route("{postId}/related-posts")]
         public async Task<IActionResult> RelatedPosts(int postId, int count = 10, int skip = 0)
         {
-            var retrievePost = await _context.Posts
-                .Include(p => p.Article)
-                .Include(p => p.Share)
-                .Include(p => p.Markdown)
-                .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
-                .FirstOrDefaultAsync(post => post.Id == postId);
-            if (retrievePost == null)
-                return null;
+            try
+            {
+                var retrievePost = await _context.Posts
+                    .Include(p => p.Article)
+                    .Include(p => p.Share)
+                    .Include(p => p.Markdown)
+                    .Include(p => p.PostTags).ThenInclude(pt => pt.Tag).ThenInclude(t => t.PostTags)
+                    .FirstOrDefaultAsync(post => post.Id == postId);
+                if (retrievePost == null)
+                    return null;
 
-            ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: retrievePost.ThumbnailUrl).ToString();
-            ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(RelatedPosts), nameof(PostsController).ControllerName(), new { count, skip })}";
+                ViewData["Image"] = new Uri(baseUri: new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}"), relativeUri: retrievePost.ThumbnailUrl).ToString();
+                ViewData["Url"] = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action(nameof(RelatedPosts), nameof(PostsController).ControllerName(), new { count, skip })}";
 
-            await _context.Posts.Where(p => RetrievePostIdsForRelatedPosts(retrievePost).Contains(p.Id))
-                .Include(p => p.Article)
-                .Include(p => p.Share)
-                .Include(p => p.Markdown)
-                .ToListAsync();
+                await _context.Posts.Where(p => RetrievePostIdsForRelatedPosts(retrievePost).Contains(p.Id))
+                    .Include(p => p.Article)
+                    .Include(p => p.Share)
+                    .Include(p => p.Markdown)
+                    .ToListAsync();
 
-            return View(new RelatedPostsViewModel {
-                TargetPost = new PostSummaryViewModel
+                return View(new RelatedPostsViewModel
                 {
-                    Id = retrievePost.Id,
-                    Title = retrievePost.Title,
-                    Type = DetectPostType(retrievePost),
-                    PublishDateTime = retrievePost.PublishDateTime,
-                    LatestUpdateDateTime = retrievePost.LatestUpdateDateTime,
-                    Summary = retrievePost.Summary,
-                    ThumbnailUrl = retrievePost.ThumbnailUrl,
-                    PostUrl = GetPostUrl(retrievePost),
-                    PostEditUrl = GetPostEditUrl(retrievePost),
-                    postDeleteUrl = GetPostDeleteUrl(retrievePost),
-                    postEditTypeUrl = GetPostEditTypeUrl(retrievePost),
-                    RelatedPosts = MostRelatedPostsToTagsSummary(retrievePost)
-                },
-                RelatedPosts = MostRelatedPostsToTags(post: retrievePost, count: count, skip: skip)
-                .Select(post => new PostSummaryViewModel
+                    TargetPost = new PostSummaryViewModel
+                    {
+                        Id = retrievePost.Id,
+                        Title = retrievePost.Title,
+                        Type = DetectPostType(retrievePost),
+                        PublishDateTime = retrievePost.PublishDateTime,
+                        LatestUpdateDateTime = retrievePost.LatestUpdateDateTime,
+                        Summary = retrievePost.Summary,
+                        ThumbnailUrl = retrievePost.ThumbnailUrl,
+                        PostUrl = GetPostUrl(retrievePost),
+                        PostEditUrl = GetPostEditUrl(retrievePost),
+                        postDeleteUrl = GetPostDeleteUrl(retrievePost),
+                        postEditTypeUrl = GetPostEditTypeUrl(retrievePost),
+                        RelatedPosts = MostRelatedPostsToTagsSummary(retrievePost)
+                    },
+                    RelatedPosts = MostRelatedPostsToTags(post: retrievePost, count: count, skip: skip)
+                    .Select(post => new PostSummaryViewModel
+                    {
+                        Id = post.Id,
+                        Title = post.Title,
+                        Type = DetectPostType(post),
+                        PublishDateTime = post.PublishDateTime,
+                        LatestUpdateDateTime = post.LatestUpdateDateTime,
+                        Summary = post.Summary,
+                        ThumbnailUrl = post.ThumbnailUrl,
+                        PostUrl = GetPostUrl(post),
+                        PostEditUrl = GetPostEditUrl(post),
+                        postDeleteUrl = GetPostDeleteUrl(post),
+                        postEditTypeUrl = GetPostEditTypeUrl(post),
+                        RelatedPosts = MostRelatedPostsToTagsSummary(post)
+                    }).ToList()
+                });
+            }
+            catch (Exception e)
+            {
+                HttpContext.Session.SetToast(new ToastViewModel
                 {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Type = DetectPostType(post),
-                    PublishDateTime = post.PublishDateTime,
-                    LatestUpdateDateTime = post.LatestUpdateDateTime,
-                    Summary = post.Summary,
-                    ThumbnailUrl = post.ThumbnailUrl,
-                    PostUrl = GetPostUrl(post),
-                    PostEditUrl = GetPostEditUrl(post),
-                    postDeleteUrl = GetPostDeleteUrl(post),
-                    postEditTypeUrl = GetPostEditTypeUrl(post),
-                    RelatedPosts = MostRelatedPostsToTagsSummary(post)
-                }).ToList()
-            });
+                    Type = TagHelpers.ToastType.Error,
+                    Title = "خطا در نمایش نوشتار مرتبط",
+                    Message = e.Message
+                });
+                return View();
+            }
         }
 
         //Detect PostType
