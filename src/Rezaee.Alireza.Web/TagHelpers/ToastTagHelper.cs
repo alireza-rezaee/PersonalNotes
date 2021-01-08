@@ -23,18 +23,38 @@ namespace Rezaee.Alireza.Web.TagHelpers
 
         public ToastType Type { get; set; }
 
+        public DateTime? DateTime { get; set; }
+
+        public bool Animation { get; set; }
+
+        public bool Autohide { get; set; }
+
+        public int? Delay { get; set; }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "div";
-            output.Attributes.SetAttribute("class", $"toast text-white {PrintColor(Type)}");
-            output.Attributes.SetAttribute("data-bs-autohide", "false");
+            output.Attributes.SetAttribute("data-bs-animation", Animation ? "true" : "false");
 
-            output.Content.SetHtmlContent("<div class=\"toast-header\">\n"
-                + PrintIcon(Type)
-                + $"<strong class=\"ms-auto\">{Title}</strong>"
-                + $"<small class=\"text-muted\" data-time=\"{DateTime.Now}\">الآن</small>"
-                + "<button type=\"button\" class=\"btn-close ms-0 me-2\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>"
-                + $"</div>\n<div class=\"toast-body\">\n{Message}\n</div>");
+            output.Attributes.SetAttribute("data-bs-autohide", Autohide ? "true" : "false");
+            if (Autohide || Delay is not null) output.Attributes.SetAttribute("data-bs-delay", Delay);
+
+            if (!string.IsNullOrEmpty(Title))
+            {
+                output.Attributes.SetAttribute("class", $"toast text-white {PrintColor(Type)}");
+                output.Content.SetHtmlContent("<div class=\"toast-header\">\n"
+                    + PrintIcon(Type)
+                    + $"<strong class=\"ms-auto\">{Title}</strong>"
+                    + ((DateTime is not null) ? $"<time class=\"text-muted small timeago\" datetime=\"{DateTime:s}\"></time>" : string.Empty)
+                    + "<button type=\"button\" class=\"btn-close ms-0 me-2\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>"
+                    + $"</div>\n<div class=\"toast-body\">\n{Message}\n</div>");
+            }
+            else
+            {
+                output.Attributes.SetAttribute("class", $"toast d-flex align-items-center {PrintColor(Type)}");
+                output.Content.SetHtmlContent($"<div class=\"toast-body\">\n{Message}\n</div>"
+                    + "<button type=\"button\" class=\"btn-close ms-0 me-2\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>");
+            }
         }
 
         private static string PrintIcon(ToastType type) => type switch

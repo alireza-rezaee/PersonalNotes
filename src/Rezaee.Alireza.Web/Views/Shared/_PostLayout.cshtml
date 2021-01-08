@@ -37,6 +37,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/3.5.1/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/5.0.0-beta1/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/timeago/1.6.7/jquery.timeago.js"></script>
+        <script src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -49,10 +51,23 @@
                 asp-fallback-test="bootstrap"
                 integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <script src="~/js/site.min.js"></script>
+        <script src="https://unpkg.com/timeago@1.6.7/jquery.timeago.js"
+                asp-fallback-src="~/lib/timeago/1.6.7/jquery.timeago.js"
+                asp-fallback-test="window.jQuery & jQuery.timeago"
+                integrity="sha384-GsksDHaN27nM9MG1NsV9IPECsWOIts+Wpq92hznPS4KNEQeyOa5ChwoOJSfCbG+2" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/timeago@1.6.7/locales/jquery.timeago.fa.js"
+                asp-fallback-src="~/lib/timeago/1.6.7/locales/jquery.timeago.fa.js"
+                asp-fallback-test="jQuery.timeago"
+                integrity="sha384-KoRLLuB9R0fWSnmmIjid3KBcgtNESylDiSD14GIgfTEmkMvswToDuuHpFGu19aCr" crossorigin="anonymous"></script>
+        <script src="~/js/site.min.js"></script>
     </environment>
 
     <partial name="_ToastsPartial" />
-
+    <script>
+        jQuery(document).ready(function () {
+            jQuery("time.timeago").timeago();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

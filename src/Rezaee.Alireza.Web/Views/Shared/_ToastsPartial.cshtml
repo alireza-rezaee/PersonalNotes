@@ -1,5 +1,6 @@
 ﻿@using static Rezaee.Alireza.Web.Extensions.SessionExtensions
 @using Microsoft.AspNetCore.Http
+@using Rezaee.Alireza.Web.TagHelpers 
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var toasts = HttpContextAccessor.HttpContext.Session.GetToasts();
@@ -9,7 +10,18 @@
     <div class="toast-container position-fixed start-0 bottom-0 p-3" style="z-index: 99;">
         @foreach (var item in toasts)
         {
-            <toast type="@item.Type" title="@item.Title" message="@item.Message"></toast>
+            if (item.Type is null) item.Type = ToastType.Information;
+            if (item.Animation is null) item.Animation = true;
+            if (item.Autohide is null) item.Autohide = true;
+            if (item.Delay is null) item.Delay = 5000;
+
+            <toast message="@item.Message"
+                   type="@(ToastType)item.Type"
+                   title="@item.Title"
+                   date-time="DateTime.Now"
+                   animation="@(bool)item.Animation"
+                   autohide="@(bool)item.Autohide"
+                   delay="@(int)item.Delay"></toast>
         }
 
         <script>
