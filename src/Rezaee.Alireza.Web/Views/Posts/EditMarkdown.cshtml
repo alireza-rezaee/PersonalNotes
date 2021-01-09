@@ -18,7 +18,7 @@
     var DefaultImage =
     new
     {
-        ThumbnailImage = Model.Post.ThumbnailUrl != null ? $"background-image: url('{Model.Post.ThumbnailUrl}');" : "background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px);"
+        ThumbnailImage = Model?.Post?.ThumbnailUrl is not null ? $"background-image: url('{Model.Post.ThumbnailUrl}');" : "background-image: repeating-linear-gradient(-45deg, #fff, #fff 20px, #eee 20px, #eee 40px);"
     };
 }
 @section Head {

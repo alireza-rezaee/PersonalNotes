@@ -13,7 +13,7 @@
     };
     var fullName = "علیرضا رضائی";
 
-    var postDate = Model.Markdown.Post.LatestUpdateDateTime == null ? Model.Markdown.Post.PublishDateTime : Model.Markdown.Post.LatestUpdateDateTime;
+    var postDate = Model?.Markdown?.Post?.LatestUpdateDateTime is null ? Model.Markdown.Post.PublishDateTime : Model.Markdown.Post.LatestUpdateDateTime;
     var persianPostDate = postDate.Value.ToPersianDateTime();
 }
 <div class="container">
