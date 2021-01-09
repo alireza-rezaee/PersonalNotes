@@ -1,6 +1,6 @@
-﻿@using static Rezaee.Alireza.Web.Extensions.SessionExtensions
+﻿@using static AlirezaRezaee.PersonalNotes.WeblogApp.Extensions.SessionExtensions
 @using Microsoft.AspNetCore.Http
-@using Rezaee.Alireza.Web.TagHelpers
+@using AlirezaRezaee.PersonalNotes.WeblogApp.TagHelpers
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var toasts = HttpContextAccessor.HttpContext.Session.GetToasts();
@@ -16,12 +16,12 @@
             if (item.Delay is null) item.Delay = 5000;
 
             <toast message="@item.Message"
-                   type="@(ToastType)item.Type"
+                   type="@((ToastType)item.Type)"
                    title="@item.Title"
                    date-time="@item.Time"
-                   animation="@(bool)item.Animation"
-                   autohide="@(bool)item.Autohide"
-                   delay="@(int)item.Delay"></toast>
+                   animation="@((bool)item.Animation)"
+                   autohide="@((bool)item.Autohide)"
+                   delay="@((int)item.Delay)"></toast>
         }
 
         <script>

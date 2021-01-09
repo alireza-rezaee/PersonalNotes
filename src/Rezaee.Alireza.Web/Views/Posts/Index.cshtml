@@ -1,8 +1,8 @@
-﻿@using Rezaee.Alireza.Web.Helpers
-@using Rezaee.Alireza.Web.Helpers.Enums
-@using Rezaee.Alireza.Web.Extensions
-@inject Microsoft.AspNetCore.Identity.UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
-@model IEnumerable<Rezaee.Alireza.Web.Models.ViewModels.Posts.PostSummaryViewModel>
+﻿@using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
+@using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers.Enums
+@using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions
+@inject Microsoft.AspNetCore.Identity.UserManager<AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser> UserManager
+@model IEnumerable<AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Posts.PostSummaryViewModel>
 
 @{
     ViewData["Title"] = "ارسالی ها";
@@ -220,7 +220,7 @@
 
         if (lastPageNumber > 1)
         {
-            var pageNumbers = Rezaee.Alireza.Web.Controllers.PostsController.PaginationPages(currentPage: currentPageNumber, rangeLength: 5, lastPage: lastPageNumber);
+            var pageNumbers = AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.PostsController.PaginationPages(currentPage: currentPageNumber, rangeLength: 5, lastPage: lastPageNumber);
             <nav>
                 <ul class="pagination justify-content-center dir-ltr">
                     @if (currentPageNumber != lastPageNumber)

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
-using Rezaee.Alireza.Web.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Models.ViewModels.Posts;
-using Rezaee.Alireza.Web.Areas.Admin.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Posts;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Models;
 
-namespace Rezaee.Alireza.Web.Data
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

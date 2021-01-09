@@ -1,10 +1,10 @@
-﻿using Rezaee.Alireza.Web.Models.ViewModels.Posts;
+﻿using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Models.ViewModels.Home
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Home
 {
     public class IndexViewModel
     {

@@ -10,14 +10,14 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Models;
-using Rezaee.Alireza.Web.Models.ViewModels.Blocks;
-using Block = Rezaee.Alireza.Web.Models.Block;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Blocks;
+using Block = AlirezaRezaee.PersonalNotes.WeblogApp.Models.Block;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("blocks")]
     public class BlocksController : Controller

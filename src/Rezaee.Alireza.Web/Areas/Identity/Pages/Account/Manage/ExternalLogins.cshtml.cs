@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Rezaee.Alireza.Web.Areas.Identity.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Helpers;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {

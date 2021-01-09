@@ -4,7 +4,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Rezaee.Alireza.Web.TagHelpers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.TagHelpers
 {
     public enum GravatarMode
     {

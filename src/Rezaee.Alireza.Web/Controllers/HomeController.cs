@@ -4,20 +4,20 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Rezaee.Alireza.Web.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Models.ViewModels;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Models.ViewModels.Posts;
-using Rezaee.Alireza.Web.Helpers.Enums;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Posts;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers.Enums;
 using Microsoft.AspNetCore.Authorization;
-using Rezaee.Alireza.Web.Attributes;
-using Rezaee.Alireza.Web.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Attributes;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 using Microsoft.AspNetCore.Http;
-using Rezaee.Alireza.Web.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     public class HomeController : Controller
     {

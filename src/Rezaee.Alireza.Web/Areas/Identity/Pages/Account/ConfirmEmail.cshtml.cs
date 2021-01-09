@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Rezaee.Alireza.Web.Areas.Identity.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Helpers;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel

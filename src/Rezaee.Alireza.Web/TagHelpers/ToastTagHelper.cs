@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.TagHelpers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.TagHelpers
 {
     public enum ToastType
     {

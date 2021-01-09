@@ -1,15 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Rezaee.Alireza.Web.Areas.Identity.Helpers;
-using Rezaee.Alireza.Web.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {

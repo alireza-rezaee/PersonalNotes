@@ -1,6 +1,6 @@
-﻿@using Rezaee.Alireza.Web.Extensions
-@using Rezaee.Alireza.Web.Helpers
-@model Rezaee.Alireza.Web.Models.ViewModels.Blocks.CreateEditViewModel
+﻿@using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions
+@using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
+@model AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Blocks.CreateEditViewModel
 @{
     ViewData["Title"] = "ایجاد بلاک جدید";
 }
@@ -127,7 +127,7 @@
 <div class="container">
     <div class="my-5">
         <div class="card card-body" id="block-new">
-            <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Edit)">
+            <form asp-controller="@nameof(AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.BlocksController).ControllerName()" asp-action="@nameof(AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.BlocksController.Edit)">
                 <ul class="nav nav-tabs" id="newBlockTab">
                     <li class="nav-item">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#js-block-content">بدنه</button>
@@ -212,7 +212,7 @@
     <div class="modal fade" id="modal-delete-block" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Delete)" asp-route-id="@Model.Id">
+                <form asp-controller="@nameof(AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.BlocksController).ControllerName()" asp-action="@nameof(AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.BlocksController.Delete)" asp-route-id="@Model.Id">
                     <div class="modal-header">
                         <h5 class="modal-title">
                             هشدار حذف بلاک

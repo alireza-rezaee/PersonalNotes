@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Rezaee.Alireza.Web
+namespace AlirezaRezaee.PersonalNotes.WeblogApp
 {
     public class Program
     {

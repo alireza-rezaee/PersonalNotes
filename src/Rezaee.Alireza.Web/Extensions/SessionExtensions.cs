@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Rezaee.Alireza.Web.Models.ViewModels;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Extensions
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Extensions
 {
     public static class SessionExtensions
     {

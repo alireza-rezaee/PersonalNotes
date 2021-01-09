@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("links")]
     public class LinksController : Controller

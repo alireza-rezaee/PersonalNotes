@@ -1,11 +1,11 @@
-﻿using Rezaee.Alireza.Web.Helpers.Enums;
-using Rezaee.Alireza.Web.Models;
+﻿using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers.Enums;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Models.ViewModels.Posts
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Posts
 {
     public class PostSummaryViewModel
     {

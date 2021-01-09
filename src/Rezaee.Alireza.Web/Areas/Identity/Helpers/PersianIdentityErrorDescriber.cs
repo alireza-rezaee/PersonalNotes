@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Helpers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Helpers
 {
     public class PersianIdentityErrorDescriber : IdentityErrorDescriber
     {

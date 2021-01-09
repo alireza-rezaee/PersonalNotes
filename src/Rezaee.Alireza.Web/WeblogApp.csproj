@@ -1,0 +1,233 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>aspnet-AlirezaRezaee.Web-5339E1CF-AAD4-4E00-A9FC-FDE5E556675C</UserSecretsId>
+		<ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
+		<RootNamespace>AlirezaRezaee.PersonalNotes.WeblogApp</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="wwwroot\sass\**" />
+		<Content Remove="wwwroot\sass\**" />
+		<EmbeddedResource Remove="wwwroot\sass\**" />
+		<None Remove="wwwroot\sass\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Data\Migrations\20200112050259_AddOption.cs" />
+		<Compile Remove="Data\Migrations\20200112050259_AddOption.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112052410_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112052410_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112081106_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112081106_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112094122_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112094122_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112095032_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112095032_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112163851_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112163851_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112164629_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112164629_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112164940_InsertDefaultOptions.cs" />
+		<Compile Remove="Data\Migrations\20200112164940_InsertDefaultOptions.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112185654_AddAuthorNoteModel.cs" />
+		<Compile Remove="Data\Migrations\20200112185654_AddAuthorNoteModel.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200112200912_AddAuthorNoteModel1.cs" />
+		<Compile Remove="Data\Migrations\20200112200912_AddAuthorNoteModel1.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200128064632_a.cs" />
+		<Compile Remove="Data\Migrations\20200128064632_a.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200128065020_AddApplicationUser.cs" />
+		<Compile Remove="Data\Migrations\20200128065020_AddApplicationUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200128065430_AddApplicationUser.cs" />
+		<Compile Remove="Data\Migrations\20200128065430_AddApplicationUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200128065704_AddApplicationUser.cs" />
+		<Compile Remove="Data\Migrations\20200128065704_AddApplicationUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200328042052_InsrtDefaultOptions4.cs" />
+		<Compile Remove="Data\Migrations\20200328042052_InsrtDefaultOptions4.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200328042228_InsertDefaultOptions4.cs" />
+		<Compile Remove="Data\Migrations\20200328042228_InsertDefaultOptions4.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200328080441_InsertDefaultOptions5.cs" />
+		<Compile Remove="Data\Migrations\20200328080441_InsertDefaultOptions5.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200329152019_م.cs" />
+		<Compile Remove="Data\Migrations\20200329152019_م.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200330182046_AddPosts.cs" />
+		<Compile Remove="Data\Migrations\20200330182046_AddPosts.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200330184121_AddPostsl.cs" />
+		<Compile Remove="Data\Migrations\20200330184121_AddPostsl.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200331073024_RemovePosts.cs" />
+		<Compile Remove="Data\Migrations\20200331073024_RemovePosts.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200331123449_DropSCategoriesAndDropShareCategoryAndEditShare.cs" />
+		<Compile Remove="Data\Migrations\20200331123449_DropSCategoriesAndDropShareCategoryAndEditShare.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200331143741_test.cs" />
+		<Compile Remove="Data\Migrations\20200331143741_test.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200331143836_test.cs" />
+		<Compile Remove="Data\Migrations\20200331143836_test.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200401164353_AlterPosts.cs" />
+		<Compile Remove="Data\Migrations\20200401164353_AlterPosts.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402152245_AlterPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200402152245_AlterPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402155348_AlterPosts02.cs" />
+		<Compile Remove="Data\Migrations\20200402155348_AlterPosts02.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402164003_test.cs" />
+		<Compile Remove="Data\Migrations\20200402164003_test.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402164059_AlterPosts03.cs" />
+		<Compile Remove="Data\Migrations\20200402164059_AlterPosts03.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402195820_AlterPosts04.cs" />
+		<Compile Remove="Data\Migrations\20200402195820_AlterPosts04.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402195944_RemoveExtraTables.cs" />
+		<Compile Remove="Data\Migrations\20200402195944_RemoveExtraTables.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402201644_p.cs" />
+		<Compile Remove="Data\Migrations\20200402201644_p.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200402201716_AlterPosts05.cs" />
+		<Compile Remove="Data\Migrations\20200402201716_AlterPosts05.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200404162658_InsertDefaultPost01.cs" />
+		<Compile Remove="Data\Migrations\20200404162658_InsertDefaultPost01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406135945_AlterPostsArticlesShares.cs" />
+		<Compile Remove="Data\Migrations\20200406135945_AlterPostsArticlesShares.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406140123_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406140123_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406140706_AlterPosts02.cs" />
+		<Compile Remove="Data\Migrations\20200406140706_AlterPosts02.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406140731_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406140731_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406145951_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406145951_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406150048_AlterPostsSharesArticles.cs" />
+		<Compile Remove="Data\Migrations\20200406150048_AlterPostsSharesArticles.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406150058_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406150058_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406151330_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406151330_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406151415_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406151415_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406151533_AlterPost02.cs" />
+		<Compile Remove="Data\Migrations\20200406151533_AlterPost02.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406151545_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406151545_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406152626_AlterPost02.cs" />
+		<Compile Remove="Data\Migrations\20200406152626_AlterPost02.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406152740_AlterPost02.cs" />
+		<Compile Remove="Data\Migrations\20200406152740_AlterPost02.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406152819_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406152819_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406153204_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406153204_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406153301_AlterPost01.cs" />
+		<Compile Remove="Data\Migrations\20200406153301_AlterPost01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406153313_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406153313_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406153849_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406153849_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406154409_InsertDefaultPosts01.cs" />
+		<Compile Remove="Data\Migrations\20200406154409_InsertDefaultPosts01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406154439_DropAriclesPostsShares.cs" />
+		<Compile Remove="Data\Migrations\20200406154439_DropAriclesPostsShares.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406154529_CreatePostsArticlesShares.cs" />
+		<Compile Remove="Data\Migrations\20200406154529_CreatePostsArticlesShares.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200406162441_AlterSharesPostsArticles.cs" />
+		<Compile Remove="Data\Migrations\20200406162441_AlterSharesPostsArticles.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200408121203_test.cs" />
+		<Compile Remove="Data\Migrations\20200408121203_test.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200414093005_AlterMarkdowns0.cs" />
+		<Compile Remove="Data\Migrations\20200414093005_AlterMarkdowns0.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200612150311_AlterTags.cs" />
+		<Compile Remove="Data\Migrations\20200612150311_AlterTags.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200612182126_AlterTags01.cs" />
+		<Compile Remove="Data\Migrations\20200612182126_AlterTags01.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200623094543_AlterTags05.cs" />
+		<Compile Remove="Data\Migrations\20200623094543_AlterTags05.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200818083919_SeedAdminUser.cs" />
+		<Compile Remove="Data\Migrations\20200818083919_SeedAdminUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200818084559_SeedAdminUser.cs" />
+		<Compile Remove="Data\Migrations\20200818084559_SeedAdminUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200818093444_SeedAdminUser.cs" />
+		<Compile Remove="Data\Migrations\20200818093444_SeedAdminUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200818093849_SeedAdminUser.cs" />
+		<Compile Remove="Data\Migrations\20200818093849_SeedAdminUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.cs" />
+		<Compile Remove="Data\Migrations\20200818095020_SeedAdminUser.Designer.cs" />
+		<Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.cs" />
+		<Compile Remove="Data\Migrations\20201005031600_AddRequestLogs.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201017190753_SeedPersonalizations01.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201017190753_SeedPersonalizations01.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111648_SeedCleaning.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111648_SeedCleaning.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111843_SeedCleaning.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120111843_SeedCleaning.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112309_SeedCleaning.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112309_SeedCleaning.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112409_SeedCleaning.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120112409_SeedCleaning.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144153_DropRecommendeds.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144153_DropRecommendeds.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144340_DropDestructivePosts.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144340_DropDestructivePosts.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144514_DropRecommendeds.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144514_DropRecommendeds.Designer.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144911_SeedCleaning.cs" />
+		<Compile Remove="Data\Migrations\ApplicationDbContextMigrations\20201120144911_SeedCleaning.Designer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Remove="bundleconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="bundleconfig.json" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="5.0.0" />
+		<PackageReference Include="AspNet.Security.OAuth.StackExchange" Version="5.0.0" />
+		<PackageReference Include="Markdig" Version="0.22.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+		<PackageReference Include="morelinq" Version="3.3.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+		<PackageReference Include="PersianDateTime.Core" Version="1.0.8" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Folder Include="Data\SqlQueries\InsertDefaultBlocks\" />
+		<Folder Include="wwwroot\css\" />
+		<Folder Include="wwwroot\uploads\images\" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<None Update="Data\SqlQueries\InsertDefaultBlocks\InsertDefaults01.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\SqlQueries\InsertSimplePostsAndTags\part5.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\SqlQueries\InsertSimplePostsAndTags\part4.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\SqlQueries\InsertSimplePostsAndTags\part3.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\SqlQueries\InsertSimplePostsAndTags\part2.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\SqlQueries\InsertSimplePostsAndTags\part1.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

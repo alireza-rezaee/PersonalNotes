@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Models
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Models
 {
     public enum BlockPosition: byte
     {

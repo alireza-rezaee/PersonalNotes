@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Data.Migrations.ApplicationDbContextMigrations
 {
     public partial class InsertSimplePostsAndTags : Migration
     {

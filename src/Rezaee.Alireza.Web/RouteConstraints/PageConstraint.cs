@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Rezaee.Alireza.Web.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.RouteConstraint
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.RouteConstraint
 {
     public class PageConstraint : IRouteConstraint
     {

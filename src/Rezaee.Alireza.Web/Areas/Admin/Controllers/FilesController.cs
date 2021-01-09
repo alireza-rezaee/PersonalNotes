@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Areas.Admin.Models;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 
-namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/files")]

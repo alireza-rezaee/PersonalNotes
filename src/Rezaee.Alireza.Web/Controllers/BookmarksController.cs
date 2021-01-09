@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("bookmarks")]
     public class BookmarksController : Controller

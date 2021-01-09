@@ -11,13 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MoreLinq;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Models;
-using Rezaee.Alireza.Web.Models.ViewModels.Tags;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Tags;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("tags")]
     public class TagsController : Controller

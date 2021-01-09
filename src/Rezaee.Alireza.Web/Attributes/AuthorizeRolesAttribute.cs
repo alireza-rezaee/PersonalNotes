@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Attributes
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Attributes
 {
     public class AuthorizeRolesAttribute : AuthorizeAttribute
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Rezaee.Alireza.Web.Services.Email;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Services.Email;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -95,7 +95,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendAsync(
-                        from: Web.Helpers.EmailTypes.NoReply,
+                        from: WeblogApp.Helpers.EmailTypes.NoReply,
                         to: Input.Email, 
                         subject: "تایید رایانامه",
                         body: $"حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",

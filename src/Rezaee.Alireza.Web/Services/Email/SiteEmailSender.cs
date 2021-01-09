@@ -1,11 +1,11 @@
-﻿using Rezaee.Alireza.Web.Helpers;
+﻿using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Services.Email
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Services.Email
 {
     public class SiteEmailSender : ISiteEmailSender
     {

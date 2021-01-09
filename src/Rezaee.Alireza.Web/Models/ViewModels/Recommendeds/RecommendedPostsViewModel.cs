@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Models.ViewModels.Recommendeds
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Recommendeds
 {
     public class RecommendedPostsViewModel
     {

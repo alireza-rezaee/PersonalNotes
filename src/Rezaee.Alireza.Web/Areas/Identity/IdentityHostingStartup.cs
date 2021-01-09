@@ -1,5 +1,5 @@
 ﻿using System;
-using Rezaee.Alireza.Web.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: HostingStartup(typeof(Rezaee.Alireza.Web.Areas.Identity.IdentityHostingStartup))]
-namespace Rezaee.Alireza.Web.Areas.Identity
+[assembly: HostingStartup(typeof(AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.IdentityHostingStartup))]
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

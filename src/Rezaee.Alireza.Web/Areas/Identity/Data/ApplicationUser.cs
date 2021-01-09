@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Data
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data
 {
     public class ApplicationUser : IdentityUser
     {

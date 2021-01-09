@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Rezaee.Alireza.Web.Helpers
-@inject SignInManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> SignInManager
-@inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
+@using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
+@inject SignInManager<AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser> SignInManager
+@inject UserManager<AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser> UserManager
 @{
     var user = await UserManager.GetUserAsync(User);
 }
-@addTagHelper *, Rezaee.Alireza.Web
+@addTagHelper *, AlirezaRezaee.PersonalNotes.WeblogApp
 
 <li class="d-block">
     <a asp-route="SiteIndex" class="p-2" style="line-height: 0;">

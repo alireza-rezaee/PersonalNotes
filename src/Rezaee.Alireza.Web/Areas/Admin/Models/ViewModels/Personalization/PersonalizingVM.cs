@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Areas.Admin.Models.ViewModels.Personalization
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Models.ViewModels.Personalization
 {
     public class PersonalizingVM
     {

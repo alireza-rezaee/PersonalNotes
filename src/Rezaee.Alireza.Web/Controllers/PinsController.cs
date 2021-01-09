@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("pins")]
     public class PinsController : Controller

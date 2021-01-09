@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Helpers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
 {
     public class File
     {

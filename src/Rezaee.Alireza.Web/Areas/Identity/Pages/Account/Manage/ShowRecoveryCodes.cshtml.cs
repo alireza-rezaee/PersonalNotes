@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account.Manage
 {
     public class ShowRecoveryCodesModel : PageModel
     {

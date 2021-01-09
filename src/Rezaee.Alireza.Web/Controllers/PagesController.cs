@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Models.ViewModels.Pages;
-using Rezaee.Alireza.Web.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Pages;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
 using System.Runtime.InteropServices.ComTypes;
 using Microsoft.AspNetCore.Authorization;
-using Rezaee.Alireza.Web.Attributes;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Attributes;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("pages")]
     public class PagesController : Controller

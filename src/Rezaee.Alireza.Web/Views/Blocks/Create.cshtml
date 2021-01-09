@@ -1,5 +1,5 @@
-﻿@using Rezaee.Alireza.Web.Extensions;
-@model Rezaee.Alireza.Web.Models.ViewModels.Blocks.CreateEditViewModel
+﻿@using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+@model AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Blocks.CreateEditViewModel
 @{
     ViewData["Title"] = "ایجاد بلاک جدید";
 }
@@ -126,7 +126,7 @@
 <div class="container">
     <div class="my-5">
         <div class="card card-body" id="block-new">
-            <form asp-controller="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController).ControllerName()" asp-action="@nameof(Rezaee.Alireza.Web.Controllers.BlocksController.Create)">
+            <form asp-controller="@nameof(AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.BlocksController).ControllerName()" asp-action="@nameof(AlirezaRezaee.PersonalNotes.WeblogApp.Controllers.BlocksController.Create)">
                 <ul class="nav nav-tabs" id="newBlockTab">
                     <li class="nav-item">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#js-block-content">بدنه</button>

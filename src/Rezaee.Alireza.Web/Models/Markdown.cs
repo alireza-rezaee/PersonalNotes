@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Models
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Models
 {
     public class Markdown
     {

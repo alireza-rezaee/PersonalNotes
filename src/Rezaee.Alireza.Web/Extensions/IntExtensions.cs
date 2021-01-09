@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Extensions
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Extensions
 {
     public static class IntExtensions
     {

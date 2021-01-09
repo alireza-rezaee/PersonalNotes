@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Areas.Admin.Models.ViewModels.Personalization;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Models.ViewModels.Personalization;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 
-namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/personalization")]

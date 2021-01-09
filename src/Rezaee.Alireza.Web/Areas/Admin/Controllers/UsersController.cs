@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
-using Rezaee.Alireza.Web.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 
-namespace Rezaee.Alireza.Web.Areas.Admin.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/users")]

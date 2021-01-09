@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
-using Rezaee.Alireza.Web.Services.Email;
-using Rezaee.Alireza.Web.Areas.Identity.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Services.Email;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Helpers;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {
@@ -103,7 +103,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
                     values: new { userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
                 await _emailSender.SendAsync(
-                    from: Web.Helpers.EmailTypes.NoReply,
+                    from: WeblogApp.Helpers.EmailTypes.NoReply,
                     to: Input.NewEmail,
                     subject: "تایید رایانامه",
                     body: $"لطفاً حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",
@@ -141,7 +141,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account.Manage
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
             await _emailSender.SendAsync(
-                from: Web.Helpers.EmailTypes.NoReply,
+                from: WeblogApp.Helpers.EmailTypes.NoReply,
                 to: Input.NewEmail,
                 subject: "تایید رایانامه",
                 body: $"لطفاً حساب کاربری خود را با <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>کلیک روی نشانی</a> تایید کنید.",

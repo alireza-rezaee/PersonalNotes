@@ -6,23 +6,23 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Rezaee.Alireza.Web.Data;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
-using Rezaee.Alireza.Web.Helpers.Enums;
-using Rezaee.Alireza.Web.Models;
-using Rezaee.Alireza.Web.Models.ViewModels.Posts;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers.Enums;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels.Posts;
 using Markdig;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using Microsoft.AspNetCore.Authorization;
-using Rezaee.Alireza.Web.Attributes;
-using Rezaee.Alireza.Web.Models.ViewModels;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Attributes;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 
-namespace Rezaee.Alireza.Web.Controllers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
 {
     [Route("posts")]
     public class PostsController : Controller

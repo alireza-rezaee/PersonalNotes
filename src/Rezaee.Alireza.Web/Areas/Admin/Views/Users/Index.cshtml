@@ -1,10 +1,10 @@
-﻿@using Rezaee.Alireza.Web.Extensions
+﻿@using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions
 @using Microsoft.AspNetCore.Identity
-@using Rezaee.Alireza.Web.Helpers
-@addTagHelper *, Rezaee.Alireza.Web
-@model IEnumerable<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser>
-@inject SignInManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> SignInManager
-@inject UserManager<Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser> UserManager
+@using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
+@addTagHelper *, AlirezaRezaee.PersonalNotes.WeblogApp
+@model IEnumerable<AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser>
+@inject SignInManager<AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser> SignInManager
+@inject UserManager<AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser> UserManager
 @{
     ViewData["Title"] = "نمایش کاربران";
     var user = await UserManager.GetUserAsync(User);

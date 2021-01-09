@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Areas.Admin.Models
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Admin.Models
 {
     public class File
     {

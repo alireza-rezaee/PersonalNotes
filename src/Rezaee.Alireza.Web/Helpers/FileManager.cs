@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Rezaee.Alireza.Web.Helpers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
 {
     public class FileManager : IFileManager
     {

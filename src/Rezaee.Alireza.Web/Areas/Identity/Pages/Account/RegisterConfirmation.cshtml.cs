@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
-using Rezaee.Alireza.Web.Services.Email;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Services.Email;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Helpers.Enums
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Helpers.Enums
 {
     public enum PostType
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Rezaee.Alireza.Web.Extensions;
-using Rezaee.Alireza.Web.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Extensions;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 using System;
 using System.Text;
 
-namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Data.Migrations.ApplicationDbContextMigrations
 {
     public partial class SeedRoles01 : Migration
     {

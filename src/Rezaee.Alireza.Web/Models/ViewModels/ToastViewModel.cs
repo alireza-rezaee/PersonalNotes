@@ -1,10 +1,10 @@
-﻿using Rezaee.Alireza.Web.TagHelpers;
+﻿using AlirezaRezaee.PersonalNotes.WeblogApp.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Models.ViewModels
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Models.ViewModels
 {
     public class ToastViewModel
     {

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Rezaee.Alireza.Web.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
 
-namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Data.Migrations.ApplicationDbContextMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200923092409_AlterLinks01")]
@@ -152,7 +152,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -243,7 +243,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Article", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Article", b =>
                 {
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -266,7 +266,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Block", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Block", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,7 +297,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Blocks");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.DestructivePost", b =>
                 {
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -313,7 +313,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("DestructivePosts");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Link", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Link", b =>
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
@@ -342,7 +342,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Links");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Markdown", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Markdown", b =>
                 {
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -364,7 +364,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Markdowns");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Option", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Option", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -382,7 +382,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Options");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Page", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Page", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -423,7 +423,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Pages");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Pin", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Pin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -441,7 +441,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Pins");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Post", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -472,7 +472,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.PostTag", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.PostTag", b =>
                 {
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -490,7 +490,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("PostTags");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Posterpins", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Posterpins", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -514,7 +514,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Posterpins");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Recommendeds", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Recommendeds", b =>
                 {
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -527,7 +527,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Recommendeds");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Share", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Share", b =>
                 {
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -540,7 +540,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Shares");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Tag", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -556,7 +556,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.UserAbout", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.UserAbout", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -585,7 +585,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -594,7 +594,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -609,7 +609,7 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -618,87 +618,87 @@ namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Article", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Article", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("Article")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.Article", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Article", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.DestructivePost", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.DestructivePost", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("DestructivePosts")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.DestructivePost", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.DestructivePost", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Markdown", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Markdown", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("Markdown")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.Markdown", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Markdown", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Pin", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Pin", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("Pin")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.Pin", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Pin", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.PostTag", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.PostTag", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithMany("PostTags")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Rezaee.Alireza.Web.Models.Tag", "Tag")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Tag", "Tag")
                         .WithMany("PostTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Posterpins", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Posterpins", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("Posterpins")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.Posterpins", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Posterpins", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Recommendeds", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Recommendeds", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("RecommendedPost")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.Recommendeds", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Recommendeds", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rezaee.Alireza.Web.Models.Share", b =>
+            modelBuilder.Entity("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Share", b =>
                 {
-                    b.HasOne("Rezaee.Alireza.Web.Models.Post", "Post")
+                    b.HasOne("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Post", "Post")
                         .WithOne("Share")
-                        .HasForeignKey("Rezaee.Alireza.Web.Models.Share", "PostId")
+                        .HasForeignKey("AlirezaRezaee.PersonalNotes.WeblogApp.Models.Share", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

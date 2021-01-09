@@ -10,10 +10,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
-using Rezaee.Alireza.Web.Services.Email;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Services.Email;
 
-namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
@@ -60,7 +60,7 @@ namespace Rezaee.Alireza.Web.Areas.Identity.Pages.Account
                     protocol: Request.Scheme);
 
                 await _emailSender.SendAsync(
-                    from: Web.Helpers.EmailTypes.NoReply,
+                    from: WeblogApp.Helpers.EmailTypes.NoReply,
                     to: Input.Email,
                     subject: "تنظیم مجدد گذرواژه",
                     body: $"برای تنظیم مجدد گذرواژه <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>اینجا</a> کلیک کنید.",

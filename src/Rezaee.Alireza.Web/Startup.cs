@@ -8,24 +8,24 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Rezaee.Alireza.Web.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Rezaee.Alireza.Web.Areas.Identity.Data;
-using Rezaee.Alireza.Web.Services.Email;
-using Rezaee.Alireza.Web.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Data;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Services.Email;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Rezaee.Alireza.Web.Areas.Identity.Helpers;
-using Rezaee.Alireza.Web.Models;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Areas.Identity.Helpers;
+using AlirezaRezaee.PersonalNotes.WeblogApp.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
-using Rezaee.Alireza.Web.RouteConstraint;
+using AlirezaRezaee.PersonalNotes.WeblogApp.RouteConstraint;
 using Microsoft.AspNetCore.Http;
 using System.Text;
 using System.Diagnostics;
 
-namespace Rezaee.Alireza.Web
+namespace AlirezaRezaee.PersonalNotes.WeblogApp
 {
     public class Startup
     {

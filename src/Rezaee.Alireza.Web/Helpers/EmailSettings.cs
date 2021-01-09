@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace Rezaee.Alireza.Web.Helpers
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Helpers
 {
     public enum EmailTypes : byte
     {

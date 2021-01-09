@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Rezaee.Alireza.Web.Data.Migrations.ApplicationDbContextMigrations
+namespace AlirezaRezaee.PersonalNotes.WeblogApp.Data.Migrations.ApplicationDbContextMigrations
 {
     public partial class AlterPins02 : Migration
     {
