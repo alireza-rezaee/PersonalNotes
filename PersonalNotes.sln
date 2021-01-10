@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "~", "~", "{34FEB113-87BA-42
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalNotes.IntegrationTests", "tests\PersonalNotes.IntegrationTests\PersonalNotes.IntegrationTests.csproj", "{02B4F9B1-B674-4CC7-9BE4-6EC8F859290B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8E6C2E70-ACEA-4265-9623-A24F99ED6BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E6C2E70-ACEA-4265-9623-A24F99ED6BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E6C2E70-ACEA-4265-9623-A24F99ED6BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B4F9B1-B674-4CC7-9BE4-6EC8F859290B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B4F9B1-B674-4CC7-9BE4-6EC8F859290B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B4F9B1-B674-4CC7-9BE4-6EC8F859290B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B4F9B1-B674-4CC7-9BE4-6EC8F859290B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B55DA485-0834-4E9E-ACDA-AB1C238B2549} = {2A3A8875-C8C3-47AF-936B-6B2963D11A8D}
 		{8E6C2E70-ACEA-4265-9623-A24F99ED6BB1} = {8A4E5417-F275-4009-A0DB-CE142A15C7DD}
+		{02B4F9B1-B674-4CC7-9BE4-6EC8F859290B} = {8A4E5417-F275-4009-A0DB-CE142A15C7DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D519D7CF-38D0-477E-AC19-6BEB5FED5098}
