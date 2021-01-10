@@ -41,6 +41,8 @@ namespace AlirezaRezaee.PersonalNotes.WeblogApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".AlirezaRezaee.Session";
@@ -122,7 +124,7 @@ namespace AlirezaRezaee.PersonalNotes.WeblogApp
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
