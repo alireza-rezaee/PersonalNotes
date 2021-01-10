@@ -2,7 +2,7 @@ version: 2
 updates:
   # Enable version updates for NuGet
   - package-ecosystem: "nuget"
-    directory: "/src/Rezaee.Alireza.Web" #Rezaee.Alireza.Web.csproj
+    directory: "/src/PersonalNotes.WeblogApp" #PersonalNotes.WeblogApp.csproj
     schedule:
       interval: "weekly"
       day: "wednesday"
