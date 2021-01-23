@@ -98,7 +98,7 @@ namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
                     return View(nameof(DetailMarkdown), new DetailMarkdownPostViewModel
                     {
                         Markdown = post.Markdown,
-                        HtmlContent = markdownContent,
+                        HtmlContent = Markdig.Markdown.ToHtml(markdownContent),
                         PostDetailUrl = post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
                         PostDeleteUrl = "/delete/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
                         PostEditTypeUrl = "/edit/type/" + post.PublishDateTime.ToPersianDateTime().ToString("yyyy/MM/dd/") + $"{post.Id}/{post.Markdown.UrlTitle}",
@@ -431,7 +431,7 @@ namespace AlirezaRezaee.PersonalNotes.WeblogApp.Controllers
                 });
             }
 
-            return View(nameof(CreateShare), createPostVM);
+            return View(nameof(CreateMarkdown), createPostVM);
         }
 
         [HttpGet("/edit/{year:int:range(1398,9378)}/{month:int:range(1,12)}/{day:int:range(1,31)}/{postId}/{UrlTitle?}")]
