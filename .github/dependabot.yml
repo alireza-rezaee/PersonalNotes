@@ -1,9 +1,50 @@
 version: 2
 updates:
-  # Enable version updates for NuGet
-  - package-ecosystem: "nuget"
-    directory: "/src/PersonalNotes.WeblogApp" #PersonalNotes.WeblogApp.csproj
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
-    open-pull-requests-limit: 5
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "01:30"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: AspNet.Security.OAuth.StackExchange
+    versions:
+    - 5.0.1
+    - 5.0.2
+    - 5.0.3
+  - dependency-name: AspNet.Security.OAuth.GitHub
+    versions:
+    - 5.0.1
+    - 5.0.2
+    - 5.0.3
+  - dependency-name: Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.Identity.UI
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.Authentication.MicrosoftAccount
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.EntityFrameworkCore.SqlServer
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.Mvc.NewtonsoftJson
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.Identity.EntityFrameworkCore
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.EntityFrameworkCore.Sqlite
+    versions:
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: coverlet.collector
+    versions:
+    - 3.0.2
